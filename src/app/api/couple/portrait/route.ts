@@ -1,0 +1,138 @@
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
+import { withApiHandler } from '@/lib/api/withApiHandler';
+import { AppError } from '@/lib/errors';
+import { supabaseAdmin } from '@/lib/supabase-admin';
+import { createLogger } from '@/lib/logger';
+import { dbRetry } from '@/lib/db/withRetry';
+
+export const runtime = 'edge';
+
+const querySchema = z.object({
+  coupleId: z.string().min(1),
+});
+
+export const GET = withApiHandler({
+  querySchema,
+  async handler({ query }) {
+    const logger = createLogger({ route: '/api/couple/portrait' });
+    const { coupleId } = query;
+
+    // 1. Fetch the Couple
+    const { data: couple, error: coupleError } = await dbRetry<any>(async () =>
+      supabaseAdmin
+        .from('Couple')
+        .select('*')
+        .eq('id', coupleId)
+        .single()
+    );
+
+    if (coupleError || !couple) {
+      throw new AppError('COUPLE_NOT_FOUND', 'Couple introuvable.');
+    }
+
+    // 2. Fetch all DailyQuestions for this couple, ordered by releasedAt DESC
+    const { data: dailyQuestions, error: dqError } = await dbRetry<any[]>(async () =>
+      supabaseAdmin
+        .from('DailyQuestion')
+        .select('*')
+        .eq('coupleId', coupleId)
+        .order('releasedAt', { ascending: false })
+    );
+
+    if (dqError) {
+      logger.error('Échec du chargement des questions quotidiennes', { coupleId }, dqError);
+      throw new AppError('INTERNAL_ERROR', 'Impossible de charger les questions quotidiennes.');
+    }
+
+    const questions = dailyQuestions ?? [];
+
+    // 3. Check if any questions are ready to reveal (COMPUTED + current hour >= 20)
+    const now = new Date();
+    const currentHour = now.getUTCHours();
+    // Adjust for Paris timezone (UTC+1 in winter, UTC+2 in summer)
+    // Use a conservative approach: check if local hour could be >= 20
+    const parisOffset = getParisUtcOffset(now);
+    const parisHour = (currentHour + parisOffset) % 24;
+
+    const questionsToReveal = questions.filter(
+      (q: { analysisStatus: string; isRevealed: boolean }) =>
+        q.analysisStatus === 'COMPUTED' && !q.isRevealed && parisHour >= 20
+    );
+
+    if (questionsToReveal.length > 0) {
+      const idsToReveal = questionsToReveal.map((q: { id: string }) => q.id);
+
+      const { error: revealError } = await dbRetry<any>(async () =>
+        supabaseAdmin
+          .from('DailyQuestion')
+          .update({
+            isRevealed: true,
+            analysisStatus: 'REVEALED',
+            revealedAt: now.toISOString(),
+          })
+          .in('id', idsToReveal)
+      );
+
+      if (revealError) {
+        logger.warn('Échec de la révélation automatique', { idsToReveal }, revealError);
+      } else {
+        // Update local data to reflect reveal
+        for (const q of questions) {
+          if (idsToReveal.includes(q.id)) {
+            q.isRevealed = true;
+            q.analysisStatus = 'REVEALED';
+            q.revealedAt = now.toISOString();
+          }
+        }
+        logger.info('Questions révélées automatiquement', { count: idsToReveal.length });
+      }
+    }
+
+    // 4. Fetch CouplePortraits ordered by month DESC
+    const { data: portraits, error: portraitError } = await dbRetry<any[]>(async () =>
+      supabaseAdmin
+        .from('CouplePortrait')
+        .select('*')
+        .eq('coupleId', coupleId)
+        .order('month', { ascending: false })
+    );
+
+    if (portraitError) {
+      logger.warn('Échec du chargement des portraits', {coupleId}, portraitError);
+    }
+
+    // 5. Return aggregated data
+    return NextResponse.json({
+      couple,
+      dailyQuestions: questions,
+      portraits: portraits ?? [],
+    });
+  },
+});
+
+
+/**
+ * Returns the UTC offset for Paris timezone (handles CET/CEST).
+ * CET = UTC+1 (last Sunday of October → last Sunday of March)
+ * CEST = UTC+2 (last Sunday of March → last Sunday of October)
+ */
+function getParisUtcOffset(date: Date): number {
+  const year = date.getUTCFullYear();
+  const month = date.getUTCMonth(); // 0-indexed
+
+  // Last Sunday of March (start of CEST)
+  const marchLast = new Date(Date.UTC(year, 2, 31));
+  marchLast.setUTCDate(31 - marchLast.getUTCDay());
+  marchLast.setUTCHours(1, 0, 0, 0); // transition at 01:00 UTC
+
+  // Last Sunday of October (end of CEST)
+  const octoberLast = new Date(Date.UTC(year, 9, 31));
+  octoberLast.setUTCDate(31 - octoberLast.getUTCDay());
+  octoberLast.setUTCHours(1, 0, 0, 0); // transition at 01:00 UTC
+
+  if (date.getTime() >= marchLast.getTime() && date.getTime() < octoberLast.getTime()) {
+    return 2; // CEST (summer)
+  }
+  return 1; // CET (winter)
+}

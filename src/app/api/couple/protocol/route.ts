@@ -1,0 +1,191 @@
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
+import { withApiHandler } from '@/lib/api/withApiHandler';
+import { AppError } from '@/lib/errors';
+import { supabaseAdmin } from '@/lib/supabase-admin';
+import { generateContent } from '@/lib/gemini';
+import { safeJsonParse } from '@/lib/json';
+import { createLogger } from '@/lib/logger';
+import { dbRetry } from '@/lib/db/withRetry';
+
+export const runtime = 'edge';
+
+const bodySchema = z.object({
+  coupleId: z.string().min(1),
+  dailyQuestionId: z.string().min(1),
+  step: z.enum(['COMPRENDRE', 'QUESTIONNER', 'AGIR', 'questions', 'action']),
+});
+
+export const POST = withApiHandler({
+  bodySchema,
+  async handler({ body }) {
+    const logger = createLogger({ route: '/api/couple/protocol' });
+    const { coupleId, dailyQuestionId, step } = body;
+
+    // Normalize step input to match uppercase internally
+    let normalizedStep = step.toUpperCase();
+    if (normalizedStep === 'QUESTIONS') normalizedStep = 'QUESTIONNER';
+    if (normalizedStep === 'ACTION') normalizedStep = 'AGIR';
+
+    // 1. Fetch the DailyQuestion (must be revealed)
+    const { data: dailyQuestion, error: dqError } = await dbRetry<any>(async () =>
+      supabaseAdmin
+        .from('DailyQuestion')
+        .select('*')
+        .eq('id', dailyQuestionId)
+        .single()
+    );
+
+    if (dqError || !dailyQuestion) {
+      throw new AppError('NOT_FOUND', 'Question quotidienne introuvable.');
+    }
+
+    if (dailyQuestion.coupleId !== coupleId) {
+      throw new AppError('FORBIDDEN', 'Cette question ne correspond pas à votre couple.');
+    }
+
+    if (!dailyQuestion.isRevealed) {
+      throw new AppError('FORBIDDEN', "L'analyse n'est pas encore révélée. Patience jusqu'à 20h !");
+    }
+
+    const analysisJson = dailyQuestion.analysisJson as Record<string, any> | null;
+    if (!analysisJson) {
+      throw new AppError('NOT_FOUND', "Aucune analyse disponible pour cette question.");
+    }
+
+    // 2. Handle each step
+    switch (normalizedStep) {
+      case 'COMPRENDRE': {
+        return NextResponse.json({
+          step: 'COMPRENDRE',
+          analysis: analysisJson,
+        });
+      }
+
+      case 'QUESTIONNER': {
+        const resonanceInsight = analysisJson.resonanceInsight || '';
+        const partnerAProfile = JSON.stringify(analysisJson.partnerAProfile || {});
+        const partnerBProfile = JSON.stringify(analysisJson.partnerBProfile || {});
+        const alignmentScore = analysisJson.alignmentScore ?? 0;
+
+        const prompt = `Tu es un guide bienveillant pour les couples. Voici l'analyse d'une question quotidienne :
+
+Score d'alignement : ${alignmentScore}
+Insight de résonance : "${resonanceInsight}"
+Profil partenaire A : ${partnerAProfile}
+Profil partenaire B : ${partnerBProfile}
+
+À partir des écarts et des complémentarités identifiés, génère exactement 3 questions de suivi que le couple pourrait se poser pour mieux se comprendre.
+
+Les questions doivent être :
+- Ouvertes et non-jugeantes
+- Formulées avec tendresse et curiosité
+- Progressives (de la plus douce à la plus profonde)
+
+Réponds en JSON avec le format :
+{
+  "questions": [
+    { "text": "La question 1", "category": "Curiosité" },
+    { "text": "La question 2", "category": "Partage" },
+    { "text": "La question 3", "category": "Profond" }
+  ]
+}`;
+
+        try {
+          const rawResponse = await generateContent(prompt, 'application/json');
+          const parsed = safeJsonParse<{ questions: any[] }>(rawResponse, { questions: [] });
+
+          if (!parsed.questions || parsed.questions.length === 0) {
+            logger.warn('Gemini a renvoyé un format inattendu pour QUESTIONNER', {
+              rawResponse: rawResponse.substring(0, 200),
+            });
+            throw new AppError('GENERATION_FAILED', 'Impossible de générer les questions de suivi.');
+          }
+
+          const questionsWithIds = (parsed.questions ?? []).map((q, idx) => {
+            const text = typeof q === 'string' ? q : (q?.text || '');
+            const category = typeof q === 'string' 
+              ? (idx === 0 ? 'Curiosité' : idx === 1 ? 'Partage' : 'Profond') 
+              : (q?.category || (idx === 0 ? 'Curiosité' : idx === 1 ? 'Partage' : 'Profond'));
+            
+            return {
+              id: `proto-q-${dailyQuestionId}-${idx}`,
+              text,
+              category,
+            };
+          });
+
+          return NextResponse.json({
+            step: 'QUESTIONNER',
+            questions: questionsWithIds,
+          });
+        } catch (error) {
+          if (error instanceof AppError) throw error;
+          logger.error('Échec de la génération des questions', {}, error);
+          throw new AppError('GENERATION_FAILED', 'Impossible de générer les questions de suivi.');
+        }
+      }
+
+      case 'AGIR': {
+        const resonanceInsight = analysisJson.resonanceInsight || '';
+        const actionSuggestion = analysisJson.actionSuggestion || '';
+        const alignmentScore = analysisJson.alignmentScore ?? 0;
+
+        const prompt = `Tu es un coach de couple doux et pragmatique. Voici le contexte :
+
+Score d'alignement : ${alignmentScore}
+Insight : "${resonanceInsight}"
+Suggestion initiale : "${actionSuggestion}"
+
+Propose UNE micro-action concrète, spécifique et réalisable aujourd'hui pour renforcer le lien du couple.
+
+La micro-action doit être :
+- Simple et immédiate (pas de planification complexe)
+- Sensorielle ou émotionnelle (pas intellectuelle)
+- Adaptée au niveau d'alignement du couple
+
+Réponds en JSON avec le format :
+{
+  "action": "description détaillée de la micro-action",
+  "difficulty": "facile" | "moyen" | "engagé"
+}`;
+
+        try {
+          const rawResponse = await generateContent(prompt, 'application/json');
+          const parsed = safeJsonParse<{
+            action: string;
+            difficulty: string;
+          }>(rawResponse, { action: '', difficulty: 'moyen' });
+
+          if (!parsed.action) {
+            logger.warn('Gemini a renvoyé un format inattendu pour AGIR', {
+              rawResponse: rawResponse.substring(0, 200),
+            });
+            throw new AppError('GENERATION_FAILED', 'Impossible de générer la micro-action.');
+          }
+
+          const difficulty = ['facile', 'moyen', 'engagé'].includes(parsed.difficulty)
+            ? parsed.difficulty
+            : 'moyen';
+
+          return NextResponse.json({
+            step: 'AGIR',
+            action: {
+              text: parsed.action,
+              difficulty,
+            },
+          });
+        } catch (error) {
+          if (error instanceof AppError) throw error;
+          logger.error('Échec de la génération de la micro-action', {}, error);
+          throw new AppError('GENERATION_FAILED', 'Impossible de générer la micro-action.');
+        }
+      }
+
+      default: {
+        throw new AppError('VALIDATION_ERROR', 'Étape de protocole invalide.');
+      }
+    }
+  },
+});
+

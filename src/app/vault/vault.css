@@ -1,0 +1,981 @@
+/* ==========================================================================
+   Vault – Coffre aux Souvenirs
+   Premium dark glassmorphism theme with amber/gold accents
+   ========================================================================== */
+
+/* ── Color palette ── */
+:root {
+  --vault-bg: #020617;
+  --vault-surface: rgba(15, 23, 42, 0.6);
+  --vault-glass: rgba(255, 255, 255, 0.04);
+  --vault-glass-border: rgba(255, 255, 255, 0.08);
+  --vault-glass-hover: rgba(255, 255, 255, 0.08);
+  --vault-amber: #f59e0b;
+  --vault-amber-light: #fbbf24;
+  --vault-amber-glow: rgba(245, 158, 11, 0.25);
+  --vault-amber-subtle: rgba(245, 158, 11, 0.08);
+  --vault-gold: #eab308;
+  --vault-text: #f8fafc;
+  --vault-text-muted: #94a3b8;
+  --vault-text-dim: #64748b;
+  --vault-danger: #ef4444;
+  --vault-success: #22c55e;
+  --vault-purple: #8b5cf6;
+  --vault-pink: #ec4899;
+  --vault-radius: 1.25rem;
+  --vault-radius-lg: 1.5rem;
+  --vault-radius-sm: 0.75rem;
+}
+
+/* ── Animations ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25%      { transform: translateY(-12px) rotate(1.5deg); }
+  50%      { transform: translateY(-4px) rotate(-1deg); }
+  75%      { transform: translateY(-16px) rotate(0.5deg); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px var(--vault-amber-glow); }
+  50%      { box-shadow: 0 0 40px var(--vault-amber-glow), 0 0 60px rgba(245, 158, 11, 0.1); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes textCycle {
+  0%, 100% { opacity: 0; transform: translateY(8px); }
+  10%, 90% { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Container ── */
+.vault-container {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: linear-gradient(180deg, var(--vault-bg) 0%, #0a0f1e 50%, var(--vault-bg) 100%);
+  color: var(--vault-text);
+  position: relative;
+  overflow-x: hidden;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+.vault-header {
+  text-align: center;
+  padding: 2rem 0 1rem;
+  animation: fadeIn 0.4s ease-out;
+  position: relative;
+  z-index: 10;
+}
+
+.vault-header h1 {
+  font-size: 1.75rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--vault-amber-light), var(--vault-amber), var(--vault-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.vault-header p {
+  font-size: 0.75rem;
+  color: var(--vault-text-dim);
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+}
+
+/* ── Wizard Step ── */
+.wizard-step {
+  background: var(--vault-glass);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--vault-glass-border);
+  border-radius: var(--vault-radius-lg);
+  padding: 1.75rem 1.5rem;
+  max-width: 32rem;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  animation: slideUp 0.4s ease-out;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.wizard-step::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+
+.wizard-step h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--vault-text);
+  margin-bottom: 1.25rem;
+}
+
+.wizard-step label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--vault-text-muted);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── Friend Chips ── */
+.friend-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.friend-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--vault-amber-subtle);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  color: var(--vault-amber-light);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  animation: fadeIn 0.2s ease-out;
+  transition: all 0.2s ease;
+}
+
+.friend-chip:hover {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+.friend-chip .remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--vault-amber-light);
+  font-size: 0.65rem;
+  font-weight: 900;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.friend-chip .remove:hover {
+  background: var(--vault-danger);
+  color: white;
+}
+
+/* ── Vibe Selector ── */
+.vibe-selector {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.vibe-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.25rem 0.75rem;
+  border-radius: var(--vault-radius);
+  background: var(--vault-glass);
+  border: 1.5px solid var(--vault-glass-border);
+  color: var(--vault-text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.vibe-btn .vibe-icon {
+  font-size: 1.75rem;
+  display: block;
+}
+
+.vibe-btn:hover {
+  background: var(--vault-glass-hover);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--vault-text);
+  transform: translateY(-2px);
+}
+
+.vibe-btn:active {
+  transform: scale(0.97);
+}
+
+.vibe-btn.active {
+  background: var(--vault-amber-subtle);
+  border-color: var(--vault-amber);
+  color: var(--vault-amber-light);
+  box-shadow: 0 0 24px var(--vault-amber-glow), inset 0 0 20px rgba(245, 158, 11, 0.05);
+}
+
+/* ── Dossier Card (anecdote entry) ── */
+.dossier-card {
+  background: var(--vault-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--vault-glass-border);
+  border-radius: var(--vault-radius);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  animation: slideUp 0.3s ease-out;
+  animation-fill-mode: both;
+  position: relative;
+}
+
+.dossier-card .friend-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--vault-amber);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.dossier-prompt {
+  font-size: 0.8rem;
+  color: var(--vault-text-dim);
+  font-style: italic;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--vault-radius-sm);
+  border-left: 2px solid var(--vault-amber-glow);
+}
+
+/* ── Inputs ── */
+.vault-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--vault-glass-border);
+  border-radius: var(--vault-radius-sm);
+  color: var(--vault-text);
+  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  backdrop-filter: blur(8px);
+}
+
+.vault-input::placeholder {
+  color: var(--vault-text-dim);
+}
+
+.vault-input:focus {
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.08);
+}
+
+.vault-textarea {
+  width: 100%;
+  min-height: 5rem;
+  resize: vertical;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--vault-glass-border);
+  border-radius: var(--vault-radius-sm);
+  color: var(--vault-text);
+  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+.vault-textarea:focus {
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.08);
+}
+
+/* ── Buttons ── */
+.vault-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: var(--vault-radius);
+  background: linear-gradient(135deg, var(--vault-amber), var(--vault-gold));
+  color: #0f172a;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px var(--vault-amber-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+.vault-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 30px var(--vault-amber-glow);
+}
+
+.vault-btn-primary:active {
+  transform: scale(0.98);
+}
+
+.vault-btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.vault-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid var(--vault-glass-border);
+  border-radius: var(--vault-radius);
+  background: var(--vault-glass);
+  color: var(--vault-text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.vault-btn-secondary:hover {
+  background: var(--vault-glass-hover);
+  color: var(--vault-text);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.vault-btn-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1rem;
+  border: none;
+  border-radius: var(--vault-radius-sm);
+  background: var(--vault-amber);
+  color: #0f172a;
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.vault-btn-add:hover {
+  background: var(--vault-amber-light);
+}
+
+.vault-btn-add:active {
+  transform: scale(0.95);
+}
+
+/* ── Input row (input + button side by side) ── */
+.input-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.input-row .vault-input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Loading Show ── */
+.loading-show {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  background: linear-gradient(180deg, var(--vault-bg) 0%, #0a0f1e 100%);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.loading-cards {
+  display: flex;
+  gap: 1rem;
+  perspective: 600px;
+}
+
+.loading-card {
+  width: 4.5rem;
+  height: 6.5rem;
+  border-radius: var(--vault-radius-sm);
+  background: linear-gradient(135deg, var(--vault-amber-subtle), rgba(245, 158, 11, 0.15));
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  animation: cardFloat 3s ease-in-out infinite;
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.1);
+}
+
+.loading-card:nth-child(2) {
+  animation-delay: 0.4s;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(139, 92, 246, 0.15));
+  border-color: rgba(139, 92, 246, 0.2);
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.1);
+}
+
+.loading-card:nth-child(3) {
+  animation-delay: 0.8s;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.08), rgba(236, 72, 153, 0.15));
+  border-color: rgba(236, 72, 153, 0.2);
+  box-shadow: 0 8px 24px rgba(236, 72, 153, 0.1);
+}
+
+.loading-spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid var(--vault-glass-border);
+  border-top-color: var(--vault-amber);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-message {
+  text-align: center;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-message p {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--vault-text-muted);
+  animation: fadeIn 0.4s ease-out;
+  max-width: 20rem;
+  line-height: 1.5;
+}
+
+/* ── Preview Cards ── */
+.preview-section {
+  max-width: 32rem;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.preview-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.preview-card {
+  background: var(--vault-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--vault-glass-border);
+  border-radius: var(--vault-radius);
+  padding: 1.25rem 1.5rem;
+  animation: slideUp 0.4s ease-out;
+  animation-fill-mode: both;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.preview-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.preview-card .card-number {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--vault-amber);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.preview-card .card-question {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--vault-text);
+  line-height: 1.5;
+}
+
+.preview-card .card-mode {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  margin-top: 0.75rem;
+  background: rgba(139, 92, 246, 0.12);
+  color: rgba(139, 92, 246, 0.8);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+}
+
+.preview-card.locked {
+  filter: blur(6px);
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* ── Paywall Overlay ── */
+.paywall-overlay {
+  background: var(--vault-glass);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  border-radius: var(--vault-radius-lg);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  margin: 1.5rem 0;
+  position: relative;
+  overflow: hidden;
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.paywall-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06) 0%, transparent 50%, rgba(234, 179, 8, 0.04) 100%);
+  pointer-events: none;
+}
+
+.paywall-overlay h3 {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--vault-amber-light);
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.paywall-overlay p {
+  font-size: 0.8rem;
+  color: var(--vault-text-dim);
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+/* ── Deck Grid (Editor) ── */
+.deck-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  max-width: 32rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.deck-card {
+  background: var(--vault-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--vault-glass-border);
+  border-radius: var(--vault-radius);
+  padding: 1rem 1.25rem;
+  animation: fadeIn 0.25s ease-out;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.deck-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: var(--vault-glass-hover);
+}
+
+.deck-card .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.deck-card .card-number {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: var(--vault-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.deck-card .card-mode-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.1);
+  color: rgba(139, 92, 246, 0.7);
+  border: 1px solid rgba(139, 92, 246, 0.12);
+}
+
+.deck-card .card-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--vault-text);
+  line-height: 1.55;
+  margin-bottom: 0.75rem;
+}
+
+.deck-card .card-players {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.deck-card .player-tag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: 999px;
+  background: var(--vault-amber-subtle);
+  color: var(--vault-amber);
+  border: 1px solid rgba(245, 158, 11, 0.12);
+}
+
+.deck-card .card-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.deck-card .edit-btn,
+.deck-card .delete-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--vault-radius-sm);
+  border: 1px solid var(--vault-glass-border);
+  background: transparent;
+  color: var(--vault-text-dim);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.deck-card .edit-btn:hover {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.25);
+  color: var(--vault-purple);
+}
+
+.deck-card .delete-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: var(--vault-danger);
+}
+
+/* ── Deck List (Vault library) ── */
+.deck-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 32rem;
+  margin: 1rem auto;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.deck-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--vault-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--vault-glass-border);
+  border-radius: var(--vault-radius);
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  animation: slideUp 0.3s ease-out;
+  animation-fill-mode: both;
+}
+
+.deck-list-item:hover {
+  background: var(--vault-glass-hover);
+  border-color: rgba(245, 158, 11, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.deck-list-item .deck-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.deck-list-item .deck-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--vault-text);
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.deck-list-item .deck-meta {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.7rem;
+  color: var(--vault-text-dim);
+  font-weight: 600;
+}
+
+.deck-list-item .deck-arrow {
+  font-size: 1rem;
+  color: var(--vault-text-dim);
+  flex-shrink: 0;
+  margin-left: 0.75rem;
+  transition: color 0.2s ease;
+}
+
+.deck-list-item:hover .deck-arrow {
+  color: var(--vault-amber);
+}
+
+.deck-list-item .deck-delete {
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--vault-radius-sm);
+  border: 1px solid var(--vault-glass-border);
+  background: transparent;
+  color: var(--vault-text-dim);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.deck-list-item .deck-delete:hover {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: var(--vault-danger);
+}
+
+/* ── Empty state ── */
+.vault-empty {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+.vault-empty .empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.vault-empty h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--vault-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.vault-empty p {
+  font-size: 0.8rem;
+  color: var(--vault-text-dim);
+  max-width: 18rem;
+  margin: 0 auto 1.5rem;
+  line-height: 1.5;
+}
+
+/* ── Editor header ── */
+.editor-header {
+  max-width: 32rem;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.editor-title-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--vault-glass-border);
+  color: var(--vault-text);
+  font-size: 1.25rem;
+  font-weight: 800;
+  padding: 0.5rem 0;
+  outline: none;
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+}
+
+.editor-title-input:focus {
+  border-bottom-color: var(--vault-amber);
+}
+
+.editor-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ── Error toast ── */
+.vault-error {
+  max-width: 32rem;
+  margin: 1rem auto;
+  width: 100%;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--vault-radius-sm);
+  padding: 0.75rem 1rem;
+  color: #fca5a5;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  animation: fadeIn 0.3s ease-out;
+  position: relative;
+  z-index: 10;
+}
+
+/* ── Footer ── */
+.vault-footer {
+  text-align: center;
+  padding: 2rem 0 1rem;
+  position: relative;
+  z-index: 10;
+  margin-top: auto;
+}
+
+.vault-footer a,
+.vault-footer button {
+  font-size: 0.75rem;
+  color: var(--vault-text-dim);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.vault-footer a:hover,
+.vault-footer button:hover {
+  color: var(--vault-text-muted);
+  text-decoration: underline;
+}
+
+/* ── Responsive ── */
+@media (min-width: 640px) {
+  .vault-container {
+    padding: 2rem;
+  }
+
+  .vault-header h1 {
+    font-size: 2.25rem;
+  }
+
+  .wizard-step {
+    padding: 2rem 2.25rem;
+  }
+
+  .vibe-selector {
+    gap: 1rem;
+  }
+
+  .deck-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .preview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .deck-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 56rem;
+  }
+
+  .preview-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .preview-section {
+    max-width: 56rem;
+  }
+}

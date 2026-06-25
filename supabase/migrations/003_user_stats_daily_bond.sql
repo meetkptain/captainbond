@@ -1,0 +1,5 @@
+-- Ajout des colonnes Daily Bond à UserStats
+ALTER TABLE "UserStats"
+  ADD COLUMN IF NOT EXISTS "currentStreak" INTEGER NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS "gamesPlayedToday" INTEGER NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS "lastPlayedAt" TIMESTAMPTZ;

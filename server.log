@@ -1,0 +1,18 @@
+◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+◇ injected env (16) from .env.local // tip: ◈ secrets for agents [www.dotenvx.com]
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://172.16.0.2:3000
+- Environments: .env.local
+✓ Ready in 1808ms
+[2026-06-19T13:08:44.238Z] [WARN] Environment validation completed with warnings {"warnings":["NEXT_PUBLIC_SUPABASE_ANON_KEY doit faire au moins 32 caractères.","SUPABASE_SERVICE_ROLE_KEY doit faire au moins 32 caractères.","ADMIN_PASSWORD doit faire au moins 32 caractères.","STRIPE_SECRET_KEY doit faire au moins 32 caractères.","STRIPE_WEBHOOK_SECRET doit faire au moins 32 caractères.","Variable optionnelle manquante : UPSTASH_REDIS_REST_URL","Variable optionnelle manquante : UPSTASH_REDIS_REST_TOKEN","Variable optionnelle manquante : NEXT_PUBLIC_POSTHOG_KEY","Variable optionnelle manquante : NEXT_PUBLIC_POSTHOG_HOST","Variable optionnelle manquante : HMAC_IMPOSTEUR_SECRET"]}
+[2026-06-19T13:08:44.243Z] [INFO] Koze server boot {"version":"unknown","environment":"development","integrations":{"supabase":true,"upstash":false,"stripe":true,"posthog":false,"storage":true,"gemini":true,"sync":true}}
+
+[2026-06-19T13:09:49.595Z] [WARN] Environment validation completed with warnings {"warnings":["NEXT_PUBLIC_SUPABASE_ANON_KEY doit faire au moins 32 caractères.","SUPABASE_SERVICE_ROLE_KEY doit faire au moins 32 caractères.","ADMIN_PASSWORD doit faire au moins 32 caractères.","STRIPE_SECRET_KEY doit faire au moins 32 caractères.","STRIPE_WEBHOOK_SECRET doit faire au moins 32 caractères.","Variable optionnelle manquante : UPSTASH_REDIS_REST_URL","Variable optionnelle manquante : UPSTASH_REDIS_REST_TOKEN","Variable optionnelle manquante : NEXT_PUBLIC_POSTHOG_KEY","Variable optionnelle manquante : NEXT_PUBLIC_POSTHOG_HOST","Variable optionnelle manquante : HMAC_IMPOSTEUR_SECRET"]}
+[2026-06-19T13:09:49.598Z] [INFO] Koze server boot {"version":"unknown","environment":"development","integrations":{"supabase":true,"upstash":false,"stripe":true,"posthog":false,"storage":true,"gemini":true,"sync":true}}
+[2026-06-19T13:09:56.852Z] [ERROR] Supabase health check failed {"requestId":"health-check","route":"/api/health"}
+ GET /api/health 503 in 7.9s
+[2026-06-19T13:10:14.989Z] [ERROR] Supabase health check failed {"requestId":"health-check","route":"/api/health"}
+ GET /api/health 503 in 7.2s
+[2026-06-19T13:10:34.157Z] [ERROR] Supabase health check failed {"requestId":"health-check","route":"/api/health"}
+ GET /api/health 503 in 7.1s

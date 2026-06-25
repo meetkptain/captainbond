@@ -1,0 +1,439 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RoomStatus {
+  WAITING
+  PLAYING
+  REVEALING
+  DISCUSSION
+  ENDED
+}
+
+enum SubscriptionStatus {
+  NONE
+  ACTIVE
+  CANCELLED
+  PAST_DUE
+}
+
+enum PurchaseStatus {
+  PENDING
+  COMPLETED
+  REFUNDED
+  FAILED
+}
+
+enum ProductType {
+  PASS_24H
+  PASS_WEEKEND
+  SUBSCRIPTION_ANNUAL
+  SUBSCRIPTION_MONTHLY
+  LIFETIME
+  PROFILE
+  PROFILE_COUPLE
+  PACK
+  CREDIT
+}
+
+// Une salle de jeu
+model Room {
+  id                String     @id @default(cuid())
+  code              String     @unique // Code à 4 lettres (ex: "3K9A")
+  hostId            String
+  hostToken         String     @unique // Token signé pour authentifier l'hôte
+  status            RoomStatus @default(WAITING)
+  currentMode       String?
+  round             Int        @default(0)
+  currentQuestionId String?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  players         Player[]
+  scores          Score[]
+  currentQuestion Question? @relation("RoomCurrentQuestion", fields: [currentQuestionId], references: [id])
+  roundConfig     Json?
+
+  targetType         String  @default("GROUP")
+  isProfilingEnabled Boolean @default(true)
+
+  hostUserId    String?
+  hostUser      User?    @relation("HostUser", fields: [hostUserId], references: [id])
+  paidByUserId  String?
+  paidByUser    User?    @relation("PaidByUser", fields: [paidByUserId], references: [id])
+  passExpiresAt DateTime?
+
+  trees              Tree[]
+  djProfile          DJProfile?
+
+  @@index([code])
+}
+
+// Un joueur
+model Player {
+  id             String    @id @default(cuid())
+  name           String
+  isHost         Boolean   @default(false)
+  isReady        Boolean   @default(false)
+  socketId       String // Utilisé pour stocker le client ID temps réel
+  roomId         String
+  room           Room      @relation(fields: [roomId], references: [id])
+  consentGivenAt DateTime?
+  createdAt      DateTime  @default(now())
+
+  scores    Score[]
+  responses Response[]
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  @@index([roomId])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+// Score d'un joueur
+model Score {
+  id        String   @id @default(cuid())
+  playerId  String
+  player    Player   @relation(fields: [playerId], references: [id])
+  roomId    String
+  room      Room     @relation(fields: [roomId], references: [id])
+  points    Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  @@index([roomId])
+  @@index([playerId])
+}
+
+// Une question
+model Question {
+  id             String   @id @default(cuid())
+  mode           String
+  text           String
+  correctAnswer  String? // Réponse attendue (QCM, Vrai/Faux, mot imposteur)
+  options        String[] // Options pour QCM
+  explanation    String? // Explication de la réponse
+  category       String   @default("GENERAL") // Catégorie sémantique
+  difficulty     Int      @default(1) // 1-3
+  intensityLevel Int      @default(1) // 1: Chill/Icebreaker, 2: Spicy/Tension, 3: Deep/Trauma
+  isPremium      Boolean  @default(false) // Payant ou gratuit
+  isTimed        Boolean  @default(true) // true pour Icebreaker, false pour Deep Connection
+  packId         String? // Si lié à un pack
+  metadata       Json? // Pour stocker des paramètres de jeu flexibles par mode
+  tags           String[] // Tags pour le filtrage transversal (ex: "date_safe", "friends", "nsfw")
+  audiences      String[] // Audiences cibles (ex: "couple", "group", "solo")
+  createdAt      DateTime @default(now())
+
+  pack         Pack?  @relation(fields: [packId], references: [id])
+  currentRooms Room[] @relation("RoomCurrentQuestion")
+  treeNodes      TreeNode[]
+  dailyQuestions DailyQuestion[]
+
+  @@index([packId])
+  @@index([mode])
+  @@index([category])
+}
+
+// Un pack de contenu (achat intégré)
+model Pack {
+  id              String      @id @default(cuid())
+  sku             String      @unique // Clé métier stable (ex: PASS_24H, LIFETIME)
+  name            String
+  description     String
+  price           Float // 2.99, 4.99, etc.
+  stripePriceId   String?     @unique // Pour Stripe Checkout
+  stripeProductId String?
+  productType     ProductType // Catégorie métier
+  scope           Json? // { modes: ['DEEP_CONNECTION'], features: ['profiles', 'story'] }
+  isSubscription  Boolean     @default(false)
+  isPro           Boolean     @default(false) // Pack pro B2B
+  questions       Question[]
+  purchases       Purchase[]
+  userPacks       UserPack[]
+  userPasses      UserPass[]
+  createdAt       DateTime    @default(now())
+
+  @@index([sku])
+}
+
+// Un achat
+model Purchase {
+  id              String         @id @default(cuid())
+  userId          String
+  user            User           @relation(fields: [userId], references: [id])
+  playerId        String? // Joueur ayant initié l'achat (contexte room)
+  packId          String?
+  pack            Pack?          @relation(fields: [packId], references: [id])
+  amount          Float
+  currency        String         @default("eur")
+  status          PurchaseStatus @default(COMPLETED)
+  stripePaymentId String?
+  stripeInvoiceId String?
+  refundedAt      DateTime?
+  metadata        Json? // { roomCode, playerId, source }
+  createdAt       DateTime       @default(now())
+
+  @@index([userId])
+  @@index([packId])
+  @@index([stripePaymentId])
+}
+
+// Historique des Pass temporaires (24h, week-end)
+model UserPass {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  packId    String
+  pack      Pack     @relation(fields: [packId], references: [id])
+  startedAt DateTime @default(now())
+  expiresAt DateTime
+  source    String   @default("stripe") // stripe, promo, admin
+  createdAt DateTime @default(now())
+
+  @@index([userId, expiresAt])
+}
+
+// Packs lifetime ou thématiques achetés par un utilisateur
+model UserPack {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  packId    String
+  pack      Pack     @relation(fields: [packId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, packId])
+  @@index([userId])
+}
+
+// Une réponse de joueur
+model Response {
+  id         String   @id @default(cuid())
+  playerId   String
+  player     Player   @relation(fields: [playerId], references: [id])
+  roomId     String
+  questionId String
+  answer     String
+  isCorrect  Boolean?
+  timestamp  DateTime @default(now())
+
+  @@unique([playerId, questionId])
+  @@index([roomId, questionId])
+}
+
+// Un compte utilisateur permanent (lié à Supabase Auth auth.users)
+model User {
+  id                   String             @id // Doit correspondre à auth.users.id quand Supabase Auth est activé
+  email                String             @unique
+  name                 String?
+  avatarUrl            String?
+  stripeCustomerId     String?            @unique // Pour la facturation Stripe
+  activePassExpiresAt  DateTime? // Cache du Pass 24h le plus récent (dénormalisé pour performances)
+  subscriptionStatus   SubscriptionStatus @default(NONE)
+  stripeSubscriptionId String?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  stats          UserStats?
+  hostedRooms    Room[]     @relation("HostUser")
+  paidRooms      Room[]     @relation("PaidByUser")
+  playerSessions Player[]
+  purchases      Purchase[]
+  userPacks      UserPack[]
+  userPasses     UserPass[]
+  user1Couples   Couple[]   @relation("User1Couples")
+  user2Couples   Couple[]   @relation("User2Couples")
+
+  @@index([stripeCustomerId])
+}
+
+// Journal des événements webhook traités (idempotence)
+model WebhookEvent {
+  id          String   @id
+  type        String
+  payload     Json?
+  processedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  @@index([type, processedAt])
+}
+
+// Le Dossier Classifié (Effet de Dotation)
+model UserStats {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  psychologicalProfile String? // Ex: "Le Manipulateur", "Le Naïf"
+  compatibilityData    Json? // Stats radar et compatibilités
+  totalGamesPlayed     Int     @default(0)
+  totalBetrayals       Int     @default(0) // Stats spécifiques au jeu
+
+  // Daily Bond (streak)
+  currentStreak    Int      @default(0)
+  gamesPlayedToday Int      @default(0)
+  lastPlayedAt     DateTime?
+
+  // Meta-progression
+  badges             Json    @default("[]")
+  archetypesUnlocked Json    @default("[]")
+
+  updatedAt DateTime @updatedAt
+}
+
+// 🧠 Phase 3 — Neural Tree & Couple Distanciel Models
+
+model Couple {
+  id        String   @id @default(cuid())
+  user1Id   String
+  user1     User     @relation("User1Couples", fields: [user1Id], references: [id], onDelete: Cascade)
+  user2Id   String
+  user2     User     @relation("User2Couples", fields: [user2Id], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  trees           Tree[]
+  djProfile       DJProfile?
+  dailyQuestions  DailyQuestion[]
+  portraits       CouplePortrait[]
+
+  @@unique([user1Id, user2Id])
+  @@index([user1Id])
+  @@index([user2Id])
+}
+
+model Tree {
+  id        String   @id @default(cuid())
+  coupleId  String?
+  couple    Couple?  @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  roomId    String?
+  room      Room?    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  nodes       TreeNode[]
+  connections TreeConnection[]
+
+  @@index([coupleId])
+  @@index([roomId])
+}
+
+model TreeNode {
+  id         String   @id @default(cuid())
+  treeId     String
+  tree       Tree     @relation(fields: [treeId], references: [id], onDelete: Cascade)
+  questionId String?
+  question   Question? @relation(fields: [questionId], references: [id])
+  customText String?  // For dynamic DJ generated questions
+  intensity  Int      @default(1)
+  category   String   @default("GENERAL")
+  answeredAt DateTime @default(now())
+  answeredBy String[] // User/Player IDs who answered
+
+  // pgvector column (768 dimensions for text-embedding-004)
+  embedding  Unsupported("vector(768)")?
+
+  sourceConnections TreeConnection[] @relation("SourceNode")
+  targetConnections TreeConnection[] @relation("TargetNode")
+
+  @@index([treeId])
+  @@index([questionId])
+}
+
+model TreeConnection {
+  id        String   @id @default(cuid())
+  treeId    String
+  tree      Tree     @relation(fields: [treeId], references: [id], onDelete: Cascade)
+  sourceId  String
+  source    TreeNode @relation("SourceNode", fields: [sourceId], references: [id], onDelete: Cascade)
+  targetId  String
+  target    TreeNode @relation("TargetNode", fields: [targetId], references: [id], onDelete: Cascade)
+  resonance Float    // Similarity/resonance score (1 - cosine distance)
+  type      String   @default("SIMILARITY") // SIMILARITY, SEQUENCE, CONTRAST
+  createdAt DateTime @default(now())
+
+  @@unique([sourceId, targetId])
+  @@index([treeId])
+  @@index([sourceId])
+  @@index([targetId])
+}
+
+model DJProfile {
+  id                 String   @id @default(cuid())
+  coupleId           String?  @unique
+  couple             Couple?  @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  roomId             String?  @unique
+  room               Room?    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  mood               String   @default("CHILL") // CHILL, DEEP, SPICY, PROVOCATIVE
+  intensityTarget    Int      @default(1)
+  interactionHistory Json?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  djQuestions DJQuestion[]
+
+  @@index([coupleId])
+  @@index([roomId])
+}
+
+model DJQuestion {
+  id        String    @id @default(cuid())
+  profileId String
+  profile   DJProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  text      String
+  status    String    @default("PENDING") // PENDING, ACCEPTED, REJECTED
+  feedback  String?
+  createdAt DateTime  @default(now())
+
+  @@index([profileId])
+}
+
+model DailyQuestion {
+  id          String    @id @default(cuid())
+  coupleId    String
+  couple      Couple    @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  questionId  String?
+  question    Question? @relation(fields: [questionId], references: [id])
+  customText  String?
+  releasedAt  DateTime  @default(now())
+  isAnswered  Boolean   @default(false)
+  user1Answer String?
+  user2Answer String?
+  revealedAt  DateTime?
+
+  // Sync Drop (Rituel de 20h) — analysis computed when both answers received
+  user1Answered Boolean  @default(false)
+  user2Answered Boolean  @default(false)
+  isRevealed    Boolean  @default(false)   // Unlocked at 20h local time
+  resonanceScore Float?                    // Cosine similarity between embeddings
+  analysisJson   Json?                     // AI-generated resonance analysis
+  analysisStatus String   @default("PENDING") // PENDING, COMPUTED, REVEALED, EXPIRED
+
+  @@index([coupleId])
+  @@index([questionId])
+  @@index([coupleId, releasedAt])
+}
+
+// Portrait sémantique mensuel du couple
+model CouplePortrait {
+  id              String   @id @default(cuid())
+  coupleId        String
+  couple          Couple   @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  month           String   // e.g. "2026-06"
+  partnerAProfile Json?    // Traits dominants et centroïdes Partner A
+  partnerBProfile Json?    // Traits dominants et centroïdes Partner B
+  coupleDynamic   Json?    // Synthèse de la dynamique (forces, axes)
+  alignmentTrend  Float    @default(0.0)
+  createdAt       DateTime @default(now())
+
+  @@unique([coupleId, month])
+  @@index([coupleId])
+}
