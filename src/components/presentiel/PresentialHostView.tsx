@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
+import { useAudioSynthesis, PresentialSound } from '@/hooks/useAudioSynthesis';
 import { HourglassTimer } from './HourglassTimer';
 import { TalkingStick, Player } from './TalkingStick';
 import { DiscussionPhase } from './DiscussionPhase';
@@ -320,91 +321,7 @@ export function PresentialHostView({
   }, [currentQuestionIndex, modeId, players]);
 
   // Web Audio Synthesizer for reactions
-  const playSynthesizedSound = (soundType: string, isMuted: boolean) => {
-    if (isMuted) return;
-    try {
-      const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-      if (!AudioContextClass) return;
-      const ctx = new AudioContextClass();
-
-      if (soundType === 'buzzer') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(100, ctx.currentTime);
-        gain.gain.setValueAtTime(0.2, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.4);
-      } else if (soundType === 'applaudissements') {
-        const bufferSize = ctx.sampleRate * 0.1;
-        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-          data[i] = Math.random() * 2 - 1;
-        }
-        for (let delay = 0; delay < 0.6; delay += 0.15) {
-          const noise = ctx.createBufferSource();
-          noise.buffer = buffer;
-          const filter = ctx.createBiquadFilter();
-          filter.type = 'bandpass';
-          filter.frequency.value = 1000;
-          const gain = ctx.createGain();
-          noise.connect(filter);
-          filter.connect(gain);
-          gain.connect(ctx.destination);
-          gain.gain.setValueAtTime(0.15, ctx.currentTime + delay);
-          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + delay + 0.08);
-          noise.start(ctx.currentTime + delay);
-        }
-      } else if (soundType === 'rires') {
-        for (let delay = 0; delay < 0.5; delay += 0.18) {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(250 + Math.random() * 50, ctx.currentTime + delay);
-          osc.frequency.exponentialRampToValueAtTime(380 + Math.random() * 50, ctx.currentTime + delay + 0.12);
-          gain.gain.setValueAtTime(0.15, ctx.currentTime + delay);
-          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + delay + 0.12);
-          osc.start(ctx.currentTime + delay);
-          osc.stop(ctx.currentTime + delay + 0.12);
-        }
-      } else if (soundType === 'violon') {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(330, ctx.currentTime);
-        osc.frequency.linearRampToValueAtTime(360, ctx.currentTime + 0.8);
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 0.6);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.8);
-      } else if (soundType === 'joker_bell') {
-        const freqs = [880, 1109, 1318, 1760];
-        freqs.forEach((f, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(f, ctx.currentTime);
-          gain.gain.setValueAtTime(0.05 - idx * 0.01, ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2 - idx * 0.2);
-          osc.start();
-          osc.stop(ctx.currentTime + 1.2);
-        });
-      }
-    } catch (e) {
-      console.error('Audio synthesis failed:', e);
-    }
-  };
+  const { play: playSynthesizedSound } = useAudioSynthesis();
 
   const triggerLocalEmoji = (emoji: string) => {
     const id = crypto.randomUUID();
@@ -452,7 +369,7 @@ export function PresentialHostView({
         broadcastState();
       })
       .on('broadcast', { event: 'TRIGGER_SOUND' }, ({ payload }) => {
-        playSynthesizedSound(payload.soundType, isMuted);
+        playSynthesizedSound(payload.soundType as PresentialSound, isMuted);
       })
       .on('broadcast', { event: 'TRIGGER_EMOJI' }, ({ payload }) => {
         triggerLocalEmoji(payload.emoji);
@@ -493,6 +410,7 @@ export function PresentialHostView({
     return () => {
       supabase.removeChannel(channel);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [channel, currentQuestionIndex, currentPlayerIndex, phase, questions, players, modeId, isMuted]);
 
   // Handle Imposteur Voting Countdown

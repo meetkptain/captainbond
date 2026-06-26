@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useAudioSynthesis } from '@/hooks/useAudioSynthesis';
 
 export interface Player {
   id: string;
@@ -52,74 +53,6 @@ function getQuestionTheme(q: { text: string; tags?: string[] }): string {
   return '🎲 Chill & Anecdotes';
 }
 
-function playSynthesizedSound(type: 'bell' | 'gong' | 'chime', muted: boolean) {
-  if (muted || typeof window === 'undefined') return;
-  try {
-    const AudioContextClass = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-    if (!AudioContextClass) return;
-    const ctx = new AudioContextClass();
-    const now = ctx.currentTime;
-    
-    if (type === 'bell') {
-      const freqs = [440, 554, 659, 880];
-      const gains = [0.3, 0.2, 0.1, 0.05];
-      freqs.forEach((freq, idx) => {
-        const osc = ctx.createOscillator();
-        const gainNode = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, now);
-        gainNode.gain.setValueAtTime(gains[idx], now);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 2);
-        osc.connect(gainNode);
-        gainNode.connect(ctx.destination);
-        osc.start(now);
-        osc.stop(now + 2);
-      });
-    } else if (type === 'chime') {
-      const freqs = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 arpeggio
-      freqs.forEach((freq, idx) => {
-        const osc = ctx.createOscillator();
-        const gainNode = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, now + idx * 0.1);
-        gainNode.gain.setValueAtTime(0.12, now + idx * 0.1);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.8);
-        osc.connect(gainNode);
-        gainNode.connect(ctx.destination);
-        osc.start(now + idx * 0.1);
-        osc.stop(now + idx * 0.1 + 0.8);
-      });
-    } else if (type === 'gong') {
-      const osc = ctx.createOscillator();
-      const gainNode = ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(110, now);
-      osc.frequency.exponentialRampToValueAtTime(105, now + 3);
-      gainNode.gain.setValueAtTime(0.001, now);
-      gainNode.gain.linearRampToValueAtTime(0.5, now + 0.15);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 3.5);
-      osc.connect(gainNode);
-      gainNode.connect(ctx.destination);
-      osc.start(now);
-      osc.stop(now + 3.5);
-
-      const chime = ctx.createOscillator();
-      const chimeGain = ctx.createGain();
-      chime.type = 'sine';
-      chime.frequency.setValueAtTime(293.66, now);
-      chimeGain.gain.setValueAtTime(0.001, now);
-      chimeGain.gain.linearRampToValueAtTime(0.12, now + 0.15);
-      chimeGain.gain.exponentialRampToValueAtTime(0.001, now + 2.5);
-      chime.connect(chimeGain);
-      chimeGain.connect(ctx.destination);
-      chime.start(now);
-      chime.stop(now + 2.5);
-    }
-  } catch (err) {
-    console.warn('AudioContext failed:', err);
-  }
-}
-
 export function TalkingStick({
   players,
   currentPlayerIndex,
@@ -137,6 +70,8 @@ export function TalkingStick({
   const [voteState, setVoteState] = useState<'idle' | 'countdown' | 'reveal'>('idle');
   const [countdown, setCountdown] = useState(3);
   const countdownIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const { play: playSynthesizedSound } = useAudioSynthesis();
 
   // Stage: 'pass' (holding screen), 'theme' (theme choice for player 0), 'active' (question view)
   const [stage, setStage] = useState<'pass' | 'theme' | 'active'>('pass');
