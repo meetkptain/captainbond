@@ -13,6 +13,7 @@ import { getPlayerHmac } from '@/lib/crypto';
 import { getUserEntitlements, roomHasActivePass, canAccessMode, getRoomPassInfo, getPlayerEntitlements, canViewProfile, canViewCoupleProfile } from '@/lib/monetization/entitlements';
 import { calculateProfile, EnrichedResponse } from '@/lib/profiling/calculateProfile';
 import { safeJsonParseRecord } from '@/lib/json';
+import { buildQuestionPool } from '@/lib/questions/deck';
 import { recordGamePlayed, GameSummary } from './statsService';
 
 const FREE_QUESTIONS_LIMIT = 3;
@@ -102,49 +103,18 @@ export async function startNextRound(roomCode: string, hostId: string): Promise<
   }
 
   const allQuestions = await listQuestionsForDeck();
-  let pool = allQuestions;
-
-  if (currentMode === 'DATE_NIGHT') {
-    pool = pool.filter((q) => q.tags?.includes('date_safe'));
-  } else if (currentMode === 'FAMILY') {
-    pool = pool.filter((q) => q.mode === currentMode && q.tags?.includes('positive'));
-  } else {
-    pool = pool.filter((q) => q.mode === currentMode);
-    if (currentMode === 'ICEBREAKER' && room.round > 0 && (room.round + 1) % 3 === 0) {
-      pool = pool.filter((q) => q.tags?.includes('positive'));
-    }
-  }
 
   // Anti-répétition : exclure les questions déjà jouées dans cette room
   const existingConfig = (room.roundConfig || {}) as { playedQuestionIds?: string[] };
   const playedQuestionIds = new Set(existingConfig.playedQuestionIds || []);
-  const poolWithoutRepeats = pool.filter((q) => !playedQuestionIds.has(q.id));
 
-  // Date Night : courbe 70% légèreté / 30% profondeur après la première carte
-  if (currentMode === 'DATE_NIGHT' && room.round > 0) {
-    if (previousIntensity === 3) {
-      pool = poolWithoutRepeats.filter((q) => (q.intensityLevel || 1) <= 2);
-    } else {
-      const deepPool = poolWithoutRepeats.filter((q) => q.intensityLevel === 3);
-      const lightPool = poolWithoutRepeats.filter((q) => (q.intensityLevel || 1) <= 2);
-      pool = Math.random() < 0.3 && deepPool.length > 0 ? deepPool : lightPool;
-    }
-  } else if (previousIntensity === 3) {
-    pool = poolWithoutRepeats.filter((q) => (q.intensityLevel || 1) <= 2);
-  } else {
-    pool = poolWithoutRepeats;
-  }
-
-  if (currentMode === 'DATE_NIGHT' && room.round === 0) {
-    pool = pool.filter((q) => q.intensityLevel === 1 && q.tags?.includes('icebreaker'));
-  }
-
-  // Fallback : si le filtrage a tout vidé, on relâche l'anti-répétition
-  if (!pool.length) {
-    pool = currentMode === 'DATE_NIGHT'
-      ? allQuestions.filter((q) => q.tags?.includes('date_safe'))
-      : allQuestions.filter((q) => q.mode === currentMode);
-  }
+  const pool = buildQuestionPool({
+    allQuestions,
+    currentMode,
+    roomRound: room.round,
+    previousIntensity,
+    playedQuestionIds,
+  });
 
   if (!pool.length) {
     throw new AppError('NOT_FOUND', 'Database is empty or missing content');
