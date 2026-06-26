@@ -45,6 +45,7 @@ export interface Question {
   intensityLevel?: number;
   packId?: string | null;
   createdAt?: string;
+  [key: string]: unknown;
 }
 
 export interface Response {

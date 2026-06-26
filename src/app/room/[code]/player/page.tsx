@@ -22,11 +22,6 @@ import type { Room, Response as GameResponse, Player, Question } from '@/lib/db/
 import { api, ApiClientError } from '@/lib/api/client';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
 import { useHostSession } from '@/hooks/useHostSession';
-import type { GameModeQuestion } from '@/game-modes/types';
-
-function adaptQuestionToGameMode(question: Question): GameModeQuestion {
-  return question as unknown as GameModeQuestion;
-}
 
 export default function PlayerController() {
   const params = useParams();
@@ -557,7 +552,7 @@ export default function PlayerController() {
                   ) : (
                     <>
                       <ActiveGameMode.PlayerController
-                        question={adaptQuestionToGameMode(currentQuestion)}
+                        question={currentQuestion}
                         onSubmitAnswer={handleVote}
                         onVote={handleVote}
                         hasSubmitted={hasVoted}
