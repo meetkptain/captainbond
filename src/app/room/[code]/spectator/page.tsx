@@ -35,10 +35,14 @@ export default function SpectatorCompanion() {
     return getLocalDecks().filter(d => d.isPurchased);
   });
 
-  if (currentQuestionText !== prevQuestionText) {
-    setPrevQuestionText(currentQuestionText);
-    setJokerUsed(false);
-  }
+  useEffect(() => {
+    if (currentQuestionText !== prevQuestionText) {
+      requestAnimationFrame(() => {
+        setPrevQuestionText(currentQuestionText);
+        setJokerUsed(false);
+      });
+    }
+  }, [currentQuestionText, prevQuestionText]);
 
   // Setup broadcast channel
   const channel = useMemo(() => {

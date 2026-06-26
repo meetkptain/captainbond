@@ -71,7 +71,6 @@ export interface GameModeQuestion {
   id?: string;
   text?: string;
   metadata?: Record<string, unknown> | null;
-  [key: string]: unknown;
 }
 
 export interface GameModeTVViewProps {

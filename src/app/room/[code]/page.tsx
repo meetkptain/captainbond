@@ -8,7 +8,7 @@ import { PresentialHostView } from '@/components/presentiel/PresentialHostView';
 import { Onboarding } from '@/components/presentiel/Onboarding';
 import { BackgroundOrbs } from '@/components/BackgroundOrbs';
 import { ApiClientError } from '@/lib/api/client';
-import { safeJsonParse } from '@/lib/json';
+import { useHostSession } from '@/hooks/useHostSession';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
 
 type Step = 'setup' | 'mode' | 'game';
@@ -26,38 +26,25 @@ export default function RoomPage() {
   const [hostToken, setHostToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
+  const { hostId: storedHostId, hostToken: storedHostToken } = useHostSession(roomCode);
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      if (!storedHostId || !storedHostToken) {
+        setError(new ApiClientError('Session administrateur manquante. Veuillez créer la partie depuis l\'accueil.', 401).message);
+      } else {
+        setHostId(storedHostId);
+        setHostToken(storedHostToken);
+      }
+      setLoading(false);
+    });
+  }, [storedHostId, storedHostToken]);
+
   const [showPresentielOnboarding, setShowPresentielOnboarding] = useState(() => {
     if (typeof window === 'undefined') return false;
     return localStorage.getItem('cb_presentiel_onboarding_viewed') !== 'true';
   });
-
-  useEffect(() => {
-    // Authenticate host session
-    async function checkHostSession() {
-      try {
-        const hostSession = safeJsonParse<{ hostId?: string; hostToken?: string }>(
-          sessionStorage.getItem(`host_${roomCode}`) || '{}',
-          {}
-        );
-        const storedHostId = hostSession.hostId || null;
-        const storedHostToken = hostSession.hostToken || null;
-
-        if (!storedHostId || !storedHostToken) {
-          throw new ApiClientError('Session administrateur manquante. Veuillez créer la partie depuis l\'accueil.', 401);
-        }
-
-        setHostId(storedHostId);
-        setHostToken(storedHostToken);
-        setLoading(false);
-      } catch (err) {
-        console.error(err);
-        setError(err instanceof ApiClientError ? err.message : 'Session invalide.');
-        setLoading(false);
-      }
-    }
-    checkHostSession();
-  }, [roomCode]);
 
   const handleSetupComplete = (registeredPlayers: Player[]) => {
     setPlayers(registeredPlayers);

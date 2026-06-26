@@ -77,11 +77,15 @@ export function TalkingStick({
   const [stage, setStage] = useState<'pass' | 'theme' | 'active'>('pass');
 
   const [prevPlayerIndex, setPrevPlayerIndex] = useState(currentPlayerIndex);
-  if (currentPlayerIndex !== prevPlayerIndex) {
-    setPrevPlayerIndex(currentPlayerIndex);
-    setVoteState('idle');
-    setStage('pass');
-  }
+  useEffect(() => {
+    if (currentPlayerIndex !== prevPlayerIndex) {
+      requestAnimationFrame(() => {
+        setPrevPlayerIndex(currentPlayerIndex);
+        setVoteState('idle');
+        setStage('pass');
+      });
+    }
+  }, [currentPlayerIndex, prevPlayerIndex]);
 
   useEffect(() => {
     return () => {
