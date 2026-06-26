@@ -9,7 +9,7 @@ export interface Entitlements {
   passExpiresAt: string | null;
   hasActiveSubscription: boolean;
   subscriptionStatus: string;
-  hasLifetime: boolean;
+  hasPurchasedPack: boolean;
   purchasedPackIds: string[];
   accessibleModes: string[]; // '*' = all
   accessibleFeatures: string[]; // '*' = all
@@ -83,7 +83,7 @@ export async function getUserEntitlements(userId: string): Promise<Entitlements 
 
   const typedUserPacks = (userPacks || []) as UserPackJoinRow[];
   const purchasedPackIds: string[] = typedUserPacks.map((up) => up.packId);
-  const hasLifetime = purchasedPackIds.length > 0; // Simplification : tout pack lifetime crée un UserPack
+  const hasPurchasedPack = purchasedPackIds.length > 0; // true dès qu'un pack a été acheté
 
   // Passes temporaires (pour l'historique / analytics)
   const { data: userPasses } = await supabaseAdmin
@@ -115,7 +115,7 @@ export async function getUserEntitlements(userId: string): Promise<Entitlements 
     passExpiresAt,
     hasActiveSubscription,
     subscriptionStatus: user.subscriptionStatus,
-    hasLifetime,
+    hasPurchasedPack,
     purchasedPackIds,
     accessibleModes: Array.from(modes),
     accessibleFeatures: Array.from(features),

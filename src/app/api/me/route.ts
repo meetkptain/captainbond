@@ -39,7 +39,7 @@ export const GET = withApiHandler({
         passExpiresAt: null,
         hasPurchasedProfile: false,
         hasActiveSubscription: false,
-        hasLifetime: false,
+        hasPurchasedPack: false,
         accessibleModes: roomPassActive ? ['DEEP_CONNECTION', 'DATE_NIGHT'] : [],
         accessibleFeatures: roomPassActive ? ['profiles'] : [],
       });
@@ -52,7 +52,7 @@ export const GET = withApiHandler({
         entitlements.accessibleFeatures.includes('profile') ||
         entitlements.accessibleFeatures.includes('profiles'),
       hasActiveSubscription: entitlements.hasActiveSubscription,
-      hasLifetime: entitlements.hasLifetime,
+      hasPurchasedPack: entitlements.hasPurchasedPack,
       accessibleModes: entitlements.accessibleModes,
       accessibleFeatures: entitlements.accessibleFeatures,
     });

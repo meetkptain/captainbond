@@ -78,7 +78,7 @@ export const GET = withApiHandler({
           passExpiresAt: null,
           hasActiveSubscription: false,
           subscriptionStatus: 'NONE',
-          hasLifetime: false,
+          hasPurchasedPack: false,
           purchasedPackIds: [],
           accessibleModes: roomPassActive ? ['DEEP_CONNECTION', 'DATE_NIGHT'] : [],
           accessibleFeatures: roomPassActive ? ['profiles'] : [],

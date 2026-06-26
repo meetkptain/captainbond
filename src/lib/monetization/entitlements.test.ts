@@ -9,7 +9,7 @@ function buildEntitlements(partial: Partial<Entitlements> = {}): Entitlements {
     passExpiresAt: null,
     hasActiveSubscription: false,
     subscriptionStatus: 'NONE',
-    hasLifetime: false,
+    hasPurchasedPack: false,
     purchasedPackIds: [],
     accessibleModes: [],
     accessibleFeatures: [],
