@@ -38,19 +38,19 @@ export interface GameModeEngine<TQuestion, TResponse, TScoreUpdate> {
   /**
    * Validates and parses the raw input answer from a player's phone controller.
    */
-  validateResponse: (
+  validateResponse(
     playerResponse: string,
     question: TQuestion
-  ) => ValidationResult<TResponse>;
+  ): ValidationResult<TResponse>;
 
   /**
    * Calculates points earned by players at the end of the round.
    */
-  calculateScores: (
+  calculateScores(
     responses: Array<{ playerId: string; answer: TResponse; timeSpentMs: number }>,
     question: TQuestion,
     context?: unknown
-  ) => Array<{ playerId: string; pointsEarned: number; isCorrect: boolean }>;
+  ): Array<{ playerId: string; pointsEarned: number; isCorrect: boolean }>;
 }
 
 export interface TVComponentProps<TQuestion, TResponse> {

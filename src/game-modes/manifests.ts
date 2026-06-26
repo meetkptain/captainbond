@@ -17,8 +17,7 @@ import { mostLikelyToManifest, mostLikelyToEngine } from './most-likely-to';
 
 export interface ServerGameMode {
   manifest: GameModeManifest;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  engine: GameModeEngine<any, any, any>;
+  engine: GameModeEngine<unknown, unknown, unknown>;
 }
 
 export const gameModesServerRegistry: Record<string, ServerGameMode> = {
@@ -55,5 +54,8 @@ export const gameModesServerRegistry: Record<string, ServerGameMode> = {
 export type ServerGameModeId = keyof typeof gameModesServerRegistry;
 
 export function getServerGameMode(id: string): ServerGameMode | undefined {
-  return gameModesServerRegistry[id as ServerGameModeId];
+  if (id in gameModesServerRegistry) {
+    return gameModesServerRegistry[id as ServerGameModeId];
+  }
+  return undefined;
 }

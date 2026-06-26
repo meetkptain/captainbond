@@ -6,8 +6,10 @@ describe('gameModesServerRegistry', () => {
     expect(Object.keys(gameModesServerRegistry).sort()).toEqual([
       'DATE_NIGHT',
       'DEEP_CONNECTION',
+      'FAMILY',
       'ICEBREAKER',
       'IMPOSTEUR',
+      'MOST_LIKELY_TO',
       'SPICY',
     ]);
   });
