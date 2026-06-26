@@ -7,11 +7,21 @@ import { withTimeout } from '@/lib/fetch';
 import { logger } from '@/lib/logger';
 import { AppError } from '@/lib/errors';
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY || '';
-const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: '2026-05-27.dahlia',
-  httpClient: Stripe.createFetchHttpClient(),
-});
+let stripeInstance: Stripe | null = null;
+
+export function getStripe(): Stripe {
+  if (!stripeInstance) {
+    const key = process.env.STRIPE_SECRET_KEY;
+    if (!key) {
+      throw new AppError('CONFIG_MISSING', 'STRIPE_SECRET_KEY is not configured');
+    }
+    stripeInstance = new Stripe(key, {
+      apiVersion: '2026-05-27.dahlia',
+      httpClient: Stripe.createFetchHttpClient(),
+    });
+  }
+  return stripeInstance;
+}
 
 export interface CreateCheckoutSessionInput {
   sku: string;
@@ -130,7 +140,7 @@ export async function createCheckoutSession(input: CreateCheckoutSessionInput): 
 
   if (pendingPurchase?.stripePaymentId) {
     try {
-      const existingSession = await withTimeout(stripe.checkout.sessions.retrieve(pendingPurchase.stripePaymentId), 10000);
+      const existingSession = await withTimeout(getStripe().checkout.sessions.retrieve(pendingPurchase.stripePaymentId), 10000);
       if (existingSession.status !== 'expired' && existingSession.url) {
         return { sessionId: existingSession.id, sessionUrl: existingSession.url };
       }
@@ -144,7 +154,7 @@ export async function createCheckoutSession(input: CreateCheckoutSessionInput): 
   let customerId = user?.stripeCustomerId;
 
   if (!customerId) {
-    const customer = await withTimeout(stripe.customers.create({
+    const customer = await withTimeout(getStripe().customers.create({
       email: user?.email || undefined,
       metadata: { userId, playerId },
     }), 10000);
@@ -155,7 +165,7 @@ export async function createCheckoutSession(input: CreateCheckoutSessionInput): 
   const isSubscription = pack.isSubscription;
   const lineItem = buildLineItem(pack);
 
-  const session = await withTimeout(stripe.checkout.sessions.create({
+  const session = await withTimeout(getStripe().checkout.sessions.create({
     customer: customerId,
     payment_method_types: ['card'],
     mode: isSubscription ? 'subscription' : 'payment',

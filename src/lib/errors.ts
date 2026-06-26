@@ -29,6 +29,7 @@ export type ErrorCode =
   | 'COUPLE_NOT_FOUND'
   // Infrastructure
   | 'INTERNAL_ERROR'
+  | 'CONFIG_MISSING'
   | 'RATE_LIMITED'
   | 'SERVICE_UNAVAILABLE';
 

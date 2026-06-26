@@ -1,6 +1,16 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi, type Mock } from 'vitest';
 import { AppError } from '@/lib/errors';
-import { validateCheckoutUrl } from './checkout';
+import { validateCheckoutUrl, getStripe } from './checkout';
+
+vi.mock('stripe', () => {
+  const MockStripe = vi.fn() as Mock & { createFetchHttpClient: Mock };
+  MockStripe.mockImplementation(() => ({
+    checkout: { sessions: { create: vi.fn(), retrieve: vi.fn() } },
+    customers: { create: vi.fn() },
+  }));
+  MockStripe.createFetchHttpClient = vi.fn().mockReturnValue({});
+  return { default: MockStripe };
+});
 
 describe('validateCheckoutUrl', () => {
   const originalEnv = process.env.NEXT_PUBLIC_SITE_URL;
@@ -38,6 +48,23 @@ describe('validateCheckoutUrl', () => {
   it('rejects URLs using the origin as a substring prefix', () => {
     expect(() => validateCheckoutUrl('https://captainbond.com.evil.com/success')).toThrow(
       new AppError('VALIDATION_ERROR', 'URL de redirection invalide'),
+    );
+  });
+});
+
+describe('getStripe', () => {
+  beforeEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('throws a CONFIG_MISSING AppError when STRIPE_SECRET_KEY is not set', () => {
+    delete process.env.STRIPE_SECRET_KEY;
+    expect(() => getStripe()).toThrow(
+      new AppError('CONFIG_MISSING', 'STRIPE_SECRET_KEY is not configured'),
     );
   });
 });
