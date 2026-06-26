@@ -18,6 +18,10 @@ import { recordGamePlayed, GameSummary } from './statsService';
 
 const FREE_QUESTIONS_LIMIT = 3;
 
+function calculateFreeQuestionsUsed(isPremiumMode: boolean, roomRound: number): number {
+  return isPremiumMode ? 0 : Math.min(roomRound, FREE_QUESTIONS_LIMIT);
+}
+
 function checkHost(room: Room, hostId: string) {
   if (room.hostId !== hostId) {
     throw new AppError('FORBIDDEN', 'Seul l\'hôte peut effectuer cette action');
@@ -66,10 +70,9 @@ export async function startNextRound(roomCode: string, hostId: string): Promise<
   // Les modes gratuits (Icebreaker, Imposteur, Spicy, etc.) n'ont plus de limite de rounds
   // pour maximiser la boucle virale et la conversion post-soirée (Dossier Classifié).
   const isPremiumMode = serverMode?.manifest?.isPremium === true;
-  const hasReachedFreeLimit = false; // Anciennement : !isPremiumMode && room.round >= FREE_QUESTIONS_LIMIT
-  const freeQuestionsUsed = !isPremiumMode ? Math.min(room.round, FREE_QUESTIONS_LIMIT) : 0;
+  const freeQuestionsUsed = calculateFreeQuestionsUsed(isPremiumMode, room.round);
 
-  if (isPremiumMode || hasReachedFreeLimit) {
+  if (isPremiumMode) {
     const nonHostPlayers = players.filter((p) => !p.isHost && p.userId);
     let anyPlayerCanAccess = false;
 
@@ -87,9 +90,7 @@ export async function startNextRound(roomCode: string, hostId: string): Promise<
     if (!anyPlayerCanAccess && !roomPassActive) {
       throw new AppError(
         'FORBIDDEN',
-        isPremiumMode
-          ? 'Ce mode premium nécessite le Pass 24h ou un abonnement Premium.'
-          : 'Vous avez atteint la limite de questions gratuites. Passez en soirée premium pour continuer.',
+        'Ce mode premium nécessite le Pass 24h ou un abonnement Premium.',
         { details: { passPriceCents: 299 } }
       );
     }
