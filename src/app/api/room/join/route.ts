@@ -11,6 +11,9 @@ export const POST = withApiHandler({
   bodySchema: roomJoinSchema,
   rateLimit: ipLimiter(rateLimiters.ip),
   async handler({ body }) {
+    if (!body) {
+      return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
+    }
     const { player, roomId, roomCode } = await joinRoom({
       roomCode: body.roomCode,
       playerName: body.playerName,

@@ -15,6 +15,9 @@ export const POST = withApiHandler({
   bodySchema: adminLoginSchema,
   rateLimit: adminLoginLimiter,
   async handler({ body }) {
+    if (!body) {
+      return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
+    }
     await verifyAdminPassword(body.password);
 
     const token = await signAdminSession();

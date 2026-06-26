@@ -5,7 +5,7 @@ import { createLogger } from '@/lib/logger';
 
 export interface ApiContext<TBody = unknown, TQuery = Record<string, string | undefined>> {
   req: NextRequest;
-  body: TBody;
+  body: TBody | undefined;
   query: TQuery;
 }
 
@@ -132,7 +132,7 @@ export function withApiHandler<
         body = parsed.data;
       }
 
-      const response = await options.handler({ req, body: body as TBody, query });
+      const response = await options.handler({ req, body, query });
       const duration = Date.now() - start;
       logger.info('API request completed', { status: response.status, durationMs: duration });
       return attachRequestId(response, requestId);

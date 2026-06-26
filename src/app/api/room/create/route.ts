@@ -10,6 +10,9 @@ export const POST = withApiHandler({
   bodySchema: roomCreateSchema,
   rateLimit: createRoomLimiter,
   async handler({ body }) {
+    if (!body) {
+      return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
+    }
     const { room, hostId, hostToken } = await createRoom({
       targetType: body.targetType,
       playerName: body.playerName,

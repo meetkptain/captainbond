@@ -19,6 +19,9 @@ const b2bContactSchema = z.object({
 export const POST = withApiHandler({
   bodySchema: b2bContactSchema,
   async handler({ body }) {
+    if (!body) {
+      return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
+    }
     logger.info('B2B Lead received', {
       name: body.name,
       company: body.company,

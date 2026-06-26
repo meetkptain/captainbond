@@ -13,6 +13,9 @@ export const POST = withApiHandler({
   bodySchema: checkoutSessionSchema,
   rateLimit: checkoutLimiter,
   async handler({ req, body }) {
+    if (!body) {
+      return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
+    }
     await requirePlayerSessionFor(req, body.playerId, body.roomCode);
     const room = await getRoomByCode(body.roomCode);
     if (!room) {

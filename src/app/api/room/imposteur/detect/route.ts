@@ -21,6 +21,9 @@ export const POST = withApiHandler({
   bodySchema: detectSchema,
   rateLimit: playerActionIpLimiter,
   async handler({ req, body }) {
+    if (!body) {
+      return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
+    }
     const { playerId } = await getAuthenticatedPlayer(req, { playerId: body.playerId, roomCode: body.roomCode });
     const room = await getRoomByCode(body.roomCode);
     if (!room) throw new AppError('NOT_FOUND', 'Salle introuvable');

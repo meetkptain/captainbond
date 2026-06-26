@@ -12,6 +12,9 @@ const generateDJQuestionSchema = z.object({
 export const POST = withApiHandler({
   bodySchema: generateDJQuestionSchema,
   async handler({ body }) {
+    if (!body) {
+      return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
+    }
     const questionText = await generateDJQuestion(body.profileId);
     return NextResponse.json({ success: true, question: questionText });
   },

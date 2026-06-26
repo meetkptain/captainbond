@@ -17,6 +17,9 @@ export const POST = withApiHandler({
   bodySchema: leaveSchema,
   rateLimit: playerActionIpLimiter,
   async handler({ req, body }) {
+    if (!body) {
+      return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
+    }
     const { playerId, roomId } = await getAuthenticatedPlayer(req, {
       playerId: body.playerId,
       roomCode: body.roomCode,

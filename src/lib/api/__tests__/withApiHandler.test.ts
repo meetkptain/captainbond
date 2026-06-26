@@ -41,6 +41,9 @@ describe('withApiHandler', () => {
     const handler = withApiHandler({
       bodySchema: z.object({ name: z.string().min(1) }),
       async handler({ body }) {
+        if (!body) {
+          return NextResponse.json({ error: 'Corps de requête manquant' }, { status: 400 });
+        }
         return NextResponse.json({ name: body.name });
       },
     });

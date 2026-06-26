@@ -21,6 +21,9 @@ const generateDeckSchema = z.object({
 export const POST = withApiHandler({
   bodySchema: generateDeckSchema,
   async handler({ body }) {
+    if (!body) {
+      return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
+    }
     const { friends, vibes, groupContext, dossiers } = body;
 
     const dossiersText = dossiers && dossiers.length > 0

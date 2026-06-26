@@ -20,6 +20,9 @@ export const POST = withApiHandler({
   bodySchema,
   async handler({ body }) {
     const logger = createLogger({ route: '/api/couple/protocol' });
+    if (!body) {
+      return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
+    }
     const { coupleId, dailyQuestionId, step } = body;
 
     // Normalize step input to match uppercase internally

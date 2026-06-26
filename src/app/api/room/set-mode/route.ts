@@ -17,6 +17,9 @@ export const POST = withApiHandler({
   bodySchema: setModeSchema,
   rateLimit: hostActionLimiter,
   async handler({ body }) {
+    if (!body) {
+      return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
+    }
     const auth = await requireHostAuthFromBody(body);
     if (auth instanceof Response) return auth;
 
