@@ -99,7 +99,7 @@ export function withApiHandler<
       }
 
       // Body validation (only when a schema is provided)
-      let body: TBody = undefined as unknown as TBody;
+      let body: TBody | undefined;
       if (options.bodySchema && req.method !== 'GET') {
         let rawBody: unknown;
         try {
@@ -132,7 +132,7 @@ export function withApiHandler<
         body = parsed.data;
       }
 
-      const response = await options.handler({ req, body, query });
+      const response = await options.handler({ req, body: body as TBody, query });
       const duration = Date.now() - start;
       logger.info('API request completed', { status: response.status, durationMs: duration });
       return attachRequestId(response, requestId);
