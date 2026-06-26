@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, createContext, useContext, ReactNode } from 'react';
+import React, { useState, createContext, useContext, ReactNode } from 'react';
 
 export type Language = 'fr' | 'en';
 
@@ -124,25 +124,13 @@ interface LanguageContextProps {
 const LanguageContext = createContext<LanguageContextProps | null>(null);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('fr');
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('cb_language') as Language;
-      if (stored === 'fr' || stored === 'en') {
-        Promise.resolve().then(() => {
-          setLanguageState(stored);
-        });
-      } else {
-        const browserLang = navigator.language.substring(0, 2).toLowerCase();
-        if (browserLang === 'en') {
-          Promise.resolve().then(() => {
-            setLanguageState('en');
-          });
-        }
-      }
-    }
-  }, []);
+  const [language, setLanguageState] = useState<Language>(() => {
+    if (typeof window === 'undefined') return 'fr';
+    const stored = localStorage.getItem('cb_language') as Language;
+    if (stored === 'fr' || stored === 'en') return stored;
+    const browserLang = navigator.language.substring(0, 2).toLowerCase();
+    return browserLang === 'en' ? 'en' : 'fr';
+  });
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);

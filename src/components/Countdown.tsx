@@ -8,21 +8,13 @@ interface CountdownProps {
 }
 
 export function Countdown({ initialSeconds, onZero, className }: CountdownProps) {
-  const [timeLeft, setTimeLeft] = useState(initialSeconds);
+  const [timeLeft, setTimeLeft] = useState(() => Math.max(0, initialSeconds));
 
   useEffect(() => {
-    let active = true;
     // Si on commence avec 0 ou moins, on stoppe directement
     if (initialSeconds <= 0) {
-      Promise.resolve().then(() => {
-        if (active) setTimeLeft(0);
-      });
       return;
     }
-    
-    Promise.resolve().then(() => {
-      if (active) setTimeLeft(initialSeconds);
-    });
 
     const intervalId = setInterval(() => {
       setTimeLeft((prev) => {
@@ -36,7 +28,6 @@ export function Countdown({ initialSeconds, onZero, className }: CountdownProps)
     }, 1000);
 
     return () => {
-      active = false;
       clearInterval(intervalId);
     };
   }, [initialSeconds, onZero]);

@@ -17,7 +17,7 @@ export default function TVView({ question, responses, gameState }: GameModeTVVie
   useEffect(() => {
     // Escalate pledge removal after 10s or when entering REVEALING/DISCUSSION state
     if (gameState === 'REVEALING' || gameState === 'DISCUSSION') {
-      Promise.resolve().then(() => {
+      requestAnimationFrame(() => {
         setShowPledge(false);
       });
     } else {

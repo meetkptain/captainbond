@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Icon } from '@/components/Icon';
 import { CustomDeck } from '@/lib/custom-decks/types';
 import { getLocalDecks } from '@/lib/custom-decks/storage';
@@ -29,36 +29,25 @@ export function PlayerSetup({
   // Consent states
   const [consentRGPD, setConsentRGPD] = useState(false);
   const [consentSafety, setConsentSafety] = useState(false);
-  const [hasConsented, setHasConsented] = useState(false);
-  const [localDecks, setLocalDecks] = useState<CustomDeck[]>([]);
-  const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const decks = getLocalDecks().filter(d => d.isPurchased);
-      const active = sessionStorage.getItem('cb_active_custom_deck');
-      Promise.resolve().then(() => {
-        setLocalDecks(decks);
-        if (active) {
-          try {
-            const deck = JSON.parse(active) as CustomDeck;
-            setSelectedDeckId(deck.id);
-          } catch {}
-        }
-      });
+  const [hasConsented, setHasConsented] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return localStorage.getItem('captainbond_presentiel_consent_v1') === 'true';
+  });
+  const [localDecks] = useState<CustomDeck[]>(() => {
+    if (typeof window === 'undefined') return [];
+    return getLocalDecks().filter(d => d.isPurchased);
+  });
+  const [selectedDeckId, setSelectedDeckId] = useState<string | null>(() => {
+    if (typeof window === 'undefined') return null;
+    const active = sessionStorage.getItem('cb_active_custom_deck');
+    if (!active) return null;
+    try {
+      const deck = JSON.parse(active) as CustomDeck;
+      return deck.id;
+    } catch {
+      return null;
     }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const consented = localStorage.getItem('captainbond_presentiel_consent_v1') === 'true';
-      if (consented) {
-        Promise.resolve().then(() => {
-          setHasConsented(true);
-        });
-      }
-    }
-  }, []);
+  });
 
   const addPlayer = () => {
     const trimmed = newName.trim();

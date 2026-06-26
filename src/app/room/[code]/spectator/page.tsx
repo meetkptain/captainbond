@@ -30,16 +30,10 @@ export default function SpectatorCompanion() {
   const [suspectVote, setSuspectVote] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [showDeckDrawer, setShowDeckDrawer] = useState(false);
-  const [localDecks, setLocalDecks] = useState<CustomDeck[]>([]);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const decks = getLocalDecks().filter(d => d.isPurchased);
-      Promise.resolve().then(() => {
-        setLocalDecks(decks);
-      });
-    }
-  }, []);
+  const [localDecks] = useState<CustomDeck[]>(() => {
+    if (typeof window === 'undefined') return [];
+    return getLocalDecks().filter(d => d.isPurchased);
+  });
 
   if (currentQuestionText !== prevQuestionText) {
     setPrevQuestionText(currentQuestionText);

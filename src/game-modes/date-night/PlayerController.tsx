@@ -19,7 +19,7 @@ export default function DateNightPlayerController({ question, isHost }: GameMode
   // Reset states when a new question arrives
   useEffect(() => {
     let active = true;
-    Promise.resolve().then(() => {
+    requestAnimationFrame(() => {
       if (active) {
         setShowQuestion(false);
         setHoldProgress(0);

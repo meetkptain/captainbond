@@ -23,22 +23,24 @@ const FUN_FACTS = [
 ];
 
 export function WaitingRoom({ roomCode, players, myPlayerId, isHost, onStart }: WaitingRoomProps) {
-  const [readyMap, setReadyMap] = useState<Record<string, boolean>>({});
-  const [isToggling, setIsToggling] = useState(false);
-  const [factIndex, setFactIndex] = useState(0);
-
-  useEffect(() => {
-    let active = true;
+  const [readyMap, setReadyMap] = useState<Record<string, boolean>>(() => {
     const map: Record<string, boolean> = {};
     for (const p of players) {
       map[p.id] = p.isReady ?? false;
     }
-    Promise.resolve().then(() => {
-      if (active) setReadyMap(map);
+    return map;
+  });
+  const [isToggling, setIsToggling] = useState(false);
+  const [factIndex, setFactIndex] = useState(0);
+
+  useEffect(() => {
+    const map: Record<string, boolean> = {};
+    for (const p of players) {
+      map[p.id] = p.isReady ?? false;
+    }
+    requestAnimationFrame(() => {
+      setReadyMap(map);
     });
-    return () => {
-      active = false;
-    };
   }, [players]);
 
   useEffect(() => {

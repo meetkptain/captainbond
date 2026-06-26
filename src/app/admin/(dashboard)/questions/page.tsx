@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import QuestionForm, { QuestionFormData } from '@/components/admin/QuestionForm';
 import { api, ApiClientError } from '@/lib/api/client';
 
@@ -39,9 +39,7 @@ export default function QuestionsAdminPage() {
   const categories = ['HISTOIRE', 'GEOGRAPHIE', 'GASTRONOMIE', 'EXPRESSIONS', 'PERSONNALITES', 'SPORT', 'MUSIQUE', 'GENERAL'];
   const gameModes = ['VRAI_FAUX', 'DEBAT', 'QUIZ_FLASH', 'IMPOSTEUR', 'GAGE', 'PHOTO', 'MIME'];
 
-  const fetchQuestions = async () => {
-    await Promise.resolve(); // Defer to microtask to avoid synchronous setState inside useEffect
-    setLoading(true);
+  const fetchQuestions = useCallback(async () => {
     try {
       const queryParams = new URLSearchParams({
         page: String(page),
@@ -64,16 +62,19 @@ export default function QuestionsAdminPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, limit, search, category, mode]);
 
   useEffect(() => {
-    Promise.resolve().then(() => {
+    const timeoutId = setTimeout(() => {
+      setLoading(true);
       fetchQuestions();
-    });
-  }, [page, category, mode]); // Fetch automatically when filters/pages change
+    }, 0);
+    return () => clearTimeout(timeoutId);
+  }, [fetchQuestions]); // Fetch automatically when filters/pages change
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     setPage(1);
     fetchQuestions();
   };
@@ -81,7 +82,6 @@ export default function QuestionsAdminPage() {
   const handleSaveQuestion = async (formData: QuestionFormData) => {
     try {
       const isEdit = !!formData.id;
-      const method = isEdit ? 'PUT' : 'POST';
 
       if (isEdit) {
         await api.put('/api/admin/questions', formData);
@@ -92,6 +92,7 @@ export default function QuestionsAdminPage() {
       alert(isEdit ? 'Question mise à jour !' : 'Question créée avec succès !');
       setIsCreating(false);
       setEditingQuestion(null);
+      setLoading(true);
       fetchQuestions(); // Refresh list
     } catch (err) {
       console.error(err);
@@ -103,6 +104,7 @@ export default function QuestionsAdminPage() {
     if (!confirm('Voulez-vous vraiment supprimer cette question ?')) return;
 
     try {
+      setLoading(true);
       await api.delete(`/api/admin/questions?id=${id}`);
 
       alert('Question supprimée avec succès !');

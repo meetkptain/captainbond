@@ -64,7 +64,7 @@ export function ImposteurPlayerController({ hasSubmitted, onSubmitAnswer }: Game
 
   useEffect(() => {
     if (hasSubmitted && phase === 'writing') {
-      Promise.resolve().then(() => {
+      requestAnimationFrame(() => {
         setPhase('waiting');
       });
     }
@@ -98,7 +98,7 @@ export function ImposteurPlayerController({ hasSubmitted, onSubmitAnswer }: Game
 
   useEffect(() => {
     if (phase !== 'detecting' || !playerId) return;
-    Promise.resolve().then(() => {
+    requestAnimationFrame(() => {
       setLoading(true);
     });
     api

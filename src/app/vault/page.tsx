@@ -48,7 +48,10 @@ export default function VaultPage() {
 
   // Navigation / views
   const [view, setView] = useState<'list' | 'wizard-friends' | 'wizard-vibes' | 'wizard-dossiers' | 'loading' | 'preview' | 'editor'>('list');
-  const [decks, setDecks] = useState<CustomDeck[]>([]);
+  const [decks, setDecks] = useState<CustomDeck[]>(() => {
+    if (typeof window === 'undefined') return [];
+    return getLocalDecks();
+  });
   const [activeDeck, setActiveDeck] = useState<CustomDeck | null>(null);
 
   // Wizard state
@@ -72,21 +75,11 @@ export default function VaultPage() {
   const [showAddCardForm, setShowAddCardForm] = useState(false);
   const [deckTitle, setDeckTitle] = useState('');
 
-  // Load decks on mount
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const initialDecks = getLocalDecks();
-      Promise.resolve().then(() => {
-        setDecks(initialDecks);
-      });
-    }
-  }, []);
-
   // Sync list when view changes to list
   useEffect(() => {
     if (view === 'list' && typeof window !== 'undefined') {
       const currentDecks = getLocalDecks();
-      Promise.resolve().then(() => {
+      requestAnimationFrame(() => {
         setDecks(currentDecks);
       });
     }

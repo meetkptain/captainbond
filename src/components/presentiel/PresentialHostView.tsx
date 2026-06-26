@@ -311,7 +311,7 @@ export function PresentialHostView({
   useEffect(() => {
     if (modeId === 'IMPOSTEUR' && players.length > 0) {
       const randomIndex = Math.floor(Math.random() * players.length);
-      Promise.resolve().then(() => {
+      requestAnimationFrame(() => {
         setImposteurIndex(randomIndex);
         setImposteurSetupFinished(false);
         setSetupPlayerIndex(0);
@@ -444,7 +444,7 @@ export function PresentialHostView({
       }, 1000);
     } else if (phase === 'imposteur_voting' && isVotingCountdownActive && votingCountdown === 0) {
       playSynthesizedSound('gong', isMuted);
-      Promise.resolve().then(() => {
+      requestAnimationFrame(() => {
         setIsVotingCountdownActive(false);
       });
     }

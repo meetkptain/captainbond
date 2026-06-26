@@ -57,7 +57,7 @@ export function HourglassTimer({
   const transitionIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const startTransition = useCallback(() => {
-    Promise.resolve().then(() => {
+    requestAnimationFrame(() => {
       setIsTransitioning(true);
       setTransitionCountdown(5);
     });
@@ -76,7 +76,7 @@ export function HourglassTimer({
 
   useEffect(() => {
     // Reset timer when duration changes
-    Promise.resolve().then(() => {
+    requestAnimationFrame(() => {
       setTimeLeft(duration);
       setIsPaused(false);
       setIsTransitioning(false);

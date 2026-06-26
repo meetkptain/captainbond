@@ -27,18 +27,10 @@ export default function RoomPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
-  const [showPresentielOnboarding, setShowPresentielOnboarding] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const viewed = localStorage.getItem('cb_presentiel_onboarding_viewed') === 'true';
-      if (!viewed) {
-        Promise.resolve().then(() => {
-          setShowPresentielOnboarding(true);
-        });
-      }
-    }
-  }, []);
+  const [showPresentielOnboarding, setShowPresentielOnboarding] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return localStorage.getItem('cb_presentiel_onboarding_viewed') !== 'true';
+  });
 
   useEffect(() => {
     // Authenticate host session
