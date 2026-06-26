@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAudioSynthesis, isPresentialSound } from '@/hooks/useAudioSynthesis';
 import { HourglassTimer } from './HourglassTimer';
 import { TalkingStick, Player } from './TalkingStick';
@@ -323,23 +323,44 @@ export function PresentialHostView({
   // Web Audio Synthesizer for reactions
   const { play: playSynthesizedSound } = useAudioSynthesis();
 
-  const triggerLocalEmoji = (emoji: string) => {
+  const handlePlayerFinished = useCallback(() => {
+    if (currentPlayerIndex < players.length - 1) {
+      setCurrentPlayerIndex(prev => prev + 1);
+    } else {
+      // All players answered -> Discussion or Imposteur voting phase
+      if (modeId === 'IMPOSTEUR') {
+        setPhase('imposteur_voting');
+        setVotingCountdown(3);
+        setIsVotingCountdownActive(true);
+        setCheckedVoters({});
+      } else {
+        setPhase('discussion');
+      }
+      capture(AnalyticsEvents.QUESTION_ANSWERED, {
+        roomCode,
+        modeId,
+        questionIndex: currentQuestionIndex,
+      });
+    }
+  }, [currentPlayerIndex, players, modeId, currentQuestionIndex, roomCode]);
+
+  const triggerLocalEmoji = useCallback((emoji: string) => {
     const id = crypto.randomUUID();
     const x = 10 + Math.random() * 80;
     setFloatingEmojis(prev => [...prev, { id, emoji, x }]);
     setTimeout(() => {
       setFloatingEmojis(prev => prev.filter(e => e.id !== id));
     }, 2000);
-  };
+  }, []);
 
-  const triggerLocalJoker = (targetPlayerName: string) => {
+  const triggerLocalJoker = useCallback((targetPlayerName: string) => {
     playSynthesizedSound('joker_bell', isMuted);
     setToastMessage(`🕊️ Joker Solidaire activé par un ange gardien pour ${targetPlayerName} !`);
     setTimeout(() => {
       setToastMessage(null);
     }, 4500);
     handlePlayerFinished();
-  };
+  }, [playSynthesizedSound, isMuted, handlePlayerFinished]);
 
   // Setup broadcast channel
   const channel = useMemo(() => {
@@ -412,10 +433,7 @@ export function PresentialHostView({
     return () => {
       supabase.removeChannel(channel);
     };
-    // We intentionally omit stable callbacks (playSynthesizedSound, triggerLocalEmoji, triggerLocalJoker)
-    // and mutable state setters from the deps array to avoid re-subscribing on every render.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [channel, currentQuestionIndex, currentPlayerIndex, phase, questions, players, modeId, isMuted]);
+  }, [channel, currentQuestionIndex, currentPlayerIndex, phase, questions, players, modeId, isMuted, playSynthesizedSound, triggerLocalEmoji, triggerLocalJoker]);
 
   // Handle Imposteur Voting Countdown
   useEffect(() => {
@@ -481,27 +499,6 @@ export function PresentialHostView({
     duration = 180; // 3 min
   } else if (modeId === 'SPICY') {
     duration = 90; // 1.5 min
-  }
-
-  function handlePlayerFinished() {
-    if (currentPlayerIndex < players.length - 1) {
-      setCurrentPlayerIndex(prev => prev + 1);
-    } else {
-      // All players answered -> Discussion or Imposteur voting phase
-      if (modeId === 'IMPOSTEUR') {
-        setPhase('imposteur_voting');
-        setVotingCountdown(3);
-        setIsVotingCountdownActive(true);
-        setCheckedVoters({});
-      } else {
-        setPhase('discussion');
-      }
-      capture(AnalyticsEvents.QUESTION_ANSWERED, {
-        roomCode,
-        modeId,
-        questionIndex: currentQuestionIndex,
-      });
-    }
   }
 
   const handlePlayerSkipped = () => {
