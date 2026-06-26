@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { buildQuestionPool, QuestionForDeck } from './deck';
 
 function makeQuestion(overrides: Partial<QuestionForDeck>): QuestionForDeck {
@@ -13,16 +13,6 @@ function makeQuestion(overrides: Partial<QuestionForDeck>): QuestionForDeck {
 }
 
 describe('buildQuestionPool', () => {
-  let randomSpy: ReturnType<typeof vi.spyOn>;
-
-  beforeEach(() => {
-    randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0.5);
-  });
-
-  afterEach(() => {
-    randomSpy.mockRestore();
-  });
-
   it('filters by mode (DATE_NIGHT uses date_safe)', () => {
     const allQuestions = [
       makeQuestion({ id: 'q1', mode: 'ICEBREAKER', tags: ['date_safe'] }),
@@ -115,22 +105,62 @@ describe('buildQuestionPool', () => {
       makeQuestion({ id: 'q-deep', mode: 'DATE_NIGHT', tags: ['date_safe'], intensityLevel: 3 }),
     ];
 
-    randomSpy.mockReturnValue(0.2);
     let pool = buildQuestionPool({
       allQuestions,
       currentMode: 'DATE_NIGHT',
       roomRound: 1,
       previousIntensity: 1,
+      random: () => 0.1,
     });
     expect(pool.map((q) => q.id)).toEqual(['q-deep']);
 
-    randomSpy.mockReturnValue(0.8);
     pool = buildQuestionPool({
       allQuestions,
       currentMode: 'DATE_NIGHT',
       roomRound: 1,
       previousIntensity: 1,
+      random: () => 0.9,
     });
     expect(pool.map((q) => q.id)).toEqual(['q-light']);
+  });
+
+  it('filters by mode (FAMILY requires mode FAMILY and positive tag)', () => {
+    const allQuestions = [
+      makeQuestion({ id: 'q1', mode: 'FAMILY', tags: ['positive'] }),
+      makeQuestion({ id: 'q2', mode: 'FAMILY', tags: [] }),
+      makeQuestion({ id: 'q3', mode: 'ICEBREAKER', tags: ['positive'] }),
+    ];
+
+    const pool = buildQuestionPool({
+      allQuestions,
+      currentMode: 'FAMILY',
+      roomRound: 0,
+      previousIntensity: 1,
+    });
+
+    expect(pool.map((q) => q.id)).toEqual(['q1']);
+  });
+
+  it('ICEBREAKER every-3rd round filters positive tags (round 2 does, round 1 does not)', () => {
+    const allQuestions = [
+      makeQuestion({ id: 'q-positive', mode: 'ICEBREAKER', tags: ['positive'] }),
+      makeQuestion({ id: 'q-neutral', mode: 'ICEBREAKER', tags: [] }),
+    ];
+
+    const round2Pool = buildQuestionPool({
+      allQuestions,
+      currentMode: 'ICEBREAKER',
+      roomRound: 2,
+      previousIntensity: 1,
+    });
+    expect(round2Pool.map((q) => q.id)).toEqual(['q-positive']);
+
+    const round1Pool = buildQuestionPool({
+      allQuestions,
+      currentMode: 'ICEBREAKER',
+      roomRound: 1,
+      previousIntensity: 1,
+    });
+    expect(round1Pool.map((q) => q.id)).toEqual(['q-positive', 'q-neutral']);
   });
 });

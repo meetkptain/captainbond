@@ -8,6 +8,7 @@ export interface BuildQuestionPoolInput {
   roomRound: number;
   previousIntensity: number;
   playedQuestionIds?: Iterable<string>;
+  random?: () => number;
 }
 
 function roomRoundWouldNeedPositive(currentMode: string, roomRound: number): boolean {
@@ -16,8 +17,7 @@ function roomRoundWouldNeedPositive(currentMode: string, roomRound: number): boo
 
 export function filterByMode(
   questions: QuestionForDeck[],
-  currentMode: string,
-  roomRound: number
+  currentMode: string
 ): QuestionForDeck[] {
   if (currentMode === 'DATE_NIGHT') {
     return questions.filter((q) => q.tags?.includes('date_safe'));
@@ -27,19 +27,26 @@ export function filterByMode(
     return questions.filter((q) => q.mode === currentMode && q.tags?.includes('positive'));
   }
 
-  const modePool = questions.filter((q) => q.mode === currentMode);
+  return questions.filter((q) => q.mode === currentMode);
+}
 
+export function applyRoundSpecificFilter(
+  pool: QuestionForDeck[],
+  currentMode: string,
+  roomRound: number
+): QuestionForDeck[] {
   if (roomRoundWouldNeedPositive(currentMode, roomRound)) {
-    return modePool.filter((q) => q.tags?.includes('positive'));
+    return pool.filter((q) => q.tags?.includes('positive'));
   }
 
-  return modePool;
+  return pool;
 }
 
 export function selectDateNightPool(
   poolWithoutRepeats: QuestionForDeck[],
   previousIntensity: number,
-  roomRound: number
+  roomRound: number,
+  random: () => number
 ): QuestionForDeck[] {
   if (roomRound === 0) {
     return poolWithoutRepeats;
@@ -52,17 +59,18 @@ export function selectDateNightPool(
   const deepPool = poolWithoutRepeats.filter((q) => q.intensityLevel === 3);
   const lightPool = poolWithoutRepeats.filter((q) => (q.intensityLevel || 1) <= 2);
 
-  return Math.random() < 0.3 && deepPool.length > 0 ? deepPool : lightPool;
+  return random() < 0.3 && deepPool.length > 0 ? deepPool : lightPool;
 }
 
 function filterByPreviousIntensity(
   poolWithoutRepeats: QuestionForDeck[],
   previousIntensity: number,
   currentMode: string,
-  roomRound: number
+  roomRound: number,
+  random: () => number
 ): QuestionForDeck[] {
   if (currentMode === 'DATE_NIGHT') {
-    return selectDateNightPool(poolWithoutRepeats, previousIntensity, roomRound);
+    return selectDateNightPool(poolWithoutRepeats, previousIntensity, roomRound, random);
   }
 
   if (previousIntensity === 3) {
@@ -81,14 +89,15 @@ function buildModeFallback(allQuestions: QuestionForDeck[], currentMode: string)
 }
 
 export function buildQuestionPool(input: BuildQuestionPoolInput): QuestionForDeck[] {
-  const { allQuestions, currentMode, roomRound, previousIntensity, playedQuestionIds } = input;
+  const { allQuestions, currentMode, roomRound, previousIntensity, playedQuestionIds, random = Math.random } = input;
 
-  let pool = filterByMode(allQuestions, currentMode, roomRound);
+  let pool = filterByMode(allQuestions, currentMode);
+  pool = applyRoundSpecificFilter(pool, currentMode, roomRound);
 
   const playedIdsSet = new Set(playedQuestionIds);
   const poolWithoutRepeats = pool.filter((q) => !playedIdsSet.has(q.id));
 
-  pool = filterByPreviousIntensity(poolWithoutRepeats, previousIntensity, currentMode, roomRound);
+  pool = filterByPreviousIntensity(poolWithoutRepeats, previousIntensity, currentMode, roomRound, random);
 
   if (currentMode === 'DATE_NIGHT' && roomRound === 0) {
     pool = pool.filter((q) => q.intensityLevel === 1 && q.tags?.includes('icebreaker'));

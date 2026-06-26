@@ -6,7 +6,7 @@ import {
   getQuestionById,
   listQuestionsForDeck,
 } from '@/lib/db/repositories';
-import { Room, Player, Question } from '@/lib/db/types';
+import { Room, Question } from '@/lib/db/types';
 import { AppError } from '@/lib/errors';
 import { getServerGameMode } from '@/game-modes/manifests';
 import { getPlayerHmac } from '@/lib/crypto';
