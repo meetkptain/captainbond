@@ -11,6 +11,13 @@ export function Countdown({ initialSeconds, onZero, className }: CountdownProps)
   const [timeLeft, setTimeLeft] = useState(() => Math.max(0, initialSeconds));
 
   useEffect(() => {
+    const rafId = requestAnimationFrame(() => {
+      setTimeLeft(Math.max(0, initialSeconds));
+    });
+    return () => cancelAnimationFrame(rafId);
+  }, [initialSeconds]);
+
+  useEffect(() => {
     // Si on commence avec 0 ou moins, on stoppe directement
     if (initialSeconds <= 0) {
       return;

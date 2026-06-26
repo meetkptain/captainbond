@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import QuestionForm, { QuestionFormData } from '@/components/admin/QuestionForm';
 import { api, ApiClientError } from '@/lib/api/client';
 
@@ -28,6 +28,7 @@ export default function QuestionsAdminPage() {
   
   // Search & Filter States
   const [search, setSearch] = useState('');
+  const searchRef = useRef('');
   const [category, setCategory] = useState('');
   const [mode, setMode] = useState('');
   
@@ -44,7 +45,7 @@ export default function QuestionsAdminPage() {
       const queryParams = new URLSearchParams({
         page: String(page),
         limit: String(limit),
-        search: search,
+        search: searchRef.current,
         category: category,
         mode: mode,
       });
@@ -62,21 +63,25 @@ export default function QuestionsAdminPage() {
     } finally {
       setLoading(false);
     }
-  }, [page, limit, search, category, mode]);
+  }, [page, limit, category, mode]);
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    const rafId = requestAnimationFrame(() => {
       setLoading(true);
       fetchQuestions();
-    }, 0);
-    return () => clearTimeout(timeoutId);
+    });
+    return () => cancelAnimationFrame(rafId);
   }, [fetchQuestions]); // Fetch automatically when filters/pages change
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setPage(1);
-    fetchQuestions();
+    searchRef.current = search;
+    if (page === 1) {
+      setLoading(true);
+      fetchQuestions();
+    } else {
+      setPage(1);
+    }
   };
 
   const handleSaveQuestion = async (formData: QuestionFormData) => {
