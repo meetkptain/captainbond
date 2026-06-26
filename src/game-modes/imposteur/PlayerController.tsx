@@ -6,30 +6,13 @@ import { supabase } from '@/lib/supabase';
 import { api } from '@/lib/api/client';
 import { safeJsonParse, safeJsonParseRecord } from '@/lib/json';
 import type { GameModePlayerControllerProps } from '../types';
+import { EMERGENCY_TRUTHS, EMERGENCY_LIES, pickRandomLie, pickTwoDistinct } from './emergencyCards';
 
 interface PublicStatement {
   playerId: string;
   name: string;
   statements: string[];
 }
-
-const EMERGENCY_TRUTHS = [
-  "J'ai déjà pleuré devant un dessin animé",
-  "Je sais imiter l'accent québécois",
-  "J'ai déjà volé dans un supermarché quand j'étais enfant",
-  "J'ai une peur panique des papillons",
-  "J'ai déjà menti sur mon CV pour avoir un job",
-  "Je sais faire des crêpes sans les faire sauter",
-  "J'ai déjà cassé le téléphone de quelqu'un sans le dire"
-];
-
-const EMERGENCY_LIES = [
-  "J'ai déjà fait de la prison pendant 24h",
-  "Je suis cousin éloigné avec une célébrité",
-  "J'ai gagné un concours de mangeur de hot-dogs",
-  "Je me suis déjà fait arrêter par le FBI",
-  "J'ai un tatouage secret très gênant"
-];
 
 function shuffleArray<T>(array: T[]): T[] {
   const newArr = [...array];
@@ -114,15 +97,10 @@ export function ImposteurPlayerController({ hasSubmitted, onSubmitAnswer }: Game
   }, [phase, playerId, roomCode]);
 
   const handleNoIdea = () => {
-    const t1 = EMERGENCY_TRUTHS[Math.floor(Math.random() * EMERGENCY_TRUTHS.length)];
-    let t2 = EMERGENCY_TRUTHS[Math.floor(Math.random() * EMERGENCY_TRUTHS.length)];
-    while (t2 === t1) {
-      t2 = EMERGENCY_TRUTHS[Math.floor(Math.random() * EMERGENCY_TRUTHS.length)];
-    }
-    const l1 = EMERGENCY_LIES[Math.floor(Math.random() * EMERGENCY_LIES.length)];
+    const [t1, t2] = pickTwoDistinct(EMERGENCY_TRUTHS);
     setTruth1(t1);
     setTruth2(t2);
-    setLie(l1);
+    setLie(pickRandomLie(EMERGENCY_LIES));
   };
 
   const handleValidate = () => {
