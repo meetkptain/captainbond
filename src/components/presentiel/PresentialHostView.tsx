@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { useAudioSynthesis, PresentialSound } from '@/hooks/useAudioSynthesis';
+import { useAudioSynthesis, isPresentialSound } from '@/hooks/useAudioSynthesis';
 import { HourglassTimer } from './HourglassTimer';
 import { TalkingStick, Player } from './TalkingStick';
 import { DiscussionPhase } from './DiscussionPhase';
@@ -369,7 +369,9 @@ export function PresentialHostView({
         broadcastState();
       })
       .on('broadcast', { event: 'TRIGGER_SOUND' }, ({ payload }) => {
-        playSynthesizedSound(payload.soundType as PresentialSound, isMuted);
+        if (isPresentialSound(payload.soundType)) {
+          playSynthesizedSound(payload.soundType, isMuted);
+        }
       })
       .on('broadcast', { event: 'TRIGGER_EMOJI' }, ({ payload }) => {
         triggerLocalEmoji(payload.emoji);
@@ -410,6 +412,8 @@ export function PresentialHostView({
     return () => {
       supabase.removeChannel(channel);
     };
+    // We intentionally omit stable callbacks (playSynthesizedSound, triggerLocalEmoji, triggerLocalJoker)
+    // and mutable state setters from the deps array to avoid re-subscribing on every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [channel, currentQuestionIndex, currentPlayerIndex, phase, questions, players, modeId, isMuted]);
 
@@ -421,29 +425,7 @@ export function PresentialHostView({
         setVotingCountdown(prev => prev - 1);
       }, 1000);
     } else if (phase === 'imposteur_voting' && isVotingCountdownActive && votingCountdown === 0) {
-      // Play Gong Sound (Web Audio API Synthesizer)
-      try {
-        const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-        if (AudioContextClass && !isMuted) {
-          const ctx = new AudioContextClass();
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(120, ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 1.5);
-          
-          gain.gain.setValueAtTime(0.3, ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.5);
-          
-          osc.start();
-          osc.stop(ctx.currentTime + 1.5);
-        }
-      } catch (e) {
-        console.error('Failed to play gong sound:', e);
-      }
+      playSynthesizedSound('gong', isMuted);
       Promise.resolve().then(() => {
         setIsVotingCountdownActive(false);
       });
@@ -451,7 +433,7 @@ export function PresentialHostView({
     return () => {
       if (timerId) clearTimeout(timerId);
     };
-  }, [phase, isVotingCountdownActive, votingCountdown, isMuted]);
+  }, [phase, isVotingCountdownActive, votingCountdown, isMuted, playSynthesizedSound]);
 
   if (showPaywall) {
     return (

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 export type PresentialSound =
   | 'buzzer'
@@ -12,26 +12,39 @@ export type PresentialSound =
   | 'gong'
   | 'chime';
 
-function getAudioContext(): AudioContext | null {
-  if (typeof window === 'undefined') return null;
-  const AudioContextClass =
-    window.AudioContext ||
-    (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-  if (!AudioContextClass) return null;
-  return new AudioContextClass();
+const PRESENTIAL_SOUNDS: PresentialSound[] = [
+  'buzzer',
+  'applaudissements',
+  'rires',
+  'violon',
+  'joker_bell',
+  'bell',
+  'gong',
+  'chime',
+];
+
+export function isPresentialSound(value: unknown): value is PresentialSound {
+  return typeof value === 'string' && PRESENTIAL_SOUNDS.includes(value as PresentialSound);
 }
+
+const BUZZER = {
+  frequency: 100,
+  type: 'sawtooth' as OscillatorType,
+  gain: 0.2,
+  duration: 0.4,
+};
 
 function playBuzzer(ctx: AudioContext) {
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.connect(gain);
   gain.connect(ctx.destination);
-  osc.type = 'sawtooth';
-  osc.frequency.setValueAtTime(100, ctx.currentTime);
-  gain.gain.setValueAtTime(0.2, ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+  osc.type = BUZZER.type;
+  osc.frequency.setValueAtTime(BUZZER.frequency, ctx.currentTime);
+  gain.gain.setValueAtTime(BUZZER.gain, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + BUZZER.duration);
   osc.start();
-  osc.stop(ctx.currentTime + 0.4);
+  osc.stop(ctx.currentTime + BUZZER.duration);
 }
 
 function playApplause(ctx: AudioContext) {
@@ -171,44 +184,75 @@ function playGong(ctx: AudioContext) {
 }
 
 export function useAudioSynthesis() {
-  const play = useCallback((sound: PresentialSound, muted: boolean) => {
-    if (muted || typeof window === 'undefined') return;
-    try {
-      const ctx = getAudioContext();
-      if (!ctx) return;
+  const ctxRef = useRef<AudioContext | null>(null);
 
-      switch (sound) {
-        case 'buzzer':
-          playBuzzer(ctx);
-          break;
-        case 'applaudissements':
-          playApplause(ctx);
-          break;
-        case 'rires':
-          playLaugh(ctx);
-          break;
-        case 'violon':
-          playViolin(ctx);
-          break;
-        case 'joker_bell':
-          playJokerBell(ctx);
-          break;
-        case 'bell':
-          playBell(ctx);
-          break;
-        case 'chime':
-          playChime(ctx);
-          break;
-        case 'gong':
-          playGong(ctx);
-          break;
-        default:
-          break;
-      }
-    } catch (e) {
-      console.error('Audio synthesis failed:', e);
+  const getAudioContext = useCallback(() => {
+    if (typeof window === 'undefined') return null;
+    if (!ctxRef.current) {
+      const AudioContextClass =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      if (!AudioContextClass) return null;
+      ctxRef.current = new AudioContextClass();
     }
+    if (ctxRef.current.state === 'suspended') {
+      ctxRef.current.resume().catch(() => {});
+    }
+    return ctxRef.current;
   }, []);
+
+  useEffect(() => {
+    return () => {
+      ctxRef.current?.close().catch(() => {});
+      ctxRef.current = null;
+    };
+  }, []);
+
+  const play = useCallback(
+    (sound: PresentialSound, muted: boolean) => {
+      if (muted || typeof window === 'undefined') return;
+      if (!isPresentialSound(sound)) {
+        console.warn('Unsupported presential sound type:', sound);
+        return;
+      }
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+
+        switch (sound) {
+          case 'buzzer':
+            playBuzzer(ctx);
+            break;
+          case 'applaudissements':
+            playApplause(ctx);
+            break;
+          case 'rires':
+            playLaugh(ctx);
+            break;
+          case 'violon':
+            playViolin(ctx);
+            break;
+          case 'joker_bell':
+            playJokerBell(ctx);
+            break;
+          case 'bell':
+            playBell(ctx);
+            break;
+          case 'chime':
+            playChime(ctx);
+            break;
+          case 'gong':
+            playGong(ctx);
+            break;
+          default:
+            break;
+        }
+      } catch (e) {
+        console.error('Audio synthesis failed:', e);
+      }
+    },
+    [getAudioContext]
+  );
 
   return { play };
 }
