@@ -21,11 +21,18 @@ import { logger } from '@/lib/logger';
 import type { Room, Response as GameResponse, Player, Question } from '@/lib/db/types';
 import { api, ApiClientError } from '@/lib/api/client';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
+import { useHostSession } from '@/hooks/useHostSession';
+import type { GameModeQuestion } from '@/game-modes/types';
+
+function adaptQuestionToGameMode(question: Question): GameModeQuestion {
+  return question as unknown as GameModeQuestion;
+}
 
 export default function PlayerController() {
   const params = useParams();
   const router = useRouter();
   const roomCode = (params.code as string).toUpperCase();
+  const { hostId: storedHostId, hostToken: storedHostToken } = useHostSession(roomCode);
 
   const [roomId, setRoomId] = useState<string | null>(null);
   const [playerId, setPlayerId] = useState<string | null>(null);
@@ -39,6 +46,7 @@ export default function PlayerController() {
   
   const [myAnswer, setMyAnswer] = useState<string | null>(null);
   const [hasVoted, setHasVoted] = useState(false);
+  const [voteError, setVoteError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [paidMessage, setPaidMessage] = useState<string | null>(null);
@@ -85,10 +93,6 @@ export default function PlayerController() {
     async function init() {
       try {
         const storedPlayerRaw = sessionStorage.getItem(`player_${roomCode}`);
-        const storedHostRaw = sessionStorage.getItem(`host_${roomCode}`);
-
-        const parsedHost = safeJsonParse<{ hostId?: string }>(storedHostRaw, {});
-        const storedHostId = parsedHost.hostId || storedHostRaw;
 
         const data = await api.get<{
           room: Room & { currentQuestion?: Question | null };
@@ -208,7 +212,7 @@ export default function PlayerController() {
       }
     }
     init();
-  }, [roomCode, router]);
+  }, [roomCode, router, storedHostId]);
 
   useEffect(() => {
     if (!roomId) return;
@@ -259,6 +263,7 @@ export default function PlayerController() {
   const handleVote = async (answer: string) => {
     if (!playerId || (isHost && targetType !== 'SOLO')) return;
     try {
+      setVoteError(null);
       setHasVoted(true);
       setMyAnswer(answer);
       await api.post('/api/room/vote', { roomCode, playerId, answer, questionId: currentQuestion?.id });
@@ -267,17 +272,15 @@ export default function PlayerController() {
         question_id: currentQuestion?.id,
         mode_id: activeMode,
       });
-    } catch(e) { console.error(e) }
+    } catch {
+      setVoteError('Impossible d\'enregistrer le vote. Réessaie.');
+      setHasVoted(false);
+      setMyAnswer(null);
+    }
   };
 
   const handleStartRound = async () => {
-    if (!isHost) return;
-    const hostSession = safeJsonParse<{ hostId?: string; hostToken?: string }>(
-      sessionStorage.getItem(`host_${roomCode}`) || '{}',
-      {}
-    );
-    const storedHostId = hostSession.hostId || null;
-    const storedHostToken = hostSession.hostToken || null;
+    if (!isHost || !storedHostId || !storedHostToken) return;
     const data = await api.post<{
       freeQuestionsLimit?: number;
       freeQuestionsUsed?: number;
@@ -288,13 +291,7 @@ export default function PlayerController() {
   };
 
   const handleReveal = async () => {
-    if (!isHost) return;
-    const hostSession = safeJsonParse<{ hostId?: string; hostToken?: string }>(
-      sessionStorage.getItem(`host_${roomCode}`) || '{}',
-      {}
-    );
-    const storedHostId = hostSession.hostId || null;
-    const storedHostToken = hostSession.hostToken || null;
+    if (!isHost || !storedHostId || !storedHostToken) return;
     await api.post('/api/room/reveal', { roomCode, hostId: storedHostId, hostToken: storedHostToken });
   };
 
@@ -558,14 +555,19 @@ export default function PlayerController() {
                        </button>
                     </div>
                   ) : (
-                    <ActiveGameMode.PlayerController 
-                      question={currentQuestion as unknown as import('@/game-modes/types').GameModeQuestion}
-                      onSubmitAnswer={handleVote}
-                      onVote={handleVote}
-                      hasSubmitted={hasVoted}
-                      hasVoted={hasVoted}
-                      myAnswer={myAnswer || undefined}
-                    />
+                    <>
+                      <ActiveGameMode.PlayerController
+                        question={adaptQuestionToGameMode(currentQuestion)}
+                        onSubmitAnswer={handleVote}
+                        onVote={handleVote}
+                        hasSubmitted={hasVoted}
+                        hasVoted={hasVoted}
+                        myAnswer={myAnswer || undefined}
+                      />
+                      {voteError && (
+                        <p className="mt-4 text-center text-sm text-red-400">{voteError}</p>
+                      )}
+                    </>
                   )}
                 </div>
               </>
