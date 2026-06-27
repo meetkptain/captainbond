@@ -36,7 +36,7 @@ describe('usePresentialRealtime', () => {
     ) as unknown as typeof fetch;
   });
 
-  it('returns initial state', () => {
+  it('returns initial state', async () => {
     const { result } = renderHook(() => usePresentialRealtime(defaultInput));
     expect(result.current.loading).toBe(true);
     expect(result.current.error).toBeNull();
@@ -45,6 +45,10 @@ describe('usePresentialRealtime', () => {
     expect(result.current.currentQuestionIndex).toBe(0);
     expect(result.current.currentPlayerIndex).toBe(0);
     expect(result.current.imposteurIndex).toBeNull();
+
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+    });
   });
 
   it('creates channel with room code', async () => {
@@ -163,7 +167,10 @@ describe('usePresentialRealtime', () => {
     act(() => {
       jokerHandler!({ payload: { targetPlayerName: 'Alice' } });
     });
-    expect(onTriggerJoker).toHaveBeenCalledWith('Alice');
-    expect(result.current.currentPlayerIndex).toBe(1);
+
+    await waitFor(() => {
+      expect(onTriggerJoker).toHaveBeenCalledWith('Alice');
+      expect(result.current.currentPlayerIndex).toBe(1);
+    });
   });
 });

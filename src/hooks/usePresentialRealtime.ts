@@ -87,8 +87,7 @@ export function usePresentialRealtime(input: UsePresentialRealtimeInput): UsePre
 
   // Imposteur state
   const [imposteurIndex, setImposteurIndex] = useState<number | null>(null);
-  const [imposteurSetupFinished, setImposteurSetupFinished] = useState(false);
-  const [setupPlayerIndex, setSetupPlayerIndex] = useState(0);
+  const [setupState, setSetupState] = useState({ index: 0, finished: false });
   const [isHolding, setIsHolding] = useState(false);
   const [checkedVoters, setCheckedVoters] = useState<Record<string, boolean>>({});
   const [votingCountdown, setVotingCountdown] = useState(3);
@@ -221,8 +220,7 @@ export function usePresentialRealtime(input: UsePresentialRealtimeInput): UsePre
       const randomIndex = Math.floor(Math.random() * players.length);
       requestAnimationFrame(() => {
         setImposteurIndex(randomIndex);
-        setImposteurSetupFinished(false);
-        setSetupPlayerIndex(0);
+        setSetupState({ index: 0, finished: false });
         setIsHolding(false);
       });
     }
@@ -322,12 +320,12 @@ export function usePresentialRealtime(input: UsePresentialRealtimeInput): UsePre
 
   const advanceSetup = useCallback(() => {
     setIsHolding(false);
-    setSetupPlayerIndex((prev) => {
-      if (prev >= players.length - 1) {
-        setImposteurSetupFinished(true);
-        return prev;
+    setSetupState((prev) => {
+      const next = prev.index + 1;
+      if (next >= players.length) {
+        return { ...prev, finished: true };
       }
-      return prev + 1;
+      return { ...prev, index: next };
     });
   }, [players.length]);
 
@@ -458,8 +456,8 @@ export function usePresentialRealtime(input: UsePresentialRealtimeInput): UsePre
     loading,
     error,
     imposteurIndex,
-    imposteurSetupFinished,
-    setupPlayerIndex,
+    imposteurSetupFinished: setupState.finished,
+    setupPlayerIndex: setupState.index,
     isHolding,
     setIsHolding,
     checkedVoters,
