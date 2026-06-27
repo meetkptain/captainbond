@@ -27,13 +27,8 @@ export default function AdminDashboardPage() {
   const [totalRooms, setTotalRooms] = useState<number>(0);
   const [totalPlayers, setTotalPlayers] = useState<number>(0);
   const [loading, setLoading] = useState(true);
-  const [adminPassword, setAdminPassword] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [authError, setAuthError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isAuthenticated) return;
-
     async function loadStats() {
       try {
         const data = await api.get<{
@@ -51,12 +46,7 @@ export default function AdminDashboardPage() {
         setPlayers(data.players || []);
       } catch (err) {
         console.error('Failed to load stats:', err);
-        if (err instanceof ApiClientError && err.status === 401) {
-          setIsAuthenticated(false);
-          setAuthError('Session expirée. Veuillez vous reconnecter.');
-        } else {
-          alert(err instanceof ApiClientError ? err.message : 'Erreur de chargement');
-        }
+        alert(err instanceof ApiClientError ? err.message : 'Erreur de chargement');
       } finally {
         setLoading(false);
       }
@@ -66,27 +56,7 @@ export default function AdminDashboardPage() {
 
     const interval = setInterval(loadStats, 5000);
     return () => clearInterval(interval);
-  }, [isAuthenticated]);
-
-  const handleAuthenticate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!adminPassword.trim()) {
-      setAuthError('Veuillez saisir le mot de passe admin.');
-      return;
-    }
-    setAuthError(null);
-    setLoading(true);
-
-    try {
-      await api.post('/api/admin/login', { password: adminPassword });
-      setIsAuthenticated(true);
-    } catch (err) {
-      setAuthError(err instanceof ApiClientError ? err.message : 'Échec de la connexion');
-      setIsAuthenticated(false);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, []);
 
   const handleForceEndRoom = async (roomId: string) => {
     if (!confirm('Voulez-vous vraiment forcer la fermeture de ce salon ?')) return;
@@ -104,26 +74,6 @@ export default function AdminDashboardPage() {
   const activePlayersCount = players.filter(p => 
     rooms.some(r => r.id === p.roomId) && !p.isHost
   ).length;
-
-  if (!isAuthenticated) {
-    return (
-      <div style={styles.loadingContainer}>
-        <h1 style={styles.pageTitle}>Dashboard Admin</h1>
-        <form onSubmit={handleAuthenticate} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%', maxWidth: '320px' }}>
-          <input
-            type="password"
-            value={adminPassword}
-            onChange={(e) => setAdminPassword(e.target.value)}
-            placeholder="Mot de passe admin"
-            style={styles.input}
-            autoFocus
-          />
-          {authError && <p style={{ color: '#ef4444', fontSize: '0.85rem' }}>{authError}</p>}
-          <button type="submit" style={styles.btnSave}>Accéder</button>
-        </form>
-      </div>
-    );
-  }
 
   if (loading) {
     return (

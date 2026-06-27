@@ -11,7 +11,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - **Services** : toute la logique métier doit vivre dans `src/services/*`.
 - **Repositories** : tout accès à Supabase passe par `src/lib/db/repositories/*`.
 - **Routes API** : toutes les routes utilisent `withApiHandler` avec des schémas Zod et `runtime = 'edge'`.
-- **Proxy** : l'authentification admin/joueur se fait dans `src/proxy.ts` (remplaçant `middleware.ts`).
+- **Middleware** : l'authentification admin se fait dans `src/middleware.ts` (runtime Edge).
 
 ## Erreurs
 
