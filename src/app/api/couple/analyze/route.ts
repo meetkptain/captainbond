@@ -7,6 +7,8 @@ import { generateContent, getEmbedding } from '@/lib/gemini';
 import { safeJsonParse } from '@/lib/json';
 import { createLogger } from '@/lib/logger';
 import { dbRetry } from '@/lib/db/withRetry';
+import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
+import { Couple, DailyQuestion, TreeNode, TreeConnection } from '@/lib/db/types';
 
 export const runtime = 'edge';
 
@@ -31,15 +33,20 @@ function cosineSimilarity(a: number[], b: number[]): number {
 
 export const POST = withApiHandler({
   bodySchema,
-  async handler({ body }) {
+  async handler({ req, body }) {
     const logger = createLogger({ route: '/api/couple/analyze' });
     if (!body) {
       return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
     }
+    const authUser = await getAuthenticatedCoupleUser(req);
     const { coupleId, dailyQuestionId, userId, answer } = body;
 
+    if (userId !== authUser.id) {
+      throw new AppError('FORBIDDEN', 'Vous ne pouvez pas soumettre de réponse pour un autre utilisateur.');
+    }
+
     // 1. Fetch the DailyQuestion and verify coupleId
-    const { data: dailyQuestion, error: dqError } = await dbRetry<any>(async () =>
+    const { data: dailyQuestion, error: dqError } = await dbRetry<DailyQuestion>(async () =>
       supabaseAdmin
         .from('DailyQuestion')
         .select('*')
@@ -55,7 +62,7 @@ export const POST = withApiHandler({
     }
 
     // 2. Fetch the Couple to determine partner role
-    const { data: couple, error: coupleError } = await dbRetry<any>(async () =>
+    const { data: couple, error: coupleError } = await dbRetry<Couple>(async () =>
       supabaseAdmin
         .from('Couple')
         .select('*')
@@ -91,7 +98,7 @@ export const POST = withApiHandler({
       updateFields.user2Answered = true;
     }
 
-    const { error: updateError } = await dbRetry<any>(async () =>
+    const { error: updateError } = await dbRetry<DailyQuestion>(async () =>
       supabaseAdmin
         .from('DailyQuestion')
         .update(updateFields)
@@ -176,7 +183,7 @@ export const POST = withApiHandler({
     const currentAnswer = answer;
 
     // Get the partner's TreeNode (latest node for this question by the other user)
-    const { data: partnerNodes } = await dbRetry<any[]>(async () =>
+    const { data: partnerNodes } = await dbRetry<TreeNode[]>(async () =>
       supabaseAdmin
         .from('TreeNode')
         .select('id, embedding')
@@ -199,7 +206,7 @@ export const POST = withApiHandler({
     const sourceId = isUser1 ? newNode.id : partnerNode?.id || newNode.id;
     const targetId = isUser1 ? partnerNode?.id || newNode.id : newNode.id;
 
-    const { error: connError } = await dbRetry<any>(async () =>
+    const { error: connError } = await dbRetry<TreeConnection>(async () =>
       supabaseAdmin
         .from('TreeConnection')
         .insert({
@@ -253,7 +260,7 @@ Sois poétique, pas psychologue. Parle avec le cœur.`;
         : resonanceScore;
 
     // 7d. Update DailyQuestion with analysis results
-    const { error: analysisUpdateError } = await dbRetry<any>(async () =>
+    const { error: analysisUpdateError } = await dbRetry<DailyQuestion>(async () =>
       supabaseAdmin
         .from('DailyQuestion')
         .update({

@@ -7,6 +7,8 @@ import { generateContent } from '@/lib/gemini';
 import { safeJsonParse } from '@/lib/json';
 import { createLogger } from '@/lib/logger';
 import { dbRetry } from '@/lib/db/withRetry';
+import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
+import { Couple, DailyQuestion } from '@/lib/db/types';
 
 export const runtime = 'edge';
 
@@ -18,11 +20,12 @@ const bodySchema = z.object({
 
 export const POST = withApiHandler({
   bodySchema,
-  async handler({ body }) {
+  async handler({ req, body }) {
     const logger = createLogger({ route: '/api/couple/protocol' });
     if (!body) {
       return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
     }
+    const authUser = await getAuthenticatedCoupleUser(req);
     const { coupleId, dailyQuestionId, step } = body;
 
     // Normalize step input to match uppercase internally
@@ -30,8 +33,25 @@ export const POST = withApiHandler({
     if (normalizedStep === 'QUESTIONS') normalizedStep = 'QUESTIONNER';
     if (normalizedStep === 'ACTION') normalizedStep = 'AGIR';
 
+    // Verify couple membership
+    const { data: couple, error: coupleError } = await dbRetry<Couple>(async () =>
+      supabaseAdmin
+        .from('Couple')
+        .select('*')
+        .eq('id', coupleId)
+        .single()
+    );
+
+    if (coupleError || !couple) {
+      throw new AppError('COUPLE_NOT_FOUND', 'Couple introuvable.');
+    }
+
+    if (couple.user1Id !== authUser.id && couple.user2Id !== authUser.id) {
+      throw new AppError('FORBIDDEN', 'Vous ne faites pas partie de ce couple.');
+    }
+
     // 1. Fetch the DailyQuestion (must be revealed)
-    const { data: dailyQuestion, error: dqError } = await dbRetry<any>(async () =>
+    const { data: dailyQuestion, error: dqError } = await dbRetry<DailyQuestion>(async () =>
       supabaseAdmin
         .from('DailyQuestion')
         .select('*')
@@ -51,7 +71,7 @@ export const POST = withApiHandler({
       throw new AppError('FORBIDDEN', "L'analyse n'est pas encore révélée. Patience jusqu'à 20h !");
     }
 
-    const analysisJson = dailyQuestion.analysisJson as Record<string, any> | null;
+    const analysisJson = dailyQuestion.analysisJson as Record<string, unknown> | null;
     if (!analysisJson) {
       throw new AppError('NOT_FOUND', "Aucune analyse disponible pour cette question.");
     }
@@ -96,7 +116,7 @@ Réponds en JSON avec le format :
 
         try {
           const rawResponse = await generateContent(prompt, 'application/json');
-          const parsed = safeJsonParse<{ questions: any[] }>(rawResponse, { questions: [] });
+          const parsed = safeJsonParse<{ questions: unknown[] }>(rawResponse, { questions: [] });
 
           if (!parsed.questions || parsed.questions.length === 0) {
             logger.warn('Gemini a renvoyé un format inattendu pour QUESTIONNER', {
@@ -105,11 +125,12 @@ Réponds en JSON avec le format :
             throw new AppError('GENERATION_FAILED', 'Impossible de générer les questions de suivi.');
           }
 
-          const questionsWithIds = (parsed.questions ?? []).map((q, idx) => {
-            const text = typeof q === 'string' ? q : (q?.text || '');
-            const category = typeof q === 'string' 
+          const questionsWithIds = (parsed.questions ?? []).map((unknownQ, idx) => {
+            const q = unknownQ as Record<string, unknown>;
+            const text = typeof unknownQ === 'string' ? unknownQ : ((q?.text as string) || '');
+            const category = typeof unknownQ === 'string' 
               ? (idx === 0 ? 'Curiosité' : idx === 1 ? 'Partage' : 'Profond') 
-              : (q?.category || (idx === 0 ? 'Curiosité' : idx === 1 ? 'Partage' : 'Profond'));
+              : ((q?.category as string) || (idx === 0 ? 'Curiosité' : idx === 1 ? 'Partage' : 'Profond'));
             
             return {
               id: `proto-q-${dailyQuestionId}-${idx}`,

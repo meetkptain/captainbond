@@ -6,20 +6,44 @@ import { supabaseAdmin } from '@/lib/supabase-admin';
 import { createLogger } from '@/lib/logger';
 import { dbRetry } from '@/lib/db/withRetry';
 
+import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
+import { Couple, DailyQuestion, CouplePortrait } from '@/lib/db/types';
+
 export const runtime = 'edge';
 
 const querySchema = z.object({
-  coupleId: z.string().min(1),
+  coupleId: z.string().optional(),
+  userId: z.string().optional(),
+  list: z.string().optional(),
 });
 
 export const GET = withApiHandler({
   querySchema,
-  async handler({ query }) {
+  async handler({ req, query }) {
     const logger = createLogger({ route: '/api/couple/portrait' });
-    const { coupleId } = query;
+    const authUser = await getAuthenticatedCoupleUser(req);
+    const { coupleId, list } = query;
+
+    if (list === 'true') {
+      const { data: couples, error: coupleError } = await dbRetry<Couple[]>(async () =>
+        supabaseAdmin
+          .from('Couple')
+          .select('*')
+          .or(`user1Id.eq.${authUser.id},user2Id.eq.${authUser.id}`)
+      );
+      if (coupleError) {
+        logger.error('Échec du chargement des couples', { userId: authUser.id }, coupleError);
+        throw new AppError('INTERNAL_ERROR', 'Impossible de charger la liste des couples.');
+      }
+      return NextResponse.json(couples || []);
+    }
+
+    if (!coupleId) {
+      throw new AppError('BAD_REQUEST', 'coupleId est requis.');
+    }
 
     // 1. Fetch the Couple
-    const { data: couple, error: coupleError } = await dbRetry<any>(async () =>
+    const { data: couple, error: coupleError } = await dbRetry<Couple>(async () =>
       supabaseAdmin
         .from('Couple')
         .select('*')
@@ -31,8 +55,12 @@ export const GET = withApiHandler({
       throw new AppError('COUPLE_NOT_FOUND', 'Couple introuvable.');
     }
 
+    if (couple.user1Id !== authUser.id && couple.user2Id !== authUser.id) {
+      throw new AppError('FORBIDDEN', 'Vous ne faites pas partie de ce couple.');
+    }
+
     // 2. Fetch all DailyQuestions for this couple, ordered by releasedAt DESC
-    const { data: dailyQuestions, error: dqError } = await dbRetry<any[]>(async () =>
+    const { data: dailyQuestions, error: dqError } = await dbRetry<DailyQuestion[]>(async () =>
       supabaseAdmin
         .from('DailyQuestion')
         .select('*')
@@ -63,7 +91,7 @@ export const GET = withApiHandler({
     if (questionsToReveal.length > 0) {
       const idsToReveal = questionsToReveal.map((q: { id: string }) => q.id);
 
-      const { error: revealError } = await dbRetry<any>(async () =>
+      const { error: revealError } = await dbRetry<DailyQuestion>(async () =>
         supabaseAdmin
           .from('DailyQuestion')
           .update({
@@ -90,7 +118,7 @@ export const GET = withApiHandler({
     }
 
     // 4. Fetch CouplePortraits ordered by month DESC
-    const { data: portraits, error: portraitError } = await dbRetry<any[]>(async () =>
+    const { data: portraits, error: portraitError } = await dbRetry<CouplePortrait[]>(async () =>
       supabaseAdmin
         .from('CouplePortrait')
         .select('*')
@@ -119,7 +147,6 @@ export const GET = withApiHandler({
  */
 function getParisUtcOffset(date: Date): number {
   const year = date.getUTCFullYear();
-  const month = date.getUTCMonth(); // 0-indexed
 
   // Last Sunday of March (start of CEST)
   const marchLast = new Date(Date.UTC(year, 2, 31));
