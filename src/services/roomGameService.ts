@@ -5,11 +5,15 @@ import {
   getPlayersInRoom,
   getQuestionById,
   listQuestionsForDeck,
+  getScoresByRoom,
+  updateResponseCorrectness,
 } from '@/lib/db/repositories';
 import { Room, Question } from '@/lib/db/types';
 import { AppError } from '@/lib/errors';
 import { getServerGameMode } from '@/game-modes/manifests';
 import { getPlayerHmac } from '@/lib/crypto';
+import { computeRevealResult, findImpostorPlayerId, RawResponse, ScoreRecord } from '@/lib/game/reveal';
+import { applyScores } from '@/lib/game/scoring';
 import { getUserEntitlements, roomHasActivePass, canAccessMode, getRoomPassInfo, getPlayerEntitlements, canViewProfile, canViewCoupleProfile } from '@/lib/monetization/entitlements';
 import { calculateProfile, EnrichedResponse } from '@/lib/profiling/calculateProfile';
 import { safeJsonParseRecord } from '@/lib/json';
@@ -222,19 +226,15 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
   const question = await getQuestionById(room.currentQuestionId);
   if (!question) throw new AppError('NOT_FOUND', 'Question not found');
 
-  if (currentMode === 'IMPOSTEUR' && room.roundConfig) {
-    const config = typeof room.roundConfig === 'string' ? safeJsonParseRecord(room.roundConfig) : room.roundConfig;
-    if (config?.imposterHash) {
-      const players = await getPlayersInRoom(room.id);
-      for (const p of players) {
-        const hash = await getPlayerHmac(p.id);
-        if (hash === config.imposterHash) {
-          question.correctAnswer = p.id;
-          break;
-        }
-      }
-    }
-  }
+  const impostorPlayerId =
+    currentMode === 'IMPOSTEUR' && room.roundConfig
+      ? await findImpostorPlayerId(
+          room.id,
+          room.roundConfig,
+          () => getPlayersInRoom(room.id),
+          getPlayerHmac
+        )
+      : undefined;
 
   const { data: responses, error: responsesError } = await supabaseAdmin
     .from('Response')
@@ -251,57 +251,34 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
     throw new AppError('INTERNAL_ERROR', 'No default game mode registered');
   }
 
-  const mappedResponses: Array<{
-    playerId: string;
-    answer: unknown;
-    timeSpentMs: number;
-    rawResponseId?: string;
-  }> = [];
-  for (const r of responses || []) {
-    const { isValid, parsedAnswer } = gameMode.engine.validateResponse(r.answer, question);
-    if (isValid) {
-      mappedResponses.push({
-        playerId: r.playerId,
-        answer: parsedAnswer,
-        timeSpentMs: new Date(r.timestamp).getTime(),
-        rawResponseId: r.id,
-      });
-    }
-  }
+  const roundConfigContext =
+    typeof room.roundConfig === 'string'
+      ? safeJsonParseRecord(room.roundConfig)
+      : (room.roundConfig ?? null);
 
-  const roundConfigContext = typeof room.roundConfig === 'string' ? safeJsonParseRecord(room.roundConfig) : room.roundConfig;
-  const calculatedScores = gameMode.engine.calculateScores(mappedResponses, question, roundConfigContext);
+  const rawResponses: RawResponse[] = (responses || []).map((r) => ({
+    id: r.id,
+    playerId: r.playerId,
+    answer: r.answer,
+    timestamp: r.timestamp ?? new Date().toISOString(),
+  }));
 
-  for (const scoreItem of calculatedScores) {
-    const resp = mappedResponses.find((m) => m.playerId === scoreItem.playerId);
-    if (resp?.rawResponseId) {
-      await supabaseAdmin
-        .from('Response')
-        .update({ isCorrect: scoreItem.isCorrect })
-        .eq('id', resp.rawResponseId);
-    }
+  const revealResult = computeRevealResult({
+    question,
+    responses: rawResponses,
+    gameMode,
+    roundConfig: roundConfigContext,
+    impostorPlayerId,
+  });
 
-    const { data: existingScore } = await supabaseAdmin
-      .from('Score')
-      .select('*')
-      .eq('roomId', room.id)
-      .eq('playerId', scoreItem.playerId)
-      .maybeSingle();
-
-    if (existingScore) {
-      await supabaseAdmin
-        .from('Score')
-        .update({ points: existingScore.points + scoreItem.pointsEarned })
-        .eq('id', existingScore.id);
-    } else {
-      await supabaseAdmin.from('Score').insert({
-        id: crypto.randomUUID(),
-        roomId: room.id,
-        playerId: scoreItem.playerId,
-        points: scoreItem.pointsEarned,
-      });
-    }
-  }
+  await applyScores(room.id, revealResult.scores, {
+    fetchExistingScores: async (roomId: string) => (await getScoresByRoom(roomId)) as ScoreRecord[],
+    updateResponse: updateResponseCorrectness,
+    upsertScores: async (scores: ScoreRecord[]) => {
+      const { error } = await supabaseAdmin.from('Score').upsert(scores);
+      if (error) throw error;
+    },
+  });
 
   const { data: updatedRoom } = await supabaseAdmin
     .from('Room')
@@ -314,10 +291,10 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
   return {
     success: true,
     status: updatedRoom?.status || 'DISCUSSION',
-    scores: calculatedScores,
+    scores: revealResult.scores,
     question: {
-      correctAnswer: question.correctAnswer,
-      explanation: question.explanation,
+      correctAnswer: revealResult.correctAnswer,
+      explanation: revealResult.explanation,
     },
   };
 }
