@@ -43,6 +43,8 @@ export function useCheckoutFeedback({
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const refreshRef = useRef(refreshEntitlements);
   const onPaidRef = useRef(onPaid);
+  // Intentionally not reset: onPaid must be reported at most once per product
+  // for the lifetime of this hook instance.
   const reportedRef = useRef<Set<CheckoutProduct>>(new Set());
 
   useEffect(() => {
@@ -67,7 +69,11 @@ export function useCheckoutFeedback({
     let isCurrent = true;
 
     if (!reportedRef.current.has(paid)) {
-      onPaidRef.current?.(paid);
+      try {
+        onPaidRef.current?.(paid);
+      } catch (err: unknown) {
+        logger.error('onPaid callback failed after checkout', { roomCode, playerId, product: paid }, err);
+      }
       reportedRef.current.add(paid);
     }
 

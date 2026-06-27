@@ -21,7 +21,7 @@ import type { Room, Response as GameResponse, Player, Question } from '@/lib/db/
 import { api, ApiClientError } from '@/lib/api/client';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
 import { useHostSession } from '@/hooks/useHostSession';
-import { useCheckoutFeedback } from '@/hooks/useCheckoutFeedback';
+import { useCheckoutFeedback, type CheckoutProduct } from '@/hooks/useCheckoutFeedback';
 
 export default function PlayerController() {
   const params = useParams();
@@ -297,7 +297,7 @@ export default function PlayerController() {
     setEntitlements(data);
   }, [playerId, roomCode]);
 
-  const handlePaid = useCallback((product: 'pass' | 'profile') => {
+  const handlePaid = useCallback((product: CheckoutProduct) => {
     capture(AnalyticsEvents.PURCHASE_COMPLETED, {
       room_code: roomCode,
       product_type: product,
