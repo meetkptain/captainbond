@@ -12,6 +12,7 @@ import { logger } from '@/lib/logger';
 import { safeJsonParse, safeJsonParseRecord } from '@/lib/json';
 import { withRetry } from '@/lib/db/withRetry';
 import { fetchWithTimeout } from '@/lib/fetch';
+import { normalizeQuestionInput } from '@/lib/questions/normalize';
 
 export interface QuestionListOptions {
   page?: number;
@@ -26,47 +27,17 @@ export async function getQuestionsList(options: QuestionListOptions) {
 }
 
 export async function addQuestion(input: Partial<Question>) {
-  if (!input.text || !input.mode || !input.category) {
-    throw new AppError('VALIDATION_ERROR', 'Champs manquants : text, mode, category');
-  }
-  return createQuestion({
-    id: input.id || crypto.randomUUID(),
-    text: input.text.trim(),
-    mode: input.mode.toUpperCase(),
-    correctAnswer: input.correctAnswer !== undefined ? String(input.correctAnswer).trim() : '',
-    options: input.options || [],
-    category: input.category.toUpperCase(),
-    difficulty: typeof input.difficulty === 'number' ? input.difficulty : parseInt(String(input.difficulty), 10) || 1,
-    isPremium: !!input.isPremium,
-    explanation: input.explanation ? input.explanation.trim() : null,
-    packId: input.packId || null,
-    tags: input.tags || [],
-    metadata: input.metadata || null,
-    createdAt: new Date().toISOString(),
-  });
+  const normalized = normalizeQuestionInput(input);
+  return createQuestion({ ...normalized, createdAt: new Date().toISOString() });
 }
 
 export async function addQuestionsBulk(inputs: Partial<Question>[]) {
-  const formatted = inputs.map((q) => {
-    if (!q.text || !q.mode || !q.category) {
-      throw new AppError('VALIDATION_ERROR', 'Champs manquants sur une question (text, mode, category)');
-    }
-    return {
-      id: q.id || crypto.randomUUID(),
-      text: q.text.trim(),
-      mode: q.mode.toUpperCase(),
-      correctAnswer: q.correctAnswer !== undefined ? String(q.correctAnswer).trim() : '',
-      options: q.options || [],
-      category: q.category.toUpperCase(),
-      difficulty: typeof q.difficulty === 'number' ? q.difficulty : parseInt(String(q.difficulty), 10) || 1,
-      isPremium: !!q.isPremium,
-      explanation: q.explanation ? q.explanation.trim() : null,
-      packId: q.packId || null,
-      tags: q.tags || [],
-      metadata: q.metadata || null,
-      createdAt: new Date().toISOString(),
-    };
-  });
+  const formatted = inputs.map((q) => ({
+    ...normalizeQuestionInput(q, undefined, {
+      message: 'Champs manquants sur une question (text, mode, category)',
+    }),
+    createdAt: new Date().toISOString(),
+  }));
   return createQuestions(formatted);
 }
 
@@ -159,18 +130,22 @@ export async function syncQuestionsFromCsv(csvText: string): Promise<{ count: nu
       parsedMetadata = safeJsonParseRecord(q.metadata);
     }
 
-    questionsToUpsert.push({
-      id: q.id || crypto.randomUUID(),
-      mode: q.mode.toUpperCase(),
-      text: q.text.replace(/^["']|["']$/g, ''),
-      correctAnswer: q.correctAnswer.trim(),
-      options: q.options ? q.options.split('|').map((o) => o.trim()) : [],
-      explanation: q.explanation ? q.explanation.trim() : null,
-      category: q.category ? q.category.toUpperCase() : 'GENERAL',
-      difficulty: parseInt(q.difficulty || '1', 10) || 1,
-      isPremium: q.isPremium === 'TRUE' || q.isPremium === 'true' || q.isPremium === '1',
-      metadata: parsedMetadata,
-    });
+    questionsToUpsert.push(
+      normalizeQuestionInput({
+        id: q.id,
+        text: q.text.replace(/^["']|["']$/g, ''),
+        mode: q.mode,
+        correctAnswer: q.correctAnswer,
+        options: q.options ? q.options.split('|').map((o) => o.trim()) : [],
+        category: q.category || 'GENERAL',
+        difficulty: q.difficulty,
+        isPremium: q.isPremium === 'TRUE' || q.isPremium === 'true' || q.isPremium === '1',
+        explanation: q.explanation,
+        packId: null,
+        tags: [],
+        metadata: parsedMetadata,
+      }),
+    );
   }
 
   if (questionsToUpsert.length > 0) {
@@ -190,7 +165,7 @@ export interface GenerateQuestionsInput {
   difficulty?: number | string;
 }
 
-function buildGeminiPrompt(mode: string, theme: string, count: number, category: string, difficulty: number): string {
+function buildGeminiPrompt(mode: string, theme: string, count: number, category: string): string {
   let formatInstructions = '';
 
   if (mode === 'QUIZ_FLASH') {
@@ -259,7 +234,7 @@ export async function generateQuestions(input: GenerateQuestionsInput): Promise<
   const questionCount = Math.min(Math.max(parseInt(String(input.count), 10) || 5, 1), 15);
   const difficultyNum = parseInt(String(input.difficulty), 10) || 1;
 
-  const promptText = buildGeminiPrompt(input.mode, input.theme, questionCount, input.category, difficultyNum);
+  const promptText = buildGeminiPrompt(input.mode, input.theme, questionCount, input.category);
   const geminiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
 
   const res = await withRetry(
