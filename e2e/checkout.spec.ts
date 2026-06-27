@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { createRoom, joinRoom, cleanupPlayer } from './fixtures/api';
 import { isSupabaseHealthy } from './fixtures/health';
 
-const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY || '';
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 
 test.describe('checkout flow', () => {
   test.beforeAll(async () => {

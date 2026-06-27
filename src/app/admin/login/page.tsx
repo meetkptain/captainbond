@@ -16,7 +16,7 @@ function LoginCard() {
   const urlErrorMsg = errorParam === 'invalid'
     ? 'Votre session a expiré ou est invalide. Veuillez vous reconnecter.'
     : errorParam === 'config'
-    ? "Erreur serveur: La variable ADMIN_PASSWORD n'est pas configurée."
+    ? "Erreur serveur: La variable ADMIN_PASSWORD_HASH n'est pas configurée."
     : null;
 
   const errorMsg = apiErrorMsg || urlErrorMsg;
