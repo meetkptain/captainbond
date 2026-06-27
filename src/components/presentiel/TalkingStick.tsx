@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useAudioSynthesis } from '@/hooks/useAudioSynthesis';
+import { imposteurManifest } from '@/game-modes/imposteur';
+import { mostLikelyToManifest } from '@/game-modes/most-likely-to';
+import type { ThemedQuestion } from '@/lib/presentiel/theme';
 import { ActivePlayStage } from './ActivePlayStage';
 import { PassPhoneStage } from './PassPhoneStage';
 import { ThemeChoiceStage } from './ThemeChoiceStage';
@@ -24,7 +27,7 @@ interface TalkingStickProps {
   onVoteComplete?: (votedPlayerId: string) => void;
   isMuted?: boolean;
   // New props for Host rotation and Theme selection
-  questions?: { text: string; tags?: string[] }[];
+  questions?: ThemedQuestion[];
   currentQuestionIndex?: number;
   onSelectQuestion?: (selectedIndex: number) => void;
 }
@@ -58,8 +61,8 @@ export function TalkingStick({
 
   const currentPlayer = players[currentPlayerIndex];
   const isFirstPlayer = currentPlayerIndex === 0;
-  const isImposteur = modeId === 'IMPOSTEUR';
-  const isVoteMode = modeId === 'MOST_LIKELY_TO';
+  const isImposteur = modeId === imposteurManifest.id;
+  const isVoteMode = modeId === mostLikelyToManifest.id;
   const hasChoices = questions && questions.length > (currentQuestionIndex ?? 0) + 1;
   const canChooseTheme = isFirstPlayer && hasChoices && !isImposteur && !isVoteMode;
 

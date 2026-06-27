@@ -25,6 +25,7 @@ export function useVoteCountdown() {
           window.clearInterval(intervalRef.current);
         }
         setVoteState('reveal');
+        setCountdown(0);
       } else {
         setCountdown(currentCount);
       }

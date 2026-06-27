@@ -1,11 +1,12 @@
 'use client';
 
 import { getQuestionTheme } from '@/lib/presentiel/theme';
+import type { ThemedQuestion } from '@/lib/presentiel/theme';
 import type { Player } from './TalkingStick';
 
 interface ThemeChoiceStageProps {
   currentPlayer: Player;
-  questions?: { text: string; tags?: string[] }[];
+  questions?: ThemedQuestion[];
   currentQuestionIndex?: number;
   onKeepCurrentQuestion: () => void;
   onSelectQuestion: (selectedIndex: number) => void;
