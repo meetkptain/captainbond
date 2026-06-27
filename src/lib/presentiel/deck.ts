@@ -44,7 +44,10 @@ export function sequenceDeck(questionsList: DeckQuestion[]): DeckQuestion[] {
     sequenced.push(lvl2.pop()!);
   }
 
-  const remaining = [...lvl1, ...lvl2, ...lvl3].sort(() => Math.random() - 0.5);
+  const usedIds = new Set(sequenced.map((q) => q.id));
+  const remaining = [...lvl1, ...lvl2, ...lvl3]
+    .filter((q) => !usedIds.has(q.id))
+    .sort(() => Math.random() - 0.5);
   sequenced.push(...remaining);
 
   return sequenced;

@@ -12,6 +12,25 @@ import { supabase } from '@/lib/supabase';
 import { CustomDeck, CustomQuestion } from '@/lib/custom-decks/types';
 import { DeckQuestion, sequenceDeck, injectWildcards, getImposteurQuestion } from '@/lib/presentiel/deck';
 
+function buildDeckFromCustom(
+  customDeck: CustomDeck | { questions: CustomQuestion[] } | null | undefined,
+  players: Player[],
+  modeId: string
+): DeckQuestion[] {
+  const questions = customDeck?.questions;
+  if (!questions?.length) return [];
+  const presentNames = new Set(players.map((p) => p.name.toLowerCase()));
+  return questions
+    .filter((q) => q.isGeneric || q.involvedPlayers?.every((name) => presentNames.has(name.toLowerCase())))
+    .map((q) => ({
+      id: q.id,
+      text: q.text,
+      mode: modeId,
+      intensityLevel: q.intensityLevel ?? 1,
+      tags: q.isGeneric ? ['generic'] : [],
+    }));
+}
+
 interface PresentialHostViewProps {
   roomCode: string;
   hostId: string;
@@ -69,23 +88,8 @@ export function PresentialHostView({
         if (customDeckJson) {
           try {
             const customDeck: CustomDeck = JSON.parse(customDeckJson);
-            // Smart Skip: filter questions based on present players
-            const presentNames = players.map(p => p.name.toLowerCase());
-            const activeQuestions: DeckQuestion[] = customDeck.questions
-              .filter(q => {
-                if (q.isGeneric) return true;
-                return q.involvedPlayers.every(name => 
-                  presentNames.includes(name.toLowerCase())
-                );
-              })
-              .map(q => ({
-                id: q.id,
-                text: q.text,
-                intensityLevel: q.intensityLevel,
-                tags: q.isGeneric ? ['generic'] : [],
-                mode: q.mode
-              }));
-            
+            const activeQuestions = buildDeckFromCustom(customDeck, players, modeId);
+
             if (activeQuestions.length > 0) {
               const targetSize = Math.min(activeQuestions.length, players.length * 3);
               const sequenced = sequenceDeck(activeQuestions);
@@ -294,19 +298,11 @@ export function PresentialHostView({
         }));
       })
       .on('broadcast', { event: 'INJECT_CUSTOM_DECK' }, ({ payload }) => {
-        const injectQuestions: DeckQuestion[] = (payload.questions as CustomQuestion[])
-          .filter(q => {
-            if (q.isGeneric) return true;
-            const presentNames = players.map(p => p.name.toLowerCase());
-            return q.involvedPlayers.every(name => presentNames.includes(name.toLowerCase()));
-          })
-          .map(q => ({
-            id: q.id,
-            text: q.text,
-            intensityLevel: q.intensityLevel,
-            tags: q.isGeneric ? ['generic'] : [],
-            mode: q.mode
-          }));
+        const injectQuestions = buildDeckFromCustom(
+          { questions: payload.questions as CustomQuestion[] },
+          players,
+          modeId
+        );
         if (injectQuestions.length > 0) {
           setToastMessage(`🌴 ${payload.senderName || 'Un spectateur'} injecte son deck de souvenirs !`);
           setTimeout(() => setToastMessage(null), 4500);

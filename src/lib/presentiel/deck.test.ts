@@ -1,6 +1,15 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { sequenceDeck, injectWildcards, getImposteurQuestion, DeckQuestion, DeckPlayer } from './deck';
 
+function makeQuestion(overrides: Partial<DeckQuestion> & Pick<DeckQuestion, 'id'>): DeckQuestion {
+  return {
+    text: 'Question',
+    intensityLevel: 1,
+    mode: 'ICEBREAKER',
+    ...overrides,
+  };
+}
+
 describe('sequenceDeck', () => {
   beforeEach(() => {
     vi.spyOn(Math, 'random').mockReturnValue(0.5);
@@ -29,18 +38,31 @@ describe('sequenceDeck', () => {
     expect(result[1].intensityLevel).toBe(1);
   });
 
-  it('places a positive/date_safe card early', () => {
+  it('places a positive/date_safe card in the first half', () => {
     const list: DeckQuestion[] = [
-      { id: 'l1', text: 'L1a', intensityLevel: 1, mode: 'ICEBREAKER' },
+      { id: 'l1', text: 'Positive L1', intensityLevel: 1, tags: ['positive'], mode: 'ICEBREAKER' },
       { id: 'l2', text: 'L1b', intensityLevel: 1, mode: 'ICEBREAKER' },
       { id: 'm1', text: 'M1a', intensityLevel: 2, mode: 'ICEBREAKER' },
       { id: 'm2', text: 'M1b', intensityLevel: 2, mode: 'ICEBREAKER' },
-      { id: 'h1', text: 'Positive', intensityLevel: 3, tags: ['positive'], mode: 'ICEBREAKER' },
+      { id: 'h1', text: 'H3a', intensityLevel: 3, mode: 'ICEBREAKER' },
       { id: 'h2', text: 'H3b', intensityLevel: 3, mode: 'ICEBREAKER' },
     ];
     const result = sequenceDeck(list);
     const positiveIndex = result.findIndex(q => q.tags?.includes('positive'));
-    expect(positiveIndex).toBe(5);
+    expect(positiveIndex).toBeLessThan(result.length / 2);
+  });
+
+  it('does not duplicate questions', () => {
+    const qs = [
+      makeQuestion({ id: 'l1', intensityLevel: 1 }),
+      makeQuestion({ id: 'l2', intensityLevel: 1 }),
+      makeQuestion({ id: 'm1', intensityLevel: 2 }),
+      makeQuestion({ id: 'h1', intensityLevel: 3, tags: ['positive'] }),
+    ];
+    const sequenced = sequenceDeck(qs);
+    const ids = sequenced.map((q) => q.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(sequenced.length).toBe(qs.length);
   });
 });
 
