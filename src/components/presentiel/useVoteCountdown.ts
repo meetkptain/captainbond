@@ -12,6 +12,7 @@ export function useVoteCountdown() {
   const start = useCallback(() => {
     if (intervalRef.current) {
       window.clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
 
     setVoteState('countdown');
@@ -23,6 +24,7 @@ export function useVoteCountdown() {
       if (currentCount <= 0) {
         if (intervalRef.current) {
           window.clearInterval(intervalRef.current);
+          intervalRef.current = null;
         }
         setVoteState('reveal');
         setCountdown(0);
@@ -35,6 +37,7 @@ export function useVoteCountdown() {
   const reset = useCallback(() => {
     if (intervalRef.current) {
       window.clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
     setVoteState('idle');
     setCountdown(3);
@@ -44,6 +47,7 @@ export function useVoteCountdown() {
     return () => {
       if (intervalRef.current) {
         window.clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     };
   }, []);

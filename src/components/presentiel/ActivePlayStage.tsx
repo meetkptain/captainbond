@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useAudioSynthesis } from '@/hooks/useAudioSynthesis';
 import { mostLikelyToManifest } from '@/game-modes/most-likely-to';
 import type { Player } from './TalkingStick';
@@ -48,15 +48,18 @@ export function ActivePlayStage({
   const nextPlayer = players[(currentPlayerIndex + 1) % players.length];
   const isVoteMode = modeId === mostLikelyToManifest.id;
 
-  const handleVote = (playerId: string) => {
-    if (onVoteComplete) {
-      onVoteComplete(playerId);
-    } else {
-      // Intentional fallback from the original TalkingStick: without a vote handler,
-      // treat a vote as advancing to the next turn.
-      onNext();
-    }
-  };
+  const handleVote = useCallback(
+    (playerId: string) => {
+      if (onVoteComplete) {
+        onVoteComplete(playerId);
+      } else {
+        // Intentional fallback from the original TalkingStick: without a vote handler,
+        // treat a vote as advancing to the next turn.
+        onNext();
+      }
+    },
+    [onNext, onVoteComplete]
+  );
 
   return (
     <div className="flex flex-col items-center justify-between gap-6 p-6 bg-slate-900/40 border border-slate-800/80 rounded-3xl backdrop-blur-md max-w-md mx-auto shadow-xl w-full animate-[fadeIn_0.25s_ease-out]">

@@ -62,7 +62,7 @@ export function TalkingStick({
   const isImposteur = modeId === imposteurManifest.id;
   const isVoteMode = modeId === mostLikelyToManifest.id;
   const hasChoices = questions && questions.length > (currentQuestionIndex ?? 0) + 1;
-  const canChooseTheme = isFirstPlayer && hasChoices && !isImposteur && !isVoteMode;
+  const canChooseTheme = isFirstPlayer && hasChoices && !!onSelectQuestion && !isImposteur && !isVoteMode;
 
   const handleReady = () => {
     playSynthesizedSound('chime', isMuted);
