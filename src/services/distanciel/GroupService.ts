@@ -10,7 +10,7 @@ export interface GroupMember {
 
 export type GroupPayloads = {
   'member_joined': { member: GroupMember };
-  'state_changed': { currentQuestionId: string | null; status: string; round: number };
+  'state_changed': { currentQuestionId: string | null; status: 'LOBBY' | 'PLAYING' | 'VOTED' | 'RESULTS'; round: number };
   'player_voted': { playerId: string; questionId: string; answer: string };
   'audio_signal': { signal: unknown; toPlayerId: string };
 };
@@ -91,7 +91,7 @@ export async function broadcastGroupState(
   groupId: string,
   senderId: string,
   currentQuestionId: string | null,
-  status: string,
+  status: 'LOBBY' | 'PLAYING' | 'VOTED' | 'RESULTS',
   round: number
 ): Promise<void> {
   const channel = activeGroupChannels.get(groupId);
