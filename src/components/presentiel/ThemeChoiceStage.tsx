@@ -6,6 +6,7 @@ interface ThemeChoiceStageProps {
   currentPlayer: Player;
   questions?: { text: string; tags?: string[] }[];
   currentQuestionIndex?: number;
+  onProceed: () => void;
   onSelectQuestion: (selectedIndex: number) => void;
 }
 
@@ -60,6 +61,7 @@ export function ThemeChoiceStage({
   currentPlayer,
   questions,
   currentQuestionIndex,
+  onProceed,
   onSelectQuestion,
 }: ThemeChoiceStageProps) {
   const hasChoices = questions && questions.length > (currentQuestionIndex ?? 0) + 1;
@@ -89,7 +91,7 @@ export function ThemeChoiceStage({
 
       <div className="w-full space-y-3 my-4">
         <button
-          onClick={() => onSelectQuestion(currentQuestionIndex ?? 0)}
+          onClick={onProceed}
           className="w-full py-4 px-5 bg-slate-950/60 hover:bg-amber-500 hover:text-slate-950 border border-slate-800 hover:border-amber-400 rounded-2xl text-left font-bold transition-all text-slate-200 cursor-pointer shadow-md flex justify-between items-center group active:scale-[0.98]"
         >
           <div className="flex flex-col text-left">

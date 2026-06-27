@@ -73,6 +73,11 @@ export function TalkingStick({
     }
   };
 
+  const handleProceed = () => {
+    playSynthesizedSound('chime', isMuted);
+    setStage('active');
+  };
+
   const handleSelectQuestion = (selectedIndex: number) => {
     playSynthesizedSound('chime', isMuted);
     if (onSelectQuestion) {
@@ -97,6 +102,7 @@ export function TalkingStick({
           currentPlayer={currentPlayer}
           questions={questions}
           currentQuestionIndex={currentQuestionIndex}
+          onProceed={handleProceed}
           onSelectQuestion={handleSelectQuestion}
         />
       )}
