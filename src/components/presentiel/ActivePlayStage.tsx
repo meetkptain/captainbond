@@ -15,7 +15,7 @@ interface ActivePlayStageProps {
   onNext: () => void;
   onSkip?: () => void;
   showSkip?: boolean;
-  onVoteComplete: (votedPlayerId: string) => void;
+  onVoteComplete?: (votedPlayerId: string) => void;
 }
 
 export function ActivePlayStage({
@@ -47,6 +47,16 @@ export function ActivePlayStage({
   const currentPlayer = players[currentPlayerIndex];
   const nextPlayer = players[(currentPlayerIndex + 1) % players.length];
   const isVoteMode = modeId === mostLikelyToManifest.id;
+
+  const handleVote = (playerId: string) => {
+    if (onVoteComplete) {
+      onVoteComplete(playerId);
+    } else {
+      // Intentional fallback from the original TalkingStick: without a vote handler,
+      // treat a vote as advancing to the next turn.
+      onNext();
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-between gap-6 p-6 bg-slate-900/40 border border-slate-800/80 rounded-3xl backdrop-blur-md max-w-md mx-auto shadow-xl w-full animate-[fadeIn_0.25s_ease-out]">
@@ -98,7 +108,7 @@ export function ActivePlayStage({
               {players.map((p) => (
                 <button
                   key={p.id}
-                  onClick={() => onVoteComplete(p.id)}
+                  onClick={() => handleVote(p.id)}
                   className="py-3 px-2 bg-slate-800/60 hover:bg-amber-500 hover:text-slate-950 border border-slate-700/50 hover:border-amber-400 rounded-xl text-sm font-bold transition-all text-slate-200 cursor-pointer shadow-sm text-center truncate active:scale-[0.97]"
                 >
                   {p.name}

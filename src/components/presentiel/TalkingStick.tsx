@@ -14,8 +14,6 @@ export interface Player {
   name: string;
 }
 
-const noopVoteComplete = () => {};
-
 interface TalkingStickProps {
   players: Player[];
   currentPlayerIndex: number;
@@ -117,7 +115,7 @@ export function TalkingStick({
           onNext={onNext}
           onSkip={onSkip}
           showSkip={showSkip}
-          onVoteComplete={onVoteComplete ?? noopVoteComplete}
+          onVoteComplete={onVoteComplete}
         />
       )}
     </>
