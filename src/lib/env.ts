@@ -10,7 +10,7 @@ const REQUIRED_STRING_VARS = [
   'NEXT_PUBLIC_SUPABASE_URL',
   'NEXT_PUBLIC_SUPABASE_ANON_KEY',
   'SUPABASE_SERVICE_ROLE_KEY',
-  'ADMIN_PASSWORD',
+  'ADMIN_PASSWORD_HASH',
   'ADMIN_JWT_SECRET',
   'PLAYER_JWT_SECRET',
   'HOST_TOKEN_SECRET',
@@ -47,6 +47,14 @@ function checkSecretLength(name: string, value: string | undefined): string | nu
   return null;
 }
 
+export function requireEnv(name: string): string {
+  const value = process.env[name];
+  if (!value || value.trim().length === 0) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+  return value;
+}
+
 export function validateEnv(): EnvValidationResult {
   const missing: string[] = [];
   const warnings: string[] = [];
@@ -59,6 +67,10 @@ export function validateEnv(): EnvValidationResult {
       const warning = checkSecretLength(key, value);
       if (warning) warnings.push(warning);
     }
+  }
+
+  if (process.env.ADMIN_PASSWORD) {
+    warnings.push('ADMIN_PASSWORD est déprécié. Utilisez ADMIN_PASSWORD_HASH à la place.');
   }
 
   for (const key of OPTIONAL_BUT_RECOMMENDED) {

@@ -61,10 +61,8 @@ describe('getStripe', () => {
     vi.unstubAllEnvs();
   });
 
-  it('throws a CONFIG_MISSING AppError when STRIPE_SECRET_KEY is not set', () => {
+  it('throws when STRIPE_SECRET_KEY is not set', () => {
     delete process.env.STRIPE_SECRET_KEY;
-    expect(() => getStripe()).toThrow(
-      new AppError('CONFIG_MISSING', 'STRIPE_SECRET_KEY is not configured'),
-    );
+    expect(() => getStripe()).toThrow('Missing required environment variable: STRIPE_SECRET_KEY');
   });
 });

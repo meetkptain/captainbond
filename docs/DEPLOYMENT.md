@@ -11,7 +11,7 @@ Copier `.env.example` vers `.env.local` en local et configurer les variables sur
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
-- `ADMIN_PASSWORD`
+- `ADMIN_PASSWORD_HASH` (hash bcrypt du mot de passe admin)
 - `ADMIN_JWT_SECRET` (min. 32 caractères)
 - `HOST_TOKEN_SECRET` (min. 32 caractères, **différent** de `ADMIN_SYNC_SECRET` et des autres secrets)
 - `PLAYER_JWT_SECRET` (min. 32 caractères, différent de `ADMIN_JWT_SECRET`)
@@ -78,8 +78,8 @@ npm run pages:deploy
 ## 6. Sécurité
 
 - Les secrets JWT et HOST_TOKEN doivent être générés aléatoirement (256 bits / 32+ caractères).
-- `ADMIN_PASSWORD` doit être long et unique.
-- Ne jamais commiter `.env.local`.
+- `ADMIN_PASSWORD` est déprécié ; utiliser `ADMIN_PASSWORD_HASH` (hash bcrypt) à la place.
+- Ne jamais commiter `.env.local` ni `ADMIN_PASSWORD` en clair.
 - Vérifier que `SUPABASE_SERVICE_ROLE_KEY` n’est utilisé que côté serveur.
 
 ## 7. Mise à jour

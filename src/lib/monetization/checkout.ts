@@ -6,15 +6,13 @@ import { dbRetry } from '@/lib/db/withRetry';
 import { withTimeout } from '@/lib/fetch';
 import { logger } from '@/lib/logger';
 import { AppError } from '@/lib/errors';
+import { requireEnv } from '@/lib/env';
 
 let stripeInstance: Stripe | null = null;
 
 export function getStripe(): Stripe {
   if (!stripeInstance) {
-    const key = process.env.STRIPE_SECRET_KEY;
-    if (!key) {
-      throw new AppError('CONFIG_MISSING', 'STRIPE_SECRET_KEY is not configured');
-    }
+    const key = requireEnv('STRIPE_SECRET_KEY');
     stripeInstance = new Stripe(key, {
       apiVersion: '2026-05-27.dahlia',
       httpClient: Stripe.createFetchHttpClient(),

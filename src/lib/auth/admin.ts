@@ -76,21 +76,13 @@ export async function hashAdminPassword(password: string): Promise<string> {
 
 export async function verifyAdminPassword(password: string): Promise<void> {
   const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
-  const adminPassword = process.env.ADMIN_PASSWORD;
 
-  if (adminPasswordHash) {
-    const valid = await bcrypt.compare(password, adminPasswordHash);
-    if (!valid) {
-      throw new AppError('INVALID_CREDENTIALS', 'Mot de passe incorrect', { status: 401 });
-    }
-    return;
+  if (!adminPasswordHash) {
+    throw new AppError('INTERNAL_ERROR', 'ADMIN_PASSWORD_HASH n\'est pas configuré', { status: 500 });
   }
 
-  // Fallback déprécié : comparaison en clair (à migrer vers ADMIN_PASSWORD_HASH)
-  if (!adminPassword) {
-    throw new AppError('INTERNAL_ERROR', 'Mot de passe administrateur non configuré', { status: 500 });
-  }
-  if (password !== adminPassword) {
+  const valid = await bcrypt.compare(password, adminPasswordHash);
+  if (!valid) {
     throw new AppError('INVALID_CREDENTIALS', 'Mot de passe incorrect', { status: 401 });
   }
 }

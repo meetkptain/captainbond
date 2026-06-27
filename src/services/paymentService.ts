@@ -16,8 +16,9 @@ import { supabaseAdmin } from '@/lib/supabase-admin';
 import { dbRetry, withRetry } from '@/lib/db/withRetry';
 import { withTimeout } from '@/lib/fetch';
 import { logger } from '@/lib/logger';
+import { requireEnv } from '@/lib/env';
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY || '';
+const stripeSecretKey = requireEnv('STRIPE_SECRET_KEY');
 const stripe = new Stripe(stripeSecretKey, {
   apiVersion: '2026-05-27.dahlia',
   httpClient: Stripe.createFetchHttpClient(),

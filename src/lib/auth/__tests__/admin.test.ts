@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import bcrypt from 'bcryptjs';
 import {
   signAdminSession,
   verifyAdminSession,
@@ -6,10 +7,12 @@ import {
   ADMIN_COOKIE_NAME,
 } from '../admin';
 
+const TEST_PASSWORD = 'super-secret-admin-password';
+
 describe('admin auth', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.stubEnv('ADMIN_JWT_SECRET', 'admin-secret-test-32-chars-long!!');
-    vi.stubEnv('ADMIN_PASSWORD', 'super-secret-admin-password');
+    vi.stubEnv('ADMIN_PASSWORD_HASH', await bcrypt.hash(TEST_PASSWORD, 4));
   });
 
   afterEach(() => {
@@ -36,11 +39,27 @@ describe('admin auth', () => {
   });
 
   it('verifies the admin password', async () => {
-    await expect(verifyAdminPassword('super-secret-admin-password')).resolves.not.toThrow();
+    await expect(verifyAdminPassword(TEST_PASSWORD)).resolves.not.toThrow();
   });
 
   it('throws on wrong admin password', async () => {
     await expect(verifyAdminPassword('wrong-password')).rejects.toThrow('Mot de passe incorrect');
+  });
+
+  it('throws internal error when ADMIN_PASSWORD_HASH is missing', async () => {
+    vi.unstubAllEnvs();
+    vi.stubEnv('ADMIN_JWT_SECRET', 'admin-secret-test-32-chars-long!!');
+    await expect(verifyAdminPassword(TEST_PASSWORD)).rejects.toThrow("ADMIN_PASSWORD_HASH n'est pas configuré");
+  });
+
+  it('throws at import if STRIPE_SECRET_KEY is missing', async () => {
+    const originalStripeKey = process.env.STRIPE_SECRET_KEY;
+    delete process.env.STRIPE_SECRET_KEY;
+    vi.resetModules();
+    await expect(import('@/services/paymentService')).rejects.toThrow('STRIPE_SECRET_KEY');
+    if (originalStripeKey) {
+      process.env.STRIPE_SECRET_KEY = originalStripeKey;
+    }
   });
 
   it('exposes the cookie name', () => {
