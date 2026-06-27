@@ -2,14 +2,14 @@ import { test, expect } from '@playwright/test';
 
 // Plaintext password used only to type into the E2E login form.
 // Production auth uses the bcrypt hash in ADMIN_PASSWORD_HASH.
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+const E2E_ADMIN_PASSWORD = process.env.E2E_ADMIN_PASSWORD;
 
 test.describe('admin login', () => {
-  test.skip(() => !ADMIN_PASSWORD, 'ADMIN_PASSWORD not configured (plaintext E2E test password)');
+  test.skip(() => !E2E_ADMIN_PASSWORD, 'E2E_ADMIN_PASSWORD not configured');
 
   test('admin can login and access dashboard', async ({ page }) => {
     await page.goto('/admin/login');
-    await page.fill('input#password', ADMIN_PASSWORD!);
+    await page.fill('input#password', E2E_ADMIN_PASSWORD!);
     await page.click('button[type="submit"]');
 
     await page.waitForURL('/admin');

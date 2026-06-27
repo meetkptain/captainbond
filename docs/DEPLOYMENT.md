@@ -26,6 +26,10 @@ Copier `.env.example` vers `.env.local` en local et configurer les variables sur
 - `GOOGLE_SHEETS_CSV_URL` + `ADMIN_SYNC_SECRET` (sync questions)
 - `GEMINI_API_KEY` (génération questions)
 
+### Tests E2E (optionnelles)
+
+- `E2E_ADMIN_PASSWORD` — mot de passe admin en clair utilisé uniquement par Playwright pour le test de connexion à `/admin/login`. Ne pas utiliser en production ; la production utilise `ADMIN_PASSWORD_HASH`.
+
 ### Validation locale
 
 ```bash
