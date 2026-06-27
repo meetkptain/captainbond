@@ -7,6 +7,7 @@ import { Icon } from '@/components/Icon';
 import { joinGroupSession, leaveGroupSession, broadcastGroupState, broadcastPlayerVote, GroupMember, GroupEvent } from '@/services/distanciel/GroupService';
 import { api } from '@/lib/api/client';
 import { Question } from '@/lib/db/types';
+import { useVoiceChat } from '@/hooks/useVoiceChat';
 
 export default function RemoteGroupPage() {
   const params = useParams();
@@ -48,7 +49,11 @@ export default function RemoteGroupPage() {
   
   // Voice Chat States
   const [isVoiceConnected, setIsVoiceConnected] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const { isMuted, toggleMute } = useVoiceChat({
+    groupId,
+    playerId: playerId || '',
+    isEnabled: isVoiceConnected,
+  });
 
   // Sync session handler
   const handleEvent = useCallback((event: GroupEvent) => {
@@ -155,13 +160,9 @@ export default function RemoteGroupPage() {
     setStatus('RESULTS');
   };
 
-  // Voice chat controls (Agora Mock)
+  // Voice chat controls
   const toggleVoice = () => {
     setIsVoiceConnected(!isVoiceConnected);
-  };
-
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
   };
 
   if (!isJoined) {
