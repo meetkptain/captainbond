@@ -1,35 +1,14 @@
 'use client';
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useAudioSynthesis, isPresentialSound } from '@/hooks/useAudioSynthesis';
+import { usePresentialRealtime } from '@/hooks/usePresentialRealtime';
 import { HourglassTimer } from './HourglassTimer';
 import { TalkingStick, Player } from './TalkingStick';
 import { DiscussionPhase } from './DiscussionPhase';
 import { Paywall } from './Paywall';
 import { EndGameSummary } from './EndGameSummary';
-import { capture, AnalyticsEvents } from '@/lib/analytics';
-import { supabase } from '@/lib/supabase';
-import { CustomDeck, CustomQuestion } from '@/lib/custom-decks/types';
-import { DeckQuestion, sequenceDeck, injectWildcards, getImposteurQuestion } from '@/lib/presentiel/deck';
-
-function buildDeckFromCustom(
-  customDeck: CustomDeck | { questions: CustomQuestion[] } | null | undefined,
-  players: Player[],
-  modeId: string
-): DeckQuestion[] {
-  const questions = customDeck?.questions;
-  if (!questions?.length) return [];
-  const presentNames = new Set(players.map((p) => p.name.toLowerCase()));
-  return questions
-    .filter((q) => q.isGeneric || q.involvedPlayers?.every((name) => presentNames.has(name.toLowerCase())))
-    .map((q) => ({
-      id: q.id,
-      text: q.text,
-      mode: modeId,
-      intensityLevel: q.intensityLevel ?? 1,
-      tags: q.isGeneric ? ['generic'] : [],
-    }));
-}
+import { getImposteurQuestion } from '@/lib/presentiel/deck';
 
 interface PresentialHostViewProps {
   roomCode: string;
@@ -48,293 +27,90 @@ export function PresentialHostView({
   modeId,
   onExit
 }: PresentialHostViewProps) {
-  const [questions, setQuestions] = useState<DeckQuestion[]>([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
-  const [phase, setPhase] = useState<'question' | 'imposteur_voting' | 'imposteur_reveal' | 'discussion'>('question');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // Imposteur state
-  const [imposteurIndex, setImposteurIndex] = useState<number | null>(null);
-  const [imposteurSetupFinished, setImposteurSetupFinished] = useState(false);
-  const [setupPlayerIndex, setSetupPlayerIndex] = useState(0);
-  const [isHolding, setIsHolding] = useState(false);
-  const [checkedVoters, setCheckedVoters] = useState<Record<string, boolean>>({}); // { playerId: guessedCorrectly }
-  const [votingCountdown, setVotingCountdown] = useState(3);
-  const [isVotingCountdownActive, setIsVotingCountdownActive] = useState(false);
-
-  // Spectator state
+  // UI state
   const [showQRModal, setShowQRModal] = useState(false);
-  const [spectatorVotes, setSpectatorVotes] = useState<Record<string, number>>({});
   const [floatingEmojis, setFloatingEmojis] = useState<{ id: string; emoji: string; x: number }[]>([]);
-
-  // Scores & Mute state
-  const [scores, setScores] = useState<Record<string, number>>({});
   const [isMuted, setIsMuted] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [isGameEnded, setIsGameEnded] = useState(false);
-
-  // Paywall & Entitlements state
-  const [entitlements, setEntitlements] = useState<{ accessibleModes?: string[] } | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showPaywall, setShowPaywall] = useState(false);
 
-  useEffect(() => {
-    async function loadDeck() {
-      try {
-        // Check for custom deck from vault
-        const customDeckJson = typeof window !== 'undefined' ? sessionStorage.getItem('cb_active_custom_deck') : null;
-        if (customDeckJson) {
-          try {
-            const customDeck: CustomDeck = JSON.parse(customDeckJson);
-            const activeQuestions = buildDeckFromCustom(customDeck, players, modeId);
-
-            if (activeQuestions.length > 0) {
-              const targetSize = Math.min(activeQuestions.length, players.length * 3);
-              const sequenced = sequenceDeck(activeQuestions);
-              setQuestions(sequenced.slice(0, targetSize));
-              sessionStorage.removeItem('cb_active_custom_deck');
-              setLoading(false);
-              return; // Skip the default deck
-            }
-          } catch (e) {
-            console.error('Failed to load custom deck:', e);
-          }
-        }
-
-        const res = await fetch(
-          `/api/questions/deck?roomCode=${roomCode}&hostId=${hostId}&hostToken=${hostToken}`
-        );
-        if (!res.ok) {
-          throw new Error('Impossible de charger les questions');
-        }
-        const data = await res.json();
-        
-        // Filter by mode
-        let filtered: DeckQuestion[] = data.filter((q: DeckQuestion) => q.mode === modeId);
-        
-        // Mode specific overrides
-        if (modeId === 'DATE_NIGHT') {
-          filtered = data.filter((q: DeckQuestion) => q.tags?.includes('date_safe'));
-        } else if (modeId === 'FAMILY') {
-          filtered = data.filter((q: DeckQuestion) => q.mode === modeId && q.tags?.includes('positive'));
-        }
-
-        if (filtered.length === 0) {
-          // Fallback if no questions matched the mode
-          filtered = data.filter((q: DeckQuestion) => q.mode === 'ICEBREAKER');
-        }
-
-        // Sequence and inject wildcards
-        let preparedDeck = [...filtered];
-        if (modeId !== 'IMPOSTEUR') {
-          preparedDeck = injectWildcards(preparedDeck, players, modeId);
-        } else {
-          preparedDeck = sequenceDeck(preparedDeck);
-        }
-
-        // Check for presential couples and inject specialized couple questions
-        const couplesJson = typeof window !== 'undefined' ? sessionStorage.getItem('cb_presentiel_couples') : null;
-        if (couplesJson) {
-          try {
-            const couplesList: string[][] = JSON.parse(couplesJson);
-            if (couplesList.length > 0) {
-              const coupleQuestions: DeckQuestion[] = [];
-              couplesList.forEach((c, idx) => {
-                const pA = c[0];
-                const pB = c[1];
-                coupleQuestions.push({
-                  id: `couple-q1-${idx}-${Date.now()}`,
-                  text: `💖 COMPLICITÉ : ${pA} et ${pB}, quel est le plus beau souvenir de votre rencontre ? L'autre doit valider !`,
-                  intensityLevel: 1,
-                  tags: ['couple', 'positive'],
-                  mode: modeId
-                });
-                coupleQuestions.push({
-                  id: `couple-q2-${idx}-${Date.now()}`,
-                  text: `💖 ALIGNEMENT : Si ${pA} devait citer le plus mignon petit défaut de ${pB} en un mot, est-ce que ${pB} devinerait le même ?`,
-                  intensityLevel: 2,
-                  tags: ['couple'],
-                  mode: modeId
-                });
-              });
-              if (coupleQuestions.length > 0) {
-                if (preparedDeck.length >= 4) {
-                  preparedDeck.splice(2, 0, coupleQuestions[0]);
-                  if (coupleQuestions.length > 1) {
-                    preparedDeck.splice(Math.min(preparedDeck.length, 5), 0, coupleQuestions[1]);
-                  }
-                } else {
-                  preparedDeck.push(...coupleQuestions);
-                }
-              }
-            }
-          } catch (e) {
-            console.error('Failed to parse couples for presential deck:', e);
-          }
-        }
-
-        // Limit presential session to 6 questions for pacing
-        setQuestions(preparedDeck.slice(0, 6));
-
-        // Fetch entitlements
-        const entitlementsRes = await fetch(
-          `/api/me/entitlements?playerId=${hostId}&roomCode=${roomCode}`
-        ).catch(() => null);
-        
-        if (entitlementsRes && entitlementsRes.ok) {
-          const loadedEntitlements = await entitlementsRes.json();
-          setEntitlements(loadedEntitlements);
-        }
-
-        setLoading(false);
-      } catch (err) {
-        console.error(err);
-        setError('Erreur lors du chargement des questions');
-        setLoading(false);
-      }
-    }
-    loadDeck();
-  }, [roomCode, hostId, hostToken, modeId, players]);
-
-  // Handle Imposteur selection on new question
-  useEffect(() => {
-    if (modeId === 'IMPOSTEUR' && players.length > 0) {
-      const randomIndex = Math.floor(Math.random() * players.length);
-      requestAnimationFrame(() => {
-        setImposteurIndex(randomIndex);
-        setImposteurSetupFinished(false);
-        setSetupPlayerIndex(0);
-        setIsHolding(false);
-      });
-    }
-  }, [currentQuestionIndex, modeId, players]);
-
-  // Web Audio Synthesizer for reactions
   const { play: playSynthesizedSound } = useAudioSynthesis();
-
-  const handlePlayerFinished = useCallback(() => {
-    if (currentPlayerIndex < players.length - 1) {
-      setCurrentPlayerIndex(prev => prev + 1);
-    } else {
-      // All players answered -> Discussion or Imposteur voting phase
-      if (modeId === 'IMPOSTEUR') {
-        setPhase('imposteur_voting');
-        setVotingCountdown(3);
-        setIsVotingCountdownActive(true);
-        setCheckedVoters({});
-      } else {
-        setPhase('discussion');
-      }
-      capture(AnalyticsEvents.QUESTION_ANSWERED, {
-        roomCode,
-        modeId,
-        questionIndex: currentQuestionIndex,
-      });
-    }
-  }, [currentPlayerIndex, players, modeId, currentQuestionIndex, roomCode]);
 
   const triggerLocalEmoji = useCallback((emoji: string) => {
     const id = crypto.randomUUID();
     const x = 10 + Math.random() * 80;
-    setFloatingEmojis(prev => [...prev, { id, emoji, x }]);
+    setFloatingEmojis((prev) => [...prev, { id, emoji, x }]);
     setTimeout(() => {
-      setFloatingEmojis(prev => prev.filter(e => e.id !== id));
+      setFloatingEmojis((prev) => prev.filter((e) => e.id !== id));
     }, 2000);
   }, []);
 
-  const triggerLocalJoker = useCallback((targetPlayerName: string) => {
+  const handleTriggerSound = useCallback((soundType: string) => {
+    if (isPresentialSound(soundType)) {
+      playSynthesizedSound(soundType, isMuted);
+    }
+  }, [playSynthesizedSound, isMuted]);
+
+  const handleTriggerJoker = useCallback((targetPlayerName: string) => {
     playSynthesizedSound('joker_bell', isMuted);
     setToastMessage(`🕊️ Joker Solidaire activé par un ange gardien pour ${targetPlayerName} !`);
     setTimeout(() => {
       setToastMessage(null);
     }, 4500);
-    handlePlayerFinished();
-  }, [playSynthesizedSound, isMuted, handlePlayerFinished]);
+  }, [playSynthesizedSound, isMuted]);
 
-  // Setup broadcast channel
-  const channel = useMemo(() => {
-    return supabase.channel(`room-events-${roomCode}`);
-  }, [roomCode]);
+  const handleInjectDeck = useCallback((senderName: string) => {
+    setToastMessage(`🌴 ${senderName} injecte son deck de souvenirs !`);
+    setTimeout(() => setToastMessage(null), 4500);
+  }, []);
 
-  // Synchronization with spectator devices
-  useEffect(() => {
-    const broadcastState = () => {
-      channel.send({
-        type: 'broadcast',
-        event: 'ROOM_STATE_UPDATE',
-        payload: {
-          currentQuestionText: modeId === 'IMPOSTEUR'
-            ? "Chacun répond à sa question secrète à tour de rôle."
-            : questions[currentQuestionIndex]?.text || '',
-          currentPlayerName: players[currentPlayerIndex]?.name || '',
-          phase,
-          players,
-          modeId
-        }
-      });
-    };
+  const game = usePresentialRealtime({
+    roomCode,
+    hostId,
+    hostToken,
+    players,
+    modeId,
+    onTriggerSound: handleTriggerSound,
+    onTriggerEmoji: triggerLocalEmoji,
+    onTriggerJoker: handleTriggerJoker,
+    onInjectDeck: handleInjectDeck,
+    onExit,
+  });
 
-    channel
-      .on('broadcast', { event: 'REQUEST_ROOM_STATE' }, () => {
-        broadcastState();
-      })
-      .on('broadcast', { event: 'TRIGGER_SOUND' }, ({ payload }) => {
-        if (isPresentialSound(payload.soundType)) {
-          playSynthesizedSound(payload.soundType, isMuted);
-        }
-      })
-      .on('broadcast', { event: 'TRIGGER_EMOJI' }, ({ payload }) => {
-        triggerLocalEmoji(payload.emoji);
-      })
-      .on('broadcast', { event: 'TRIGGER_JOKER_SOLIDAIRE' }, ({ payload }) => {
-        triggerLocalJoker(payload.targetPlayerName);
-      })
-      .on('broadcast', { event: 'SUBMIT_SPECTATOR_VOTE' }, ({ payload }) => {
-        setSpectatorVotes(prev => ({
-          ...prev,
-          [payload.suspectPlayerId]: (prev[payload.suspectPlayerId] || 0) + 1
-        }));
-      })
-      .on('broadcast', { event: 'INJECT_CUSTOM_DECK' }, ({ payload }) => {
-        const injectQuestions = buildDeckFromCustom(
-          { questions: payload.questions as CustomQuestion[] },
-          players,
-          modeId
-        );
-        if (injectQuestions.length > 0) {
-          setToastMessage(`🌴 ${payload.senderName || 'Un spectateur'} injecte son deck de souvenirs !`);
-          setTimeout(() => setToastMessage(null), 4500);
-          setQuestions(prev => [...prev, ...injectQuestions]);
-        }
-      })
-      .subscribe();
-
-    broadcastState();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [channel, currentQuestionIndex, currentPlayerIndex, phase, questions, players, modeId, isMuted, playSynthesizedSound, triggerLocalEmoji, triggerLocalJoker]);
-
-  // Handle Imposteur Voting Countdown
-  useEffect(() => {
-    let timerId: ReturnType<typeof setTimeout> | undefined;
-    if (phase === 'imposteur_voting' && isVotingCountdownActive && votingCountdown > 0) {
-      timerId = setTimeout(() => {
-        setVotingCountdown(prev => prev - 1);
-      }, 1000);
-    } else if (phase === 'imposteur_voting' && isVotingCountdownActive && votingCountdown === 0) {
-      playSynthesizedSound('gong', isMuted);
-      requestAnimationFrame(() => {
-        setIsVotingCountdownActive(false);
-      });
-    }
-    return () => {
-      if (timerId) clearTimeout(timerId);
-    };
-  }, [phase, isVotingCountdownActive, votingCountdown, isMuted, playSynthesizedSound]);
+  const {
+    questions,
+    currentQuestionIndex,
+    currentPlayerIndex,
+    phase,
+    loading,
+    error,
+    imposteurIndex,
+    imposteurSetupFinished,
+    setupPlayerIndex,
+    isHolding,
+    setIsHolding,
+    checkedVoters,
+    toggleCheckedVoter,
+    votingCountdown,
+    isVotingCountdownActive,
+    setVotingCountdown,
+    setIsVotingCountdownActive,
+    spectatorVotes,
+    scores,
+    isGameEnded,
+    entitlements,
+    handleNext,
+    handleReveal,
+    handleSkip,
+    handleExit,
+    handlePlayerFinished,
+    handleVoteComplete,
+    handleImposteurNext,
+    restartGame,
+    advanceSetup,
+    swapQuestion,
+  } = game;
 
   if (showPaywall) {
     return (
@@ -376,12 +152,11 @@ export function PresentialHostView({
   const currentQuestion = questions[currentQuestionIndex];
   const hasAccess = entitlements?.accessibleModes?.includes('*') || entitlements?.accessibleModes?.includes(modeId);
 
-  // Timer duration logic based on mode
-  let duration = 60; // default 1 min
+  let duration = 60;
   if (modeId === 'DEEP_CONNECTION' || modeId === 'DATE_NIGHT') {
-    duration = 180; // 3 min
+    duration = 180;
   } else if (modeId === 'SPICY') {
-    duration = 90; // 1.5 min
+    duration = 90;
   }
 
   const handlePlayerSkipped = () => {
@@ -389,72 +164,10 @@ export function PresentialHostView({
     setTimeout(() => {
       setToastMessage(null);
     }, 4500);
-    handlePlayerFinished();
+    handleSkip();
   };
 
-  const handleVoteComplete = (votedPlayerId: string) => {
-    setScores(prev => ({
-      ...prev,
-      [votedPlayerId]: (prev[votedPlayerId] || 0) + 1
-    }));
-    handlePlayerFinished();
-  };
-
-  const handleImposteurNext = () => {
-    const imposteurPlayer = players[imposteurIndex!];
-    const newPoints: Record<string, number> = {};
-
-    // Determine correct voters (Civils who guessed the Imposteur correctly)
-    const correctVoterIds = Object.entries(checkedVoters)
-      .filter(([, guessedCorrectly]) => guessedCorrectly)
-      .map(([voterId]) => voterId);
-
-    // Civil players get +1 if they guessed correctly
-    players.forEach(p => {
-      if (p.id !== imposteurPlayer.id && correctVoterIds.includes(p.id)) {
-        newPoints[p.id] = 1;
-      }
-    });
-
-    // Imposteur gets +2 if nobody found them
-    if (correctVoterIds.length === 0) {
-      newPoints[imposteurPlayer.id] = 2;
-    }
-
-    // Update state scores
-    setScores(prev => {
-      const updated = { ...prev };
-      Object.entries(newPoints).forEach(([pid, pts]) => {
-        updated[pid] = (updated[pid] || 0) + pts;
-      });
-      return updated;
-    });
-
-    // Proceed to next question
-    handleNextQuestion();
-  };
-
-  const handleNextQuestion = () => {
-    // Lock after 3 questions (disabled for now - presential is free)
-    /*
-    const isPremiumMode = modeId === 'DATE_NIGHT' || modeId === 'SPICY' || modeId === 'DEEP_CONNECTION';
-    if ((isPremiumMode || currentQuestionIndex >= 2) && !hasAccess) {
-      setShowPaywall(true);
-      return;
-    }
-    */
-
-    setPhase('question');
-    setCurrentPlayerIndex(0);
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(prev => prev + 1);
-    } else {
-      // Show endgame summary screen
-      setIsGameEnded(true);
-    }
-  };
-
-  // Imposteur Game Setup Screen (Sequential Anti-Peeking Flow with Hold-to-Reveal)
+  // Imposteur Game Setup Screen
   if (modeId === 'IMPOSTEUR' && !imposteurSetupFinished) {
     const activeSetupPlayer = players[setupPlayerIndex];
     const isLastSetupPlayer = setupPlayerIndex === players.length - 1;
@@ -471,7 +184,6 @@ export function PresentialHostView({
 
     return (
       <div className="flex flex-col items-center justify-between gap-6 p-6 max-w-md mx-auto min-h-[500px] text-slate-100 bg-slate-900/60 backdrop-blur-md rounded-3xl border border-slate-700/50 shadow-2xl text-center w-full relative overflow-hidden">
-        {/* Beautiful Repeating Visual Pattern */}
         <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[repeating-linear-gradient(45deg,#d4af37,#d4af37_10px,#000_10px,#000_20px)] animate-[pulse_3s_infinite]"></div>
 
         <div className="flex flex-col gap-4 mt-6 z-10 w-full">
@@ -490,7 +202,6 @@ export function PresentialHostView({
           </div>
         </div>
 
-        {/* Display secret role while holding */}
         <div className="w-full min-h-[180px] z-10 flex items-center justify-center">
           {isHolding ? (
             <div className="w-full animate-[fadeIn_0.2s_ease-out]">
@@ -539,14 +250,7 @@ export function PresentialHostView({
           </button>
 
           <button
-            onClick={() => {
-              setIsHolding(false);
-              if (isLastSetupPlayer) {
-                setImposteurSetupFinished(true);
-              } else {
-                setSetupPlayerIndex(prev => prev + 1);
-              }
-            }}
+            onClick={advanceSetup}
             disabled={isHolding}
             className="w-full py-3 bg-slate-800 hover:bg-slate-700 disabled:opacity-30 text-slate-200 font-bold text-sm rounded-xl transition-all cursor-pointer border border-slate-700 shadow-sm"
           >
@@ -557,7 +261,7 @@ export function PresentialHostView({
     );
   }
 
-  // Imposteur Voting Countdown Screen (Physical Voting Option B)
+  // Imposteur Voting Countdown Screen
   if (phase === 'imposteur_voting') {
     return (
       <div className="flex flex-col items-center justify-between gap-6 p-6 max-w-md mx-auto min-h-[500px] text-slate-100 bg-slate-900/60 backdrop-blur-md rounded-3xl border border-slate-700/50 shadow-2xl text-center w-full relative overflow-hidden">
@@ -600,7 +304,7 @@ export function PresentialHostView({
 
           {votingCountdown === 0 && (
             <button
-              onClick={() => setPhase('imposteur_reveal')}
+              onClick={handleReveal}
               className="w-full py-4 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-slate-950 font-extrabold text-base rounded-2xl transition-all cursor-pointer shadow-lg shadow-emerald-500/10 flex items-center justify-center gap-2"
             >
               Révéler l&apos;Imposteur
@@ -614,7 +318,7 @@ export function PresentialHostView({
     );
   }
 
-  // Imposteur Reveal and Score Submission Screen (Physical Voting Option B)
+  // Imposteur Reveal and Score Submission Screen
   if (phase === 'imposteur_reveal') {
     const imposteurPlayer = players[imposteurIndex!];
     const correctVotersCount = Object.values(checkedVoters).filter(Boolean).length;
@@ -623,16 +327,15 @@ export function PresentialHostView({
     return (
       <div className="flex flex-col items-center justify-between gap-6 p-6 max-w-md mx-auto min-h-[500px] text-slate-100 bg-slate-900/60 backdrop-blur-md rounded-3xl border border-slate-700/50 shadow-2xl text-center w-full relative overflow-hidden">
         <div className="flex flex-col items-center gap-5 mt-2 w-full z-10 animate-[fadeIn_0.25s_ease-out]">
-          
+
           <div className="flex flex-col gap-1.5">
             <span className="text-[10px] text-rose-400 font-bold uppercase tracking-widest font-mono">Fin de la manche</span>
             <h2 className="text-2xl font-black text-white tracking-tight uppercase">Révélation !</h2>
           </div>
 
-          {/* Reveal Card */}
           <div className="w-full bg-slate-950/80 border border-slate-800 rounded-2xl p-5 flex flex-col items-center gap-3.5 relative overflow-hidden shadow-inner">
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[repeating-linear-gradient(45deg,#ef4444,#ef4444_10px,#000_10px,#000_20px)]"></div>
-            
+
             <span className="text-5xl animate-[pulse_1.5s_infinite]">🎭</span>
             <div>
               <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mb-0.5">L&apos;Imposteur était...</span>
@@ -640,14 +343,13 @@ export function PresentialHostView({
                 {imposteurPlayer.name}
               </span>
             </div>
-            
+
             <div className="bg-slate-900/80 border border-slate-800/80 px-4 py-2 rounded-xl text-[11px] text-slate-400 max-w-xs leading-relaxed">
               La question secrète de l&apos;Imposteur était : <br />
               <strong className="text-amber-300 font-medium block mt-1 italic">&ldquo;{getImposteurQuestion(currentQuestion.text)}&rdquo;</strong>
             </div>
           </div>
 
-          {/* Voting Results Checklist */}
           <div className="w-full text-left bg-slate-900/40 border border-slate-800/60 p-4 rounded-2xl">
             <span className="text-xs text-slate-500 font-bold uppercase tracking-wider block mb-2 text-center">Qui l&apos;avait démasqué ?</span>
             <div className="space-y-2 max-h-[140px] overflow-y-auto pr-1">
@@ -660,7 +362,7 @@ export function PresentialHostView({
                     <input
                       type="checkbox"
                       checked={isChecked}
-                      onChange={(e) => setCheckedVoters(prev => ({ ...prev, [p.id]: e.target.checked }))}
+                      onChange={(e) => toggleCheckedVoter(p.id, e.target.checked)}
                       className="w-5 h-5 rounded border-slate-700 bg-slate-950 text-emerald-500 focus:ring-emerald-500/40 cursor-pointer"
                     />
                   </label>
@@ -669,7 +371,6 @@ export function PresentialHostView({
             </div>
           </div>
 
-          {/* Automatic Score Preview */}
           <div className="w-full bg-slate-950/40 border border-slate-900 p-3.5 rounded-xl text-left text-xs font-mono">
             <span className="text-slate-500 font-bold block mb-1 uppercase tracking-wider text-[9px]">Calcul des Points :</span>
             {imposteurFound ? (
@@ -685,7 +386,6 @@ export function PresentialHostView({
             )}
           </div>
 
-          {/* Spectator votes */}
           {Object.keys(spectatorVotes).length > 0 && (
             <div className="w-full bg-slate-950/30 border border-slate-900/50 p-3 rounded-xl text-left text-[11px] font-mono mt-1">
               <span className="text-slate-500 font-bold block mb-1 uppercase tracking-wider text-[9px]">Votes du Public (Spectateurs) :</span>
@@ -726,16 +426,8 @@ export function PresentialHostView({
         players={players}
         modeId={modeId}
         scores={scores}
-        onRestart={() => {
-          setIsGameEnded(false);
-          setCurrentQuestionIndex(0);
-          setCurrentPlayerIndex(0);
-          setPhase('question');
-          setScores({});
-          // Reshuffle deck
-          setQuestions(prev => [...prev].sort(() => Math.random() - 0.5));
-        }}
-        onExit={onExit}
+        onRestart={restartGame}
+        onExit={handleExit}
       />
     );
   }
@@ -744,7 +436,7 @@ export function PresentialHostView({
   if (phase === 'discussion') {
     return (
       <DiscussionPhase
-        onResume={handleNextQuestion}
+        onResume={handleNext}
         topic={modeId === 'IMPOSTEUR' ? "Débattez pour trouver qui est l'imposteur ce soir !" : undefined}
         scores={scores}
         players={players}
@@ -770,7 +462,6 @@ export function PresentialHostView({
         }
       `}</style>
 
-      {/* Render Floating Emojis */}
       {floatingEmojis.map(item => (
         <span
           key={item.id}
@@ -781,7 +472,6 @@ export function PresentialHostView({
         </span>
       ))}
 
-      {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 max-w-sm w-11/12 bg-amber-500/95 backdrop-blur-md text-slate-950 font-bold px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2 border border-amber-400 animate-[fadeIn_0.2s_ease-out]">
           <span className="text-xl">🕊️</span>
@@ -789,7 +479,6 @@ export function PresentialHostView({
         </div>
       )}
 
-      {/* Header bar with room code and sound controls */}
       <div className="flex justify-between items-center w-full px-2 gap-4">
         <div className="flex items-center gap-2">
           <span className="text-xs text-slate-400 font-bold uppercase tracking-wider hidden sm:inline">
@@ -804,7 +493,7 @@ export function PresentialHostView({
           </button>
         </div>
         <button
-          onClick={() => setIsMuted(prev => !prev)}
+          onClick={() => setIsMuted((prev) => !prev)}
           className="p-2 rounded-lg bg-slate-900/60 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-slate-200 transition-all cursor-pointer"
           title={isMuted ? 'Activer le son' : 'Couper le son'}
         >
@@ -821,7 +510,6 @@ export function PresentialHostView({
         </button>
       </div>
 
-      {/* Hourglass Timer */}
       <HourglassTimer
         duration={duration}
         mode="automatic"
@@ -829,13 +517,12 @@ export function PresentialHostView({
         isMuted={isMuted}
       />
 
-      {/* Talking Stick Rotation Controls */}
       <TalkingStick
         players={players}
         currentPlayerIndex={currentPlayerIndex}
         onNext={handlePlayerFinished}
         question={
-          modeId === 'IMPOSTEUR' 
+          modeId === 'IMPOSTEUR'
             ? "Chacun répond à sa question secrète à tour de rôle."
             : currentQuestion.text
         }
@@ -846,16 +533,9 @@ export function PresentialHostView({
         isMuted={isMuted}
         questions={questions}
         currentQuestionIndex={currentQuestionIndex}
-        onSelectQuestion={(selectedIndex) => {
-          const updated = [...questions];
-          const temp = updated[currentQuestionIndex];
-          updated[currentQuestionIndex] = updated[selectedIndex];
-          updated[selectedIndex] = temp;
-          setQuestions(updated);
-        }}
+        onSelectQuestion={swapQuestion}
       />
 
-      {/* Free questions progress gauge (disabled - presential is free) */}
       {false && !hasAccess && (
         <div className="w-full text-center space-y-1.5 my-2">
           <p className="text-xs text-slate-400 font-medium">
@@ -870,15 +550,13 @@ export function PresentialHostView({
         </div>
       )}
 
-      {/* Exit Button */}
       <button
-        onClick={onExit}
+        onClick={handleExit}
         className="text-xs text-slate-500 hover:text-slate-400 font-semibold text-center cursor-pointer hover:underline mt-1"
       >
         Quitter la partie
       </button>
 
-      {/* QR Code Modale */}
       {showQRModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-[fadeIn_0.2s_ease-out]">
           <div className="bg-slate-900 border border-slate-800 p-8 rounded-3xl max-w-sm w-full text-center relative space-y-6 shadow-2xl">
@@ -894,7 +572,7 @@ export function PresentialHostView({
               <span className="text-xs text-amber-500 font-bold uppercase tracking-widest font-mono">Rejoindre le salon</span>
               <h3 className="text-xl font-black text-slate-200">Spectateur Interactif</h3>
             </div>
-            
+
             <div className="bg-slate-950/60 border border-slate-800/80 p-5 rounded-2xl space-y-2">
               <p className="text-xs text-slate-400 leading-relaxed">
                 Rendez-vous sur votre téléphone sur :
@@ -909,11 +587,11 @@ export function PresentialHostView({
                 {roomCode}
               </p>
             </div>
-            
+
             <p className="text-[10px] text-slate-500 leading-relaxed">
               Friction zéro : pas besoin de créer de compte ni d&apos;entrer de prénom. Flashez ou tapez pour buzzer la table !
             </p>
-            
+
             <button
               onClick={() => setShowQRModal(false)}
               className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-xl transition-all cursor-pointer border border-slate-700 text-sm"
