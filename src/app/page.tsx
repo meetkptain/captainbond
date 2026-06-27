@@ -36,6 +36,7 @@ const AMBIENCES = [
 export default function Home() {
   const router = useRouter();
   const codeInputRef = useRef<HTMLInputElement>(null);
+  const joinSectionRef = useRef<HTMLElement>(null);
 
   const [roomCode, setRoomCode] = useState('');
   const [isCreating, setIsCreating] = useState(false);
@@ -94,7 +95,7 @@ export default function Home() {
             </LandingButton>
             <LandingButton
               variant="secondary"
-              onClick={() => document.getElementById('join-section')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => joinSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}
             >
               Rejoindre une table
             </LandingButton>
@@ -150,7 +151,7 @@ export default function Home() {
       </Section>
 
       {/* Join Section */}
-      <Section id="join-section" compact className="bg-white/[0.02]">
+      <Section ref={joinSectionRef} id="join-section" compact className="bg-white/[0.02]">
         <div className="max-w-xl mx-auto text-center space-y-6">
           <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
             Rejoindre une table

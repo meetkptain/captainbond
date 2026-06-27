@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { LandingLayout } from '@/components/landing/LandingLayout';
 import { LandingButton } from '@/components/landing/LandingButton';
 import { Section } from '@/components/landing/Section';
@@ -25,6 +25,8 @@ export default function CorporateLandingPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const contactRef = useRef<HTMLElement>(null);
+  const estimateurRef = useRef<HTMLElement>(null);
 
   const quote = getB2BQuote(participants);
   const estimatedPrice = estimateB2BPrice(participants);
@@ -65,12 +67,12 @@ export default function CorporateLandingPage() {
             Brisez la glace, encouragez la parole et renforcez la cohésion de vos collaborateurs avec une expérience de jeu de société 2.0 interactive.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <LandingButton onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
+            <LandingButton onClick={() => contactRef.current?.scrollIntoView({ behavior: 'smooth' })}>
               Demander un devis
             </LandingButton>
             <LandingButton
               variant="secondary"
-              onClick={() => document.getElementById('estimateur')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => estimateurRef.current?.scrollIntoView({ behavior: 'smooth' })}
             >
               Estimer mon événement
             </LandingButton>
@@ -118,14 +120,14 @@ export default function CorporateLandingPage() {
       </Section>
 
       {/* Calculator */}
-      <Section id="estimateur" compact className="bg-white/[0.02]">
+      <Section ref={estimateurRef} id="estimateur" compact className="bg-white/[0.02]">
         <div className="max-w-2xl mx-auto">
           <CorporatePricingCalculator participants={participants} onChange={setParticipants} />
         </div>
       </Section>
 
       {/* Contact Form */}
-      <Section id="contact">
+      <Section ref={contactRef} id="contact">
         <div className="max-w-2xl mx-auto">
           {submitted ? (
             <div className="text-center py-16 space-y-4 rounded-3xl border border-white/10 bg-white/[0.02]">
