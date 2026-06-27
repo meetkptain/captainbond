@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAudioSynthesis } from '@/hooks/useAudioSynthesis';
 import { ActivePlayStage } from './ActivePlayStage';
 import { PassPhoneStage } from './PassPhoneStage';
@@ -42,22 +42,19 @@ export function TalkingStick({
   onSelectQuestion,
 }: TalkingStickProps) {
   const [stage, setStage] = useState<'pass' | 'theme' | 'active'>('pass');
-  const [prevPlayerIndex, setPrevPlayerIndex] = useState(currentPlayerIndex);
+  const prevPlayerIndexRef = useRef(currentPlayerIndex);
   const { play: playSynthesizedSound } = useAudioSynthesis();
 
   useEffect(() => {
-    if (currentPlayerIndex !== prevPlayerIndex) {
-      requestAnimationFrame(() => {
-        setPrevPlayerIndex(currentPlayerIndex);
-        setStage('pass');
-      });
+    if (currentPlayerIndex !== prevPlayerIndexRef.current) {
+      prevPlayerIndexRef.current = currentPlayerIndex;
+      setStage('pass');
     }
-  }, [currentPlayerIndex, prevPlayerIndex]);
+  }, [currentPlayerIndex]);
 
   if (!players || players.length === 0) return null;
 
   const currentPlayer = players[currentPlayerIndex];
-  const nextPlayer = players[(currentPlayerIndex + 1) % players.length];
   const isFirstPlayer = currentPlayerIndex === 0;
   const isImposteur = modeId === 'IMPOSTEUR';
   const isVoteMode = modeId === 'MOST_LIKELY_TO';
@@ -73,7 +70,7 @@ export function TalkingStick({
     }
   };
 
-  const handleProceed = () => {
+  const handleKeepCurrentQuestion = () => {
     playSynthesizedSound('chime', isMuted);
     setStage('active');
   };
@@ -91,7 +88,6 @@ export function TalkingStick({
       {stage === 'pass' && (
         <PassPhoneStage
           currentPlayer={currentPlayer}
-          nextPlayer={nextPlayer}
           isFirstPlayer={isFirstPlayer}
           isImposteur={isImposteur}
           onReady={handleReady}
@@ -102,7 +98,7 @@ export function TalkingStick({
           currentPlayer={currentPlayer}
           questions={questions}
           currentQuestionIndex={currentQuestionIndex}
-          onProceed={handleProceed}
+          onKeepCurrentQuestion={handleKeepCurrentQuestion}
           onSelectQuestion={handleSelectQuestion}
         />
       )}

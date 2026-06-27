@@ -4,7 +4,6 @@ import type { Player } from './TalkingStick';
 
 interface PassPhoneStageProps {
   currentPlayer: Player;
-  nextPlayer: Player;
   isFirstPlayer: boolean;
   isImposteur: boolean;
   onReady: () => void;

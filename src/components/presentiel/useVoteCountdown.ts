@@ -7,25 +7,24 @@ export type VoteState = 'idle' | 'countdown' | 'reveal';
 export function useVoteCountdown() {
   const [voteState, setVoteState] = useState<VoteState>('idle');
   const [countdown, setCountdown] = useState(3);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<number | null>(null);
 
   const start = useCallback(() => {
     if (intervalRef.current) {
-      clearInterval(intervalRef.current);
+      window.clearInterval(intervalRef.current);
     }
 
     setVoteState('countdown');
     setCountdown(3);
 
     let currentCount = 3;
-    intervalRef.current = setInterval(() => {
+    intervalRef.current = window.setInterval(() => {
       currentCount -= 1;
       if (currentCount <= 0) {
         if (intervalRef.current) {
-          clearInterval(intervalRef.current);
+          window.clearInterval(intervalRef.current);
         }
         setVoteState('reveal');
-        setCountdown(0);
       } else {
         setCountdown(currentCount);
       }
@@ -34,7 +33,7 @@ export function useVoteCountdown() {
 
   const reset = useCallback(() => {
     if (intervalRef.current) {
-      clearInterval(intervalRef.current);
+      window.clearInterval(intervalRef.current);
     }
     setVoteState('idle');
     setCountdown(3);
@@ -43,7 +42,7 @@ export function useVoteCountdown() {
   useEffect(() => {
     return () => {
       if (intervalRef.current) {
-        clearInterval(intervalRef.current);
+        window.clearInterval(intervalRef.current);
       }
     };
   }, []);
