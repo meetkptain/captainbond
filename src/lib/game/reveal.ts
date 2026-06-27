@@ -53,7 +53,8 @@ export function computeRevealResult(input: ComputeRevealInput): RevealResult {
 
   const mappedResponses: ValidatedResponse[] = [];
   for (const r of responses) {
-    const { isValid, parsedAnswer } = gameMode.engine.validateResponse(r.answer as string, workingQuestion);
+    const answer = typeof r.answer === 'string' ? r.answer : String(r.answer ?? '');
+    const { isValid, parsedAnswer } = gameMode.engine.validateResponse(answer, workingQuestion);
     if (isValid) {
       mappedResponses.push({
         playerId: r.playerId,
@@ -84,7 +85,6 @@ export function computeRevealResult(input: ComputeRevealInput): RevealResult {
 }
 
 export async function findImpostorPlayerId(
-  roomId: string,
   roundConfig: unknown,
   getPlayers: () => Promise<Array<{ id: string }>>,
   getHmac: (playerId: string) => Promise<string>

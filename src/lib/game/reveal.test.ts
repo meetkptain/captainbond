@@ -124,7 +124,7 @@ describe('findImpostorPlayerId', () => {
     const getPlayers = vi.fn().mockResolvedValue([{ id: 'p-1' }]);
     const getHmac = vi.fn().mockResolvedValue('hash');
 
-    const result = await findImpostorPlayerId('room-1', {}, getPlayers, getHmac);
+    const result = await findImpostorPlayerId({}, getPlayers, getHmac);
 
     expect(result).toBeUndefined();
     expect(getPlayers).not.toHaveBeenCalled();
@@ -135,7 +135,6 @@ describe('findImpostorPlayerId', () => {
     const getHmac = vi.fn((playerId: string) => Promise.resolve(playerId === 'p-2' ? 'target-hash' : 'other-hash'));
 
     const result = await findImpostorPlayerId(
-      'room-1',
       { imposterHash: 'target-hash' },
       getPlayers,
       getHmac
@@ -151,7 +150,6 @@ describe('findImpostorPlayerId', () => {
     const getHmac = vi.fn().mockResolvedValue('matched-hash');
 
     const result = await findImpostorPlayerId(
-      'room-1',
       JSON.stringify({ imposterHash: 'matched-hash' }),
       getPlayers,
       getHmac
@@ -165,7 +163,6 @@ describe('findImpostorPlayerId', () => {
     const getHmac = vi.fn().mockResolvedValue('unmatched-hash');
 
     const result = await findImpostorPlayerId(
-      'room-1',
       { imposterHash: 'target-hash' },
       getPlayers,
       getHmac

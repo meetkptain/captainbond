@@ -6,7 +6,6 @@ import {
   getQuestionById,
   listQuestionsForDeck,
   getScoresByRoom,
-  updateResponseCorrectness,
 } from '@/lib/db/repositories';
 import { Room, Question } from '@/lib/db/types';
 import { AppError } from '@/lib/errors';
@@ -229,7 +228,6 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
   const impostorPlayerId =
     currentMode === 'IMPOSTEUR' && room.roundConfig
       ? await findImpostorPlayerId(
-          room.id,
           room.roundConfig,
           () => getPlayersInRoom(room.id),
           getPlayerHmac
@@ -273,7 +271,12 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
 
   await applyScores(room.id, revealResult.scores, {
     fetchExistingScores: async (roomId: string) => (await getScoresByRoom(roomId)) as ScoreRecord[],
-    updateResponse: updateResponseCorrectness,
+    updateResponses: async (updates) => {
+      await supabaseAdmin.from('Response').upsert(
+        updates.map((u) => ({ id: u.responseId, isCorrect: u.isCorrect })),
+        { onConflict: 'id' }
+      );
+    },
     upsertScores: async (scores: ScoreRecord[]) => {
       const { error } = await supabaseAdmin.from('Score').upsert(scores);
       if (error) throw error;
