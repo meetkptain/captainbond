@@ -109,7 +109,7 @@ model Score {
   points    Int      @default(0)
   updatedAt DateTime @updatedAt
 
-  @@index([roomId])
+  @@unique([roomId, playerId])
   @@index([playerId])
 }
 

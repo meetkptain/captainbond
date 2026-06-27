@@ -5,14 +5,12 @@ import {
   getPlayersInRoom,
   getQuestionById,
   listQuestionsForDeck,
-  getScoresByRoom,
 } from '@/lib/db/repositories';
 import { Room, Question } from '@/lib/db/types';
 import { AppError } from '@/lib/errors';
 import { getServerGameMode } from '@/game-modes/manifests';
 import { getPlayerHmac } from '@/lib/crypto';
-import { computeRevealResult, findImpostorPlayerId, RawResponse, ScoreRecord } from '@/lib/game/reveal';
-import { applyScores } from '@/lib/game/scoring';
+import { computeRevealResult, findImpostorPlayerId, RawResponse } from '@/lib/game/reveal';
 import { getUserEntitlements, roomHasActivePass, canAccessMode, getRoomPassInfo, getPlayerEntitlements, canViewProfile, canViewCoupleProfile } from '@/lib/monetization/entitlements';
 import { calculateProfile, EnrichedResponse } from '@/lib/profiling/calculateProfile';
 import { safeJsonParseRecord } from '@/lib/json';
@@ -269,19 +267,27 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
     impostorPlayerId,
   });
 
-  await applyScores(room.id, revealResult.scores, {
-    fetchExistingScores: async (roomId: string) => (await getScoresByRoom(roomId)) as ScoreRecord[],
-    updateResponses: async (updates) => {
-      await supabaseAdmin.from('Response').upsert(
-        updates.map((u) => ({ id: u.responseId, isCorrect: u.isCorrect })),
-        { onConflict: 'id' }
-      );
-    },
-    upsertScores: async (scores: ScoreRecord[]) => {
-      const { error } = await supabaseAdmin.from('Score').upsert(scores);
-      if (error) throw error;
-    },
+  const responseUpdates = revealResult.scores
+    .filter((s) => s.rawResponseId)
+    .map((s) => ({
+      response_id: s.rawResponseId,
+      is_correct: s.isCorrect,
+    }));
+
+  const scoreUpserts = revealResult.scores.map((s) => ({
+    player_id: s.playerId,
+    points_to_add: s.pointsEarned,
+  }));
+
+  const { error: rpcError } = await supabaseAdmin.rpc('upsert_reveal_scores', {
+    p_room_id: room.id,
+    p_response_updates: responseUpdates,
+    p_score_upserts: scoreUpserts,
   });
+
+  if (rpcError) {
+    throw new AppError('INTERNAL_ERROR', 'Failed to save scores', { cause: rpcError });
+  }
 
   const { data: updatedRoom } = await supabaseAdmin
     .from('Room')
