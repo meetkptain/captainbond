@@ -24,8 +24,6 @@ export default function AdminDashboardPage() {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [players, setPlayers] = useState<Player[]>([]);
   const [totalQuestions, setTotalQuestions] = useState<number>(0);
-  const [totalRooms, setTotalRooms] = useState<number>(0);
-  const [totalPlayers, setTotalPlayers] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -33,15 +31,11 @@ export default function AdminDashboardPage() {
       try {
         const data = await api.get<{
           totalQuestions?: number;
-          totalRooms?: number;
-          totalPlayers?: number;
           rooms?: Room[];
           players?: Player[];
         }>('/api/admin/stats');
 
         setTotalQuestions(data.totalQuestions || 0);
-        setTotalRooms(data.totalRooms || 0);
-        setTotalPlayers(data.totalPlayers || 0);
         setRooms(data.rooms || []);
         setPlayers(data.players || []);
       } catch (err) {

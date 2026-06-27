@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { SignJWT } from 'jose';
 import { ADMIN_COOKIE_NAME } from '@/lib/auth/admin';
+import { PLAYER_COOKIE_NAME } from '@/lib/auth/player';
 
 vi.mock('next/server', () => {
   class MockNextRequest {
@@ -33,7 +34,7 @@ vi.mock('next/server', () => {
 
   class MockNextResponse extends Response {
     public cookies = {
-      set: () => undefined,
+      set: vi.fn(),
     };
 
     constructor(body?: BodyInit | null, init?: ResponseInit) {
@@ -74,6 +75,7 @@ describe('middleware', () => {
   beforeEach(() => {
     vi.stubEnv('ADMIN_JWT_SECRET', 'admin-jwt-secret-32-chars-long!!');
     vi.stubEnv('ADMIN_SYNC_SECRET', 'sync-secret-32-chars-long!!!!');
+    vi.stubEnv('PLAYER_JWT_SECRET', 'player-jwt-secret-32-chars-long!');
   });
 
   afterEach(() => {
@@ -133,7 +135,58 @@ describe('middleware', () => {
     expect(res.headers.get('x-request-id')).toBe('req-3');
   });
 
-  it('exports a matcher for admin pages and admin API routes', () => {
-    expect(config.matcher).toEqual(['/admin/:path*', '/api/admin/:path*']);
+  it('allows /api/admin/sync with a valid admin cookie only', async () => {
+    const token = await signAdminToken();
+    const req = new NextRequest(
+      new Request('http://localhost/api/admin/sync', {
+        headers: {
+          cookie: `${ADMIN_COOKIE_NAME}=${token}`,
+          'x-request-id': 'req-4',
+        },
+      })
+    );
+    const res = await middleware(req);
+
+    expect(res.status).toBe(200);
+    expect(res.headers.get('x-request-id')).toBe('req-4');
+  });
+
+  it('returns 401 and clears the cookie for /api/room/vote with an invalid player cookie', async () => {
+    const req = new NextRequest(
+      new Request('http://localhost/api/room/vote', {
+        headers: {
+          cookie: `${PLAYER_COOKIE_NAME}=invalid-token`,
+          'x-request-id': 'req-5',
+        },
+      })
+    );
+    const res = await middleware(req);
+
+    expect(res.status).toBe(401);
+    expect(res.headers.get('x-request-id')).toBe('req-5');
+    const body = await res.json();
+    expect(body.error).toBe('Session joueur invalide');
+    expect(res.cookies.set).toHaveBeenCalledWith(PLAYER_COOKIE_NAME, '', { maxAge: 0, path: '/' });
+  });
+
+  it('allows /api/room/vote through when no player cookie is present', async () => {
+    const req = new NextRequest(
+      new Request('http://localhost/api/room/vote', {
+        headers: { 'x-request-id': 'req-6' },
+      })
+    );
+    const res = await middleware(req);
+
+    expect(res.status).toBe(200);
+    expect(res.headers.get('x-request-id')).toBe('req-6');
+  });
+
+  it('exports a matcher for admin and player routes', () => {
+    expect(config.matcher).toEqual([
+      '/admin/:path*',
+      '/api/admin/:path*',
+      '/api/room/:path*',
+      '/api/me/:path*',
+    ]);
   });
 });

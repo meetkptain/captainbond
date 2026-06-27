@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { verifyAdminSession, ADMIN_COOKIE_NAME } from '@/lib/auth/admin';
+import { verifyPlayerSession, PLAYER_COOKIE_NAME } from '@/lib/auth/player';
 import { logger } from '@/lib/logger';
 
 const PUBLIC_ADMIN_PATHS = new Set([
@@ -24,6 +25,14 @@ async function verifyAdminCookie(req: NextRequest): Promise<boolean> {
   }
 }
 
+function isAdminRoute(pathname: string): boolean {
+  return pathname.startsWith('/admin') || pathname.startsWith('/api/admin');
+}
+
+function isPlayerRoute(pathname: string): boolean {
+  return pathname.startsWith('/api/room') || pathname.startsWith('/api/me');
+}
+
 export async function middleware(req: NextRequest): Promise<NextResponse> {
   const requestId = getRequestId(req);
   const { pathname } = req.nextUrl;
@@ -35,15 +44,38 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
     return NextResponse.next({ request: { headers: requestHeaders } });
   }
 
-  if (pathname === '/api/admin/sync') {
-    const isAdmin = await verifyAdminCookie(req);
-    const syncSecret = process.env.ADMIN_SYNC_SECRET;
-    const authHeader = req.headers.get('Authorization');
-    const isSync = !!syncSecret && authHeader === `Bearer ${syncSecret}`;
+  if (isAdminRoute(pathname)) {
+    if (pathname === '/api/admin/sync') {
+      const isAdmin = await verifyAdminCookie(req);
+      const syncSecret = process.env.ADMIN_SYNC_SECRET;
+      const authHeader = req.headers.get('Authorization');
+      const isSync = !!syncSecret && authHeader === `Bearer ${syncSecret}`;
 
-    if (!isAdmin && !isSync) {
-      logger.warn('Unauthorized admin sync attempt', { requestId, pathname });
-      const response = NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
+      if (!isAdmin && !isSync) {
+        logger.warn('Unauthorized admin sync attempt', { requestId, pathname });
+        const response = NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
+        response.headers.set('x-request-id', requestId);
+        return response;
+      }
+
+      return NextResponse.next({ request: { headers: requestHeaders } });
+    }
+
+    const isAdmin = await verifyAdminCookie(req);
+
+    if (!isAdmin) {
+      logger.warn('Unauthorized admin access attempt', { requestId, pathname });
+
+      if (pathname.startsWith('/api/admin')) {
+        const response = NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
+        response.headers.set('x-request-id', requestId);
+        return response;
+      }
+
+      const response = NextResponse.redirect(
+        new URL('/admin/login?error=invalid', req.url)
+      );
+      response.cookies.set(ADMIN_COOKIE_NAME, '', { maxAge: 0, path: '/' });
       response.headers.set('x-request-id', requestId);
       return response;
     }
@@ -51,28 +83,32 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
     return NextResponse.next({ request: { headers: requestHeaders } });
   }
 
-  const isAdmin = await verifyAdminCookie(req);
-
-  if (!isAdmin) {
-    logger.warn('Unauthorized admin access attempt', { requestId, pathname });
-
-    if (pathname.startsWith('/api/admin')) {
-      const response = NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
-      response.headers.set('x-request-id', requestId);
-      return response;
+  if (isPlayerRoute(pathname)) {
+    const playerSecret = process.env.PLAYER_JWT_SECRET;
+    if (playerSecret) {
+      const token = req.cookies.get(PLAYER_COOKIE_NAME)?.value;
+      if (token) {
+        try {
+          await verifyPlayerSession(token);
+        } catch {
+          logger.warn('Invalid player session', { requestId, pathname });
+          const response = NextResponse.json(
+            { error: 'Session joueur invalide', code: 'UNAUTHORIZED' },
+            { status: 401 }
+          );
+          response.cookies.set(PLAYER_COOKIE_NAME, '', { maxAge: 0, path: '/' });
+          response.headers.set('x-request-id', requestId);
+          return response;
+        }
+      }
     }
 
-    const response = NextResponse.redirect(
-      new URL('/admin/login?error=invalid', req.url)
-    );
-    response.cookies.set(ADMIN_COOKIE_NAME, '', { maxAge: 0, path: '/' });
-    response.headers.set('x-request-id', requestId);
-    return response;
+    return NextResponse.next({ request: { headers: requestHeaders } });
   }
 
   return NextResponse.next({ request: { headers: requestHeaders } });
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*'],
+  matcher: ['/admin/:path*', '/api/admin/:path*', '/api/room/:path*', '/api/me/:path*'],
 };
