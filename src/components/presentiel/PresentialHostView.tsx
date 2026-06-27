@@ -10,6 +10,7 @@ import { EndGameSummary } from './EndGameSummary';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
 import { supabase } from '@/lib/supabase';
 import { CustomDeck, CustomQuestion } from '@/lib/custom-decks/types';
+import { DeckQuestion, sequenceDeck, injectWildcards, getImposteurQuestion } from '@/lib/presentiel/deck';
 
 interface PresentialHostViewProps {
   roomCode: string;
@@ -20,120 +21,6 @@ interface PresentialHostViewProps {
   onExit: () => void;
 }
 
-interface QuestionItem {
-  id: string;
-  text: string;
-  intensityLevel?: number;
-  tags?: string[];
-  mode: string;
-}
-
-function sequenceDeck(questionsList: QuestionItem[]): QuestionItem[] {
-  if (questionsList.length < 3) return questionsList;
-
-  const lvl1 = questionsList.filter(q => (q.intensityLevel || 1) === 1).sort(() => Math.random() - 0.5);
-  const lvl2 = questionsList.filter(q => (q.intensityLevel || 1) === 2).sort(() => Math.random() - 0.5);
-  const lvl3 = questionsList.filter(q => (q.intensityLevel || 1) === 3).sort(() => Math.random() - 0.5);
-
-  const sequenced: QuestionItem[] = [];
-  
-  if (lvl1.length > 0) sequenced.push(lvl1.pop()!);
-  if (lvl1.length > 0) {
-    sequenced.push(lvl1.pop()!);
-  } else if (lvl2.length > 0) {
-    sequenced.push(lvl2.pop()!);
-  }
-  
-  if (lvl2.length > 0) sequenced.push(lvl2.pop()!);
-  if (lvl2.length > 0) {
-    sequenced.push(lvl2.pop()!);
-  } else if (lvl3.length > 0) {
-    sequenced.push(lvl3.pop()!);
-  }
-  
-  if (lvl3.length > 0) sequenced.push(lvl3.pop()!);
-  
-  const positiveQ = [...lvl1, ...lvl2, ...lvl3].find(q => q.tags?.includes('positive') || q.tags?.includes('date_safe'));
-  if (positiveQ) {
-    sequenced.push(positiveQ);
-  } else if (lvl1.length > 0) {
-    sequenced.push(lvl1.pop()!);
-  } else if (lvl2.length > 0) {
-    sequenced.push(lvl2.pop()!);
-  }
-
-  const remaining = [...lvl1, ...lvl2, ...lvl3].sort(() => Math.random() - 0.5);
-  sequenced.push(...remaining);
-
-  return sequenced;
-}
-
-function injectWildcards(questionsList: QuestionItem[], players: Player[], modeId: string): QuestionItem[] {
-  if (players.length < 2) return sequenceDeck(questionsList);
-
-  const wildcards: QuestionItem[] = [];
-
-  const p1 = players[Math.floor(Math.random() * players.length)].name;
-  let p2 = players[Math.floor(Math.random() * players.length)].name;
-  while (p2 === p1 && players.length > 1) {
-    p2 = players[Math.floor(Math.random() * players.length)].name;
-  }
-  
-  wildcards.push({
-    id: `wc-ping-pong-${Date.now()}`,
-    text: `${p1}, cite 3 qualités ou anecdotes sur ${p2} en moins de 15 secondes ! ⏱️`,
-    intensityLevel: 1,
-    tags: ['wildcard', 'positive'],
-    mode: modeId
-  });
-
-  const p3 = players[Math.floor(Math.random() * players.length)].name;
-  let p4 = players[Math.floor(Math.random() * players.length)].name;
-  while (p4 === p3 && players.length > 1) {
-    p4 = players[Math.floor(Math.random() * players.length)].name;
-  }
-  wildcards.push({
-    id: `wc-rebond-${Date.now()}`,
-    text: `${p3} doit répondre à la question suivante, mais c'est ${p4} qui doit deviner sa réponse secrète avant qu'elle ne soit dite !`,
-    intensityLevel: 2,
-    tags: ['wildcard'],
-    mode: modeId
-  });
-
-  const sequenced = sequenceDeck(questionsList);
-  if (sequenced.length >= 4) {
-    sequenced.splice(1, 0, wildcards[0]);
-    sequenced.splice(4, 0, wildcards[1]);
-  } else {
-    sequenced.push(...wildcards);
-  }
-
-  return sequenced;
-}
-
-const IMPOSTEUR_QUESTION_MAPPING: Record<string, string> = {
-  "Tes 3 pires anecdotes de soirée ?": "Tes 3 pires anecdotes de repas de famille ?",
-  "Tes 3 pires ruptures amoureuses ?": "Tes 3 pires râteaux ou rendez-vous ratés ?",
-  "Tes 3 pires mensonges au boulot ?": "Tes 3 pires bêtises à l'école quand tu étais enfant ?",
-};
-
-function getImposteurQuestion(civilQuestion: string): string {
-  if (IMPOSTEUR_QUESTION_MAPPING[civilQuestion]) {
-    return IMPOSTEUR_QUESTION_MAPPING[civilQuestion];
-  }
-  const lower = civilQuestion.toLowerCase();
-  if (lower.includes("soirée") || lower.includes("soirées")) {
-    return "Tes 3 pires anecdotes de repas de famille ?";
-  }
-  if (lower.includes("rupture") || lower.includes("ruptures")) {
-    return "Tes 3 pires râteaux ou rendez-vous ratés ?";
-  }
-  if (lower.includes("mensonge") || lower.includes("mensonges")) {
-    return "Tes 3 pires bêtises à l'école quand tu étais enfant ?";
-  }
-  return civilQuestion + " (sur un thème légèrement différent)";
-}
-
 export function PresentialHostView({
   roomCode,
   hostId,
@@ -142,7 +29,7 @@ export function PresentialHostView({
   modeId,
   onExit
 }: PresentialHostViewProps) {
-  const [questions, setQuestions] = useState<QuestionItem[]>([]);
+  const [questions, setQuestions] = useState<DeckQuestion[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [phase, setPhase] = useState<'question' | 'imposteur_voting' | 'imposteur_reveal' | 'discussion'>('question');
@@ -184,7 +71,7 @@ export function PresentialHostView({
             const customDeck: CustomDeck = JSON.parse(customDeckJson);
             // Smart Skip: filter questions based on present players
             const presentNames = players.map(p => p.name.toLowerCase());
-            const activeQuestions: QuestionItem[] = customDeck.questions
+            const activeQuestions: DeckQuestion[] = customDeck.questions
               .filter(q => {
                 if (q.isGeneric) return true;
                 return q.involvedPlayers.every(name => 
@@ -221,18 +108,18 @@ export function PresentialHostView({
         const data = await res.json();
         
         // Filter by mode
-        let filtered: QuestionItem[] = data.filter((q: QuestionItem) => q.mode === modeId);
+        let filtered: DeckQuestion[] = data.filter((q: DeckQuestion) => q.mode === modeId);
         
         // Mode specific overrides
         if (modeId === 'DATE_NIGHT') {
-          filtered = data.filter((q: QuestionItem) => q.tags?.includes('date_safe'));
+          filtered = data.filter((q: DeckQuestion) => q.tags?.includes('date_safe'));
         } else if (modeId === 'FAMILY') {
-          filtered = data.filter((q: QuestionItem) => q.mode === modeId && q.tags?.includes('positive'));
+          filtered = data.filter((q: DeckQuestion) => q.mode === modeId && q.tags?.includes('positive'));
         }
 
         if (filtered.length === 0) {
           // Fallback if no questions matched the mode
-          filtered = data.filter((q: QuestionItem) => q.mode === 'ICEBREAKER');
+          filtered = data.filter((q: DeckQuestion) => q.mode === 'ICEBREAKER');
         }
 
         // Sequence and inject wildcards
@@ -249,7 +136,7 @@ export function PresentialHostView({
           try {
             const couplesList: string[][] = JSON.parse(couplesJson);
             if (couplesList.length > 0) {
-              const coupleQuestions: QuestionItem[] = [];
+              const coupleQuestions: DeckQuestion[] = [];
               couplesList.forEach((c, idx) => {
                 const pA = c[0];
                 const pB = c[1];
@@ -407,7 +294,7 @@ export function PresentialHostView({
         }));
       })
       .on('broadcast', { event: 'INJECT_CUSTOM_DECK' }, ({ payload }) => {
-        const injectQuestions: QuestionItem[] = (payload.questions as CustomQuestion[])
+        const injectQuestions: DeckQuestion[] = (payload.questions as CustomQuestion[])
           .filter(q => {
             if (q.isGeneric) return true;
             const presentNames = players.map(p => p.name.toLowerCase());
