@@ -94,29 +94,51 @@ export async function createCheckoutSession(input: CreateCheckoutSessionInput): 
   // Récupérer ou créer un User lié à Supabase Auth
   let userId = player.userId;
   if (!userId) {
-    userId = crypto.randomUUID();
     const email = `player-${playerId.slice(0, 8)}-${room.code.toLowerCase()}@captainbond.com`;
+    // Check if user already exists in DB
+    const { data: existingUser } = await dbRetry<{ id: string }>(async () =>
+      supabaseAdmin.from('User').select('id').eq('email', email).maybeSingle()
+    );
 
-    const { error: authError } = await supabaseAdmin.auth.admin.createUser({
-      id: userId,
-      email,
-      email_confirm: true,
-      user_metadata: { name: player.name || 'Agent Bond' },
-    });
+    if (existingUser) {
+      userId = existingUser.id;
+    } else {
+      userId = crypto.randomUUID();
+      const { error: authError } = await supabaseAdmin.auth.admin.createUser({
+        id: userId,
+        email,
+        email_confirm: true,
+        user_metadata: { name: player.name || 'Agent Bond' },
+      });
 
-    if (authError) {
-      logger.error('Supabase Auth user creation failed', {}, authError);
-      throw new AppError('INTERNAL_ERROR', 'Erreur de création utilisateur', { cause: authError });
-    }
+      if (authError) {
+        if (authError.message?.toLowerCase().includes('already exists') || authError.status === 422) {
+          const { data: { users } } = await supabaseAdmin.auth.admin.listUsers();
+          const authUser = users?.find((u) => u.email === email);
+          if (authUser) {
+            userId = authUser.id;
+          } else {
+            throw new AppError('INTERNAL_ERROR', 'Erreur de création utilisateur', { cause: authError });
+          }
+        } else {
+          logger.error('Supabase Auth user creation failed', {}, authError);
+          throw new AppError('INTERNAL_ERROR', 'Erreur de création utilisateur', { cause: authError });
+        }
+      }
 
-    const { error: userError } = await dbRetry<null>(async () => supabaseAdmin.from('User').insert({
-      id: userId,
-      email,
-      name: player.name || 'Agent Bond',
-    }));
-    if (userError) {
-      logger.error('User insertion failed', {}, userError);
-      throw new AppError('INTERNAL_ERROR', 'Erreur de création utilisateur', { cause: userError });
+      const { error: userError } = await dbRetry<null>(async () => supabaseAdmin.from('User').insert({
+        id: userId,
+        email,
+        name: player.name || 'Agent Bond',
+      }));
+
+      if (userError) {
+        const errObj = userError as unknown as Record<string, unknown>;
+        if (errObj?.code !== '23505') {
+          logger.error('User insertion failed', {}, userError);
+          throw new AppError('INTERNAL_ERROR', 'Erreur de création utilisateur', { cause: userError });
+        }
+      }
     }
 
     await dbRetry<null>(async () => supabaseAdmin.from('Player').update({ userId }).eq('id', playerId));
@@ -150,6 +172,18 @@ export async function createCheckoutSession(input: CreateCheckoutSessionInput): 
   // Récupérer ou créer le customer Stripe
   const { data: user } = await dbRetry<{ stripeCustomerId: string | null; email: string | null }>(async () => supabaseAdmin.from('User').select('stripeCustomerId, email').eq('id', userId).maybeSingle());
   let customerId = user?.stripeCustomerId;
+
+  if (!customerId && user?.email) {
+    // Check if customer already exists in Stripe with this email
+    const existingCustomers = await withTimeout(getStripe().customers.list({
+      email: user.email,
+      limit: 1,
+    }), 10000);
+    if (existingCustomers.data.length > 0) {
+      customerId = existingCustomers.data[0].id;
+      await dbRetry<null>(async () => supabaseAdmin.from('User').update({ stripeCustomerId: customerId }).eq('id', userId));
+    }
+  }
 
   if (!customerId) {
     const customer = await withTimeout(getStripe().customers.create({
