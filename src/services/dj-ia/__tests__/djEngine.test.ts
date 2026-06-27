@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { generateDJQuestion } from '../djEngine';
+import { generateDJQuestion, updateDJQuestionFeedback } from '../djEngine';
 import { AppError } from '@/lib/errors';
 
 vi.mock('@/lib/db/repositories', () => ({
@@ -10,6 +10,9 @@ vi.mock('@/lib/db/repositories', () => ({
   listTreeConnections: vi.fn(),
   getQuestionById: vi.fn(),
   createDJQuestion: vi.fn(),
+  updateDJProfile: vi.fn(),
+  getDJQuestionById: vi.fn(),
+  updateDJQuestionStatus: vi.fn(),
 }));
 
 vi.mock('@/lib/gemini', () => ({
@@ -23,6 +26,9 @@ import {
   listTreeConnections,
   getQuestionById,
   createDJQuestion,
+  updateDJProfile,
+  getDJQuestionById,
+  updateDJQuestionStatus,
 } from '@/lib/db/repositories';
 import { generateContent } from '@/lib/gemini';
 
@@ -40,7 +46,7 @@ describe('djEngine', () => {
     });
 
     it('generates personalized question successfully with high resonance feedback', async () => {
-      const mockProfile = { id: 'prof-1', coupleId: 'couple-1', mood: 'DEEP', intensityTarget: 2 };
+      const mockProfile = { id: 'prof-1', coupleId: 'couple-1', mood: 'DEEP', intensityTarget: 2, interactionHistory: null };
       const mockTree = { id: 'tree-1', coupleId: 'couple-1' };
       const mockQuestion = { id: 'q-1', text: 'Parle de ton enfance', category: 'DEEP', intensityLevel: 2 };
       const mockNode = { id: 'node-1', treeId: 'tree-1', questionId: 'q-1' };
@@ -66,7 +72,7 @@ describe('djEngine', () => {
     });
 
     it('uses fallback questions if generateContent fails', async () => {
-      const mockProfile = { id: 'prof-1', coupleId: 'couple-1', mood: 'SPICY', intensityTarget: 2 };
+      const mockProfile = { id: 'prof-1', coupleId: 'couple-1', mood: 'SPICY', intensityTarget: 2, interactionHistory: null };
       const mockTree = { id: 'tree-1', coupleId: 'couple-1' };
 
       vi.mocked(getDJProfileById).mockResolvedValue(mockProfile as never);
@@ -83,6 +89,39 @@ describe('djEngine', () => {
         profileId: 'prof-1',
         text: result,
         status: 'PENDING',
+      });
+    });
+  });
+
+  describe('updateDJQuestionFeedback', () => {
+    it('throws AppError if question is not found', async () => {
+      vi.mocked(getDJQuestionById).mockResolvedValue(null);
+
+      await expect(updateDJQuestionFeedback('q-123', 'ACCEPTED'))
+        .rejects.toThrow(new AppError('NOT_FOUND', "Question DJ avec l'ID q-123 introuvable."));
+    });
+
+    it('records feedback and appends it to profile history successfully', async () => {
+      const mockQuestion = { id: 'q-123', profileId: 'prof-1', text: 'Quelle est ta plus grande peur ?', status: 'PENDING' };
+      const mockProfile = { id: 'prof-1', interactionHistory: { items: [] } };
+
+      vi.mocked(getDJQuestionById).mockResolvedValue(mockQuestion as never);
+      vi.mocked(getDJProfileById).mockResolvedValue(mockProfile as never);
+
+      await updateDJQuestionFeedback('q-123', 'REJECTED', 'Trop sensible');
+
+      expect(updateDJQuestionStatus).toHaveBeenCalledWith('q-123', { status: 'REJECTED', feedback: 'Trop sensible' });
+      expect(updateDJProfile).toHaveBeenCalledWith('prof-1', {
+        interactionHistory: {
+          items: [
+            expect.objectContaining({
+              questionText: 'Quelle est ta plus grande peur ?',
+              status: 'REJECTED',
+              feedback: 'Trop sensible',
+              timestamp: expect.any(String),
+            }),
+          ],
+        },
       });
     });
   });

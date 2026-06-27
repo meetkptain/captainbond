@@ -5,6 +5,7 @@ export interface BuildDJPromptInput {
   avgResonance: number;
   historyText: string;
   resonanceMetricsText: string;
+  interactionHistoryText?: string;
 }
 
 export function buildDJPrompt(input: BuildDJPromptInput): string {
@@ -19,6 +20,10 @@ ${input.resonanceMetricsText}
 
 Historique récent de leurs échanges sémantiques (dans l'arbre neural) :
 ${input.historyText || "- Aucun sujet abordé pour l'instant (nouveau couple)."}
+
+${input.interactionHistoryText ? `Historique de leurs retours sur les questions générées par le DJ IA :
+${input.interactionHistoryText}
+(Prends en compte ces préférences : évite de reproposer des thèmes rejetés ou similaires et continue sur la lancée des thèmes appréciés)` : ''}
 
 Consignes d'adaptation par rapport au taux de résonance :
 ${isHighResonance 

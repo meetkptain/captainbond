@@ -77,6 +77,24 @@ async function compileTreeContext(profile: Pick<DJProfile, 'coupleId' | 'roomId'
   return { historyText, resonanceMetricsText, avgResonance };
 }
 
+export interface InteractionItem {
+  questionText: string;
+  status: 'ACCEPTED' | 'REJECTED';
+  feedback?: string;
+  timestamp: string;
+}
+
+function compileInteractionHistoryText(profileHistory: unknown): string {
+  const history = profileHistory as { items?: InteractionItem[] } | null;
+  if (!history || !history.items || history.items.length === 0) {
+    return '';
+  }
+  const lines = history.items.slice(-5).map((item) => 
+    `- Question: "${item.questionText}" | Statut: ${item.status}${item.feedback ? ` | Retours: "${item.feedback}"` : ''}`
+  );
+  return lines.join('\n');
+}
+
 /**
  * Analyzes the neural tree context (including connections and average resonance) 
  * and generates a personalized, highly context-driven question using Gemini.
@@ -89,12 +107,14 @@ export async function generateDJQuestion(profileId: string): Promise<string> {
   }
 
   const { historyText, resonanceMetricsText, avgResonance } = await compileTreeContext(profile);
+  const interactionHistoryText = compileInteractionHistoryText(profile.interactionHistory);
 
   const prompt = buildDJPrompt({
     mood: profile.mood,
     avgResonance,
     historyText,
     resonanceMetricsText,
+    interactionHistoryText,
   });
 
   const generatedText = await generateDJQuestionText({
@@ -112,4 +132,40 @@ export async function generateDJQuestion(profileId: string): Promise<string> {
   });
 
   return generatedText;
+}
+
+/**
+ * Records player feedback on a DJQuestion and stores it in the DJProfile history
+ * for continuous learning (apprentissage continu).
+ */
+export async function updateDJQuestionFeedback(
+  questionId: string,
+  status: 'ACCEPTED' | 'REJECTED',
+  feedback?: string
+): Promise<void> {
+  const question = await repositories.getDJQuestionById(questionId);
+  if (!question) {
+    throw new AppError('NOT_FOUND', `Question DJ avec l'ID ${questionId} introuvable.`);
+  }
+
+  // Update status in database
+  await repositories.updateDJQuestionStatus(questionId, { status, feedback });
+
+  // Update profile interaction history
+  const profile = await repositories.getDJProfileById(question.profileId);
+  if (profile) {
+    const history = (profile.interactionHistory || { items: [] }) as { items?: InteractionItem[] };
+    if (!history.items) history.items = [];
+
+    history.items.push({
+      questionText: question.text,
+      status,
+      feedback,
+      timestamp: new Date().toISOString(),
+    });
+
+    await repositories.updateDJProfile(profile.id, {
+      interactionHistory: history as unknown as Record<string, unknown>, // Cast to Json format compatible with prisma/supabase JSONB
+    });
+  }
 }
