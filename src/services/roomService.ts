@@ -1,15 +1,11 @@
 import {
-  roomExistsWithCode,
   createRoom as createRoomInDb,
   getRoomByCode,
-  getRoomByCodeWithPlayers,
   getRoomById,
   updateRoom,
-  updateRoomStatus,
 } from '@/lib/db/repositories';
 import {
   createPlayer,
-  playerNameExistsInRoom,
   countNonHostPlayersInRoom,
   getPlayerById,
 } from '@/lib/db/repositories';
@@ -41,28 +37,37 @@ export async function createRoom(input: CreateRoomInput = {}): Promise<{
   const playerName = input.playerName ?? 'Hôte';
 
   const hostId = crypto.randomUUID();
-  let code = generateRoomCode();
+  let room: Room | null = null;
   let attempts = 0;
 
-  while ((await roomExistsWithCode(code)) && attempts < 5) {
-    code = generateRoomCode();
-    attempts++;
+  while (attempts < 5) {
+    const code = generateRoomCode();
+    const hostToken = await signHostToken(code, hostId);
+
+    try {
+      room = await createRoomInDb({
+        code,
+        hostId,
+        hostToken,
+        status: targetType === 'SOLO' ? 'PLAYING' : 'WAITING',
+        round: 0,
+        targetType,
+      });
+      break;
+    } catch (err: unknown) {
+      // Postgres error code 23505 is unique_violation (duplicate code key)
+      const postgrestError = err as { code?: string; message?: string };
+      if (postgrestError && (postgrestError.code === '23505' || postgrestError.message?.includes('duplicate key') || postgrestError.message?.includes('violates unique constraint'))) {
+        attempts++;
+        continue;
+      }
+      throw err;
+    }
   }
 
-  if (await roomExistsWithCode(code)) {
+  if (!room) {
     throw new AppError('SERVICE_UNAVAILABLE', 'Impossible de générer un code unique');
   }
-
-  const hostToken = await signHostToken(code, hostId);
-
-  const room = await createRoomInDb({
-    code,
-    hostId,
-    hostToken,
-    status: targetType === 'SOLO' ? 'PLAYING' : 'WAITING',
-    round: 0,
-    targetType,
-  });
 
   if (targetType === 'SOLO') {
     await createPlayer({
@@ -74,7 +79,7 @@ export async function createRoom(input: CreateRoomInput = {}): Promise<{
     });
   }
 
-  return { room, hostId, hostToken };
+  return { room, hostId, hostToken: room.hostToken };
 }
 
 export interface JoinRoomInput {
@@ -89,48 +94,70 @@ export interface JoinRoomResult {
 }
 
 export async function joinRoom(input: JoinRoomInput): Promise<JoinRoomResult> {
-  const { room, players } = await getRoomByCodeWithPlayers(input.roomCode);
+  const room = await getRoomByCode(input.roomCode);
 
   if (!room) {
     throw new AppError('NOT_FOUND', `Room code "${input.roomCode}" not found`);
   }
 
-  if (room.status !== 'WAITING') {
-    throw new AppError('ROOM_CLOSED', 'Game has already started or room has closed');
-  }
-
   const serverMode = room.currentMode ? getServerGameMode(room.currentMode) : null;
-  const nonHostCount = players.filter((p) => !p.isHost).length;
+  const maxPlayers = serverMode ? serverMode.manifest.maxPlayers : null;
 
-  if (serverMode) {
-    const { maxPlayers } = serverMode.manifest;
-    if (nonHostCount >= maxPlayers) {
+  const playerId = crypto.randomUUID();
+  const consentGivenAt = new Date().toISOString();
+
+  const { supabaseAdmin } = await import('@/lib/supabase-admin');
+  const { data, error } = await supabaseAdmin.rpc('join_room', {
+    p_room_code: input.roomCode.trim(),
+    p_player_name: input.playerName.trim(),
+    p_player_id: playerId,
+    p_max_players: maxPlayers,
+    p_consent_given_at: consentGivenAt,
+  });
+
+  if (error) {
+    const message = error.message || '';
+    if (message.includes('Salle introuvable')) {
+      throw new AppError('NOT_FOUND', `Room code "${input.roomCode}" not found`);
+    }
+    if (message.includes('pas en attente')) {
+      throw new AppError('ROOM_CLOSED', 'Game has already started or room has closed');
+    }
+    if (message.includes('déjà pris')) {
+      throw new AppError(
+        'PLAYER_NAME_TAKEN',
+        `The name "${input.playerName}" is already taken in this lobby`
+      );
+    }
+    if (message.includes('complète')) {
       throw new AppError(
         'ROOM_FULL',
         `Cette table est complète (${maxPlayers} joueurs max pour ce mode).`
       );
     }
+    throw new AppError('INTERNAL_ERROR', 'Failed to join room', { cause: error });
   }
 
-  if (await playerNameExistsInRoom(room.id, input.playerName)) {
-    throw new AppError(
-      'PLAYER_NAME_TAKEN',
-      `The name "${input.playerName}" is already taken in this lobby`
-    );
+  const result = Array.isArray(data) ? data[0] : data;
+  if (!result || !result.player_id) {
+    throw new AppError('INTERNAL_ERROR', 'L\'inscription a réussi mais aucune donnée n\'a été renvoyée');
   }
 
-  const player = await createPlayer({
-    id: crypto.randomUUID(),
+  const player: Player = {
+    id: result.player_id,
     name: input.playerName,
     isHost: false,
     isReady: false,
     socketId: '',
-    roomId: room.id,
-    consentGivenAt: new Date().toISOString(),
-  });
+    roomId: result.room_id,
+    consentGivenAt,
+    createdAt: new Date().toISOString(),
+    userId: null,
+  };
 
-  return { player, roomId: room.id, roomCode: room.code };
+  return { player, roomId: result.room_id, roomCode: result.room_code };
 }
+
 
 export interface RoomState {
   room: Omit<Room, 'hostToken'>;
@@ -154,14 +181,19 @@ export async function getRoomState(roomCode: string): Promise<RoomState> {
       .eq('questionId', room.currentQuestionId ?? ''),
   ]);
 
-  const { hostToken, paidByUserId, ...safeRoom } = room;
+  const safeRoom = { ...room } as Partial<Room>;
+  delete safeRoom.hostToken;
+  delete safeRoom.paidByUserId;
+
   const safePlayers = (players || []).map((p) => {
-    const { userId, consentGivenAt, ...rest } = p as Player & { userId?: string | null; consentGivenAt?: string | null };
+    const rest = { ...p } as Partial<Player> & { userId?: string | null; consentGivenAt?: string | null };
+    delete rest.userId;
+    delete rest.consentGivenAt;
     return rest;
   });
 
   return {
-    room: safeRoom,
+    room: safeRoom as Omit<Room, 'hostToken'>,
     players: safePlayers as Player[],
     responses: (responses || []) as Response[],
   };
