@@ -183,7 +183,7 @@ model Purchase {
 
   @@index([userId])
   @@index([packId])
-  @@index([stripePaymentId])
+  @@unique([stripePaymentId])
 }
 
 // Historique des Pass temporaires (24h, week-end)
