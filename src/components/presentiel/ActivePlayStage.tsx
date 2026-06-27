@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useAudioSynthesis } from '@/hooks/useAudioSynthesis';
+import { mostLikelyToManifest } from '@/game-modes/most-likely-to';
 import type { Player } from './TalkingStick';
 import { useVoteCountdown } from './useVoteCountdown';
 
@@ -14,7 +15,7 @@ interface ActivePlayStageProps {
   onNext: () => void;
   onSkip?: () => void;
   showSkip?: boolean;
-  onVoteComplete?: (votedPlayerId: string) => void;
+  onVoteComplete: (votedPlayerId: string) => void;
 }
 
 export function ActivePlayStage({
@@ -45,15 +46,10 @@ export function ActivePlayStage({
 
   const currentPlayer = players[currentPlayerIndex];
   const nextPlayer = players[(currentPlayerIndex + 1) % players.length];
-  const isVoteMode = modeId === 'MOST_LIKELY_TO';
+  const isVoteMode = modeId === mostLikelyToManifest.id;
 
   const handleVote = (playerId: string) => {
-    if (onVoteComplete) {
-      onVoteComplete(playerId);
-    } else {
-      // Fallback when no vote handler is wired: treat a vote as "next turn".
-      onNext();
-    }
+    onVoteComplete(playerId);
   };
 
   return (

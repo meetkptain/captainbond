@@ -1,5 +1,6 @@
 'use client';
 
+import { getQuestionTheme } from '@/lib/presentiel/theme';
 import type { Player } from './TalkingStick';
 
 interface ThemeChoiceStageProps {
@@ -10,53 +11,6 @@ interface ThemeChoiceStageProps {
   onSelectQuestion: (selectedIndex: number) => void;
 }
 
-function getQuestionTheme(q: { text: string; tags?: string[] }): string {
-  const text = q.text.toLowerCase();
-  if (text.includes('rupture') || text.includes('rateau') || text.includes('râteau') || text.includes('ex ')) {
-    return '💔 Amours & Ruptures';
-  }
-  if (text.includes('mensonge') || text.includes('menti') || text.includes('bluff') || text.includes('tromp')) {
-    return '🤫 Mensonges & Secrets';
-  }
-  if (
-    text.includes('soirée') ||
-    text.includes('fête') ||
-    text.includes('alcool') ||
-    text.includes('boire') ||
-    text.includes('party')
-  ) {
-    return '🎉 Anecdotes de Soirée';
-  }
-  if (
-    text.includes('boulot') ||
-    text.includes('travail') ||
-    text.includes('école') ||
-    text.includes('classe') ||
-    text.includes('prof') ||
-    text.includes('collègue')
-  ) {
-    return '🎒 École & Travail';
-  }
-  if (text.includes('honte') || text.includes('pire') || text.includes('gênant') || text.includes('ridicule')) {
-    return '😬 Moments Gênants';
-  }
-  if (q.tags?.includes('positive') || q.tags?.includes('compliment')) {
-    return '✨ Compliments & Positif';
-  }
-  if (
-    q.tags?.includes('date_safe') ||
-    text.includes('couple') ||
-    text.includes('rencontre') ||
-    text.includes('amour')
-  ) {
-    return '👩‍❤️‍👨 Romance & Couple';
-  }
-  if (text.length > 80) {
-    return '💬 Confidences Profondes';
-  }
-  return '🎲 Chill & Anecdotes';
-}
-
 export function ThemeChoiceStage({
   currentPlayer,
   questions,
@@ -64,16 +18,16 @@ export function ThemeChoiceStage({
   onKeepCurrentQuestion,
   onSelectQuestion,
 }: ThemeChoiceStageProps) {
-  const hasChoices = questions && questions.length > (currentQuestionIndex ?? 0) + 1;
-  const qA = hasChoices ? questions![currentQuestionIndex!] : null;
-  const qB = hasChoices ? questions![currentQuestionIndex! + 1] : null;
+  const indexA = currentQuestionIndex ?? 0;
+  const indexB = indexA + 1;
+  const hasChoices = questions && questions.length > indexB;
+
+  const qA = hasChoices ? questions[indexA] : null;
+  const qB = hasChoices ? questions[indexB] : null;
 
   const themeA = qA ? getQuestionTheme(qA) : '🎲 Thème A';
-  let themeB = qB ? getQuestionTheme(qB) : '🎲 Thème B';
-
-  if (themeA === themeB) {
-    themeB = themeB + ' (Alternative)';
-  }
+  const rawThemeB = qB ? getQuestionTheme(qB) : '🎲 Thème B';
+  const themeB = rawThemeB === themeA ? `${rawThemeB} (Alternative)` : rawThemeB;
 
   return (
     <div className="flex flex-col items-center justify-between gap-6 p-6 bg-slate-900/40 border border-slate-800/80 rounded-3xl backdrop-blur-md max-w-md mx-auto shadow-xl w-full text-center animate-[fadeIn_0.25s_ease-out]">
@@ -104,7 +58,7 @@ export function ThemeChoiceStage({
         </button>
 
         <button
-          onClick={() => onSelectQuestion((currentQuestionIndex ?? 0) + 1)}
+          onClick={() => onSelectQuestion(indexB)}
           className="w-full py-4 px-5 bg-slate-950/60 hover:bg-amber-500 hover:text-slate-950 border border-slate-800 hover:border-amber-400 rounded-2xl text-left font-bold transition-all text-slate-200 cursor-pointer shadow-md flex justify-between items-center group active:scale-[0.98]"
         >
           <div className="flex flex-col text-left">
