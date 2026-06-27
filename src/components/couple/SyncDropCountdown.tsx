@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 /* ────────────────────────────── Types ────────────────────────────── */
 
@@ -210,7 +210,10 @@ export function SyncDropCountdown({
   const [secondsLeft, setSecondsLeft] = useState(() => getSecondsUntilTarget(targetHour));
   const [revealed, setRevealed] = useState(false);
   const onRevealRef = useRef(onRevealTime);
-  onRevealRef.current = onRevealTime;
+
+  useEffect(() => {
+    onRevealRef.current = onRevealTime;
+  }, [onRevealTime]);
 
   // Live countdown
   useEffect(() => {
@@ -234,8 +237,10 @@ export function SyncDropCountdown({
   // Check on mount if already past
   useEffect(() => {
     if (isReady && getSecondsUntilTarget(targetHour) <= 0 && !revealed) {
-      setRevealed(true);
-      onRevealRef.current();
+      setTimeout(() => {
+        setRevealed(true);
+        onRevealRef.current();
+      }, 0);
     }
   }, [isReady, targetHour, revealed]);
 

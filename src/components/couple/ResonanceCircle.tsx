@@ -85,20 +85,26 @@ export function ResonanceCircle({
   // Manage reveal animation timing
   useEffect(() => {
     if (isRevealed && isAnimating && !hasAnimated) {
-      setHasAnimated(true);
+      setTimeout(() => {
+        setHasAnimated(true);
+      }, 0);
       const timer = setTimeout(() => setShowScore(true), 1200);
       return () => clearTimeout(timer);
     }
     if (isRevealed && !isAnimating) {
-      setShowScore(true);
+      setTimeout(() => {
+        setShowScore(true);
+      }, 0);
     }
   }, [isRevealed, isAnimating, hasAnimated]);
 
   // Reset on un-reveal
   useEffect(() => {
     if (!isRevealed) {
-      setHasAnimated(false);
-      setShowScore(false);
+      setTimeout(() => {
+        setHasAnimated(false);
+        setShowScore(false);
+      }, 0);
     }
   }, [isRevealed]);
 

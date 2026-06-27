@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { api } from '@/lib/api/client';
 
 /* ────────────────────────────── Types ────────────────────────────── */
@@ -155,7 +155,6 @@ export function ProtocolWizard({
   const [loadingAction, setLoadingAction] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const stepKeyRef = useRef(0);
 
   // Fetch questions when entering step 2
   const fetchQuestions = useCallback(async () => {
@@ -196,14 +195,17 @@ export function ProtocolWizard({
   }, [coupleId, dailyQuestionId, action]);
 
   useEffect(() => {
-    if (currentStep === 1) fetchQuestions();
-    if (currentStep === 2) fetchAction();
+    if (currentStep === 1) {
+      setTimeout(() => fetchQuestions(), 0);
+    }
+    if (currentStep === 2) {
+      setTimeout(() => fetchAction(), 0);
+    }
   }, [currentStep, fetchQuestions, fetchAction]);
 
   const goNext = () => {
     if (currentStep < STEPS.length - 1) {
       setDirection('right');
-      stepKeyRef.current++;
       setCurrentStep((s) => s + 1);
     }
   };
@@ -211,7 +213,6 @@ export function ProtocolWizard({
   const goPrev = () => {
     if (currentStep > 0) {
       setDirection('left');
-      stepKeyRef.current++;
       setCurrentStep((s) => s - 1);
     }
   };
@@ -242,7 +243,6 @@ export function ProtocolWizard({
                 onClick={() => {
                   if (i < currentStep) {
                     setDirection('left');
-                    stepKeyRef.current++;
                     setCurrentStep(i);
                   }
                 }}
@@ -286,7 +286,7 @@ export function ProtocolWizard({
 
         {/* ── Step content ── */}
         <div
-          key={stepKeyRef.current}
+          key={currentStep}
           style={{
             animation: `${slideAnim} 0.4s ease-out both`,
             minHeight: '280px',

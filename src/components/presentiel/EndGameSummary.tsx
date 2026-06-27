@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Player } from './TalkingStick';
 import { QRCodeSVG } from 'qrcode.react';
 
@@ -22,18 +22,17 @@ export function EndGameSummary({
   onExit
 }: EndGameSummaryProps) {
   const [showStoryMode, setShowStoryMode] = useState(false);
-  const [couples, setCouples] = useState<string[][]>([]);
-
-  useEffect(() => {
+  const [couples] = useState<string[][]>(() => {
     if (typeof window !== 'undefined') {
       const stored = sessionStorage.getItem('cb_presentiel_couples');
       if (stored) {
         try {
-          setCouples(JSON.parse(stored));
+          return JSON.parse(stored);
         } catch {}
       }
     }
-  }, []);
+    return [];
+  });
 
   const getCoupleComplicityScore = (p1: string, p2: string) => {
     const valA = p1.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
