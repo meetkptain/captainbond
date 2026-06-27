@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { gameModesRegistry } from '@/game-modes';
 import { supabase } from '@/lib/supabase';
@@ -22,6 +22,7 @@ import type { Room, Response as GameResponse, Player, Question } from '@/lib/db/
 import { api, ApiClientError } from '@/lib/api/client';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
 import { useHostSession } from '@/hooks/useHostSession';
+import { useCheckoutFeedback } from '@/hooks/useCheckoutFeedback';
 
 export default function PlayerController() {
   const params = useParams();
@@ -44,7 +45,6 @@ export default function PlayerController() {
   const [voteError, setVoteError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [paidMessage, setPaidMessage] = useState<string | null>(null);
   const [hasConsented, setHasConsented] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false;
     return sessionStorage.getItem(`cb_consent_${roomCode}`) === 'true';
@@ -296,31 +296,25 @@ export default function PlayerController() {
     } catch(e) { console.error(e) }
   };
 
-  // Gérer le retour de Stripe après paiement
-  useEffect(() => {
-    if (typeof window === 'undefined' || !playerId) return;
-    const params = new URLSearchParams(window.location.search);
-    const paid = params.get('paid');
-    if (paid === 'pass' || paid === 'profile') {
-      capture(AnalyticsEvents.PURCHASE_COMPLETED, {
-        room_code: roomCode,
-        product_type: paid,
-      });
-      // Re-vérifier les entitlements serveur
-      api.get<{ accessibleFeatures?: string[]; hasActivePass?: boolean }>(`/api/me/entitlements?playerId=${playerId}&roomCode=${roomCode}`)
-        .then(data => {
-          setEntitlements(data);
-          if (paid === 'pass') {
-            setPaidMessage('🎉 Pass 24h activé ! Tous les modes sont débloqués.');
-          } else {
-            setPaidMessage('🎉 Dossier débloqué ! Retournez à la fin de partie pour le voir.');
-          }
-          window.history.replaceState({}, '', `/room/${roomCode}/player`);
-          setTimeout(() => setPaidMessage(null), 5000);
-        })
-        .catch(console.error);
-    }
-  }, [roomCode, playerId]);
+  const refreshEntitlements = useCallback(async () => {
+    if (!playerId) return;
+    const data = await api.get<{ accessibleFeatures?: string[]; hasActivePass?: boolean }>(`/api/me/entitlements?playerId=${playerId}&roomCode=${roomCode}`);
+    setEntitlements(data);
+  }, [playerId, roomCode]);
+
+  const handlePaid = useCallback((product: 'pass' | 'profile') => {
+    capture(AnalyticsEvents.PURCHASE_COMPLETED, {
+      room_code: roomCode,
+      product_type: product,
+    });
+  }, [roomCode]);
+
+  const { paidMessage } = useCheckoutFeedback({
+    roomCode,
+    playerId,
+    refreshEntitlements,
+    onPaid: handlePaid,
+  });
 
   // Vérifier le consentement RGPD
   useEffect(() => {
