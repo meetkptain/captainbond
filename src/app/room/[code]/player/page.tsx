@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { gameModesRegistry } from '@/game-modes';
 import { supabase } from '@/lib/supabase';
@@ -17,7 +17,6 @@ import { BadgeTray } from '@/components/BadgeTray';
 import type { Pack } from '@/lib/monetization/catalog';
 import { onAuthStateChange, getCurrentUser } from '@/lib/supabase-auth';
 import { safeJsonParse } from '@/lib/json';
-import { logger } from '@/lib/logger';
 import type { Room, Response as GameResponse, Player, Question } from '@/lib/db/types';
 import { api, ApiClientError } from '@/lib/api/client';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
@@ -45,10 +44,6 @@ export default function PlayerController() {
   const [voteError, setVoteError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [hasConsented, setHasConsented] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return false;
-    return sessionStorage.getItem(`cb_consent_${roomCode}`) === 'true';
-  });
   const [entitlements, setEntitlements] = useState<{ accessibleFeatures?: string[]; hasActivePass?: boolean } | null>(null);
   const [authUser, setAuthUser] = useState<{ id: string; email?: string } | null>(null);
   const [players, setPlayers] = useState<Player[]>([]);

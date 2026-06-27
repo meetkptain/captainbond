@@ -11,6 +11,16 @@ describe('useCheckoutFeedback', () => {
     return vi.fn().mockResolvedValue(undefined);
   }
 
+  function createDeferred<T>() {
+    let resolve: (value: T) => void = () => {};
+    let reject: (reason?: unknown) => void = () => {};
+    const promise = new Promise<T>((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+    return { promise, resolve, reject };
+  }
+
   afterEach(() => {
     vi.useRealTimers();
     vi.unstubAllGlobals();
@@ -80,7 +90,7 @@ describe('useCheckoutFeedback', () => {
     const refreshEntitlements = createRefreshEntitlements();
 
     const { result } = renderHook(() =>
-      useCheckoutFeedback({ roomCode, playerId, refreshEntitlements, paid: 'pass' })
+      useCheckoutFeedback({ roomCode, playerId, refreshEntitlements, paidProduct: 'pass' })
     );
 
     await act(async () => {
@@ -101,7 +111,7 @@ describe('useCheckoutFeedback', () => {
     const refreshEntitlements = createRefreshEntitlements();
 
     const { result } = renderHook(() =>
-      useCheckoutFeedback({ roomCode, playerId, refreshEntitlements, paid: 'profile' })
+      useCheckoutFeedback({ roomCode, playerId, refreshEntitlements, paidProduct: 'profile' })
     );
 
     await act(async () => {
@@ -121,7 +131,7 @@ describe('useCheckoutFeedback', () => {
     const onPaid = vi.fn();
 
     renderHook(() =>
-      useCheckoutFeedback({ roomCode, playerId, refreshEntitlements, onPaid, paid: 'profile' })
+      useCheckoutFeedback({ roomCode, playerId, refreshEntitlements, onPaid, paidProduct: 'profile' })
     );
 
     await act(async () => {
@@ -137,7 +147,7 @@ describe('useCheckoutFeedback', () => {
     const refreshEntitlements = createRefreshEntitlements();
 
     const { result } = renderHook(() =>
-      useCheckoutFeedback({ roomCode, playerId, refreshEntitlements, paid: 'pass' })
+      useCheckoutFeedback({ roomCode, playerId, refreshEntitlements, paidProduct: 'pass' })
     );
 
     await act(async () => {
@@ -159,7 +169,7 @@ describe('useCheckoutFeedback', () => {
     const refreshEntitlements = createRefreshEntitlements();
 
     const { result } = renderHook(() =>
-      useCheckoutFeedback({ roomCode, playerId, refreshEntitlements, paid: 'pass' })
+      useCheckoutFeedback({ roomCode, playerId, refreshEntitlements, paidProduct: 'pass' })
     );
 
     await act(async () => {
@@ -185,7 +195,7 @@ describe('useCheckoutFeedback', () => {
     const refreshEntitlements = createRefreshEntitlements();
 
     const { result } = renderHook(() =>
-      useCheckoutFeedback({ roomCode, playerId: null, refreshEntitlements, paid: 'pass' })
+      useCheckoutFeedback({ roomCode, playerId: null, refreshEntitlements, paidProduct: 'pass' })
     );
 
     await act(async () => {
@@ -206,7 +216,7 @@ describe('useCheckoutFeedback', () => {
           roomCode,
           playerId: currentPlayerId,
           refreshEntitlements,
-          paid: 'pass',
+          paidProduct: 'pass',
         }),
       { initialProps: { currentPlayerId: null as string | null } }
     );
@@ -234,7 +244,7 @@ describe('useCheckoutFeedback', () => {
     const refreshEntitlements = createRefreshEntitlements();
 
     const { result, unmount } = renderHook(() =>
-      useCheckoutFeedback({ roomCode, playerId, refreshEntitlements, paid: 'pass' })
+      useCheckoutFeedback({ roomCode, playerId, refreshEntitlements, paidProduct: 'pass' })
     );
 
     await act(async () => {
@@ -247,5 +257,95 @@ describe('useCheckoutFeedback', () => {
     unmount();
 
     expect(clearTimeoutSpy).toHaveBeenCalled();
+  });
+
+  it('does not call onPaid twice when the effect re-runs with the same product', async () => {
+    vi.stubGlobal('history', { replaceState: vi.fn() });
+    const refreshEntitlements = createRefreshEntitlements();
+    const onPaid = vi.fn();
+
+    const { rerender } = renderHook(
+      ({ currentRoomCode }: { currentRoomCode: string }) =>
+        useCheckoutFeedback({
+          roomCode: currentRoomCode,
+          playerId,
+          refreshEntitlements,
+          onPaid,
+          paidProduct: 'pass',
+        }),
+      { initialProps: { currentRoomCode: roomCode } }
+    );
+
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(onPaid).toHaveBeenCalledTimes(1);
+
+    rerender({ currentRoomCode: 'WXYZ' });
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    expect(onPaid).toHaveBeenCalledTimes(1);
+  });
+
+  it('ignores a stale refreshEntitlements promise after dependencies change', async () => {
+    vi.useFakeTimers();
+    vi.stubGlobal('history', { replaceState: vi.fn() });
+    const deferreds: ReturnType<typeof createDeferred<void>>[] = [];
+    const refreshEntitlements = vi.fn(() => {
+      const deferred = createDeferred<void>();
+      deferreds.push(deferred);
+      return deferred.promise;
+    });
+
+    const { result, rerender } = renderHook(
+      ({ currentRoomCode }: { currentRoomCode: string }) =>
+        useCheckoutFeedback({
+          roomCode: currentRoomCode,
+          playerId,
+          refreshEntitlements,
+          paidProduct: 'pass',
+        }),
+      { initialProps: { currentRoomCode: roomCode } }
+    );
+
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(refreshEntitlements).toHaveBeenCalledTimes(1);
+    expect(deferreds).toHaveLength(1);
+
+    rerender({ currentRoomCode: 'WXYZ' });
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(refreshEntitlements).toHaveBeenCalledTimes(2);
+    expect(deferreds).toHaveLength(2);
+
+    // Resolve the stale first promise
+    act(() => {
+      deferreds[0].resolve();
+    });
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    // Stale result must not set state or start a timer
+    expect(result.current.paidMessage).toBeNull();
+    expect(result.current.isVisible).toBe(false);
+
+    // Resolve the current second promise
+    act(() => {
+      deferreds[1].resolve();
+    });
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    expect(result.current.paidMessage).toBe(
+      '🎉 Pass 24h activé ! Tous les modes sont débloqués.'
+    );
+    expect(result.current.isVisible).toBe(true);
   });
 });
