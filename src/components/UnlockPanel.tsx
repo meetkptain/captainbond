@@ -6,7 +6,7 @@ import type { Pack } from '@/lib/monetization/catalog';
 import { PricingComparison } from './PricingComparison';
 import { Icon } from '@/components/Icon';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
-import { isNativeApp, purchaseNativeProduct } from '@/lib/native/bridge';
+import { isNativeApp, purchaseNativeProduct, triggerHaptic } from '@/lib/native/bridge';
 
 interface UnlockPanelProps {
   roomCode: string;
@@ -40,6 +40,7 @@ export function UnlockPanel({ roomCode, playerId, packs, freeQuestionsUsed, free
 
       if (roomCode === 'DEMO12') {
         setTimeout(() => {
+          triggerHaptic('heavy');
           window.location.href = successUrl || `${origin}/room/${roomCode}/player?paid=pass`;
         }, 1000);
         return;
@@ -52,6 +53,7 @@ export function UnlockPanel({ roomCode, playerId, packs, freeQuestionsUsed, free
         }
         const result = await purchaseNativeProduct(packageId);
         if (result) {
+          triggerHaptic('heavy');
           window.location.href = successUrl || `${origin}/room/${roomCode}/player?paid=pass`;
         } else {
           onCheckoutError?.('Achat annulé ou rejeté par le store.');

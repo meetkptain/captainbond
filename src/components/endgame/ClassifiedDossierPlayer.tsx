@@ -3,7 +3,7 @@ import { MONETIZATION_CONFIG } from '@/lib/config/monetization';
 import { api } from '@/lib/api/client';
 import { ShareSheet } from '@/components/ShareSheet';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
-import { isNativeApp, shareNative, initializePurchases, purchaseNativeProduct } from '@/lib/native/bridge';
+import { isNativeApp, shareNative, initializePurchases, purchaseNativeProduct, triggerHaptic } from '@/lib/native/bridge';
 import { getCurrentUser } from '@/lib/supabase-auth';
 
 interface PlayerProfile {
@@ -228,6 +228,7 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
     try {
       if (roomCode === 'DEMO12') {
         setTimeout(() => {
+          triggerHaptic('heavy');
           setUnlocked(true);
           setPaying(false);
           alert('Félicitations ! Votre dossier secret a été déverrouillé.');
@@ -236,6 +237,7 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
       }
       const result = await purchaseNativeProduct(packageId);
       if (result) {
+        triggerHaptic('heavy');
         // Achat réussi ! Re-vérifier les entitlements après un court délai pour laisser le webhook s'exécuter
         setTimeout(async () => {
           try {
@@ -763,7 +765,9 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
             Tu lis en tes amis comme dans un livre ouvert. Tu sais exactement ce qu&apos;ils attendent de toi, et tu t&apos;en sers avec une précision chirurgicale. Dangereux, mais charmant. Les gens t&apos;adorent sans savoir qu&apos;ils sont dans ta main.
           </p>
           <div className="absolute inset-0 bg-black/45 backdrop-blur-[2px] flex items-center justify-center">
-            <span className="font-mono text-xs text-red-400 font-bold bg-black/80 px-3 py-1.5 border border-red-500/30 rounded uppercase tracking-widest shadow-lg">
+            {/* Ligne laser animée */}
+            <div className="absolute inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-80 animate-scan" />
+            <span className="font-mono text-xs text-red-400 font-bold bg-black/80 px-3 py-1.5 border border-red-500/30 rounded uppercase tracking-widest shadow-lg z-10">
               Description Verrouillée
             </span>
           </div>
