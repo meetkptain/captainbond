@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { LandingLayout } from '@/components/landing/LandingLayout';
 import { LandingButton } from '@/components/landing/LandingButton';
 import { Section } from '@/components/landing/Section';
@@ -13,7 +13,79 @@ import { getB2BQuote, estimateB2BPrice } from '@/lib/pricing/b2b';
 
 const MIN_PARTICIPANTS = 10;
 
+const content = {
+  fr: {
+    category: "Team Building & Séminaires",
+    heroTitle: "Organisez le Team-Building idéal en 30 secondes",
+    heroDesc: "Brisez la glace, encouragez la parole et connectez vos collaborateurs avec une animation interactive sur écran géant (zéro logistique).",
+    quoteBtn: "Demander un devis",
+    estimateBtn: "Estimer mon événement",
+    discoverTitle: "Découvrez aussi nos solutions :",
+    discoverOnboarding: "📂 Intégration & Onboarding",
+    discoverQvt: "📊 Climat Social & QVT",
+    discoverBars: "🍻 Animation de Bars",
+    feat1Title: "Zéro friction technique",
+    feat1Desc: "Pas d'application à installer. Les participants scannent un QR code avec leur smartphone pour rejoindre la partie.",
+    feat2Title: "De 10 à 500+ joueurs",
+    feat2Desc: "Jouez tous ensemble projetés sur un écran principal. Idéal pour vos séminaires physiques ou en distanciel.",
+    feat3Title: "Questions adaptées au collectif",
+    feat3Desc: "Des questions et dilemmes conçus pour stimuler l'intelligence collective, l'empathie et la synergie de groupe.",
+    formSubmittedTitle: "Demande bien reçue !",
+    formSubmittedDesc: "Merci d'avoir choisi Captain Bond. Un de nos conseillers B2B vous contactera sous 24h ouvrées pour affiner votre besoin.",
+    formAnotherBtn: "Envoyer une autre demande",
+    formTitle: "Demander un devis sur-mesure",
+    formDesc: "Remplissez ce formulaire et notre équipe vous contactera sous 24h ouvrées.",
+    formLabelName: "Votre nom",
+    formLabelCompany: "Entreprise",
+    formLabelEmail: "Email professionnel",
+    formLabelParticipants: "Participants",
+    formLabelDate: "Date estimée",
+    formLabelNotes: "Notes ou besoins particuliers",
+    formNotesPlaceholder: "Ex: Événement de fin d'année, 50% de collaborateurs à distance, etc.",
+    formLabelFormula: "Formule estimée",
+    formLabelEstimation: "Estimation",
+    formSubmitBtn: "Envoyer ma demande",
+    formSubmitting: "Envoi en cours...",
+    errorGeneric: "Une erreur est survenue lors de l'envoi de votre demande."
+  },
+  en: {
+    category: "Team Building & Seminars",
+    heroTitle: "Organize the perfect Team Building in 30 seconds",
+    heroDesc: "Break the ice, encourage sharing and connect your employees with an interactive animation on giant screens (zero logistics).",
+    quoteBtn: "Request a Quote",
+    estimateBtn: "Estimate My Event",
+    discoverTitle: "Discover our other solutions:",
+    discoverOnboarding: "📂 Onboarding & Hiring",
+    discoverQvt: "📊 CSR & Work Well-being",
+    discoverBars: "🍻 Bar Entertainment",
+    feat1Title: "Zero technical friction",
+    feat1Desc: "No app to install. Participants simply scan a QR code with their smartphones to join the game.",
+    feat2Title: "From 10 to 500+ players",
+    feat2Desc: "Play together projected on a main screen. Ideal for physically present seminars or remote teams.",
+    feat3Title: "Team-tailored questions",
+    feat3Desc: "Questions and dilemmas designed to spark collective intelligence, empathy and group synergy.",
+    formSubmittedTitle: "Request successfully received!",
+    formSubmittedDesc: "Thank you for choosing Captain Bond. One of our B2B consultants will contact you within 24 business hours to refine your needs.",
+    formAnotherBtn: "Submit another request",
+    formTitle: "Request a Custom Quote",
+    formDesc: "Fill in this form and our team will get in touch with you within 24 business hours.",
+    formLabelName: "Your name",
+    formLabelCompany: "Company name",
+    formLabelEmail: "Work email",
+    formLabelParticipants: "Participants",
+    formLabelDate: "Estimated date",
+    formLabelNotes: "Notes or special requests",
+    formNotesPlaceholder: "E.g., End-of-year event, 50% remote team, etc.",
+    formLabelFormula: "Estimated plan",
+    formLabelEstimation: "Estimate",
+    formSubmitBtn: "Send My Request",
+    formSubmitting: "Sending...",
+    errorGeneric: "An error occurred while sending your request."
+  }
+};
+
 export default function CorporateLandingPage() {
+  const [lang, setLang] = useState<'fr' | 'en'>('en');
   const [participants, setParticipants] = useState(50);
   const [formData, setFormData] = useState({
     name: '',
@@ -28,6 +100,14 @@ export default function CorporateLandingPage() {
   const contactRef = useRef<HTMLElement>(null);
   const estimateurRef = useRef<HTMLElement>(null);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isFr = window.location.pathname.startsWith('/fr');
+      setLang(isFr ? 'fr' : 'en');
+    }
+  }, []);
+
+  const t = content[lang];
   const quote = getB2BQuote(participants);
   const estimatedPrice = estimateB2BPrice(participants);
 
@@ -46,10 +126,14 @@ export default function CorporateLandingPage() {
       setSubmitted(true);
     } catch (err) {
       console.error(err);
-      setError(err instanceof ApiClientError ? err.message : 'Une erreur est survenue lors de l\'envoi de votre demande.');
+      setError(err instanceof ApiClientError ? err.message : t.errorGeneric);
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const getLocalizedPath = (path: string) => {
+    return lang === 'fr' ? `/fr${path}` : path;
   };
 
   return (
@@ -58,37 +142,37 @@ export default function CorporateLandingPage() {
       <Section className="pt-10 md:pt-20">
         <div className="text-center space-y-8 max-w-3xl mx-auto">
           <span className="inline-block text-xs font-mono uppercase tracking-widest text-white/50 border border-white/10 px-3 py-1 rounded-full">
-            Team Building & Séminaires
+            {t.category}
           </span>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.1]">
-            Organisez le Team-Building idéal en 30 secondes
+            {t.heroTitle}
           </h1>
           <p className="text-lg md:text-xl text-white/70 max-w-xl mx-auto leading-relaxed">
-            Brisez la glace, encouragez la parole et connectez vos collaborateurs avec une animation interactive sur écran géant (zéro logistique).
+            {t.heroDesc}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <LandingButton onClick={() => contactRef.current?.scrollIntoView({ behavior: 'smooth' })}>
-              Demander un devis
+              {t.quoteBtn}
             </LandingButton>
             <LandingButton
               variant="secondary"
               onClick={() => estimateurRef.current?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Estimer mon événement
+              {t.estimateBtn}
             </LandingButton>
           </div>
 
           {/* Cocon sémantique B2B - Interlinking */}
           <div className="pt-8 border-t border-white/5 flex flex-wrap justify-center gap-6 text-sm text-white/50 font-mono">
-            <span>Découvrez aussi nos solutions :</span>
-            <a href="/corporate/onboarding-recrutement" className="text-white hover:text-pink-400 hover:underline transition-colors decoration-none font-bold">
-              📂 Intégration & Onboarding
+            <span>{t.discoverTitle}</span>
+            <a href={getLocalizedPath('/corporate/onboarding-recrutement')} className="text-white hover:text-pink-400 hover:underline transition-colors decoration-none font-bold">
+              {t.discoverOnboarding}
             </a>
-            <a href="/corporate/rse-qvt" className="text-white hover:text-purple-400 hover:underline transition-colors decoration-none font-bold">
-              📊 Climat Social & QVT
+            <a href={getLocalizedPath('/corporate/rse-qvt')} className="text-white hover:text-purple-400 hover:underline transition-colors decoration-none font-bold">
+              {t.discoverQvt}
             </a>
-            <a href="/b2b/bars-cafes" className="text-white hover:text-indigo-400 hover:underline transition-colors decoration-none font-bold">
-              🍻 Animation de Bars
+            <a href={getLocalizedPath('/b2b/bars-cafes')} className="text-white hover:text-indigo-400 hover:underline transition-colors decoration-none font-bold">
+              {t.discoverBars}
             </a>
           </div>
         </div>
@@ -103,8 +187,8 @@ export default function CorporateLandingPage() {
       <Section>
         <div className="space-y-24 md:space-y-32">
           <FeatureShowcase
-            title="Zéro friction technique"
-            description="Pas d'application à installer. Les participants scannent un QR code avec leur smartphone pour rejoindre la partie."
+            title={t.feat1Title}
+            description={t.feat1Desc}
             visual={
               <div className="aspect-video bg-[#0a0f1e] rounded-2xl border border-white/10 flex items-center justify-center">
                 <Icon name="qrCode" className="w-20 h-20 text-white/20" />
@@ -112,8 +196,8 @@ export default function CorporateLandingPage() {
             }
           />
           <FeatureShowcase
-            title="De 10 à 500+ joueurs"
-            description="Jouez tous ensemble projetés sur un écran principal. Idéal pour vos séminaires physiques ou en distanciel."
+            title={t.feat2Title}
+            description={t.feat2Desc}
             visual={
               <div className="aspect-video bg-[#0a0f1e] rounded-2xl border border-white/10 flex items-center justify-center">
                 <Icon name="users" className="w-20 h-20 text-white/20" />
@@ -122,8 +206,8 @@ export default function CorporateLandingPage() {
             reverse
           />
           <FeatureShowcase
-            title="Questions adaptées au collectif"
-            description="Des questions et dilemmes conçus pour stimuler l'intelligence collective, l'empathie et la synergie de groupe."
+            title={t.feat3Title}
+            description={t.feat3Desc}
             visual={
               <div className="aspect-video bg-[#0a0f1e] rounded-2xl border border-white/10 flex items-center justify-center">
                 <Icon name="target" className="w-20 h-20 text-white/20" />
@@ -148,32 +232,32 @@ export default function CorporateLandingPage() {
               <div className="mx-auto w-16 h-16 rounded-full bg-white/5 flex items-center justify-center">
                 <Icon name="check" className="w-8 h-8 text-white/80" />
               </div>
-              <h2 className="text-2xl font-black text-white">Demande bien reçue !</h2>
+              <h2 className="text-2xl font-black text-white">{t.formSubmittedTitle}</h2>
               <p className="text-white/60 max-w-md mx-auto px-6">
-                Merci d&apos;avoir choisi Captain Bond. Un de nos conseillers B2B vous contactera sous 24h ouvrées pour affiner votre besoin.
+                {t.formSubmittedDesc}
               </p>
               <button
                 onClick={() => setSubmitted(false)}
                 className="text-sm text-white/50 hover:text-white transition-colors cursor-pointer bg-transparent border-none underline"
               >
-                Envoyer une autre demande
+                {t.formAnotherBtn}
               </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-10">
               <div className="text-center space-y-2">
                 <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
-                  Demander un devis sur-mesure
+                  {t.formTitle}
                 </h2>
                 <p className="text-sm text-white/60">
-                  Remplissez ce formulaire et notre équipe vous contactera sous 24h ouvrées.
+                  {t.formDesc}
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-xs font-mono uppercase text-white/50 mb-2">
-                    Votre nom
+                    {t.formLabelName}
                   </label>
                   <input
                     id="name"
@@ -188,7 +272,7 @@ export default function CorporateLandingPage() {
                 </div>
                 <div>
                   <label htmlFor="company" className="block text-xs font-mono uppercase text-white/50 mb-2">
-                    Entreprise
+                    {t.formLabelCompany}
                   </label>
                   <input
                     id="company"
@@ -205,7 +289,7 @@ export default function CorporateLandingPage() {
 
               <div>
                 <label htmlFor="email" className="block text-xs font-mono uppercase text-white/50 mb-2">
-                  Email professionnel
+                  {t.formLabelEmail}
                 </label>
                 <input
                   id="email"
@@ -222,7 +306,7 @@ export default function CorporateLandingPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="participants" className="block text-xs font-mono uppercase text-white/50 mb-2">
-                    Participants ({participants})
+                    {t.formLabelParticipants} ({participants})
                   </label>
                   <input
                     id="participants"
@@ -237,7 +321,7 @@ export default function CorporateLandingPage() {
                 </div>
                 <div>
                   <label htmlFor="date" className="block text-xs font-mono uppercase text-white/50 mb-2">
-                    Date estimée
+                    {t.formLabelDate}
                   </label>
                   <input
                     id="date"
@@ -254,24 +338,24 @@ export default function CorporateLandingPage() {
               {/* Estimate summary */}
               <div className="rounded-xl bg-white/5 border border-white/10 p-4 flex items-center justify-between">
                 <div>
-                  <span className="block text-xs text-white/50">Formule estimée</span>
+                  <span className="block text-xs text-white/50">{t.formLabelFormula}</span>
                   <span className="text-sm font-bold text-white">{quote.label}</span>
                 </div>
                 <div className="text-right">
-                  <span className="block text-xs text-white/50">Estimation</span>
+                  <span className="block text-xs text-white/50">{t.formLabelEstimation}</span>
                   <span className="text-lg font-black text-white">{estimatedPrice.toLocaleString('fr-FR')} €</span>
                 </div>
               </div>
 
               <div>
                 <label htmlFor="notes" className="block text-xs font-mono uppercase text-white/50 mb-2">
-                  Notes ou besoins particuliers
+                  {t.formLabelNotes}
                 </label>
                 <textarea
                   id="notes"
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  placeholder="Ex: Événement de fin d'année, 50% de collaborateurs à distance, etc."
+                  placeholder={t.formNotesPlaceholder}
                   rows={4}
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-white/20 focus:outline-none focus:border-white/30 transition-colors text-sm resize-y"
                   disabled={submitting}
@@ -285,7 +369,7 @@ export default function CorporateLandingPage() {
               )}
 
               <LandingButton type="submit" disabled={submitting} className="w-full">
-                {submitting ? 'Envoi en cours...' : 'Envoyer ma demande'}
+                {submitting ? t.formSubmitting : t.formSubmitBtn}
               </LandingButton>
             </form>
           )}

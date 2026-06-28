@@ -185,6 +185,7 @@ describe('middleware', () => {
     expect(config.matcher).toEqual([
       '/',
       '/corporate',
+      '/b2b/bars-cafes',
       '/admin/:path*',
       '/api/admin/:path*',
       '/api/room/:path*',

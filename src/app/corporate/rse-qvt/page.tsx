@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LandingLayout } from '@/components/landing/LandingLayout';
 import { LandingButton } from '@/components/landing/LandingButton';
 import { Section } from '@/components/landing/Section';
@@ -8,7 +8,73 @@ import { FeatureShowcase } from '@/components/landing/FeatureShowcase';
 import { Icon } from '@/components/Icon';
 import { api } from '@/lib/api/client';
 
+const content = {
+  fr: {
+    category: "Qualité de Vie au Travail (QVT)",
+    heroTitle: "Renforcez et mesurez la cohésion sociale de vos collaborateurs",
+    heroDesc: "Un baromètre QVT interactif et ludique sous forme de jeu. Engagez 95% de vos collaborateurs et obtenez un rapport d'impact concret pour votre direction RSE.",
+    generatePdfBtn: "Télécharger un exemple de Rapport QVT",
+    generatingPdfBtn: "Génération du PDF...",
+    reportTitle: "RAPPORT D'IMPACT QVT",
+    reportSubtitle: "Séminaire Afterwork - Captain Bond",
+    stat1Num: "96%",
+    stat1Label: "Taux de participation",
+    stat2Num: "4.8/5",
+    stat2Label: "Index de sécurité psychologique",
+    stat3Num: "+38%",
+    stat3Label: "Complicité inter-équipes",
+    verbatimTitle: "Verbatim anonyme de collaborateur :",
+    verbatimText: "\"C'est la première fois qu'on fait une activité d'équipe où je rigole sincèrement avec les développeurs sans me sentir mal à l'aise. À refaire absolument !\"",
+    closePreview: "Fermer la prévisualisation",
+    feat1Title: "L'Index de Sécurité Psychologique",
+    feat1Desc: "Le jeu est conçu pour éviter toute mise en situation gênante ou question personnelle intrusive. Chaque collaborateur dispose d'un bouton Safe Word à tout moment.",
+    feat2Title: "Dashboard pour le Codir",
+    feat2Desc: "Justifiez votre budget QVT. Recevez par email les données d'engagement clés et la progression de complicité sociale des équipes pour vos reportings internes.",
+    formSubmittedTitle: "Demande QVT reçue !",
+    formSubmittedDesc: "Un conseiller QVT de Captain Bond va vous contacter sous 24h ouvrées.",
+    formTitle: "Prendre contact pour un Essai Pilote",
+    formDesc: "Découvrez comment intégrer Captain Bond dans vos rituels QVT.",
+    formLabelName: "Votre nom",
+    formLabelCompany: "Nom de l'entreprise",
+    formLabelEmail: "Email professionnel",
+    formSubmitBtn: "Demander mon Essai Pilote",
+    formSubmitting: "Envoi en cours...",
+  },
+  en: {
+    category: "Quality of Life at Work (QVT)",
+    heroTitle: "Strengthen and measure the social cohesion of your employees",
+    heroDesc: "An interactive and fun QVT barometer as a game. Engage 95% of your employees and get a concrete impact report for your CSR leadership.",
+    generatePdfBtn: "Download a Sample QVT Report",
+    generatingPdfBtn: "Generating PDF...",
+    reportTitle: "QVT IMPACT REPORT",
+    reportSubtitle: "Afterwork Seminar - Captain Bond",
+    stat1Num: "96%",
+    stat1Label: "Participation rate",
+    stat2Num: "4.8/5",
+    stat2Label: "Psychological safety index",
+    stat3Num: "+38%",
+    stat3Label: "Inter-team complicity",
+    verbatimTitle: "Anonymous employee feedback:",
+    verbatimText: "\"This is the first time we've done a team activity where I genuinely laughed with the developers without feeling awkward. Definitely doing this again!\"",
+    closePreview: "Close preview",
+    feat1Title: "Psychological Safety Index",
+    feat1Desc: "The game is designed to avoid any embarrassing situations or intrusive personal questions. Every employee has a Safe Word button at all times.",
+    feat2Title: "Codir Dashboard",
+    feat2Desc: "Justify your QVT budget. Receive key engagement data and the social bonding progress of your teams by email for internal reportings.",
+    formSubmittedTitle: "QVT request received!",
+    formSubmittedDesc: "A Captain Bond QVT consultant will contact you within 24 business hours.",
+    formTitle: "Get in touch for a Pilot Trial",
+    formDesc: "Discover how to integrate Captain Bond into your QVT rituals.",
+    formLabelName: "Your name",
+    formLabelCompany: "Company name",
+    formLabelEmail: "Work email",
+    formSubmitBtn: "Request my Pilot Trial",
+    formSubmitting: "Sending...",
+  }
+};
+
 export default function QvtLandingPage() {
+  const [lang, setLang] = useState<'fr' | 'en'>('en');
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -19,6 +85,15 @@ export default function QvtLandingPage() {
   const [submitted, setSubmitted] = useState(false);
   const [generatingReport, setGeneratingReport] = useState(false);
   const [reportReady, setReportReady] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isFr = window.location.pathname.startsWith('/fr');
+      setLang(isFr ? 'fr' : 'en');
+    }
+  }, []);
+
+  const t = content[lang];
 
   const handleDownloadReport = () => {
     setGeneratingReport(true);
@@ -52,13 +127,13 @@ export default function QvtLandingPage() {
       <Section className="pt-10 md:pt-20">
         <div className="text-center space-y-8 max-w-3xl mx-auto">
           <span className="inline-block text-xs font-mono uppercase tracking-widest text-purple-400 border border-purple-500/20 bg-purple-500/5 px-3 py-1 rounded-full">
-            Qualité de Vie au Travail (QVT)
+            {t.category}
           </span>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.1]">
-            Renforcez et mesurez la cohésion sociale de vos collaborateurs
+            {t.heroTitle}
           </h1>
           <p className="text-lg md:text-xl text-white/70 max-w-xl mx-auto leading-relaxed">
-            Un baromètre QVT interactif et ludique sous forme de jeu. Engagez 95% de vos collaborateurs et obtenez un rapport d&apos;impact concret pour votre direction RSE.
+            {t.heroDesc}
           </p>
           <div className="pt-4">
             <button
@@ -66,7 +141,7 @@ export default function QvtLandingPage() {
               disabled={generatingReport}
               className="px-8 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 rounded-xl font-bold text-sm tracking-wide shadow-lg shadow-purple-500/20 text-center text-white border-none cursor-pointer inline-block"
             >
-              {generatingReport ? 'Génération du PDF...' : 'Télécharger un exemple de Rapport QVT'}
+              {generatingReport ? t.generatingPdfBtn : t.generatePdfBtn}
             </button>
           </div>
         </div>
@@ -78,31 +153,31 @@ export default function QvtLandingPage() {
           <div className="max-w-2xl mx-auto px-4 bg-slate-950 border border-white/10 rounded-3xl p-8 space-y-6 shadow-2xl">
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div>
-                <span className="text-xs font-mono text-purple-400 block">RAPPORT D&apos;IMPACT QVT</span>
-                <span className="text-lg font-bold text-white">Séminaire Afterwork - Captain Bond</span>
+                <span className="text-xs font-mono text-purple-400 block">{t.reportTitle}</span>
+                <span className="text-lg font-bold text-white">{t.reportSubtitle}</span>
               </div>
               <span className="text-xs font-mono text-white/40">28 Juin 2026</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="bg-white/5 border border-white/5 rounded-2xl p-4 text-center">
-                <span className="text-2xl font-black text-purple-400 block">96%</span>
-                <span className="text-[10px] uppercase font-mono text-white/50">Taux de participation</span>
+                <span className="text-2xl font-black text-purple-400 block">{t.stat1Num}</span>
+                <span className="text-[10px] uppercase font-mono text-white/50">{t.stat1Label}</span>
               </div>
               <div className="bg-white/5 border border-white/5 rounded-2xl p-4 text-center">
-                <span className="text-2xl font-black text-purple-400 block">4.8/5</span>
-                <span className="text-[10px] uppercase font-mono text-white/50">Index de sécurité psychologique</span>
+                <span className="text-2xl font-black text-purple-400 block">{t.stat2Num}</span>
+                <span className="text-[10px] uppercase font-mono text-white/50">{t.stat2Label}</span>
               </div>
               <div className="bg-white/5 border border-white/5 rounded-2xl p-4 text-center">
-                <span className="text-2xl font-black text-purple-400 block">+38%</span>
-                <span className="text-[10px] uppercase font-mono text-white/50">Complicité inter-équipes</span>
+                <span className="text-2xl font-black text-purple-400 block">{t.stat3Num}</span>
+                <span className="text-[10px] uppercase font-mono text-white/50">{t.stat3Label}</span>
               </div>
             </div>
 
             <div className="space-y-2 text-sm text-white/80">
-              <span className="text-xs font-mono text-purple-400 block">Verbatim anonyme de collaborateur :</span>
+              <span className="text-xs font-mono text-purple-400 block">{t.verbatimTitle}</span>
               <p className="italic bg-white/5 rounded-xl p-3 border-l-2 border-purple-500">
-                &quot;C&apos;est la première fois qu&apos;on fait une activité d&apos;équipe où je rigole sincèrement avec les développeurs sans me sentir mal à l&apos;aise. À refaire absolument !&quot;
+                {t.verbatimText}
               </p>
             </div>
             
@@ -110,7 +185,7 @@ export default function QvtLandingPage() {
               onClick={() => setReportReady(false)}
               className="text-xs text-white/40 hover:text-white underline cursor-pointer bg-transparent border-none block mx-auto"
             >
-              Fermer la prévisualisation
+              {t.closePreview}
             </button>
           </div>
         </Section>
@@ -120,8 +195,8 @@ export default function QvtLandingPage() {
       <Section>
         <div className="space-y-24 md:space-y-32">
           <FeatureShowcase
-            title="L&apos;Index de Sécurité Psychologique"
-            description="Le jeu est conçu pour éviter toute mise en situation gênante ou question personnelle intrusive. Chaque collaborateur dispose d'un bouton Safe Word à tout moment."
+            title={t.feat1Title}
+            description={t.feat1Desc}
             visual={
               <div className="aspect-video bg-[#0a0f1e] rounded-2xl border border-white/10 flex items-center justify-center">
                 <Icon name="target" className="w-20 h-20 text-white/20" />
@@ -129,8 +204,8 @@ export default function QvtLandingPage() {
             }
           />
           <FeatureShowcase
-            title="Dashboard pour le Codir"
-            description="Justifiez votre budget QVT. Recevez par email les données d'engagement clés et la progression de complicité sociale des équipes pour vos reportings internes."
+            title={t.feat2Title}
+            description={t.feat2Desc}
             visual={
               <div className="aspect-video bg-[#0a0f1e] rounded-2xl border border-white/10 flex items-center justify-center">
                 <Icon name="users" className="w-20 h-20 text-white/20" />
@@ -149,25 +224,25 @@ export default function QvtLandingPage() {
               <div className="mx-auto w-16 h-16 rounded-full bg-white/5 flex items-center justify-center">
                 <span className="text-2xl text-green-400">✓</span>
               </div>
-              <h2 className="text-2xl font-black text-white">Demande QVT reçue !</h2>
+              <h2 className="text-2xl font-black text-white">{t.formSubmittedTitle}</h2>
               <p className="text-white/60 max-w-md mx-auto px-6 text-sm">
-                Un conseiller QVT de Captain Bond va vous contacter sous 24h ouvrées.
+                {t.formSubmittedDesc}
               </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-10">
               <div className="text-center space-y-2">
                 <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
-                  Prendre contact pour un Essai Pilote
+                  {t.formTitle}
                 </h2>
                 <p className="text-sm text-white/60">
-                  Découvrez comment intégrer Captain Bond dans vos rituels QVT.
+                  {t.formDesc}
                 </p>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-xs font-mono uppercase text-white/50 mb-2">Votre nom</label>
+                  <label htmlFor="name" className="block text-xs font-mono uppercase text-white/50 mb-2">{t.formLabelName}</label>
                   <input
                     id="name"
                     type="text"
@@ -178,7 +253,7 @@ export default function QvtLandingPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="company" className="block text-xs font-mono uppercase text-white/50 mb-2">Nom de l&apos;entreprise</label>
+                  <label htmlFor="company" className="block text-xs font-mono uppercase text-white/50 mb-2">{t.formLabelCompany}</label>
                   <input
                     id="company"
                     type="text"
@@ -189,7 +264,7 @@ export default function QvtLandingPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-xs font-mono uppercase text-white/50 mb-2">Email professionnel</label>
+                  <label htmlFor="email" className="block text-xs font-mono uppercase text-white/50 mb-2">{t.formLabelEmail}</label>
                   <input
                     id="email"
                     type="email"
@@ -202,7 +277,7 @@ export default function QvtLandingPage() {
               </div>
 
               <LandingButton type="submit" disabled={submitting} className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700">
-                {submitting ? 'Envoi en cours...' : 'Demander mon Essai Pilote'}
+                {submitting ? t.formSubmitting : t.formSubmitBtn}
               </LandingButton>
             </form>
           )}
