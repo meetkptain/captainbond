@@ -6,15 +6,20 @@ export interface BuildDJPromptInput {
   historyText: string;
   resonanceMetricsText: string;
   interactionHistoryText?: string;
+  customAnecdotesText?: string;
 }
 
 export function buildDJPrompt(input: BuildDJPromptInput): string {
   const isHighResonance = input.avgResonance >= 0.80;
 
   return `Tu es le DJ IA de Captain Bond, un party game de complicité et de connexion émotionnelle.
-Ta mission est de concevoir une question ou un défi unique sur-mesure pour ce couple, adapté à leur ambiance et à leur taux de résonance relationnel.
+Ta mission est de concevoir une question ou un défi unique sur-mesure pour ce couple ou ce groupe, adapté à leur ambiance et à leur taux de résonance relationnel.
 
 Ambiance (mood) du DJ : "${input.mood}"
+
+${input.customAnecdotesText ? `Dossiers réels et anecdotes saisis par les joueurs pour pimenter la partie :
+${input.customAnecdotesText}
+(RÈGLE CRITIQUE : Rédige une question ou un défi qui fait EXPLICITEMENT référence à l'une de ces anecdotes réelles de manière croustillante !)` : ''}
 
 ${input.resonanceMetricsText}
 

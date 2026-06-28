@@ -61,6 +61,28 @@ export function VideoExport({
     }, 400);
   };
 
+  const handleShare = async () => {
+    if (typeof window === 'undefined') return;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Mon Clash Captain Bond !',
+          text: `Découvre notre niveau de complicité sur la question : "${questionText}" !`,
+          url: `${window.location.origin}`,
+        });
+      } catch (err) {
+        console.error('Error sharing:', err);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(`${window.location.origin}`);
+        alert('Lien copié dans le presse-papier !');
+      } catch (err) {
+        console.error('Failed to copy link:', err);
+      }
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4">
       <div className="relative w-full max-w-4xl bg-slate-900 border border-white/10 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
@@ -147,11 +169,20 @@ export function VideoExport({
                   Vidéo générée avec succès !
                 </div>
                 <button
-                  onClick={() => alert('Téléchargement simulé')}
-                  className="w-full py-3 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 font-bold text-sm tracking-wide shadow-lg shadow-emerald-500/20"
+                  onClick={handleShare}
+                  className="w-full py-3 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 font-bold text-sm tracking-wide shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2"
                 >
-                  Télécharger la vidéo
+                  <Icon name="share" className="w-4 h-4" />
+                  Partager le lien (TikTok / Insta)
                 </button>
+                <a
+                  href={`https://api.whatsapp.com/send?text=Regarde%20notre%20clash%20sur%20Captain%20Bond%20!%20${encodeURIComponent(typeof window !== 'undefined' ? window.location.origin : '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3 rounded-lg bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm tracking-wide shadow-lg text-center flex items-center justify-center gap-2 text-white border-none decoration-none"
+                >
+                  💬 Partager sur WhatsApp
+                </a>
               </div>
             ) : (
               <button

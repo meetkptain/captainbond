@@ -106,6 +106,16 @@ export async function generateDJQuestion(profileId: string): Promise<string> {
     throw new AppError('NOT_FOUND', `Profil DJ avec l'ID ${profileId} introuvable.`);
   }
 
+  let customAnecdotesText = '';
+  if (profile.roomId) {
+    const room = await repositories.getRoomById(profile.roomId);
+    if (room && room.customAnecdotes && Array.isArray(room.customAnecdotes) && room.customAnecdotes.length > 0) {
+      customAnecdotesText = (room.customAnecdotes as Array<{ question: string, answer: string }>)
+        .map(a => `- Question : "${a.question}" | Anecdote réelle : "${a.answer}"`)
+        .join('\n');
+    }
+  }
+
   const { historyText, resonanceMetricsText, avgResonance } = await compileTreeContext(profile);
   const interactionHistoryText = compileInteractionHistoryText(profile.interactionHistory);
 
@@ -115,6 +125,7 @@ export async function generateDJQuestion(profileId: string): Promise<string> {
     historyText,
     resonanceMetricsText,
     interactionHistoryText,
+    customAnecdotesText,
   });
 
   const generatedText = await generateDJQuestionText({

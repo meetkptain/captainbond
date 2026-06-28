@@ -14,6 +14,7 @@ export interface Room {
   roundConfig?: Record<string, unknown> | null;
   paidByUserId?: string | null;
   passExpiresAt?: string | null;
+  customAnecdotes?: Array<{ id: string; question: string; answer: string }> | null;
   createdAt?: string;
   updatedAt?: string;
 }

@@ -39,6 +39,8 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
   const [unlocked, setUnlocked] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [showShareSheet, setShowShareSheet] = useState(false);
+  const [connectionsTeaser, setConnectionsTeaser] = useState<{ hasConnections: boolean; teaseName?: string } | null>(null);
+  const [revealedConnections, setRevealedConnections] = useState<Array<{ voterName: string; voteCount: number }>>([]);
 
   // Fetch le profil calculé à l'ouverture
   useEffect(() => {
@@ -61,6 +63,40 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
     }
     fetchProfile();
   }, [roomCode, playerId]);
+
+  // Fetch teaser of connection votes
+  useEffect(() => {
+    async function fetchTeaser() {
+      try {
+        const data = await api.get<{ hasConnections: boolean; teaseName?: string }>(
+          `/api/room/connections?roomCode=${roomCode}&playerId=${playerId}`
+        );
+        setConnectionsTeaser(data);
+      } catch (e) {
+        console.error('Error fetching connections teaser:', e);
+      }
+    }
+    fetchTeaser();
+  }, [roomCode, playerId]);
+
+  // Fetch revealed connection details if unlocked
+  useEffect(() => {
+    async function fetchRevealed() {
+      if (!unlocked) return;
+      try {
+        const data = await api.post<{ connections: Array<{ voterName: string; voteCount: number }> }>(
+          '/api/room/connections',
+          { roomCode, playerId }
+        );
+        if (data.connections) {
+          setRevealedConnections(data.connections);
+        }
+      } catch (e) {
+        console.error('Error fetching revealed connections:', e);
+      }
+    }
+    fetchRevealed();
+  }, [unlocked, roomCode, playerId]);
 
   // Vérifier les entitlements au montage
   useEffect(() => {
@@ -468,9 +504,25 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
             </span>
           </div>
 
-          <p className="text-slate-200 text-base mb-8 px-2 leading-relaxed italic">
+          <p className="text-slate-200 text-base mb-6 px-2 leading-relaxed italic">
             &ldquo;{profile.barnumText}&rdquo;
           </p>
+
+          {revealedConnections.length > 0 && (
+            <div className="w-full bg-green-500/10 border border-green-500/20 rounded-2xl p-4 mb-6 text-left animate-fade-in shadow-inner">
+              <p className="text-green-400 font-mono text-[10px] font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <span>🕵️</span> CONNEXIONS SECRÈTES DÉVOILÉES
+              </p>
+              <div className="space-y-1.5">
+                {revealedConnections.map((conn, idx) => (
+                  <div key={idx} className="flex justify-between items-center text-xs text-slate-300 font-mono border-b border-white/5 pb-1 last:border-0 last:pb-0">
+                    <span>{conn.voterName}</span>
+                    <span className="text-green-400 font-bold">{conn.voteCount} votes d&apos;affinité</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Radar des 3 axes débloqué */}
           <div className="w-full grid grid-cols-3 gap-3 mb-8">
@@ -542,11 +594,23 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
         <p className="text-green-400 font-mono text-xs font-bold mb-4">FIABILITÉ : {profile?.confidencePercent}% ✓</p>
 
         {/* FREEMIUM TEASER : Archétype et émoji visibles gratuitement */}
-        <div className="w-full bg-white/5 border border-white/10 rounded-xl p-4 mb-6 relative overflow-hidden shadow-inner">
+        <div className="w-full bg-white/5 border border-white/10 rounded-xl p-4 mb-4 relative overflow-hidden shadow-inner">
           <div className="text-5xl mb-2">{profile?.archetypeEmoji || '👤'}</div>
           <div className="text-slate-400 text-xs font-mono uppercase tracking-wider">Votre profil ludique :</div>
           <div className="text-xl font-black text-white mt-1 uppercase tracking-tight">{profile?.archetype}</div>
         </div>
+
+        {/* FLIRT TEASER BOX */}
+        {connectionsTeaser && connectionsTeaser.hasConnections && (
+          <div className="w-full bg-gradient-to-r from-pink-500/10 to-rose-500/10 border border-pink-500/20 rounded-xl p-4 mb-4 text-left animate-pulse">
+            <p className="text-pink-400 font-mono text-[10px] font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <span>🤫</span> FLIRT & CONNEXION SECRÈTE
+            </p>
+            <p className="text-xs text-slate-200 leading-relaxed font-mono">
+              <strong>{connectionsTeaser.teaseName}</strong> (et peut-être d&apos;autres) a voté pour vous comme sa connexion secrète de la soirée. Débloquez votre rapport pour tout savoir !
+            </p>
+          </div>
+        )}
 
         {/* Description Barnum floutée */}
         <div className="relative w-full p-4 bg-white/5 border border-white/10 rounded-xl overflow-hidden mb-6">
