@@ -40,12 +40,13 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set('x-request-id', requestId);
 
-  // 1. Détection de langue et redirection bilingue (avec bypass Googlebot)
+  // 1. Détection de langue et redirection bilingue (avec bypass Googlebot et préférences cookies)
   if (pathname === '/' || pathname === '/corporate') {
     const userAgent = req.headers.get('user-agent') || '';
     const isBot = /bot|googlebot|bingbot|yandexbot|baidu|duckduckbot|crawler|spider|robot|crawling/i.test(userAgent);
+    const langCookie = req.cookies.get('cb_language')?.value;
 
-    if (!isBot) {
+    if (!isBot && langCookie !== 'en') {
       const acceptLang = req.headers.get('accept-language') || '';
       if (acceptLang.toLowerCase().includes('fr')) {
         const dest = pathname === '/' ? '/fr' : '/fr/corporate';
