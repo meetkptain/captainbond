@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 function PhoneMockup({
   title,
@@ -33,9 +33,18 @@ function PhoneMockup({
 }
 
 export function CoupleVisualMockup() {
+  const [lang, setLang] = useState<'fr' | 'en'>('en');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isFr = window.location.pathname.startsWith('/fr');
+      setLang(isFr ? 'fr' : 'en');
+    }
+  }, []);
+
   return (
     <div className="relative w-full aspect-[16/10] md:aspect-[16/7] bg-[#0a0f1e] rounded-3xl border border-white/10 flex items-center justify-center gap-4 md:gap-8 overflow-hidden">
-      <PhoneMockup title="Partenaire A" variant="left">
+      <PhoneMockup title={lang === 'fr' ? "Partenaire A" : "Partner A"} variant="left">
         <div className="space-y-2">
           <div className="h-1.5 w-3/4 bg-white/10 rounded" />
           <div className="h-1.5 w-1/2 bg-white/10 rounded" />
@@ -48,11 +57,11 @@ export function CoupleVisualMockup() {
           <div className="w-2 h-2 rounded-full bg-white/40 animate-pulse" />
         </div>
         <span className="text-[10px] font-mono uppercase tracking-wider text-white/40">
-          Synchro 20h
+          {lang === 'fr' ? "Synchro 20h" : "Sync 8pm"}
         </span>
       </div>
 
-      <PhoneMockup title="Partenaire B" variant="right">
+      <PhoneMockup title={lang === 'fr' ? "Partenaire B" : "Partner B"} variant="right">
         <div className="space-y-2">
           <div className="h-1.5 w-3/4 bg-white/10 rounded" />
           <div className="h-1.5 w-1/2 bg-white/10 rounded" />

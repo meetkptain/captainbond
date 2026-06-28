@@ -7,13 +7,15 @@ export interface B2BQuote {
   description: string;
 }
 
-export function getB2BQuote(participants: number): B2BQuote {
+export function getB2BQuote(participants: number, lang: 'fr' | 'en' = 'en'): B2BQuote {
   if (participants <= 40) {
     return {
       formula: 'self-service',
       unitPrice: 25,
-      label: 'Self-service',
-      description: 'Accès à la plateforme Captain Bond pour un événement autonome.',
+      label: lang === 'fr' ? 'Self-service' : 'Self-service',
+      description: lang === 'fr' 
+        ? 'Accès à la plateforme Captain Bond pour un événement autonome.'
+        : 'Access to the Captain Bond platform for an autonomous event.',
     };
   }
 
@@ -21,8 +23,10 @@ export function getB2BQuote(participants: number): B2BQuote {
     return {
       formula: 'facilitator',
       unitPrice: 35,
-      label: 'Avec facilitateur dédié',
-      description: 'Un animateur Captain Bond accompagne votre événement de A à Z.',
+      label: lang === 'fr' ? 'Avec facilitateur dédié' : 'With dedicated facilitator',
+      description: lang === 'fr'
+        ? 'Un animateur Captain Bond accompagne votre événement de A à Z.'
+        : 'A Captain Bond animator accompanies your event from A to Z.',
     };
   }
 
@@ -30,20 +34,24 @@ export function getB2BQuote(participants: number): B2BQuote {
     return {
       formula: 'enterprise',
       unitPrice: 45,
-      label: 'Grand compte',
-      description: 'Solution clé en main pour séminaires et événements d\'envergure.',
+      label: lang === 'fr' ? 'Grand compte' : 'Enterprise',
+      description: lang === 'fr'
+        ? 'Solution clé en main pour séminaires et événements d\'envergure.'
+        : 'Turnkey solution for large-scale seminars and events.',
     };
   }
 
   return {
     formula: 'custom',
     unitPrice: 45,
-    label: 'Sur mesure',
-    description: 'Contactez-nous pour une proposition adaptée à vos besoins.',
+    label: lang === 'fr' ? 'Sur mesure' : 'Custom',
+    description: lang === 'fr'
+      ? 'Contactez-nous pour une proposition adaptée à vos besoins.'
+      : 'Contact us for a proposal adapted to your needs.',
   };
 }
 
-export function estimateB2BPrice(participants: number): number {
-  const quote = getB2BQuote(participants);
+export function estimateB2BPrice(participants: number, lang: 'fr' | 'en' = 'en'): number {
+  const quote = getB2BQuote(participants, lang);
   return participants * quote.unitPrice;
 }

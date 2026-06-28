@@ -1,8 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export function SoireeVisualMockup() {
+  const [lang, setLang] = useState<'fr' | 'en'>('en');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isFr = window.location.pathname.startsWith('/fr');
+      setLang(isFr ? 'fr' : 'en');
+    }
+  }, []);
+
   return (
     <div className="relative w-full aspect-[16/10] md:aspect-[16/8] bg-[#0a0f1e] rounded-3xl border border-white/10 p-6 md:p-10 overflow-hidden">
       {/* TV Screen */}
@@ -23,7 +32,9 @@ export function SoireeVisualMockup() {
         <div className="flex-1 flex items-center justify-center p-4 md:p-8">
           <div className="text-center space-y-4 max-w-md">
             <div className="text-lg md:text-2xl font-black text-white leading-tight">
-              Quel est le souvenir à deux qui vous fait encore sourire ?
+              {lang === 'fr' 
+                ? 'Quel est le souvenir à deux qui vous fait encore sourire ?' 
+                : 'What memory of the two of you still makes you smile?'}
             </div>
             <div className="flex items-center justify-center gap-2 text-xs text-white/50 font-mono">
               <span>Mode Deep Connection</span>
@@ -48,7 +59,7 @@ export function SoireeVisualMockup() {
             </div>
           </div>
           <span className="text-[9px] font-mono text-white/40 uppercase">
-            Scan pour rejoindre
+            {lang === 'fr' ? 'Scan pour rejoindre' : 'Scan to join'}
           </span>
         </div>
       </div>
