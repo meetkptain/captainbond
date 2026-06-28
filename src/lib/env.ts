@@ -50,6 +50,9 @@ function checkSecretLength(name: string, value: string | undefined): string | nu
 export function requireEnv(name: string): string {
   const value = process.env[name];
   if (!value || value.trim().length === 0) {
+    if (process.env.NEXT_PHASE === 'phase-production-build') {
+      return `mock-${name.toLowerCase().replace(/_/g, '-')}-value-for-build-32-chars-long`;
+    }
     throw new Error(`Missing required environment variable: ${name}`);
   }
   return value;
