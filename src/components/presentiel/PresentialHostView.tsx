@@ -112,6 +112,7 @@ export function PresentialHostView({
     swapQuestion,
   } = game;
 
+  const hasAccess = entitlements?.accessibleModes?.includes('*') || entitlements?.accessibleModes?.includes(modeId);
   const isPremiumMode = modeId === 'DEEP_CONNECTION' || modeId === 'DATE_NIGHT';
   const shouldBlock = isPremiumMode && !hasAccess && currentQuestionIndex >= 3;
 
@@ -153,7 +154,7 @@ export function PresentialHostView({
   }
 
   const currentQuestion = questions[currentQuestionIndex];
-  const hasAccess = entitlements?.accessibleModes?.includes('*') || entitlements?.accessibleModes?.includes(modeId);
+  // hasAccess is already declared at the top of the component
 
   let duration = 60;
   if (modeId === 'DEEP_CONNECTION' || modeId === 'DATE_NIGHT') {
