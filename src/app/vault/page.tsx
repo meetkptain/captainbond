@@ -332,6 +332,7 @@ export default function VaultPage({ defaultLang = 'en' }: { defaultLang?: 'fr' |
         title: lang === 'fr' ? `Soirée Souvenir - ${new Date().toLocaleDateString('fr-FR')}` : `Memory Night - ${new Date().toLocaleDateString('en-US')}`,
         friends,
         vibes: selectedVibes,
+        groupContext,
         questions: generatedQuestions,
         isPurchased: false,
         createdAt: new Date().toISOString(),
