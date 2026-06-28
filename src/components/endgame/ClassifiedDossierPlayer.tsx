@@ -3,7 +3,8 @@ import { MONETIZATION_CONFIG } from '@/lib/config/monetization';
 import { api } from '@/lib/api/client';
 import { ShareSheet } from '@/components/ShareSheet';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
-import { isNativeApp, shareNative } from '@/lib/native/bridge';
+import { isNativeApp, shareNative, initializePurchases, purchaseNativeProduct } from '@/lib/native/bridge';
+import { getCurrentUser } from '@/lib/supabase-auth';
 
 interface PlayerProfile {
   archetype: string;
@@ -43,6 +44,21 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
   const [connectionsTeaser, setConnectionsTeaser] = useState<{ hasConnections: boolean; teaseName?: string } | null>(null);
   const [revealedConnections, setRevealedConnections] = useState<Array<{ voterName: string; voteCount: number }>>([]);
   const native = isNativeApp();
+
+  // Initialise le SDK Purchases de RevenueCat en environnement natif
+  useEffect(() => {
+    if (!native) return;
+    async function setupPurchases() {
+      try {
+        const user = await getCurrentUser();
+        const appUserId = user?.id || playerId;
+        await initializePurchases(appUserId);
+      } catch (e) {
+        console.error('Error setting up RevenueCat purchases client:', e);
+      }
+    }
+    setupPurchases();
+  }, [native, playerId]);
 
   // Fetch le profil calculé à l'ouverture
   useEffect(() => {
@@ -155,6 +171,35 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
       );
     } else {
       setShowShareModal(true);
+    }
+  };
+
+  const handleNativePayment = async (packageId: string) => {
+    setPaying(true);
+    try {
+      const result = await purchaseNativeProduct(packageId);
+      if (result) {
+        // Achat réussi ! Re-vérifier les entitlements après un court délai pour laisser le webhook s'exécuter
+        setTimeout(async () => {
+          try {
+            const data = await api.get<{ accessibleFeatures?: string[] }>(`/api/me/entitlements?playerId=${playerId}&roomCode=${roomCode}`);
+            const isCouple = currentMode === 'DATE_NIGHT';
+            const shouldUnlock = isCouple
+              ? data.accessibleFeatures?.includes('profile_couple') || data.accessibleFeatures?.includes('profiles') || data.accessibleFeatures?.includes('profile')
+              : data.accessibleFeatures?.includes('profile') || data.accessibleFeatures?.includes('profiles');
+            setUnlocked(!!shouldUnlock);
+            if (shouldUnlock) {
+              alert('Félicitations ! Votre dossier secret a été déverrouillé.');
+            }
+          } catch (e) {
+            console.error('Error re-verifying entitlements:', e);
+          }
+        }, 1500);
+      }
+    } catch (e) {
+      console.error('Native purchase trigger error:', e);
+    } finally {
+      setPaying(false);
     }
   };
 
@@ -432,12 +477,19 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
           </div>
         </div>
 
-        {/* Bouton de paiement ou Gating App Store */}
+        {/* Bouton de paiement (Stripe vs RevenueCat) */}
         {native ? (
-          <div className="w-full bg-slate-950/90 border border-amber-500/20 rounded-2xl p-4 text-center text-xs font-mono text-amber-300 leading-relaxed shadow-lg">
-            🔒 <strong>Pass requis</strong><br />
-            Déverrouillez votre pass sur <strong>captainbond.com</strong> depuis Safari/Chrome. Les achats ne sont pas disponibles directement dans l&apos;application.
-          </div>
+          <button
+            onClick={() => handleNativePayment('com.meetkptain.captainbond.dossiercouple')}
+            disabled={paying}
+            className="w-full bg-gradient-to-r from-neon-purple to-neon-pink text-white font-black py-4 px-4 rounded-xl hover:opacity-90 transition-all flex items-center justify-center gap-3 text-lg shadow-[0_0_20px_rgba(139,92,246,0.4)]"
+          >
+            {paying ? (
+              <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-6 h-6" />
+            ) : (
+              <>🔓 Révéler notre Compatibilité — {priceString}</>
+            )}
+          </button>
         ) : (
           <button
             onClick={handlePayment}
@@ -657,12 +709,19 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
 
         {/* Actions */}
         <div className="flex flex-col gap-3 w-full">
-          {/* Déverrouillage payant ou Gating App Store */}
+          {/* Déverrouillage payant (Stripe vs RevenueCat) */}
           {native ? (
-            <div className="w-full bg-slate-950/90 border border-amber-500/20 rounded-2xl p-4 text-center text-xs font-mono text-amber-300 leading-relaxed shadow-lg">
-              🔒 <strong>Pass requis</strong><br />
-              Déverrouillez votre pass sur <strong>captainbond.com</strong> depuis Safari/Chrome. Les achats ne sont pas disponibles directement dans l&apos;application.
-            </div>
+            <button
+              onClick={() => handleNativePayment('com.meetkptain.captainbond.dossierflirt')}
+              disabled={paying}
+              className="w-full bg-gradient-to-r from-neon-purple to-neon-pink text-white font-black py-4 px-4 rounded-xl hover:opacity-90 transition-all flex items-center justify-center gap-3 text-lg shadow-[0_0_20px_rgba(139,92,246,0.4)]"
+            >
+              {paying ? (
+                <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-6 h-6" />
+              ) : (
+                <>🔓 Révéler mes Stats & Axes — {priceString}</>
+              )}
+            </button>
           ) : (
             <button
               onClick={handlePayment}
