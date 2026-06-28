@@ -71,6 +71,8 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
             barnumText: 'Vous lisez dans les gens comme dans un livre ouvert. Vous analysez chaque micro-expression et anticipez les réactions de vos amis avec une précision déconcertante.',
             funniestTrait: 'Aime avoir toujours raison, même de mauvaise foi.',
             confidencePercent: 92,
+            questionsAnswered: 3,
+            isReady: true,
             axes: {
               alignment: 85,
               perspicacity: 78,
