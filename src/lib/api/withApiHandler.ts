@@ -159,6 +159,13 @@ export function withApiHandler<
 
       logger.error('API unexpected error', { durationMs: duration }, error);
 
+      try {
+        const Sentry = require('@sentry/nextjs');
+        Sentry.captureException(error);
+      } catch (e) {
+        logger.error('Failed to report exception to Sentry', {}, e);
+      }
+
       return attachRequestId(
         NextResponse.json(
           {

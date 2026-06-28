@@ -115,5 +115,6 @@ export const AnalyticsEvents = {
   PURCHASE_FAILED: 'purchase_failed',
   PROFILE_SHARED: 'profile_shared',
   QUESTION_ANSWERED: 'question_answered',
+  SAFE_WORD_TRIGGERED: 'safe_word_triggered',
   GAME_ENDED: 'game_ended',
 } as const;
