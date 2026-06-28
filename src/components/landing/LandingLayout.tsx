@@ -33,9 +33,11 @@ const dict = {
 export function LandingLayout({ children, variant = 'soiree' }: LandingLayoutProps) {
   const router = useRouter();
   const [lang, setLang] = useState<'fr' | 'en'>('en');
+  const [currentPath, setCurrentPath] = useState('');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      setCurrentPath(window.location.pathname);
       const isFr = window.location.pathname.startsWith('/fr');
       setLang(isFr ? 'fr' : 'en');
     }
@@ -45,6 +47,18 @@ export function LandingLayout({ children, variant = 'soiree' }: LandingLayoutPro
 
   const getLocalizedPath = (path: string) => {
     return lang === 'fr' ? `/fr${path}` : path;
+  };
+
+  const getEnglishEquivalentPath = () => {
+    if (currentPath === '/fr') return '/';
+    if (currentPath.startsWith('/fr/')) return currentPath.replace('/fr', '');
+    return currentPath || '/';
+  };
+
+  const getFrenchEquivalentPath = () => {
+    if (currentPath === '/') return '/fr';
+    if (currentPath.startsWith('/fr')) return currentPath;
+    return `/fr${currentPath}`;
   };
 
   return (
@@ -105,6 +119,34 @@ export function LandingLayout({ children, variant = 'soiree' }: LandingLayoutPro
                 {t.back}
               </button>
             )}
+
+            <div className="flex items-center gap-2 border-l border-white/10 pl-4">
+              {lang === 'fr' ? (
+                <>
+                  <span className="text-xs font-black text-amber-400">FR</span>
+                  <span className="text-white/20 text-xs">|</span>
+                  <a
+                    href={getEnglishEquivalentPath()}
+                    hrefLang="en"
+                    className="text-xs font-medium text-white/50 hover:text-white transition-colors cursor-pointer"
+                  >
+                    EN
+                  </a>
+                </>
+              ) : (
+                <>
+                  <a
+                    href={getFrenchEquivalentPath()}
+                    hrefLang="fr"
+                    className="text-xs font-medium text-white/50 hover:text-white transition-colors cursor-pointer"
+                  >
+                    FR
+                  </a>
+                  <span className="text-white/20 text-xs">|</span>
+                  <span className="text-xs font-black text-amber-400">EN</span>
+                </>
+              )}
+            </div>
           </nav>
         </div>
       </header>
