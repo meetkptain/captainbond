@@ -188,6 +188,7 @@ describe('middleware', () => {
       '/couple',
       '/vault',
       '/b2b/bars-cafes',
+      '/group/:path*',
       '/admin/:path*',
       '/api/admin/:path*',
       '/api/room/:path*',

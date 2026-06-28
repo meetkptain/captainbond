@@ -302,7 +302,7 @@ export default function Home({ defaultLang = 'en' }: { defaultLang?: 'fr' | 'en'
           <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
             {t.testimonialsTitle}
           </h2>
-          <Testimonials />
+          <Testimonials defaultLang={lang} />
         </div>
       </Section>
     </LandingLayout>

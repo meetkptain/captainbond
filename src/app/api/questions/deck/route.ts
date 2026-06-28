@@ -17,7 +17,13 @@ export const GET = withApiHandler({
       return NextResponse.json({ error: 'Authentification requise' }, { status: 401 });
     }
 
-    const questions = await listQuestionsForDeck();
+    const roomLanguage = !(hostAuth instanceof Response)
+      ? hostAuth.room.language
+      : !(playerAuth instanceof Response)
+      ? playerAuth.room.language
+      : 'fr';
+
+    const questions = await listQuestionsForDeck(roomLanguage || 'fr');
     return NextResponse.json(questions);
   },
 });
