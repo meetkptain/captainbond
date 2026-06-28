@@ -22,6 +22,7 @@ import { api, ApiClientError } from '@/lib/api/client';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
 import { useHostSession } from '@/hooks/useHostSession';
 import { useCheckoutFeedback, type CheckoutProduct } from '@/hooks/useCheckoutFeedback';
+import { triggerHaptic, triggerHapticDouble } from '@/lib/native/bridge';
 
 export default function PlayerController() {
   const params = useParams();
@@ -267,6 +268,7 @@ export default function PlayerController() {
 
   const handleVote = async (answer: string) => {
     if (!playerId || (isHost && targetType !== 'SOLO')) return;
+    triggerHaptic('light');
     try {
       setVoteError(null);
       setHasVoted(true);
@@ -482,6 +484,7 @@ export default function PlayerController() {
           onClose={() => setShowSafeWord(false)}
           onSkip={async () => {
             setShowSafeWord(false);
+            triggerHapticDouble();
             try {
               await api.post('/api/room/skip', { playerId, roomCode });
               const channel = supabase.channel(`room-events-${roomCode}`);
