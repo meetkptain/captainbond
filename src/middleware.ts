@@ -41,7 +41,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   requestHeaders.set('x-request-id', requestId);
 
   // 1. Détection de langue et redirection bilingue (avec bypass Googlebot et préférences cookies)
-  if (pathname === '/' || pathname === '/corporate' || pathname === '/b2b/bars-cafes') {
+  if (pathname === '/' || pathname === '/corporate' || pathname === '/couple' || pathname === '/vault' || pathname === '/b2b/bars-cafes') {
     const userAgent = req.headers.get('user-agent') || '';
     const isBot = /bot|googlebot|bingbot|yandexbot|baidu|duckduckbot|crawler|spider|robot|crawling/i.test(userAgent);
     const langCookie = req.cookies.get('cb_language')?.value;
@@ -51,6 +51,8 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
       if (acceptLang.toLowerCase().includes('fr')) {
         let dest = '/fr';
         if (pathname === '/corporate') dest = '/fr/corporate';
+        if (pathname === '/couple') dest = '/fr/couple';
+        if (pathname === '/vault') dest = '/fr/vault';
         if (pathname === '/b2b/bars-cafes') dest = '/fr/b2b/bars-cafes';
         const response = NextResponse.redirect(new URL(dest, req.url), 302);
         response.headers.set('x-request-id', requestId);
@@ -129,5 +131,5 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
 }
 
 export const config = {
-  matcher: ['/', '/corporate', '/b2b/bars-cafes', '/admin/:path*', '/api/admin/:path*', '/api/room/:path*', '/api/me/:path*'],
+  matcher: ['/', '/corporate', '/couple', '/vault', '/b2b/bars-cafes', '/admin/:path*', '/api/admin/:path*', '/api/room/:path*', '/api/me/:path*'],
 };

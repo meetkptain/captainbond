@@ -98,7 +98,7 @@ function calculateStreak(questions: DailyQuestionData[]): number {
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export default function CoupleDashboard() {
+export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 'fr' | 'en' }) {
   const router = useRouter();
 
   // State
@@ -298,7 +298,7 @@ export default function CoupleDashboard() {
   if (!userId) {
     return (
       <>
-        <CoupleLanding onStartAuth={() => setShowAuthModal(true)} />
+        <CoupleLanding defaultLang={defaultLang} onStartAuth={() => setShowAuthModal(true)} />
         <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
       </>
     );

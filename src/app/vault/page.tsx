@@ -5,53 +5,188 @@ import { useRouter } from 'next/navigation';
 import { CustomDeck, CustomQuestion, DeckVibe, QuestionMode } from '@/lib/custom-decks/types';
 import { getLocalDecks, saveLocalDeck, deleteLocalDeck } from '@/lib/custom-decks/storage';
 import { BackgroundOrbs } from '@/components/BackgroundOrbs';
+import { api, ApiClientError } from '@/lib/api/client';
 import './vault.css';
 
-const VIBE_METADATA: Record<DeckVibe, { emoji: string; label: string; desc: string; colorClass: string }> = {
-  ICEBREAKER: {
-    emoji: '🧊',
-    label: 'Brise-Glace',
-    desc: 'Idéal pour démarrer la soirée en douceur et rire un bon coup.',
-    colorClass: 'vibe-icebreaker',
-  },
-  SPICY: {
-    emoji: '🔥',
-    label: 'Pimenté',
-    desc: 'Dilemmes croustillants, vérités gênantes et révélations.',
-    colorClass: 'vibe-spicy',
-  },
-  SECRETS: {
-    emoji: '🕵️',
-    label: 'Secrets & Bluff',
-    desc: 'Qui a fait quoi ? Devinez qui cache le mieux son jeu.',
-    colorClass: 'vibe-secrets',
-  },
-  NOSTALGIA: {
-    emoji: '🎒',
-    label: 'Nostalgie',
-    desc: 'Anecdotes d\'enfance, vieux souvenirs de vacances et nostalgie.',
-    colorClass: 'vibe-nostalgia',
-  },
+const getVibeMetadata = (lang: 'fr' | 'en'): Record<DeckVibe, { emoji: string; label: string; desc: string; colorClass: string }> => {
+  return {
+    ICEBREAKER: {
+      emoji: '🧊',
+      label: lang === 'fr' ? 'Brise-Glace' : 'Icebreaker',
+      desc: lang === 'fr'
+        ? 'Idéal pour démarrer la soirée en douceur et rire un bon coup.'
+        : 'Ideal to kick off the night smoothly with some good laughs.',
+      colorClass: 'vibe-icebreaker',
+    },
+    SPICY: {
+      emoji: '🔥',
+      label: lang === 'fr' ? 'Pimenté' : 'Spicy',
+      desc: lang === 'fr'
+        ? 'Dilemmes croustillants, vérités gênantes et révélations.'
+        : 'Spicy dilemmas, awkward truths and revelations.',
+      colorClass: 'vibe-spicy',
+    },
+    SECRETS: {
+      emoji: '🕵️',
+      label: lang === 'fr' ? 'Secrets & Bluff' : 'Secrets & Bluff',
+      desc: lang === 'fr'
+        ? 'Qui a fait quoi ? Devinez qui cache le mieux son jeu.'
+        : 'Who did what? Guess who hides their game best.',
+      colorClass: 'vibe-secrets',
+    },
+    NOSTALGIA: {
+      emoji: '🎒',
+      label: lang === 'fr' ? 'Nostalgie' : 'Nostalgia',
+      desc: lang === 'fr'
+        ? "Anecdotes d'enfance, vieux souvenirs de vacances et nostalgie."
+        : 'Childhood anecdotes, old vacation memories and nostalgia.',
+      colorClass: 'vibe-nostalgia',
+    },
+  };
 };
 
-const LOADING_MESSAGES = [
-  "Analyse des dossiers secrets en cours... 🔎",
-  "Rédaction des cartes Most Likely To... ✍️",
-  "Mélange des vibes et des anecdotes... 🌪️",
-  "Génération de questions piquantes sur mesure... 🌶️",
-  "Scellage des 60 cartes dans votre coffre... 🔒",
-  "Finalisation de la magie Captain Bond... 🪄"
-];
+const getLoadingMessages = (lang: 'fr' | 'en'): string[] => {
+  return lang === 'fr' ? [
+    "Analyse des dossiers secrets en cours... 🔎",
+    "Rédaction des cartes Most Likely To... ✍️",
+    "Mélange des vibes et des anecdotes... 🌪️",
+    "Génération de questions piquantes sur mesure... 🌶️",
+    "Scellage des 60 cartes dans votre coffre... 🔒",
+    "Finalisation de la magie Captain Bond... 🪄"
+  ] : [
+    "Analyzing secret files in progress... 🔎",
+    "Drafting Most Likely To cards... ✍️",
+    "Mixing vibes and stories... 🌪️",
+    "Generating custom spicy questions... 🌶️",
+    "Sealing the 60 cards in your vault... 🔒",
+    "Finalizing Captain Bond magic... 🪄"
+  ];
+};
 
-export default function VaultPage() {
+const content = {
+  fr: {
+    backBtn: "Retour",
+    title: "Mon Coffre aux Souvenirs",
+    desc: "Générez des decks de questions 100% uniques basés sur vos anecdotes privées, vos amis et vos pires dossiers.",
+    createBtn: "Créer un nouveau Deck Souvenir",
+    myDecksTitle: "Mes Decks Privés",
+    noDecks: "Vous n'avez pas encore créé de deck.",
+    lockedLabel: "Bloqué",
+    cardsSuffix: "cartes",
+    friendsSuffix: "amis",
+    membersLabel: "Membres :",
+    playBtn: "Jouer",
+    deleteConfirm: "Supprimer ce deck ?",
+    step1Title: "Étape 1 sur 3",
+    step1Question: "Qui participe à la soirée ? 👥",
+    step1Desc: "Ajoutez les prénoms des joueurs qui seront présents autour de la table pour personnaliser les questions.",
+    noFriends: "Aucun ami ajouté pour l'instant...",
+    friendInputPlaceholder: "Ex: Camille",
+    addBtn: "Ajouter",
+    cancelBtn: "Annuler",
+    nextBtn: "Suivant →",
+    step2Title: "Étape 2 sur 3",
+    step2Question: "Choisis l'ambiance générale 🎭",
+    step2Desc: "Sélectionnez une ou plusieurs vibes pour guider l'intelligence artificielle dans le ton de vos cartes.",
+    step3Title: "Étape 3 sur 3",
+    step3Question: "Injecte des dossiers croustillants 🤫",
+    step3Desc: "Écrivez une phrase ou une anecdote rapide pour vos amis. Ces éléments seront utilisés par Gemini pour créer des cartes exclusives et hilarantes.",
+    dossierLabel: "Anecdote / Secret sur",
+    dossierPlaceholderPrefix: "Idée :",
+    dossierTextareaPlaceholder: "Tape ici son dossier...",
+    groupContextLabel: "Contexte du groupe / Lieu (Optionnel)",
+    groupContextPlaceholder: "Ex: Vacances Ibiza 2025, coloc à Lyon, weekend à la campagne...",
+    generateBtn: "Générer mon Deck !",
+    loadingSub: "Gemini 2.0 rédige les 60 cartes en se basant sur vos dossiers... Cela prend environ 5 à 15 secondes.",
+    previewTitle: "Ton Coffre est Prêt ! 📦",
+    previewDesc: "Découvrez un aperçu des 3 premières cartes générées.",
+    previewBadge: "Génération réussie",
+    lockedCardDesc: "Ici s'affiche une question croustillante générée par l'IA...",
+    paywallTitle: "Débloquer les 57 autres cartes",
+    paywallDesc: "Obtenez l'accès complet à votre deck personnalisé de 60 cartes, modifiable à volonté et jouable indéfiniment.",
+    paywallBtn: "Débloquer le Deck Complet • 3€",
+    editorTitle: "Liste des Cartes",
+    editorAddCardBtn: "+ Ajouter une carte",
+    editorCloseBtn: "Fermer",
+    editorAddCardTitle: "Ajouter une nouvelle question",
+    editorAddCardLabelText: "Texte de la carte",
+    editorAddCardLabelMode: "Mode de jeu",
+    editorAddCardLabelTarget: "Impliquer des joueurs spécifiques (Optionnel)",
+    editorAddCardBtnSubmit: "Ajouter au deck",
+    editorCardPrefix: "Carte",
+    editorCardLabelTargeted: "Joueurs ciblés :",
+    editorSaveBtn: "💾 Sauvegarder",
+    editorPlayBtn: "Lancer la Partie !",
+    editorDeckTitlePlaceholder: "Titre du Deck",
+    errorGeneric: "Une erreur est survenue lors de l'action.",
+  },
+  en: {
+    backBtn: "Back",
+    title: "My Memories Vault",
+    desc: "Generate 100% unique question decks based on your private stories, friends, and worst secrets.",
+    createBtn: "Create a New Memories Deck",
+    myDecksTitle: "My Private Decks",
+    noDecks: "You haven't created any deck yet.",
+    lockedLabel: "Locked",
+    cardsSuffix: "cards",
+    friendsSuffix: "friends",
+    membersLabel: "Members:",
+    playBtn: "Play",
+    deleteConfirm: "Delete this deck?",
+    step1Title: "Step 1 of 3",
+    step1Question: "Who is attending the party? 👥",
+    step1Desc: "Add the first names of the players present around the table to personalize the questions.",
+    noFriends: "No friends added yet...",
+    friendInputPlaceholder: "E.g., Camille",
+    addBtn: "Add",
+    cancelBtn: "Cancel",
+    nextBtn: "Next →",
+    step2Title: "Step 2 of 3",
+    step2Question: "Choose the general vibes 🎭",
+    step2Desc: "Select one or more vibes to guide the artificial intelligence in the tone of your cards.",
+    step3Title: "Step 3 of 3",
+    step3Question: "Inject some juicy stories 🤫",
+    step3Desc: "Write a quick sentence or anecdote for each friend. These elements will be used by Gemini to generate exclusive, hilarious cards.",
+    dossierLabel: "Anecdote / Secret about",
+    dossierPlaceholderPrefix: "Idea:",
+    dossierTextareaPlaceholder: "Type their story here...",
+    groupContextLabel: "Group Context / Location (Optional)",
+    groupContextPlaceholder: "E.g., Ibiza Vacation 2025, Lyon roommates, countryside weekend...",
+    generateBtn: "Generate My Deck!",
+    loadingSub: "Gemini 2.0 is writing the 60 cards based on your stories... This takes about 5 to 15 seconds.",
+    previewTitle: "Your Vault is Ready! 📦",
+    previewDesc: "Discover a preview of the first 3 generated cards.",
+    previewBadge: "Generation successful",
+    lockedCardDesc: "A juicy question generated by AI will be shown here...",
+    paywallTitle: "Unlock the 57 other cards",
+    paywallDesc: "Get full access to your personalized deck of 60 cards, fully editable and playable indefinitely.",
+    paywallBtn: "Unlock the Full Deck • 3€",
+    editorTitle: "Cards List",
+    editorAddCardBtn: "+ Add a card",
+    editorCloseBtn: "Close",
+    editorAddCardTitle: "Add a new question",
+    editorAddCardLabelText: "Card text",
+    editorAddCardLabelMode: "Game mode",
+    editorAddCardLabelTarget: "Involve specific players (Optional)",
+    editorAddCardBtnSubmit: "Add to deck",
+    editorCardPrefix: "Card",
+    editorCardLabelTargeted: "Targeted players:",
+    editorSaveBtn: "💾 Save",
+    editorPlayBtn: "Launch the Game!",
+    editorDeckTitlePlaceholder: "Deck Title",
+    errorGeneric: "An error occurred during this action.",
+  }
+};
+
+export default function VaultPage({ defaultLang = 'en' }: { defaultLang?: 'fr' | 'en' }) {
   const router = useRouter();
+
+  // Language state
+  const [lang, setLang] = useState<'fr' | 'en'>(defaultLang);
 
   // Navigation / views
   const [view, setView] = useState<'list' | 'wizard-friends' | 'wizard-vibes' | 'wizard-dossiers' | 'loading' | 'preview' | 'editor'>('list');
-  const [decks, setDecks] = useState<CustomDeck[]>(() => {
-    if (typeof window === 'undefined') return [];
-    return getLocalDecks();
-  });
+  const [decks, setDecks] = useState<CustomDeck[]>([]);
   const [activeDeck, setActiveDeck] = useState<CustomDeck | null>(null);
 
   // Wizard state
@@ -75,6 +210,20 @@ export default function VaultPage() {
   const [showAddCardForm, setShowAddCardForm] = useState(false);
   const [deckTitle, setDeckTitle] = useState('');
 
+  // Dynamic values based on language
+  const t = content[lang];
+  const vibeMetadata = getVibeMetadata(lang);
+  const loadingMessages = getLoadingMessages(lang);
+
+  // Detect path locale and load local storage decks on client mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isFr = window.location.pathname.startsWith('/fr');
+      setLang(isFr ? 'fr' : 'en');
+      setDecks(getLocalDecks());
+    }
+  }, []);
+
   // Sync list when view changes to list
   useEffect(() => {
     if (view === 'list' && typeof window !== 'undefined') {
@@ -89,10 +238,10 @@ export default function VaultPage() {
   useEffect(() => {
     if (view !== 'loading') return;
     const interval = setInterval(() => {
-      setLoadingMessageIdx((prev) => (prev + 1) % LOADING_MESSAGES.length);
+      setLoadingMessageIdx((prev) => (prev + 1) % loadingMessages.length);
     }, 2500);
     return () => clearInterval(interval);
-  }, [view]);
+  }, [view, loadingMessages.length]);
 
   // Add a friend chip
   const handleAddFriend = (e: React.FormEvent) => {
@@ -105,16 +254,15 @@ export default function VaultPage() {
     setFriendInput('');
   };
 
-  // Remove a friend chip
   const handleRemoveFriend = (name: string) => {
     setFriends(friends.filter((f) => f !== name));
-    // clean up associated dossier
+    // Clean related dossier
     const updatedDossiers = { ...dossiers };
     delete updatedDossiers[name];
     setDossiers(updatedDossiers);
   };
 
-  // Toggle vibe selection
+  // Toggle selected vibe filter
   const handleToggleVibe = (vibe: DeckVibe) => {
     if (selectedVibes.includes(vibe)) {
       setSelectedVibes(selectedVibes.filter((v) => v !== vibe));
@@ -125,16 +273,29 @@ export default function VaultPage() {
 
   // Dynamic dossier templates based on selected vibes
   const getDossierPlaceholder = (friendName: string) => {
-    if (selectedVibes.includes('SPICY')) {
-      return `Le plus gros secret de ${friendName} c'est...`;
+    if (lang === 'fr') {
+      if (selectedVibes.includes('SPICY')) {
+        return `Le plus gros secret de ${friendName} c'est...`;
+      }
+      if (selectedVibes.includes('SECRETS')) {
+        return `${friendName} ne veut surtout pas qu'on sache que...`;
+      }
+      if (selectedVibes.includes('NOSTALGIA')) {
+        return `Le meilleur souvenir d'enfance ou de vacances avec ${friendName} c'est...`;
+      }
+      return `La fois où ${friendName} a fait quelque chose de drôle/bizarre...`;
+    } else {
+      if (selectedVibes.includes('SPICY')) {
+        return `The biggest secret of ${friendName} is...`;
+      }
+      if (selectedVibes.includes('SECRETS')) {
+        return `${friendName} absolutely does not want anyone to know that...`;
+      }
+      if (selectedVibes.includes('NOSTALGIA')) {
+        return `The best childhood or vacation memory with ${friendName} is...`;
+      }
+      return `The time when ${friendName} did something funny/weird...`;
     }
-    if (selectedVibes.includes('SECRETS')) {
-      return `${friendName} ne veut surtout pas qu'on sache que...`;
-    }
-    if (selectedVibes.includes('NOSTALGIA')) {
-      return `Le meilleur souvenir d'enfance ou de vacances avec ${friendName} c'est...`;
-    }
-    return `La fois où ${friendName} a fait quelque chose de drôle/bizarre...`;
   };
 
   // Launch AI Generation
@@ -153,27 +314,27 @@ export default function VaultPage() {
         body: JSON.stringify({
           friends,
           vibes: selectedVibes,
-          groupContext,
           dossiers: formattedDossiers,
+          groupContext: groupContext.trim() || undefined,
+          language: lang,
         }),
       });
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.error || 'Erreur lors de la génération');
+        throw new Error(errorData.error || 'Erreur lors de la génération.');
       }
 
-      const generatedQuestions: CustomQuestion[] = await res.json();
-
+      const generatedQuestions = await res.json() as CustomQuestion[];
+      
       const newDeck: CustomDeck = {
         id: `deck-${Date.now()}`,
-        title: `Deck de ${friends.slice(0, 3).join(', ')}${friends.length > 3 ? '...' : ''}`,
-        createdAt: new Date().toISOString(),
+        title: lang === 'fr' ? `Soirée Souvenir - ${new Date().toLocaleDateString('fr-FR')}` : `Memory Night - ${new Date().toLocaleDateString('en-US')}`,
         friends,
         vibes: selectedVibes,
-        groupContext,
         questions: generatedQuestions,
-        isPurchased: false, // Starts locked
+        isPurchased: false,
+        createdAt: new Date().toISOString(),
       };
 
       saveLocalDeck(newDeck);
@@ -182,119 +343,109 @@ export default function VaultPage() {
       setView('preview');
     } catch (err) {
       console.error(err);
-      const msg = err instanceof Error ? err.message : 'La génération a échoué. Veuillez vérifier la connexion Internet.';
-      setErrorMsg(msg);
+      setErrorMsg(err instanceof Error ? err.message : 'Une erreur inconnue est survenue.');
       setView('wizard-dossiers');
     }
   };
 
-  // Unlock/purchase deck (mocked for now, instant unlock)
+  // Delete local deck
+  const handleDeleteDeck = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (confirm(t.deleteConfirm)) {
+      deleteLocalDeck(id);
+      setDecks(getLocalDecks());
+      if (activeDeck?.id === id) {
+        setActiveDeck(null);
+      }
+    }
+  };
+
+  // Simulate purchase flow / paywall
   const handleUnlockDeck = () => {
     if (!activeDeck) return;
-    const unlocked = { ...activeDeck, isPurchased: true };
-    saveLocalDeck(unlocked);
-    setActiveDeck(unlocked);
+    // Set deck to unlocked locally for simplicity in custom-decks feature
+    const updated = { ...activeDeck, isPurchased: true };
+    saveLocalDeck(updated);
+    setActiveDeck(updated);
     setView('editor');
   };
 
-  // Launch local game with active deck
+  // Launch a game room with this custom deck
   const handlePlayDeck = async (deck: CustomDeck) => {
     setIsLaunching(true);
     try {
-      sessionStorage.setItem('cb_active_custom_deck', JSON.stringify(deck));
-      const res = await fetch('/api/room/create', { method: 'POST' });
-      if (!res.ok) throw new Error('Impossible de créer la room');
-      const data = await res.json();
+      const data = await api.post<{ roomCode: string; hostId: string; hostToken: string; status: string }>('/api/room/create', {
+        language: lang,
+      });
 
-      sessionStorage.setItem(
-        `host_${data.roomCode}`,
-        JSON.stringify({ hostId: data.hostId, hostToken: data.hostToken })
-      );
-
-      router.push(`/room/${data.roomCode}`);
+      sessionStorage.setItem(`host_${data.roomCode}`, JSON.stringify({ hostId: data.hostId, hostToken: data.hostToken }));
+      
+      // Navigate to host screen passing customDeckId query param
+      window.location.href = `/room/${data.roomCode}?customDeckId=${deck.id}`;
     } catch (err) {
       console.error(err);
-      alert('Impossible de lancer la partie.');
       setIsLaunching(false);
     }
   };
 
-  // Delete deck
-  const handleDeleteDeck = (deckId: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (confirm('Voulez-vous vraiment supprimer ce deck personnalisé ?')) {
-      deleteLocalDeck(deckId);
-      setDecks(getLocalDecks());
-    }
-  };
-
-  // Save changes from editor
+  // Save changes made in editor
   const handleSaveChanges = () => {
     if (!activeDeck) return;
-    const updated = {
+    const updated: CustomDeck = {
       ...activeDeck,
-      title: deckTitle,
+      title: deckTitle.trim() || activeDeck.title,
     };
     saveLocalDeck(updated);
     setActiveDeck(updated);
-    setDecks(getLocalDecks());
-    alert('Deck sauvegardé !');
+    alert(lang === 'fr' ? 'Modifications enregistrées !' : 'Changes saved!');
   };
 
-  // Start editing a card
-  const startEditingCard = (id: string, text: string) => {
-    setEditingCardId(id);
-    setEditingText(text);
+  // Card editor methods
+  const startEditingCard = (cardId: string, currentText: string) => {
+    setEditingCardId(cardId);
+    setEditingText(currentText);
   };
 
-  // Save edited card
-  const saveEditedCard = (id: string) => {
-    if (!activeDeck) return;
-    const updatedQuestions = activeDeck.questions.map((q) =>
-      q.id === id ? { ...q, text: editingText } : q
-    );
+  const saveEditedCard = (cardId: string) => {
+    if (!activeDeck || !editingText.trim()) return;
+    const updatedQuestions = activeDeck.questions.map((q) => {
+      if (q.id === cardId) {
+        return { ...q, text: editingText.trim() };
+      }
+      return q;
+    });
     const updatedDeck = { ...activeDeck, questions: updatedQuestions };
-    setActiveDeck(updatedDeck);
     saveLocalDeck(updatedDeck);
+    setActiveDeck(updatedDeck);
     setEditingCardId(null);
   };
 
-  // Delete card from deck
-  const deleteCard = (id: string) => {
+  const deleteCard = (cardId: string) => {
     if (!activeDeck) return;
-    const updatedQuestions = activeDeck.questions.filter((q) => q.id !== id);
+    const updatedQuestions = activeDeck.questions.filter((q) => q.id !== cardId);
     const updatedDeck = { ...activeDeck, questions: updatedQuestions };
-    setActiveDeck(updatedDeck);
     saveLocalDeck(updatedDeck);
+    setActiveDeck(updatedDeck);
   };
 
-  // Add custom card
   const handleAddCard = () => {
     if (!activeDeck || !newCardText.trim()) return;
-
-    const newQuestion: CustomQuestion = {
-      id: `custom-q-manual-${Date.now()}`,
+    const newCard: CustomQuestion = {
+      id: `custom-q-${Date.now()}`,
       text: newCardText.trim(),
       mode: newCardMode,
-      intensityLevel: 1,
+      intensityLevel: 2,
       involvedPlayers: newCardPlayers,
       isGeneric: newCardPlayers.length === 0,
     };
-
-    const updatedDeck = {
-      ...activeDeck,
-      questions: [...activeDeck.questions, newQuestion],
-    };
-    setActiveDeck(updatedDeck);
+    const updatedDeck = { ...activeDeck, questions: [newCard, ...activeDeck.questions] };
     saveLocalDeck(updatedDeck);
-
-    // reset card form
+    setActiveDeck(updatedDeck);
     setNewCardText('');
     setNewCardPlayers([]);
     setShowAddCardForm(false);
   };
 
-  // Toggle player selection for new manual card
   const togglePlayerForNewCard = (player: string) => {
     if (newCardPlayers.includes(player)) {
       setNewCardPlayers(newCardPlayers.filter((p) => p !== player));
@@ -312,11 +463,11 @@ export default function VaultPage() {
         <button
           onClick={() => {
             if (view !== 'list') setView('list');
-            else router.push('/');
+            else router.push(lang === 'fr' ? '/fr' : '/');
           }}
           className="text-sm font-bold tracking-tight text-slate-400 hover:text-white transition-colors cursor-pointer flex items-center gap-1"
         >
-          <span>←</span> <span>Retour</span>
+          <span>←</span> <span>{t.backBtn}</span>
         </button>
         <span className="text-xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">
           CAPTAIN BOND VAULT
@@ -329,10 +480,14 @@ export default function VaultPage() {
           <div className="space-y-8 animate-[slideUp_0.3s_ease-out]">
             <div className="text-center space-y-3">
               <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
-                Mon Coffre aux <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">Souvenirs</span> 🔒
+                {lang === 'fr' ? (
+                  <>Mon Coffre aux <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">Souvenirs</span> 🔒</>
+                ) : (
+                  <>My Memories <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">Vault</span> 🔒</>
+                )}
               </h1>
               <p className="text-slate-400 max-w-lg mx-auto text-sm sm:text-base leading-relaxed">
-                Générez des decks de questions 100% uniques basés sur vos anecdotes privées, vos amis et vos pires dossiers.
+                {t.desc}
               </p>
             </div>
 
@@ -348,17 +503,17 @@ export default function VaultPage() {
                 className="px-8 py-4 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-lg rounded-2xl transition-all hover:scale-[1.02] cursor-pointer shadow-lg shadow-amber-500/15 flex items-center gap-2"
               >
                 <span>✨</span>
-                <span>Créer un nouveau Deck Souvenir</span>
+                <span>{t.createBtn}</span>
               </button>
             </div>
 
             {/* Deck List */}
             <div className="space-y-4">
-              <h2 className="text-lg font-bold uppercase tracking-wider text-amber-500/80 font-mono">Mes Decks Privés</h2>
+              <h2 className="text-lg font-bold uppercase tracking-wider text-amber-500/80 font-mono">{t.myDecksTitle}</h2>
               {decks.length === 0 ? (
                 <div className="glass-panel p-10 text-center space-y-4 border-white/5">
                   <span className="text-4xl block">📦</span>
-                  <p className="text-slate-400 text-sm">Vous n&apos;avez pas encore créé de deck.</p>
+                  <p className="text-slate-400 text-sm">{t.noDecks}</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -379,21 +534,21 @@ export default function VaultPage() {
                           </h3>
                           {!deck.isPurchased && (
                             <span className="text-[10px] uppercase font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-md">
-                              Bloqué
+                              {t.lockedLabel}
                             </span>
                           )}
                         </div>
                         <p className="text-xs text-slate-400 font-mono">
-                          {deck.questions.length} cartes · {deck.friends.length} amis
+                          {deck.questions.length} {t.cardsSuffix} · {deck.friends.length} {t.friendsSuffix}
                         </p>
                         <p className="text-xs text-slate-500 truncate">
-                          Membres : {deck.friends.join(', ')}
+                          {t.membersLabel} {deck.friends.join(', ')}
                         </p>
                       </div>
 
                       <div className="flex gap-2 mt-6 pt-4 border-t border-white/5 items-center justify-between">
                         <span className="text-[10px] text-slate-500 font-mono">
-                          {new Date(deck.createdAt).toLocaleDateString('fr-FR')}
+                          {new Date(deck.createdAt).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US')}
                         </span>
 
                         <div className="flex gap-2">
@@ -407,13 +562,13 @@ export default function VaultPage() {
                               className="px-3 py-1.5 bg-violet-600/80 hover:bg-violet-600 text-white font-bold text-xs rounded-lg transition-all flex items-center gap-1"
                             >
                               <span>🎮</span>
-                              <span>Jouer</span>
+                              <span>{t.playBtn}</span>
                             </button>
                           )}
                           <button
                             onClick={(e) => handleDeleteDeck(deck.id, e)}
                             className="p-1.5 hover:bg-red-500/10 text-slate-400 hover:text-red-400 rounded-lg transition-colors"
-                            title="Supprimer"
+                            title={t.deleteConfirm}
                           >
                             🗑️
                           </button>
@@ -431,24 +586,24 @@ export default function VaultPage() {
         {view === 'wizard-friends' && (
           <div className="wizard-step max-w-xl mx-auto space-y-6 glass-panel p-8 animate-[slideUp_0.3s_ease-out]">
             <div className="space-y-1">
-              <span className="text-xs uppercase font-mono font-bold text-amber-500 tracking-wider">Étape 1 sur 3</span>
-              <h2 className="text-2xl font-black text-slate-200">Qui participe à la soirée ? 👥</h2>
+              <span className="text-xs uppercase font-mono font-bold text-amber-500 tracking-wider">{t.step1Title}</span>
+              <h2 className="text-2xl font-black text-slate-200">{t.step1Question}</h2>
               <p className="text-xs text-slate-400">
-                Ajoutez les prénoms des joueurs qui seront présents autour de la table pour personnaliser les questions.
+                {t.step1Desc}
               </p>
             </div>
 
             {/* Friend Chips */}
             <div className="flex flex-wrap gap-2 min-h-[4rem] p-4 bg-slate-950/40 rounded-2xl border border-white/5">
               {friends.length === 0 ? (
-                <span className="text-slate-500 text-xs self-center">Aucun ami ajouté pour l&apos;instant...</span>
+                <span className="text-slate-500 text-xs self-center">{t.noFriends}</span>
               ) : (
                 friends.map((friend) => (
                   <span key={friend} className="friend-chip px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-sm font-bold flex items-center gap-1.5">
                     {friend}
                     <button
                       onClick={() => handleRemoveFriend(friend)}
-                      className="text-xs text-amber-400/60 hover:text-amber-400 cursor-pointer font-bold"
+                      className="text-xs text-amber-400/60 hover:text-amber-400 cursor-pointer font-bold bg-transparent border-none"
                     >
                       ×
                     </button>
@@ -461,7 +616,7 @@ export default function VaultPage() {
             <form onSubmit={handleAddFriend} className="flex gap-2">
               <input
                 type="text"
-                placeholder="Ex: Camille"
+                placeholder={t.friendInputPlaceholder}
                 value={friendInput}
                 onChange={(e) => setFriendInput(e.target.value)}
                 maxLength={15}
@@ -471,23 +626,23 @@ export default function VaultPage() {
                 type="submit"
                 className="px-6 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-2xl transition-all font-bold cursor-pointer"
               >
-                Ajouter
+                {t.addBtn}
               </button>
             </form>
 
             <div className="flex justify-between pt-6 border-t border-white/5">
               <button
                 onClick={() => setView('list')}
-                className="px-6 py-3 text-slate-400 hover:text-white font-bold transition-all text-sm cursor-pointer"
+                className="px-6 py-3 text-slate-400 hover:text-white font-bold transition-all text-sm cursor-pointer bg-transparent border-none"
               >
-                Annuler
+                {t.cancelBtn}
               </button>
               <button
                 onClick={() => setView('wizard-vibes')}
                 disabled={friends.length < 2}
-                className="px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 disabled:from-slate-800 disabled:text-slate-600 font-bold rounded-xl transition-all text-sm cursor-pointer disabled:cursor-not-allowed"
+                className="px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 disabled:from-slate-800 disabled:text-slate-600 font-bold rounded-xl transition-all text-sm cursor-pointer disabled:cursor-not-allowed border-none"
               >
-                Suivant →
+                {t.nextBtn}
               </button>
             </div>
           </div>
@@ -497,17 +652,17 @@ export default function VaultPage() {
         {view === 'wizard-vibes' && (
           <div className="wizard-step max-w-2xl mx-auto space-y-6 glass-panel p-8 animate-[slideUp_0.3s_ease-out]">
             <div className="space-y-1">
-              <span className="text-xs uppercase font-mono font-bold text-amber-500 tracking-wider">Étape 2 sur 3</span>
-              <h2 className="text-2xl font-black text-slate-200">Choisis l&apos;ambiance générale 🎭</h2>
+              <span className="text-xs uppercase font-mono font-bold text-amber-500 tracking-wider">{t.step2Title}</span>
+              <h2 className="text-2xl font-black text-slate-200">{t.step2Question}</h2>
               <p className="text-xs text-slate-400">
-                Sélectionnez une ou plusieurs vibes pour guider l&apos;intelligence artificielle dans le ton de vos cartes.
+                {t.step2Desc}
               </p>
             </div>
 
             {/* Vibes Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {(Object.keys(VIBE_METADATA) as DeckVibe[]).map((vibe) => {
-                const meta = VIBE_METADATA[vibe];
+              {(Object.keys(vibeMetadata) as DeckVibe[]).map((vibe) => {
+                const meta = vibeMetadata[vibe];
                 const isActive = selectedVibes.includes(vibe);
                 return (
                   <button
@@ -532,16 +687,16 @@ export default function VaultPage() {
             <div className="flex justify-between pt-6 border-t border-white/5">
               <button
                 onClick={() => setView('wizard-friends')}
-                className="px-6 py-3 text-slate-400 hover:text-white font-bold transition-all text-sm cursor-pointer"
+                className="px-6 py-3 text-slate-400 hover:text-white font-bold transition-all text-sm cursor-pointer bg-transparent border-none"
               >
-                ← Retour
+                ← {t.backBtn}
               </button>
               <button
                 onClick={() => setView('wizard-dossiers')}
                 disabled={selectedVibes.length === 0}
-                className="px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 disabled:from-slate-800 disabled:text-slate-600 font-bold rounded-xl transition-all text-sm cursor-pointer disabled:cursor-not-allowed"
+                className="px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 disabled:from-slate-800 disabled:text-slate-600 font-bold rounded-xl transition-all text-sm cursor-pointer disabled:cursor-not-allowed border-none"
               >
-                Suivant →
+                {t.nextBtn}
               </button>
             </div>
           </div>
@@ -551,10 +706,10 @@ export default function VaultPage() {
         {view === 'wizard-dossiers' && (
           <div className="wizard-step max-w-2xl mx-auto space-y-6 glass-panel p-8 animate-[slideUp_0.3s_ease-out]">
             <div className="space-y-1">
-              <span className="text-xs uppercase font-mono font-bold text-amber-500 tracking-wider">Étape 3 sur 3</span>
-              <h2 className="text-2xl font-black text-slate-200">Injecte des dossiers croustillants 🤫</h2>
+              <span className="text-xs uppercase font-mono font-bold text-amber-500 tracking-wider">{t.step3Title}</span>
+              <h2 className="text-2xl font-black text-slate-200">{t.step3Question}</h2>
               <p className="text-xs text-slate-400">
-                Écrivez une phrase ou une anecdote rapide pour vos amis. Ces éléments seront utilisés par Gemini pour créer des cartes exclusives et hilarantes.
+                {t.step3Desc}
               </p>
             </div>
 
@@ -569,13 +724,13 @@ export default function VaultPage() {
               {friends.map((friend) => (
                 <div key={friend} className="dossier-card p-4 bg-slate-950/40 border border-white/5 rounded-2xl space-y-2">
                   <label className="text-sm font-bold text-slate-300 block">
-                    Anecdote / Secret sur <span className="text-amber-400">{friend}</span>
+                    {t.dossierLabel} <span className="text-amber-400">{friend}</span>
                   </label>
                   <p className="dossier-prompt text-[11px] text-slate-500 italic">
-                    Idée : {getDossierPlaceholder(friend)}
+                    {t.dossierPlaceholderPrefix} {getDossierPlaceholder(friend)}
                   </p>
                   <textarea
-                    placeholder="Tape ici son dossier..."
+                    placeholder={t.dossierTextareaPlaceholder}
                     rows={2}
                     value={dossiers[friend] || ''}
                     onChange={(e) => setDossiers({ ...dossiers, [friend]: e.target.value })}
@@ -588,11 +743,11 @@ export default function VaultPage() {
             {/* Group Context */}
             <div className="space-y-2 pt-2">
               <label className="text-sm font-bold text-slate-300 block">
-                Contexte du groupe / Lieu (Optionnel)
+                {t.groupContextLabel}
               </label>
               <input
                 type="text"
-                placeholder="Ex: Vacances Ibiza 2025, coloc à Lyon, weekend à la campagne..."
+                placeholder={t.groupContextPlaceholder}
                 value={groupContext}
                 onChange={(e) => setGroupContext(e.target.value)}
                 maxLength={100}
@@ -603,15 +758,15 @@ export default function VaultPage() {
             <div className="flex justify-between pt-6 border-t border-white/5">
               <button
                 onClick={() => setView('wizard-vibes')}
-                className="px-6 py-3 text-slate-400 hover:text-white font-bold transition-all text-sm cursor-pointer"
+                className="px-6 py-3 text-slate-400 hover:text-white font-bold transition-all text-sm cursor-pointer bg-transparent border-none"
               >
-                ← Retour
+                ← {t.backBtn}
               </button>
               <button
                 onClick={handleGenerateDeck}
-                className="px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 font-bold rounded-xl transition-all text-sm cursor-pointer hover:scale-[1.02] shadow-lg shadow-amber-500/10 flex items-center gap-1.5"
+                className="px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 font-bold rounded-xl transition-all text-sm cursor-pointer hover:scale-[1.02] shadow-lg shadow-amber-500/10 flex items-center gap-1.5 border-none"
               >
-                <span>Générer mon Deck !</span> <span>🪄</span>
+                <span>{t.generateBtn}</span> <span>🪄</span>
               </button>
             </div>
           </div>
@@ -630,10 +785,10 @@ export default function VaultPage() {
 
             <div className="space-y-3 text-center px-4 max-w-sm">
               <p className="loading-message text-lg font-bold text-slate-200 min-h-[2rem]">
-                {LOADING_MESSAGES[loadingMessageIdx]}
+                {loadingMessages[loadingMessageIdx]}
               </p>
               <p className="text-xs text-slate-500 font-mono">
-                Gemini 2.0 rédige les 60 cartes en se basant sur vos dossiers... Cela prend environ 5 à 15 secondes.
+                {t.loadingSub}
               </p>
             </div>
           </div>
@@ -644,11 +799,11 @@ export default function VaultPage() {
           <div className="space-y-8 animate-[slideUp_0.3s_ease-out] max-w-2xl mx-auto">
             <div className="text-center space-y-2">
               <span className="text-xs uppercase font-mono font-bold text-emerald-400 bg-emerald-400/10 px-2.5 py-0.5 rounded-full border border-emerald-400/20">
-                Génération réussie
+                {t.previewBadge}
               </span>
-              <h1 className="text-3xl font-black">Ton Coffre est Prêt ! 📦</h1>
+              <h1 className="text-3xl font-black">{t.previewTitle}</h1>
               <p className="text-slate-400 text-sm">
-                Découvrez un aperçu des 3 premières cartes générées.
+                {t.previewDesc}
               </p>
             </div>
 
@@ -658,7 +813,7 @@ export default function VaultPage() {
                 <div key={q.id} className="preview-card p-6 glass-panel border-white/5 space-y-2 relative">
                   <div className="flex justify-between items-center">
                     <span className="text-[10px] font-bold text-amber-500 uppercase tracking-widest font-mono">
-                      Carte {idx + 1} · {q.mode}
+                      {t.editorCardPrefix} {idx + 1} · {q.mode}
                     </span>
                   </div>
                   <p className="text-base text-slate-100 font-semibold leading-relaxed">
@@ -672,10 +827,10 @@ export default function VaultPage() {
                 {[1, 2].map((i) => (
                   <div key={i} className="preview-card locked p-6 glass-panel border-white/5 opacity-40 blur-xs space-y-2 select-none pointer-events-none">
                     <div className="flex justify-between items-center">
-                      <span className="text-[10px] font-bold text-slate-500 font-mono">CARTE LOCKED</span>
+                      <span className="text-[10px] font-bold text-slate-500 font-mono">LOCKED</span>
                     </div>
                     <p className="text-base text-slate-500">
-                      Ici s&apos;affiche une question croustillante générée par l&apos;IA...
+                      {t.lockedCardDesc}
                     </p>
                   </div>
                 ))}
@@ -685,25 +840,25 @@ export default function VaultPage() {
                   <span className="text-3xl">🔒</span>
                   <div className="space-y-1">
                     <h3 className="text-lg font-black text-amber-400 uppercase tracking-wide">
-                      Débloquer les 57 autres cartes
+                      {t.paywallTitle}
                     </h3>
                     <p className="text-xs text-slate-400 max-w-xs">
-                      Obtenez l&apos;accès complet à votre deck personnalisé de 60 cartes, modifiable à volonté et jouable indéfiniment.
+                      {t.paywallDesc}
                     </p>
                   </div>
 
                   <button
                     onClick={handleUnlockDeck}
-                    className="px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black rounded-2xl transition-all hover:scale-[1.02] cursor-pointer shadow-lg shadow-amber-500/15"
+                    className="px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black rounded-2xl transition-all hover:scale-[1.02] cursor-pointer shadow-lg shadow-amber-500/15 border-none"
                   >
-                    Débloquer le Deck Complet • 3€
+                    {t.paywallBtn}
                   </button>
 
                   <button
                     onClick={() => setView('list')}
-                    className="text-xs text-slate-500 hover:text-slate-400 font-bold underline transition-colors"
+                    className="text-xs text-slate-500 hover:text-slate-400 font-bold underline transition-colors bg-transparent border-none"
                   >
-                    Retourner au coffre
+                    {t.cancelBtn}
                   </button>
                 </div>
               </div>
@@ -722,10 +877,10 @@ export default function VaultPage() {
                   value={deckTitle}
                   onChange={(e) => setDeckTitle(e.target.value)}
                   className="bg-transparent border-b border-transparent hover:border-white/20 focus:border-amber-500 focus:outline-none text-2xl font-black text-white w-full transition-colors"
-                  placeholder="Titre du Deck"
+                  placeholder={t.editorDeckTitlePlaceholder}
                 />
                 <p className="text-xs text-slate-400 font-mono">
-                  {activeDeck.questions.length} cartes personnalisées · Amis : {activeDeck.friends.join(', ')}
+                  {activeDeck.questions.length} {t.cardsSuffix} · {t.friendsSuffix} : {activeDeck.friends.join(', ')}
                 </p>
               </div>
 
@@ -734,15 +889,15 @@ export default function VaultPage() {
                   onClick={handleSaveChanges}
                   className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-xl border border-white/10 transition-all flex items-center gap-1 cursor-pointer"
                 >
-                  💾 Sauvegarder
+                  {t.editorSaveBtn}
                 </button>
                 <button
                   onClick={() => handlePlayDeck(activeDeck)}
                   disabled={isLaunching}
-                  className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 text-xs font-black rounded-xl transition-all hover:scale-[1.02] cursor-pointer shadow-md shadow-amber-500/10 flex items-center gap-1"
+                  className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 text-xs font-black rounded-xl transition-all hover:scale-[1.02] cursor-pointer shadow-md shadow-amber-500/10 flex items-center gap-1 border-none"
                 >
                   <span>🎮</span>
-                  <span>Lancer la Partie !</span>
+                  <span>{t.editorPlayBtn}</span>
                 </button>
               </div>
             </div>
@@ -750,24 +905,24 @@ export default function VaultPage() {
             {/* Grid of editable questions */}
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <h2 className="text-lg font-black text-slate-200">Liste des Cartes</h2>
+                <h2 className="text-lg font-black text-slate-200">{t.editorTitle}</h2>
                 <button
                   onClick={() => setShowAddCardForm(!showAddCardForm)}
-                  className="px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold rounded-lg hover:bg-amber-500/20 transition-all"
+                  className="px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold rounded-lg hover:bg-amber-500/20 transition-all bg-transparent"
                 >
-                  {showAddCardForm ? 'Fermer' : '+ Ajouter une carte'}
+                  {showAddCardForm ? t.editorCloseBtn : t.editorAddCardBtn}
                 </button>
               </div>
 
               {/* Add Card Form Inline */}
               {showAddCardForm && (
                 <div className="p-5 bg-slate-900/60 border border-amber-500/20 rounded-2xl space-y-4 animate-[fadeIn_0.2s_ease-out]">
-                  <h3 className="text-sm font-bold text-amber-400">Ajouter une nouvelle question</h3>
+                  <h3 className="text-sm font-bold text-amber-400">{t.editorAddCardTitle}</h3>
                   
                   <div className="space-y-2">
-                    <label className="text-xs text-slate-400 font-mono block">Texte de la carte</label>
+                    <label className="text-xs text-slate-400 font-mono block">{t.editorAddCardLabelText}</label>
                     <textarea
-                      placeholder="Ex: Qui est le plus susceptible de rater son avion pour Ibiza ?"
+                      placeholder="Ex: Who is most likely to miss their flight to Ibiza?"
                       rows={2}
                       value={newCardText}
                       onChange={(e) => setNewCardText(e.target.value)}
@@ -777,7 +932,7 @@ export default function VaultPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label className="text-xs text-slate-400 font-mono block">Mode de jeu</label>
+                      <label className="text-xs text-slate-400 font-mono block">{t.editorAddCardLabelMode}</label>
                       <select
                         value={newCardMode}
                         onChange={(e) => setNewCardMode(e.target.value as QuestionMode)}
@@ -792,7 +947,7 @@ export default function VaultPage() {
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-xs text-slate-400 font-mono block">Impliquer des joueurs spécifiques (Optionnel)</label>
+                      <label className="text-xs text-slate-400 font-mono block">{t.editorAddCardLabelTarget}</label>
                       <div className="flex flex-wrap gap-1.5 pt-1">
                         {activeDeck.friends.map((friend) => {
                           const isSel = newCardPlayers.includes(friend);
@@ -818,9 +973,9 @@ export default function VaultPage() {
                   <button
                     onClick={handleAddCard}
                     disabled={!newCardText.trim()}
-                    className="px-4 py-2 bg-amber-500 text-slate-950 font-bold text-xs rounded-xl disabled:bg-slate-800 disabled:text-slate-600 transition-colors"
+                    className="px-4 py-2 bg-amber-500 text-slate-950 font-bold text-xs rounded-xl disabled:bg-slate-800 disabled:text-slate-600 transition-colors border-none"
                   >
-                    Ajouter au deck
+                    {t.editorAddCardBtnSubmit}
                   </button>
                 </div>
               )}
@@ -837,7 +992,7 @@ export default function VaultPage() {
                       <div className="space-y-2">
                         <div className="flex justify-between items-center">
                           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono">
-                            Carte {index + 1}
+                            {t.editorCardPrefix} {index + 1}
                           </span>
                           <span className={`text-[9px] uppercase font-bold px-2 py-0.5 rounded-md ${
                             q.mode === 'SPICY'
@@ -868,7 +1023,7 @@ export default function VaultPage() {
 
                       {q.involvedPlayers.length > 0 && (
                         <div className="flex flex-wrap gap-1 items-center">
-                          <span className="text-[9px] text-slate-500 font-mono uppercase mr-1">Joueurs ciblés:</span>
+                          <span className="text-[9px] text-slate-500 font-mono uppercase mr-1">{t.editorCardLabelTargeted}</span>
                           {q.involvedPlayers.map((p) => (
                             <span key={p} className="px-1.5 py-0.5 bg-slate-800 text-[9px] rounded text-slate-300 font-medium">
                               {p}
@@ -882,30 +1037,30 @@ export default function VaultPage() {
                           <>
                             <button
                               onClick={() => setEditingCardId(null)}
-                              className="px-2.5 py-1.5 hover:bg-white/5 text-slate-400 text-xs font-bold rounded-lg transition-colors"
+                              className="px-2.5 py-1.5 hover:bg-white/5 text-slate-400 text-xs font-bold rounded-lg transition-colors bg-transparent border-none"
                             >
-                              Annuler
+                              {t.cancelBtn}
                             </button>
                             <button
                               onClick={() => saveEditedCard(q.id)}
-                              className="px-2.5 py-1.5 bg-amber-500 text-slate-950 text-xs font-bold rounded-lg transition-all"
+                              className="px-2.5 py-1.5 bg-amber-500 text-slate-950 text-xs font-bold rounded-lg transition-all border-none"
                             >
-                              Valider
+                              {lang === 'fr' ? 'Valider' : 'Confirm'}
                             </button>
                           </>
                         ) : (
                           <>
                             <button
                               onClick={() => startEditingCard(q.id, q.text)}
-                              className="edit-btn p-1.5 hover:bg-amber-500/10 text-slate-400 hover:text-amber-400 rounded-lg transition-colors"
-                              title="Modifier"
+                              className="edit-btn p-1.5 hover:bg-amber-500/10 text-slate-400 hover:text-amber-400 rounded-lg transition-colors bg-transparent border-none"
+                              title={lang === 'fr' ? 'Modifier' : 'Edit'}
                             >
                               ✏️
                             </button>
                             <button
                               onClick={() => deleteCard(q.id)}
-                              className="delete-btn p-1.5 hover:bg-red-500/10 text-slate-400 hover:text-red-400 rounded-lg transition-colors"
-                              title="Supprimer"
+                              className="delete-btn p-1.5 hover:bg-red-500/10 text-slate-400 hover:text-red-400 rounded-lg transition-colors bg-transparent border-none"
+                              title={lang === 'fr' ? 'Supprimer' : 'Delete'}
                             >
                               🗑️
                             </button>
@@ -923,7 +1078,7 @@ export default function VaultPage() {
                 onClick={() => setView('list')}
                 className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold rounded-xl border border-white/5 transition-all cursor-pointer"
               >
-                ← Retour au Coffre
+                ← {lang === 'fr' ? 'Retour au Coffre' : 'Back to Vault'}
               </button>
             </div>
           </div>
