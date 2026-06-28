@@ -6,6 +6,7 @@ import type { Pack } from '@/lib/monetization/catalog';
 import { PricingComparison } from './PricingComparison';
 import { Icon } from '@/components/Icon';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
+import { isNativeApp, purchaseNativeProduct } from '@/lib/native/bridge';
 
 interface UnlockPanelProps {
   roomCode: string;
@@ -36,6 +37,28 @@ export function UnlockPanel({ roomCode, playerId, packs, freeQuestionsUsed, free
         sku: pack.sku,
         price_cents: Math.round(pack.price * 100),
       });
+
+      if (roomCode === 'DEMO12') {
+        setTimeout(() => {
+          window.location.href = successUrl || `${origin}/room/${roomCode}/player?paid=pass`;
+        }, 1000);
+        return;
+      }
+
+      if (isNativeApp()) {
+        let packageId = 'com.meetkptain.captainbond.pass24h';
+        if (pack.sku === 'pack-unlimited') {
+          packageId = 'com.meetkptain.captainbond.illimite';
+        }
+        const result = await purchaseNativeProduct(packageId);
+        if (result) {
+          window.location.href = successUrl || `${origin}/room/${roomCode}/player?paid=pass`;
+        } else {
+          onCheckoutError?.('Achat annulé ou rejeté par le store.');
+        }
+        return;
+      }
+
       const data = await api.post<{ sessionUrl?: string; error?: string }>('/api/checkout', {
         sku: pack.sku,
         playerId,

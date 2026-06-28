@@ -43,7 +43,24 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
   const [showShareSheet, setShowShareSheet] = useState(false);
   const [connectionsTeaser, setConnectionsTeaser] = useState<{ hasConnections: boolean; teaseName?: string } | null>(null);
   const [revealedConnections, setRevealedConnections] = useState<Array<{ voterName: string; voteCount: number }>>([]);
+  const [timeLeft, setTimeLeft] = useState(300);
   const native = isNativeApp();
+
+  // Compte à rebours d'urgence (scarcity) de 5 minutes
+  useEffect(() => {
+    if (unlocked) return;
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [unlocked]);
+
+  // Formate les secondes en MM:SS
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
 
   // Initialise le SDK Purchases de RevenueCat en environnement natif
   useEffect(() => {
@@ -491,6 +508,12 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
 
         <h2 className="text-2xl font-black text-red-500 mb-3 uppercase tracking-wider">Dossier Couple Scellé</h2>
 
+        {/* Minuteur d'urgence */}
+        <div className="w-full bg-pink-500/10 border border-pink-500/30 rounded-xl p-3 mb-4 flex items-center justify-between text-pink-400 text-xs font-mono tracking-tight animate-pulse">
+          <span className="flex items-center gap-1.5 font-bold">⌛ L&apos;OFFRE EXPIRE DANS :</span>
+          <span className="font-black text-sm bg-pink-500/20 px-2 py-0.5 rounded text-white shadow-inner">{formatTime(timeLeft)}</span>
+        </div>
+
         {/* Warning Banner */}
         <div className="w-full bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 mb-4 text-amber-400 text-[10px] font-mono leading-relaxed flex items-start gap-2 text-left">
           <span>⚠️</span>
@@ -694,6 +717,12 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
         </div>
 
         <h2 className="text-2xl font-black text-red-500 mb-3 uppercase tracking-wider">Dossier Prêt</h2>
+
+        {/* Minuteur d'urgence */}
+        <div className="w-full bg-pink-500/10 border border-pink-500/30 rounded-xl p-3 mb-4 flex items-center justify-between text-pink-400 text-xs font-mono tracking-tight animate-pulse">
+          <span className="flex items-center gap-1.5 font-bold">⌛ L&apos;OFFRE EXPIRE DANS :</span>
+          <span className="font-black text-sm bg-pink-500/20 px-2 py-0.5 rounded text-white shadow-inner">{formatTime(timeLeft)}</span>
+        </div>
 
         {/* Warning Banner */}
         <div className="w-full bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 mb-4 text-amber-400 text-[10px] font-mono leading-relaxed flex items-start gap-2 text-left">
