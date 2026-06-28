@@ -183,6 +183,8 @@ describe('middleware', () => {
 
   it('exports a matcher for admin and player routes', () => {
     expect(config.matcher).toEqual([
+      '/',
+      '/corporate',
       '/admin/:path*',
       '/api/admin/:path*',
       '/api/room/:path*',

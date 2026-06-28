@@ -104,7 +104,7 @@ export async function startNextRound(roomCode: string, hostId: string): Promise<
     previousIntensity = pq?.intensityLevel || 1;
   }
 
-  const allQuestions = await listQuestionsForDeck();
+  const allQuestions = await listQuestionsForDeck(room.language || 'fr');
 
   // Anti-répétition : exclure les questions déjà jouées dans cette room
   const existingConfig = (room.roundConfig || {}) as { playedQuestionIds?: string[] };
@@ -641,7 +641,7 @@ export async function skipQuestion(roomCode: string, playerId: string): Promise<
     previousIntensity = pq?.intensityLevel || 1;
   }
 
-  const allQuestions = await listQuestionsForDeck();
+  const allQuestions = await listQuestionsForDeck(room.language || 'fr');
   const existingConfig = (room.roundConfig || {}) as { playedQuestionIds?: string[] };
   const playedQuestionIds = new Set(existingConfig.playedQuestionIds || []);
 

@@ -107,12 +107,16 @@ export async function generateDJQuestion(profileId: string): Promise<string> {
   }
 
   let customAnecdotesText = '';
+  let language = 'fr';
   if (profile.roomId) {
     const room = await repositories.getRoomById(profile.roomId);
-    if (room && room.customAnecdotes && Array.isArray(room.customAnecdotes) && room.customAnecdotes.length > 0) {
-      customAnecdotesText = (room.customAnecdotes as Array<{ question: string, answer: string }>)
-        .map(a => `- Question : "${a.question}" | Anecdote réelle : "${a.answer}"`)
-        .join('\n');
+    if (room) {
+      language = room.language || 'fr';
+      if (room.customAnecdotes && Array.isArray(room.customAnecdotes) && room.customAnecdotes.length > 0) {
+        customAnecdotesText = (room.customAnecdotes as Array<{ question: string, answer: string }>)
+          .map(a => `- Question : "${a.question}" | Anecdote réelle : "${a.answer}"`)
+          .join('\n');
+      }
     }
   }
 
@@ -126,6 +130,7 @@ export async function generateDJQuestion(profileId: string): Promise<string> {
     resonanceMetricsText,
     interactionHistoryText,
     customAnecdotesText,
+    language,
   });
 
   const generatedText = await generateDJQuestionText({

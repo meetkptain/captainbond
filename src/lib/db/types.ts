@@ -15,6 +15,7 @@ export interface Room {
   paidByUserId?: string | null;
   passExpiresAt?: string | null;
   customAnecdotes?: Array<{ id: string; question: string; answer: string }> | null;
+  language?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -45,6 +46,7 @@ export interface Question {
   metadata?: Record<string, unknown> | null;
   intensityLevel?: number;
   packId?: string | null;
+  language?: string;
   createdAt?: string;
 }
 

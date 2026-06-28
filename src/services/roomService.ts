@@ -26,6 +26,7 @@ function generateRoomCode(): string {
 export interface CreateRoomInput {
   targetType?: 'GROUP' | 'SOLO';
   playerName?: string;
+  language?: string;
 }
 
 export async function createRoom(input: CreateRoomInput = {}): Promise<{
@@ -35,6 +36,7 @@ export async function createRoom(input: CreateRoomInput = {}): Promise<{
 }> {
   const targetType = input.targetType ?? 'GROUP';
   const playerName = input.playerName ?? 'Hôte';
+  const language = input.language ?? 'fr';
 
   const hostId = crypto.randomUUID();
   let room: Room | null = null;
@@ -52,6 +54,7 @@ export async function createRoom(input: CreateRoomInput = {}): Promise<{
         status: targetType === 'SOLO' ? 'PLAYING' : 'WAITING',
         round: 0,
         targetType,
+        language,
       });
       break;
     } catch (err: unknown) {

@@ -30,6 +30,7 @@ export type AdminLoginInput = z.infer<typeof adminLoginSchema>;
 export const roomCreateSchema = z.object({
   targetType: z.enum(['GROUP', 'SOLO']).optional(),
   playerName: playerNameSchema.optional(),
+  language: z.string().optional(),
 });
 
 export type RoomCreateInput = z.infer<typeof roomCreateSchema>;

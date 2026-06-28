@@ -36,10 +36,11 @@ export async function listQuestions(options: {
   return { questions: (data || []) as Question[], total: count || 0 };
 }
 
-export async function listQuestionsForDeck(): Promise<Pick<Question, 'id' | 'text' | 'intensityLevel' | 'tags' | 'mode'>[]> {
+export async function listQuestionsForDeck(language: string = 'fr'): Promise<Pick<Question, 'id' | 'text' | 'intensityLevel' | 'tags' | 'mode'>[]> {
   const { data, error } = await supabaseAdmin
     .from('Question')
-    .select('id, text, intensityLevel, tags, mode');
+    .select('id, text, intensityLevel, tags, mode')
+    .eq('language', language);
   if (error) throw error;
   return (data || []) as Pick<Question, 'id' | 'text' | 'intensityLevel' | 'tags' | 'mode'>[];
 }

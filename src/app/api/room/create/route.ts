@@ -16,6 +16,7 @@ export const POST = withApiHandler({
     const { room, hostId, hostToken } = await createRoom({
       targetType: body.targetType,
       playerName: body.playerName,
+      language: body.language,
     });
 
     return NextResponse.json({

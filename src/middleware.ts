@@ -40,6 +40,22 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set('x-request-id', requestId);
 
+  // 1. Détection de langue et redirection bilingue (avec bypass Googlebot)
+  if (pathname === '/' || pathname === '/corporate') {
+    const userAgent = req.headers.get('user-agent') || '';
+    const isBot = /bot|googlebot|bingbot|yandexbot|baidu|duckduckbot|crawler|spider|robot|crawling/i.test(userAgent);
+
+    if (!isBot) {
+      const acceptLang = req.headers.get('accept-language') || '';
+      if (acceptLang.toLowerCase().includes('fr')) {
+        const dest = pathname === '/' ? '/fr' : '/fr/corporate';
+        const response = NextResponse.redirect(new URL(dest, req.url), 302);
+        response.headers.set('x-request-id', requestId);
+        return response;
+      }
+    }
+  }
+
   if (PUBLIC_ADMIN_PATHS.has(pathname)) {
     return NextResponse.next({ request: { headers: requestHeaders } });
   }
@@ -110,5 +126,5 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*', '/api/room/:path*', '/api/me/:path*'],
+  matcher: ['/', '/corporate', '/admin/:path*', '/api/admin/:path*', '/api/room/:path*', '/api/me/:path*'],
 };
