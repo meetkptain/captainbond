@@ -74,10 +74,10 @@ export async function startNextRound(roomCode: string, hostId: string): Promise<
   const freeQuestionsUsed = calculateFreeQuestionsUsed(isPremiumMode, room.round);
 
   if (isPremiumMode) {
-    const nonHostPlayers = players.filter((p) => !p.isHost && p.userId);
+    const activePlayers = players.filter((p) => p.userId);
     let anyPlayerCanAccess = false;
 
-    for (const p of nonHostPlayers) {
+    for (const p of activePlayers) {
       if (!p.userId) continue;
       const entitlements = await getUserEntitlements(p.userId);
       if (entitlements && canAccessMode(entitlements, currentMode)) {
@@ -622,4 +622,79 @@ export async function getRoomGameProfiles(roomCode: string, hostId: string): Pro
   const profiles = await buildProfilesForRoom(room, true);
   const roomPass = await getRoomPassInfo(room.id);
   return { profiles, roomPassActive: roomPass.isActive };
+}
+
+export async function skipQuestion(roomCode: string, playerId: string): Promise<NextRoundResult> {
+  const room = await getRoomByCode(roomCode);
+  if (!room) throw new AppError('NOT_FOUND', 'Salle introuvable');
+
+  const players = await getPlayersInRoom(room.id);
+  const p = players.find(player => player.id === playerId || (player.isHost && playerId === 'host'));
+  if (!p) throw new AppError('FORBIDDEN', 'Action non autorisée');
+
+  const currentMode = room.currentMode || 'ICEBREAKER';
+  const serverMode = getServerGameMode(currentMode) || getServerGameMode('ICEBREAKER');
+
+  let previousIntensity = 1;
+  if (room.currentQuestionId) {
+    const pq = await getQuestionById(room.currentQuestionId);
+    previousIntensity = pq?.intensityLevel || 1;
+  }
+
+  const allQuestions = await listQuestionsForDeck();
+  const existingConfig = (room.roundConfig || {}) as { playedQuestionIds?: string[] };
+  const playedQuestionIds = new Set(existingConfig.playedQuestionIds || []);
+
+  const pool = buildQuestionPool({
+    allQuestions,
+    currentMode,
+    roomRound: room.round,
+    previousIntensity,
+    playedQuestionIds,
+  });
+
+  if (!pool.length) {
+    throw new AppError('NOT_FOUND', 'Aucune question disponible');
+  }
+
+  const selectedQuestion = pool[Math.floor(Math.random() * pool.length)];
+  const updatedPlayedIds = Array.from(new Set([...Array.from(playedQuestionIds), selectedQuestion.id]));
+
+  let roundConfig = {
+    ...existingConfig,
+    playedQuestionIds: updatedPlayedIds,
+  };
+
+  const { data: updatedRoom, error: updateError } = await supabaseAdmin
+    .from('Room')
+    .update({
+      currentQuestionId: selectedQuestion.id,
+      roundConfig,
+    })
+    .eq('id', room.id)
+    .select()
+    .single();
+
+  if (updateError || !updatedRoom) {
+    throw new AppError('CONFLICT', 'Impossible de passer la question');
+  }
+
+  const roundDuration = serverMode?.manifest?.roundDurationSeconds ?? 30;
+  const isPremiumMode = serverMode?.manifest?.isPremium === true;
+  const freeQuestionsUsed = calculateFreeQuestionsUsed(isPremiumMode, updatedRoom.round);
+
+  return {
+    success: true,
+    status: updatedRoom.status,
+    round: updatedRoom.round,
+    roundDuration,
+    freeQuestionsUsed,
+    freeQuestionsLimit: FREE_QUESTIONS_LIMIT,
+    question: {
+      id: selectedQuestion.id,
+      text: selectedQuestion.text,
+      intensityLevel: selectedQuestion.intensityLevel,
+      tags: selectedQuestion.tags || [],
+    },
+  };
 }

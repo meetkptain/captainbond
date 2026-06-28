@@ -8,7 +8,7 @@
 
 export const MONETIZATION_CONFIG = {
   // --- Prix ---
-  PROFILE_PRICE_CENTS: 999,           // 9.99€ — Dossier Classifié individuel
+  PROFILE_PRICE_CENTS: 499,           // 4.99€ — Dossier Classifié individuel
   COUPLE_PROFILE_PRICE_CENTS: 999,    // 9.99€ — Dossier de Compatibilité ludique (Date Night)
   PASS_24H_PRICE_CENTS: 299,          // 2.99€ — Pass 24h (tous modes + profils)
   CURRENCY: 'eur' as const,

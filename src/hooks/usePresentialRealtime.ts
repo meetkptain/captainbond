@@ -400,6 +400,15 @@ export function usePresentialRealtime(input: UsePresentialRealtimeInput): UsePre
           handleSkip();
         }
       })
+      .on('broadcast', { event: 'TRIGGER_GLOBAL_SKIP' }, () => {
+        if (stateRef.current.questions.length > 1) {
+          const nextIndex = (stateRef.current.currentQuestionIndex + 1) % stateRef.current.questions.length;
+          swapQuestion(nextIndex);
+          setCurrentPlayerIndex(0);
+          setPhase('question');
+          onTriggerSound?.('joker_bell');
+        }
+      })
       .on('broadcast', { event: 'SUBMIT_SPECTATOR_VOTE' }, ({ payload }) => {
         if (payload && typeof payload.suspectPlayerId === 'string') {
           setSpectatorVotes((prev) => ({

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { recordVote, revealRound } from '../roomGameService';
+import { recordVote, revealRound, skipQuestion } from '../roomGameService';
 import { AppError } from '@/lib/errors';
 
 import type { Room } from '@/lib/db/types';
@@ -122,6 +122,33 @@ describe('roomGameService', () => {
       expect(result.success).toBe(true);
       expect(result.status).toBe('DISCUSSION');
       expect(supabaseAdmin.rpc).toHaveBeenCalledWith('upsert_reveal_scores', expect.any(Object));
+    });
+  });
+
+  describe('skipQuestion', () => {
+    it('successfully skips a question', async () => {
+      const { getPlayersInRoom, listQuestionsForDeck } = await import('@/lib/db/repositories');
+
+      vi.mocked(getRoomByCode).mockResolvedValue(mockRoom());
+      vi.mocked(getPlayersInRoom).mockResolvedValue([
+        { id: 'player-1', name: 'Agent', isHost: false, roomId: 'room-1', userId: 'user-1' }
+      ] as any);
+      vi.mocked(listQuestionsForDeck).mockResolvedValue([
+        { id: 'question-2', text: 'New Question', mode: 'ICEBREAKER', intensityLevel: 1 }
+      ] as any);
+
+      vi.mocked(supabaseAdmin.from).mockImplementation((table: string) => {
+        if (table === 'Room') {
+          return {
+            update: vi.fn().mockReturnValue(mockUpdateChain({ id: 'room-1', status: 'PLAYING', currentQuestionId: 'question-2', round: 1 })),
+          } as unknown as ReturnType<typeof supabaseAdmin.from>;
+        }
+        return {} as unknown as ReturnType<typeof supabaseAdmin.from>;
+      });
+
+      const result = await skipQuestion('ABCD', 'player-1');
+      expect(result.success).toBe(true);
+      expect(result.question.id).toBe('question-2');
     });
   });
 });

@@ -7,7 +7,7 @@ describe('catalog fallback', () => {
     expect(pass?.price).toBe(2.99);
 
     const profile = CATALOG_FALLBACK.find((p) => p.sku === 'PROFILE');
-    expect(profile?.price).toBe(9.99);
+    expect(profile?.price).toBe(4.99);
 
     const couple = CATALOG_FALLBACK.find((p) => p.sku === 'PROFILE_COUPLE');
     expect(couple?.price).toBe(9.99);

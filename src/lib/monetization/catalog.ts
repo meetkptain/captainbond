@@ -64,7 +64,7 @@ export const CATALOG_FALLBACK: Pack[] = [
     sku: 'PROFILE',
     name: 'Dossier Classifié',
     description: 'Votre rapport individuel à garder ou partager après la soirée.',
-    price: 9.99,
+    price: 4.99,
     stripePriceId: null,
     stripeProductId: null,
     productType: 'PROFILE',

@@ -112,7 +112,10 @@ export function PresentialHostView({
     swapQuestion,
   } = game;
 
-  if (showPaywall) {
+  const isPremiumMode = modeId === 'DEEP_CONNECTION' || modeId === 'DATE_NIGHT';
+  const shouldBlock = isPremiumMode && !hasAccess && currentQuestionIndex >= 3;
+
+  if (showPaywall || shouldBlock) {
     return (
       <Paywall
         roomCode={roomCode}
@@ -517,6 +520,12 @@ export function PresentialHostView({
         isMuted={isMuted}
       />
 
+      {isPremiumMode && !hasAccess && currentQuestionIndex === 1 && (
+        <div className="w-full bg-amber-500/10 border border-amber-500/25 rounded-2xl p-4 text-center text-amber-300 font-medium text-xs animate-pulse z-10 shadow-[0_0_15px_rgba(245,158,11,0.1)]">
+          🎴 Encore 1 carte gratuite. Débloquez tous les modes et profils sur vos téléphones !
+        </div>
+      )}
+
       <TalkingStick
         players={players}
         currentPlayerIndex={currentPlayerIndex}
@@ -536,7 +545,7 @@ export function PresentialHostView({
         onSelectQuestion={swapQuestion}
       />
 
-      {false && !hasAccess && (
+      {!hasAccess && (
         <div className="w-full text-center space-y-1.5 my-2">
           <p className="text-xs text-slate-400 font-medium">
             Carte gratuite {Math.min(currentQuestionIndex + 1, 3)}/3

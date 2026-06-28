@@ -103,6 +103,10 @@ export default function PlayerController() {
         setStatus(room.status);
         setActiveMode(room.currentMode || 'ICEBREAKER');
         setCurrentQuestion(room.currentQuestion ?? null);
+        
+        const limit = 3;
+        const used = Math.min(room.round ?? 0, limit);
+        setFreeQuestions({ used, limit });
 
         const roomType = room.targetType || 'GROUP';
         setTargetType(roomType);
@@ -213,6 +217,13 @@ export default function PlayerController() {
         setStatus(roomUpdate.status || 'WAITING');
         setActiveMode(roomUpdate.currentMode || 'ICEBREAKER');
         
+        if (roomUpdate.round !== undefined) {
+          setFreeQuestions((prev) => ({
+            used: Math.min(roomUpdate.round ?? 0, prev?.limit ?? 3),
+            limit: prev?.limit ?? 3,
+          }));
+        }
+
         if (roomUpdate.status === 'PLAYING') {
            setHasVoted(false);
            setMyAnswer(null);
@@ -220,7 +231,11 @@ export default function PlayerController() {
         
         if (roomUpdate.currentQuestionId) {
           api.get<{ question?: Question }>(`/api/questions/get?id=${roomUpdate.currentQuestionId}`)
-            .then(({ question }) => setCurrentQuestion(question ?? null))
+            .then(({ question }) => {
+              setCurrentQuestion(question ?? null);
+              setHasVoted(false);
+              setMyAnswer(null);
+            })
             .catch(console.error);
         } else {
           setCurrentQuestion(null);
@@ -271,12 +286,22 @@ export default function PlayerController() {
 
   const handleStartRound = async () => {
     if (!isHost || !storedHostId || !storedHostToken) return;
-    const data = await api.post<{
-      freeQuestionsLimit?: number;
-      freeQuestionsUsed?: number;
-    }>('/api/room/next-round', { roomCode, hostId: storedHostId, hostToken: storedHostToken });
-    if (data.freeQuestionsLimit) {
-      setFreeQuestions({ used: data.freeQuestionsUsed ?? 0, limit: data.freeQuestionsLimit });
+    try {
+      setError(null);
+      const data = await api.post<{
+        freeQuestionsLimit?: number;
+        freeQuestionsUsed?: number;
+      }>('/api/room/next-round', { roomCode, hostId: storedHostId, hostToken: storedHostToken });
+      if (data.freeQuestionsLimit) {
+        setFreeQuestions({ used: data.freeQuestionsUsed ?? 0, limit: data.freeQuestionsLimit });
+      }
+    } catch (e) {
+      console.error(e);
+      if (e instanceof ApiClientError && e.status === 403) {
+        setShowUnlockPanel(true);
+      } else {
+        setError(e instanceof Error ? e.message : 'Erreur de chargement de la manche');
+      }
     }
   };
 
@@ -455,13 +480,18 @@ export default function PlayerController() {
       {showSafeWord && (
         <SafeWordModal
           onClose={() => setShowSafeWord(false)}
-          onSkip={() => {
+          onSkip={async () => {
             setShowSafeWord(false);
-            if (currentQuestion) {
-              handleVote('__SKIP__');
-            } else {
-              setMyAnswer('__SKIP__');
-              setHasVoted(true);
+            try {
+              await api.post('/api/room/skip', { playerId, roomCode });
+              const channel = supabase.channel(`room-events-${roomCode}`);
+              await channel.send({
+                type: 'broadcast',
+                event: 'TRIGGER_GLOBAL_SKIP',
+                payload: { senderName: playerName }
+              });
+            } catch (e) {
+              console.error('Erreur Safe Word:', e);
             }
           }}
           onLeave={() => {
@@ -526,6 +556,14 @@ export default function PlayerController() {
               </div>
             ) : (
               <>
+                {freeQuestions && freeQuestions.used === 2 && !entitlements?.hasActivePass && (
+                  <div className="bg-amber-500/10 border border-amber-500/25 text-amber-400 rounded-xl p-3 mb-4 text-xs font-mono leading-relaxed text-left flex items-start gap-2">
+                    <span>🎴</span>
+                    <span>
+                      <strong>Encore 1 carte gratuite.</strong> Débloquez tous les modes et dossiers premium !
+                    </span>
+                  </div>
+                )}
                 <h2 className="text-xl font-bold text-center mb-6 leading-tight mt-4 text-slate-200">
                   {currentQuestion.text}
                 </h2>
