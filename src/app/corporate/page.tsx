@@ -61,10 +61,10 @@ export default function CorporateLandingPage() {
             Team Building & Séminaires
           </span>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.1]">
-            Fédérez vos équipes<br />par le jeu et l&apos;écoute
+            Organisez le Team-Building idéal en 30 secondes
           </h1>
           <p className="text-lg md:text-xl text-white/70 max-w-xl mx-auto leading-relaxed">
-            Brisez la glace, encouragez la parole et renforcez la cohésion de vos collaborateurs avec une expérience de jeu de société 2.0 interactive.
+            Brisez la glace, encouragez la parole et connectez vos collaborateurs avec une animation interactive sur écran géant (zéro logistique).
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <LandingButton onClick={() => contactRef.current?.scrollIntoView({ behavior: 'smooth' })}>
@@ -76,6 +76,20 @@ export default function CorporateLandingPage() {
             >
               Estimer mon événement
             </LandingButton>
+          </div>
+
+          {/* Cocon sémantique B2B - Interlinking */}
+          <div className="pt-8 border-t border-white/5 flex flex-wrap justify-center gap-6 text-sm text-white/50 font-mono">
+            <span>Découvrez aussi nos solutions :</span>
+            <a href="/corporate/onboarding-recrutement" className="text-white hover:text-pink-400 hover:underline transition-colors decoration-none font-bold">
+              📂 Intégration & Onboarding
+            </a>
+            <a href="/corporate/rse-qvt" className="text-white hover:text-purple-400 hover:underline transition-colors decoration-none font-bold">
+              📊 Climat Social & QVT
+            </a>
+            <a href="/b2b/bars-cafes" className="text-white hover:text-indigo-400 hover:underline transition-colors decoration-none font-bold">
+              🍻 Animation de Bars
+            </a>
           </div>
         </div>
       </Section>
