@@ -84,8 +84,8 @@ const content = {
   }
 };
 
-export default function CorporateLandingPage() {
-  const [lang, setLang] = useState<'fr' | 'en'>('en');
+export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLang?: 'fr' | 'en' }) {
+  const [lang, setLang] = useState<'fr' | 'en'>(defaultLang);
   const [participants, setParticipants] = useState(50);
   const [formData, setFormData] = useState({
     name: '',

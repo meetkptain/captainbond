@@ -51,8 +51,8 @@ const content = {
   }
 };
 
-export default function BarsCafesLandingPage() {
-  const [lang, setLang] = useState<'fr' | 'en'>('en');
+export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLang?: 'fr' | 'en' }) {
+  const [lang, setLang] = useState<'fr' | 'en'>(defaultLang);
   const [formData, setFormData] = useState({
     name: '',
     company: '',

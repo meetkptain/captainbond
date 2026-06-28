@@ -12,43 +12,114 @@ import { Icon } from '@/components/Icon';
 import { api, ApiClientError } from '@/lib/api/client';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
 
-const AMBIENCES = [
-  {
-    id: 'ICEBREAKER',
-    name: 'Icebreaker',
-    icon: 'ice' as const,
-    desc: 'Décoince la table en 3 questions.',
+const content = {
+  fr: {
+    heroTitle: <>Votre TV devient le plateau.<br />Vos smartphones les manettes.</>,
+    heroDesc: "Pas de cartes à distribuer, pas de règles compliquées. Connectez vos téléphones à l'écran géant et découvrez vos amis sous un nouveau jour.",
+    launchBtn: "Lancer une partie",
+    launchingBtn: "Création...",
+    joinBtn: "Rejoindre une table",
+    createError: "Erreur lors de l'ouverture du deck.",
+    step1Title: "La TV devient la table",
+    step1Desc: "Créez une salle sur l'écran principal. C'est le cœur de la soirée. Tous les joueurs voient la carte, le timer et le score.",
+    step2Title: "Scannez le QR code",
+    step2Desc: "Chaque joueur rejoint en scannant le code depuis son téléphone. Pas d'application à installer.",
+    step3Title: "Captain choisit les cartes",
+    step3Desc: "Icebreaker, Spicy, Deep : l'ambiance s'adapte à votre table. Vous n'avez qu'à jouer.",
+    joinTitle: "Rejoindre une table",
+    joinDesc: "Entrez le code secret à 4 caractères affiché sur l'écran TV pour utiliser votre smartphone.",
+    joinSubmitBtn: "Rejoindre",
+    tablesActive: "tables ouvertes",
+    playersActive: "joueurs",
+    ambiencesTitle: "Choisissez l'ambiance",
+    ambiences: [
+      {
+        id: 'ICEBREAKER',
+        name: 'Icebreaker',
+        icon: 'ice' as const,
+        desc: 'Décoince la table en 3 questions.',
+      },
+      {
+        id: 'SPICY',
+        name: 'Spicy',
+        icon: 'spicy' as const,
+        desc: 'Débats, dilemmes et révélations inattendues.',
+      },
+      {
+        id: 'DEEP_CONNECTION',
+        name: 'Deep',
+        icon: 'deep' as const,
+        desc: 'Connexion sans filtre, sans chronomètre.',
+      },
+    ],
+    testimonialsTitle: "Ils ont joué avec Captain Bond"
   },
-  {
-    id: 'SPICY',
-    name: 'Spicy',
-    icon: 'spicy' as const,
-    desc: 'Débats, dilemmes et révélations inattendues.',
-  },
-  {
-    id: 'DEEP_CONNECTION',
-    name: 'Deep',
-    icon: 'deep' as const,
-    desc: 'Connexion sans filtre, sans chronomètre.',
-  },
-];
+  en: {
+    heroTitle: <>Your TV is the board.<br />Your smartphones are the controllers.</>,
+    heroDesc: "No cards to deal, no complicated rules. Connect your phones to the big screen and discover your friends in a whole new light.",
+    launchBtn: "Launch a Game",
+    launchingBtn: "Creating...",
+    joinBtn: "Join a Table",
+    createError: "Error opening the deck.",
+    step1Title: "The TV is the table",
+    step1Desc: "Create a room on the main screen. This is the heart of the party. All players see the card, the timer, and the score.",
+    step2Title: "Scan the QR code",
+    step2Desc: "Each player joins by scanning the code from their phone. No app to install.",
+    step3Title: "Captain picks the cards",
+    step3Desc: "Icebreaker, Spicy, Deep: the vibe adapts to your table. You just have to play.",
+    joinTitle: "Join a Table",
+    joinDesc: "Enter the 4-character secret code displayed on the TV screen to use your smartphone.",
+    joinSubmitBtn: "Join",
+    tablesActive: "active tables",
+    playersActive: "players",
+    ambiencesTitle: "Pick the Vibe",
+    ambiences: [
+      {
+        id: 'ICEBREAKER',
+        name: 'Icebreaker',
+        icon: 'ice' as const,
+        desc: 'Loosens up the table in 3 questions.',
+      },
+      {
+        id: 'SPICY',
+        name: 'Spicy',
+        icon: 'spicy' as const,
+        desc: 'Debates, dilemmas and unexpected revelations.',
+      },
+      {
+        id: 'DEEP_CONNECTION',
+        name: 'Deep',
+        icon: 'deep' as const,
+        desc: 'Unfiltered connection, no timers.',
+      },
+    ],
+    testimonialsTitle: "They played Captain Bond"
+  }
+};
 
-export default function Home() {
+export default function Home({ defaultLang = 'en' }: { defaultLang?: 'fr' | 'en' }) {
   const router = useRouter();
   const codeInputRef = useRef<HTMLInputElement>(null);
   const joinSectionRef = useRef<HTMLElement>(null);
 
+  const [lang, setLang] = useState<'fr' | 'en'>(defaultLang);
   const [roomCode, setRoomCode] = useState('');
   const [isCreating, setIsCreating] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
   const [publicStats, setPublicStats] = useState<{ totalRooms: number; totalPlayers: number } | null>(null);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isFr = window.location.pathname.startsWith('/fr');
+      setLang(isFr ? 'fr' : 'en');
+    }
     codeInputRef.current?.focus();
     api.get<{ totalRooms: number; totalPlayers: number }>('/api/public/stats')
       .then(setPublicStats)
       .catch(() => setPublicStats(null));
   }, []);
+
+  const t = content[lang];
 
   const handleRoomCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').trim();
@@ -65,14 +136,16 @@ export default function Home() {
     setIsCreating(true);
     setCreateError(null);
     try {
-      const data = await api.post<{ roomCode: string; hostId: string; hostToken: string; status: string }>('/api/room/create');
+      const data = await api.post<{ roomCode: string; hostId: string; hostToken: string; status: string }>('/api/room/create', {
+        language: lang,
+      });
 
       sessionStorage.setItem(`host_${data.roomCode}`, JSON.stringify({ hostId: data.hostId, hostToken: data.hostToken }));
       capture(AnalyticsEvents.ROOM_CREATED, { room_code: data.roomCode, source: 'landing_group' });
       router.push(`/room/${data.roomCode}`);
     } catch (err) {
       console.error(err);
-      setCreateError(err instanceof ApiClientError ? err.message : 'Erreur lors de l\'ouverture du deck.');
+      setCreateError(err instanceof ApiClientError ? err.message : t.createError);
       setIsCreating(false);
     }
   };
@@ -83,21 +156,20 @@ export default function Home() {
       <Section className="pt-10 md:pt-20">
         <div className="text-center space-y-8 max-w-3xl mx-auto">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.1]">
-            Votre TV devient le plateau.<br />
-            Vos smartphones les manettes.
+            {t.heroTitle}
           </h1>
           <p className="text-lg md:text-xl text-white/70 max-w-xl mx-auto leading-relaxed">
-            Pas de cartes à distribuer, pas de règles compliquées. Connectez vos téléphones à l&apos;écran géant et découvrez vos amis sous un nouveau jour.
+            {t.heroDesc}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <LandingButton onClick={handleCreateRoom} disabled={isCreating}>
-              {isCreating ? 'Création...' : 'Lancer une partie'}
+              {isCreating ? t.launchingBtn : t.launchBtn}
             </LandingButton>
             <LandingButton
               variant="secondary"
               onClick={() => joinSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Rejoindre une table
+              {t.joinBtn}
             </LandingButton>
           </div>
           {createError && (
@@ -118,8 +190,8 @@ export default function Home() {
         <div className="space-y-24 md:space-y-32">
           <FeatureShowcase
             step="01"
-            title="La TV devient la table"
-            description="Créez une salle sur l'écran principal. C'est le cœur de la soirée. Tous les joueurs voient la carte, le timer et le score."
+            title={t.step1Title}
+            description={t.step1Desc}
             visual={
               <div className="aspect-video bg-[#0a0f1e] rounded-2xl border border-white/10 flex items-center justify-center">
                 <Icon name="tv" className="w-20 h-20 text-white/20" />
@@ -128,8 +200,8 @@ export default function Home() {
           />
           <FeatureShowcase
             step="02"
-            title="Scannez le QR code"
-            description="Chaque joueur rejoint en scannant le code depuis son téléphone. Pas d'application à installer."
+            title={t.step2Title}
+            description={t.step2Desc}
             visual={
               <div className="aspect-video bg-[#0a0f1e] rounded-2xl border border-white/10 flex items-center justify-center">
                 <Icon name="qrCode" className="w-20 h-20 text-white/20" />
@@ -139,8 +211,8 @@ export default function Home() {
           />
           <FeatureShowcase
             step="03"
-            title="Captain choisit les cartes"
-            description="Icebreaker, Spicy, Deep : l'ambiance s'adapte à votre table. Vous n'avez qu'à jouer."
+            title={t.step3Title}
+            description={t.step3Desc}
             visual={
               <div className="aspect-video bg-[#0a0f1e] rounded-2xl border border-white/10 flex items-center justify-center">
                 <Icon name="gamepad" className="w-20 h-20 text-white/20" />
@@ -154,10 +226,10 @@ export default function Home() {
       <Section ref={joinSectionRef} id="join-section" compact className="bg-white/[0.02]">
         <div className="max-w-xl mx-auto text-center space-y-6">
           <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
-            Rejoindre une table
+            {t.joinTitle}
           </h2>
           <p className="text-white/60">
-            Entrez le code secret à 4 caractères affiché sur l&apos;écran TV pour utiliser votre smartphone.
+            {t.joinDesc}
           </p>
           <form
             onSubmit={(e) => {
@@ -188,12 +260,12 @@ export default function Home() {
               disabled={(roomCode.length !== 4 && roomCode !== 'DEMO12') || isCreating}
               className="px-6 py-4"
             >
-              Rejoindre
+              {t.joinSubmitBtn}
             </LandingButton>
           </form>
           {publicStats && (
             <p className="text-xs font-mono text-white/40 uppercase tracking-wider">
-              {publicStats.totalRooms.toLocaleString('fr-FR')} tables ouvertes · {publicStats.totalPlayers.toLocaleString('fr-FR')} joueurs
+              {publicStats.totalRooms.toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-US')} {t.tablesActive} · {publicStats.totalPlayers.toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-US')} {t.playersActive}
             </p>
           )}
         </div>
@@ -203,10 +275,10 @@ export default function Home() {
       <Section compact>
         <div className="text-center space-y-10">
           <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
-            Choisissez l&apos;ambiance
+            {t.ambiencesTitle}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {AMBIENCES.map((mode) => (
+            {t.ambiences.map((mode) => (
               <div
                 key={mode.id}
                 className="flex items-start gap-4 p-5 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-colors"
@@ -228,7 +300,7 @@ export default function Home() {
       <Section>
         <div className="text-center space-y-10">
           <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
-            Ils ont joué avec Captain Bond
+            {t.testimonialsTitle}
           </h2>
           <Testimonials />
         </div>

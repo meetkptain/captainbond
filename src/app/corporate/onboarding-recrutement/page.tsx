@@ -73,8 +73,8 @@ const content = {
   }
 };
 
-export default function OnboardingLandingPage() {
-  const [lang, setLang] = useState<'fr' | 'en'>('en');
+export default function OnboardingLandingPage({ defaultLang = 'en' }: { defaultLang?: 'fr' | 'en' }) {
+  const [lang, setLang] = useState<'fr' | 'en'>(defaultLang);
   const [formData, setFormData] = useState({
     name: '',
     company: '',

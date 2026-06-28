@@ -1,5 +1,5 @@
 import Home from '../page';
 
 export default function FrenchHome() {
-  return <Home />;
+  return <Home defaultLang="fr" />;
 }

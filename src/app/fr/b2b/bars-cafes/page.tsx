@@ -1,5 +1,5 @@
 import BarsCafesLandingPage from '../../../b2b/bars-cafes/page';
 
 export default function FrenchBarsCafesPage() {
-  return <BarsCafesLandingPage />;
+  return <BarsCafesLandingPage defaultLang="fr" />;
 }
