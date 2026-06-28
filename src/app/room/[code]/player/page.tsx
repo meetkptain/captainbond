@@ -85,6 +85,30 @@ export default function PlayerController() {
       try {
         const storedPlayerRaw = sessionStorage.getItem(`player_${roomCode}`);
 
+        if (roomCode === 'DEMO12') {
+          setPlayers([
+            { id: 'p1', name: 'Thomas', isHost: false, isReady: true, roomId: 'demo-room' },
+            { id: 'p2', name: 'Sarah', isHost: false, isReady: true, roomId: 'demo-room' },
+            { id: 'player-demo-id', name: 'Reviewer', isHost: false, isReady: true, roomId: 'demo-room' },
+          ]);
+          setRoomId('demo-room');
+          setStatus('PLAYING');
+          setActiveMode('ICEBREAKER');
+          setCurrentQuestion({
+            id: 'demo-q1',
+            text: "Qui est le plus susceptible de rater son vol pour les vacances ?",
+            mode: 'ICEBREAKER',
+            category: 'Ambiance',
+          });
+          setFreeQuestions({ used: 1, limit: 3 });
+          setTargetType('GROUP');
+          setIsHost(false);
+          setPlayerId('player-demo-id');
+          setPlayerName('Reviewer');
+          setLoading(false);
+          return;
+        }
+
         const data = await api.get<{
           room: Room & { currentQuestion?: Question | null };
           players?: Player[];
@@ -273,6 +297,12 @@ export default function PlayerController() {
       setVoteError(null);
       setHasVoted(true);
       setMyAnswer(answer);
+      if (roomCode === 'DEMO12') {
+        setTimeout(() => {
+          setStatus('REVEALING');
+        }, 1500);
+        return;
+      }
       await api.post('/api/room/vote', { roomCode, playerId, answer, questionId: currentQuestion?.id });
       capture(AnalyticsEvents.QUESTION_ANSWERED, {
         room_code: roomCode,

@@ -38,6 +38,16 @@ export default function JoinRoomWithCode() {
     setError(null);
 
     try {
+      if (roomCode === 'DEMO12') {
+        sessionStorage.setItem(`player_${roomCode}`, JSON.stringify({
+          id: 'player-demo-id',
+          name: playerName.trim() || 'Reviewer',
+        }));
+        sessionStorage.setItem(`cb_consent_${roomCode}`, consent ? 'true' : 'false');
+        router.push(`/room/${roomCode}/player`);
+        return;
+      }
+
       const data = await api.post<{ playerId: string; playerName: string }>('/api/room/join', {
         roomCode: roomCode,
         playerName: playerName.trim(),

@@ -56,7 +56,7 @@ export default function Home() {
   };
 
   const handleJoinRoom = () => {
-    if (roomCode.length === 4) {
+    if (roomCode.length === 4 || roomCode === 'DEMO12') {
       window.location.href = `/join/${roomCode}`;
     }
   };
@@ -171,13 +171,13 @@ export default function Home() {
                 ref={codeInputRef}
                 type="text"
                 placeholder="CODE"
-                maxLength={4}
+                maxLength={6}
                 value={roomCode}
                 onChange={handleRoomCodeChange}
                 className="w-full text-center font-black tracking-widest text-2xl text-white bg-white/5 border border-white/10 focus:border-white/30 focus:outline-none rounded-2xl p-4 placeholder-white/20 transition-colors uppercase"
                 disabled={isCreating}
               />
-              {roomCode.length === 4 && (
+              {(roomCode.length === 4 || roomCode === 'DEMO12') && (
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center">
                   <span className="w-2 h-2 rounded-full bg-white" />
                 </div>
@@ -185,7 +185,7 @@ export default function Home() {
             </div>
             <LandingButton
               type="submit"
-              disabled={roomCode.length !== 4 || isCreating}
+              disabled={(roomCode.length !== 4 && roomCode !== 'DEMO12') || isCreating}
               className="px-6 py-4"
             >
               Rejoindre

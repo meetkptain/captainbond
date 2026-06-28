@@ -64,6 +64,22 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
   useEffect(() => {
     async function fetchProfile() {
       try {
+        if (roomCode === 'DEMO12') {
+          setProfile({
+            archetype: 'Le Stratège Social',
+            archetypeEmoji: '🧠',
+            barnumText: 'Vous lisez dans les gens comme dans un livre ouvert. Vous analysez chaque micro-expression et anticipez les réactions de vos amis avec une précision déconcertante.',
+            funniestTrait: 'Aime avoir toujours raison, même de mauvaise foi.',
+            confidencePercent: 92,
+            axes: {
+              alignment: 85,
+              perspicacity: 78,
+              deception: 64
+            }
+          });
+          setLoading(false);
+          return;
+        }
         const data = await api.get<{ profile?: PlayerProfile; currentMode?: string }>(
           `/api/room/profile?roomCode=${roomCode}&playerId=${playerId}`
         );
@@ -86,6 +102,10 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
   useEffect(() => {
     async function fetchTeaser() {
       try {
+        if (roomCode === 'DEMO12') {
+          setConnectionsTeaser({ hasConnections: true, teaseName: 'Sarah' });
+          return;
+        }
         const data = await api.get<{ hasConnections: boolean; teaseName?: string }>(
           `/api/room/connections?roomCode=${roomCode}&playerId=${playerId}`
         );
@@ -102,6 +122,13 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
     async function fetchRevealed() {
       if (!unlocked) return;
       try {
+        if (roomCode === 'DEMO12') {
+          setRevealedConnections([
+            { voterName: 'Sarah', voteCount: 4 },
+            { voterName: 'Thomas', voteCount: 2 },
+          ]);
+          return;
+        }
         const data = await api.post<{ connections: Array<{ voterName: string; voteCount: number }> }>(
           '/api/room/connections',
           { roomCode, playerId }
@@ -120,6 +147,9 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
   useEffect(() => {
     async function checkEntitlements() {
       try {
+        if (roomCode === 'DEMO12') {
+          return;
+        }
         const data = await api.get<{ accessibleFeatures?: string[] }>(
           `/api/me/entitlements?playerId=${playerId}&roomCode=${roomCode}`
         );
@@ -177,6 +207,14 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
   const handleNativePayment = async (packageId: string) => {
     setPaying(true);
     try {
+      if (roomCode === 'DEMO12') {
+        setTimeout(() => {
+          setUnlocked(true);
+          setPaying(false);
+          alert('Félicitations ! Votre dossier secret a été déverrouillé.');
+        }, 1000);
+        return;
+      }
       const result = await purchaseNativeProduct(packageId);
       if (result) {
         // Achat réussi ! Re-vérifier les entitlements après un court délai pour laisser le webhook s'exécuter
