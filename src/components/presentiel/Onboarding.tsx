@@ -2,31 +2,33 @@
 
 import { useState } from 'react';
 import { Icon, type IconName } from '@/components/Icon';
+import { useTranslation } from '@/lib/i18n';
 
 interface OnboardingProps {
   onComplete: () => void;
 }
 
-const SLIDES: { icon: IconName; title: string; description: string }[] = [
-  {
-    icon: 'smartphone',
-    title: 'Un seul téléphone',
-    description: 'Pas besoin de synchroniser plusieurs manettes. Captain Bond se joue en faisant tourner ce téléphone de main en main.'
-  },
-  {
-    icon: 'message',
-    title: 'Le bâton de parole',
-    description: 'Quand le téléphone affiche votre prénom, c\'est à vous de parler. Lisez la question et répondez sincèrement à haute voix.'
-  },
-  {
-    icon: 'hourglass',
-    title: 'Savourez l\'échange',
-    description: 'Le sablier est là pour guider, pas pour stresser. Si une discussion s\'engage, appuyez sur Pause et profitez du moment.'
-  }
-];
-
 export function Onboarding({ onComplete }: OnboardingProps) {
+  const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  const SLIDES: { icon: IconName; title: string; description: string }[] = [
+    {
+      icon: 'smartphone',
+      title: t('onboarding_title_1'),
+      description: t('onboarding_desc_1')
+    },
+    {
+      icon: 'message',
+      title: t('onboarding_title_2'),
+      description: t('onboarding_desc_2')
+    },
+    {
+      icon: 'hourglass',
+      title: t('onboarding_title_3'),
+      description: t('onboarding_desc_3')
+    }
+  ];
 
   const handleNext = () => {
     if (currentSlide < SLIDES.length - 1) {
@@ -69,9 +71,9 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       {/* Action Button */}
       <button
         onClick={handleNext}
-        className="w-full py-4 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-bold text-lg rounded-2xl transition-all cursor-pointer shadow-lg shadow-amber-500/10 flex items-center justify-center gap-2"
+        className="w-full py-4 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-bold text-lg rounded-2xl transition-all cursor-pointer shadow-lg shadow-amber-500/10 flex items-center justify-center gap-2 border-none"
       >
-        {currentSlide === SLIDES.length - 1 ? 'C&apos;est compris !' : 'Suivant'}
+        {currentSlide === SLIDES.length - 1 ? t('onboarding_understood') : t('onboarding_next')}
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
         </svg>

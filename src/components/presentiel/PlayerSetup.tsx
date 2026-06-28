@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Icon } from '@/components/Icon';
 import { CustomDeck } from '@/lib/custom-decks/types';
 import { getLocalDecks } from '@/lib/custom-decks/storage';
+import { useTranslation } from '@/lib/i18n';
 
 export interface Player {
   id: string;
@@ -21,6 +22,7 @@ export function PlayerSetup({
   minPlayers = 2,
   maxPlayers = 6
 }: PlayerSetupProps) {
+  const { t, language } = useTranslation();
   const [players, setPlayers] = useState<Player[]>([]);
   const [newName, setNewName] = useState('');
   const [couples, setCouples] = useState<string[][]>([]);
@@ -108,10 +110,10 @@ export function PlayerSetup({
               </svg>
             </div>
             <h2 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-amber-200 to-yellow-400 bg-clip-text text-transparent">
-              Confiance & Sécurité
+              {language === 'fr' ? 'Confiance & Sécurité' : 'Trust & Safety'}
             </h2>
             <p className="text-sm text-slate-400 mt-1">
-              Veuillez accepter la charte de jeu avant de commencer
+              {language === 'fr' ? 'Veuillez accepter la charte de jeu avant de commencer' : 'Please accept the game charter before starting'}
             </p>
           </div>
 
@@ -125,8 +127,12 @@ export function PlayerSetup({
                 className="mt-1 w-5 h-5 rounded border-slate-600 bg-slate-950 text-amber-500 focus:ring-amber-500/40 cursor-pointer"
               />
               <span className="text-xs leading-relaxed">
-                <strong className="text-amber-400 block mb-1">Prénoms & RGPD (Local-only)</strong>
-                J&apos;accepte que les prénoms des joueurs soient saisis. En mode Présentiel local, toutes les réponses restent stockées localement sur ce téléphone et sont détruites à la fin de la partie (zéro transmission serveur).
+                <strong className="text-amber-400 block mb-1">
+                  {language === 'fr' ? 'Prénoms & RGPD (Local-only)' : 'First Names & GDPR (Local-only)'}
+                </strong>
+                {language === 'fr' 
+                  ? "J'accepte que les prénoms des joueurs soient saisis. En mode Présentiel local, toutes les réponses restent stockées localement sur ce téléphone et sont détruites à la fin de la partie (zéro transmission serveur)."
+                  : "I agree that the players' first names will be entered. In local Presential mode, all answers remain stored locally on this phone and are destroyed at the end of the game (zero server transmission)."}
               </span>
             </label>
 
@@ -139,8 +145,12 @@ export function PlayerSetup({
                 className="mt-1 w-5 h-5 rounded border-slate-600 bg-slate-950 text-amber-500 focus:ring-amber-500/40 cursor-pointer"
               />
               <span className="text-xs leading-relaxed">
-                <strong className="text-amber-400 block mb-1">Cadre Bienveillant & Safe Skip</strong>
-                Nous acceptons de jouer dans un esprit de bienveillance (particulièrement en présence d&apos;alcool). Chaque joueur est libre d&apos;utiliser le bouton <strong>Safe Skip (Joker)</strong> à tout moment sans jugement.
+                <strong className="text-amber-400 block mb-1">
+                  {language === 'fr' ? 'Cadre Bienveillant & Safe Skip' : 'Kind Atmosphere & Safe Skip'}
+                </strong>
+                {language === 'fr'
+                  ? "Nous acceptons de jouer dans un esprit de bienveillance (particulièrement en présence d'alcool). Chaque joueur est libre d'utiliser le bouton Safe Skip (Joker) à tout moment sans jugement."
+                  : "We agree to play in a kind spirit (especially in the presence of alcohol). Every player is free to use the Safe Skip (Joker) button at any time without judgment."}
               </span>
             </label>
           </div>
@@ -155,15 +165,15 @@ export function PlayerSetup({
               }
             }}
             disabled={!consentRGPD || !consentSafety}
-            className="w-full py-4 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 disabled:from-slate-800 disabled:to-slate-800 text-slate-950 disabled:text-slate-600 font-bold text-lg rounded-2xl transition-all cursor-pointer disabled:cursor-not-allowed shadow-xl shadow-amber-500/10 flex items-center justify-center gap-2"
+            className="w-full py-4 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 disabled:from-slate-800 disabled:to-slate-800 text-slate-950 disabled:text-slate-600 font-bold text-lg rounded-2xl transition-all cursor-pointer disabled:cursor-not-allowed shadow-xl shadow-amber-500/10 flex items-center justify-center gap-2 border-none"
           >
-            Confirmer & Continuer
+            {language === 'fr' ? 'Confirmer & Continuer' : 'Confirm & Continue'}
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
           </button>
           <p className="text-[10px] text-center text-slate-500 font-mono">
-            Conforme RGPD 2026 • Données Privées
+            {language === 'fr' ? 'Conforme RGPD 2026 • Données Privées' : 'GDPR Compliant 2026 • Private Data'}
           </p>
         </div>
       </div>
@@ -177,14 +187,14 @@ export function PlayerSetup({
           <div className="inline-block p-3 bg-amber-500/10 rounded-2xl mb-3 border border-amber-500/20">
             {/* SVG Icon for Players Group */}
             <svg className="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
           </div>
           <h2 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-amber-200 to-yellow-400 bg-clip-text text-transparent">
-            Qui joue ce soir ?
+            {language === 'fr' ? 'Qui joue ce soir ?' : 'Who is playing tonight?'}
           </h2>
           <p className="text-sm text-slate-400 mt-1">
-            Ajoutez les prénoms des participants (2 à 6 joueurs)
+            {language === 'fr' ? `Ajoutez les prénoms des participants (2 à ${maxPlayers} joueurs)` : `Add participants' first names (2 to ${maxPlayers} players)`}
           </p>
         </div>
 
@@ -196,21 +206,21 @@ export function PlayerSetup({
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Prénom..."
+              placeholder={language === 'fr' ? "Prénom..." : "First name..."}
               maxLength={20}
               className="flex-1 px-4 py-3 bg-slate-800/80 border border-slate-700 rounded-xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all"
             />
             <button
               onClick={addPlayer}
               disabled={!newName.trim()}
-              className="px-5 py-3 bg-amber-500 hover:bg-amber-600 disabled:bg-slate-800 disabled:text-slate-600 text-slate-950 font-semibold rounded-xl transition-all cursor-pointer disabled:cursor-not-allowed flex items-center gap-1 shadow-lg shadow-amber-500/10"
+              className="px-5 py-3 bg-amber-500 hover:bg-amber-600 disabled:bg-slate-800 disabled:text-slate-600 text-slate-950 font-semibold rounded-xl transition-all cursor-pointer disabled:cursor-not-allowed flex items-center gap-1 shadow-lg shadow-amber-500/10 border-none"
             >
-              Ajouter
+              {language === 'fr' ? 'Ajouter' : 'Add'}
             </button>
           </div>
         ) : (
           <p className="text-sm text-center text-amber-400 bg-amber-400/10 border border-amber-400/20 py-2 rounded-xl">
-            Nombre maximum de joueurs atteint ({maxPlayers})
+            {language === 'fr' ? `Nombre maximum de joueurs atteint (${maxPlayers})` : `Maximum number of players reached (${maxPlayers})`}
           </p>
         )}
 
@@ -231,12 +241,12 @@ export function PlayerSetup({
                   </span>
                   {couples.some(c => c.includes(player.name)) && (
                     <span className="text-[10px] text-rose-400 font-semibold mt-0.5">
-                      <Icon name="heart" className="w-3 h-3 inline text-rose-400" /> Couple avec {couples.find(c => c.includes(player.name))?.find(n => n !== player.name)}
+                      <Icon name="heart" className="w-3 h-3 inline text-rose-400" /> {language === 'fr' ? 'Couple avec' : 'Couple with'} {couples.find(c => c.includes(player.name))?.find(n => n !== player.name)}
                     </span>
                   )}
                   {linkingPlayerId === player.id && (
                     <span className="text-[10px] text-rose-300 font-semibold mt-0.5 animate-pulse">
-                      <Icon name="heart" className="w-3 h-3 inline text-rose-300" /> Qui est le partenaire ? (Cliquez sur l&apos;autre)
+                      <Icon name="heart" className="w-3 h-3 inline text-rose-300" /> {language === 'fr' ? "Qui est le partenaire ? (Cliquez sur l'autre)" : 'Who is the partner? (Click on the other)'}
                     </span>
                   )}
                 </div>
@@ -259,7 +269,7 @@ export function PlayerSetup({
                       setLinkingPlayerId(player.id);
                     }
                   }}
-                  className={`p-1 rounded-lg transition-all cursor-pointer ${
+                  className={`p-1 rounded-lg transition-all cursor-pointer border-none bg-transparent ${
                     couples.some(c => c.includes(player.name))
                       ? 'text-rose-500 bg-rose-500/10 hover:bg-rose-500/20'
                       : linkingPlayerId === player.id
@@ -268,10 +278,10 @@ export function PlayerSetup({
                   }`}
                   title={
                     couples.some(c => c.includes(player.name))
-                      ? `Couple avec ${couples.find(c => c.includes(player.name))?.find(n => n !== player.name)}`
+                      ? `${language === 'fr' ? 'Couple avec' : 'Couple with'} ${couples.find(c => c.includes(player.name))?.find(n => n !== player.name)}`
                       : linkingPlayerId === player.id
-                      ? "Liaison en cours..."
-                      : "Lier ce joueur en couple"
+                      ? (language === 'fr' ? "Liaison en cours..." : "Linking in progress...")
+                      : (language === 'fr' ? "Lier ce joueur en couple" : "Link this player in couple")
                   }
                 >
                   <Icon name="heart" className={`w-5 h-5 ${couples.some(c => c.includes(player.name)) ? 'text-rose-500' : 'text-current'}`} />
@@ -281,8 +291,8 @@ export function PlayerSetup({
                 <button
                   type="button"
                   onClick={() => removePlayer(player.id)}
-                  className="p-1 hover:bg-red-500/20 text-slate-500 hover:text-red-400 rounded-lg transition-all cursor-pointer"
-                  title="Supprimer"
+                  className="p-1 hover:bg-red-500/20 text-slate-500 hover:text-red-400 rounded-lg transition-all cursor-pointer border-none bg-transparent"
+                  title={language === 'fr' ? "Supprimer" : "Delete"}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -294,7 +304,7 @@ export function PlayerSetup({
 
           {players.length === 0 && (
             <div className="flex flex-col items-center justify-center py-8 text-slate-500 border-2 border-dashed border-slate-800 rounded-2xl">
-              <p className="text-sm">Aucun joueur enregistré</p>
+              <p className="text-sm">{language === 'fr' ? "Aucun joueur enregistré" : "No players registered"}</p>
             </div>
           )}
         </div>
@@ -304,13 +314,15 @@ export function PlayerSetup({
       {localDecks.length > 0 && (
         <div className="space-y-3 bg-slate-900/60 border border-slate-800 rounded-3xl p-5 shadow-lg">
           <div className="flex items-center justify-between">
-            <span className="text-xs uppercase font-mono font-bold text-amber-500 tracking-wider">Jouer un Deck Souvenir ?</span>
+            <span className="text-xs uppercase font-mono font-bold text-amber-500 tracking-wider">
+              {language === 'fr' ? "Jouer un Deck Souvenir ?" : "Play a Memory Deck?"}
+            </span>
             {selectedDeckId && (
               <button
                 onClick={() => setSelectedDeckId(null)}
-                className="text-xs text-red-400 hover:text-red-300 font-bold underline cursor-pointer"
+                className="text-xs text-red-400 hover:text-red-300 font-bold underline cursor-pointer border-none bg-transparent"
               >
-                Réinitialiser
+                {language === 'fr' ? "Réinitialiser" : "Reset"}
               </button>
             )}
           </div>
@@ -330,7 +342,7 @@ export function PlayerSetup({
                   <div>
                     <span className="text-sm font-bold block">{deck.title}</span>
                     <span className="text-xs text-slate-500 font-mono block">
-                      {deck.questions.length} cartes · {deck.friends.join(', ')}
+                      {deck.questions.length} {language === 'fr' ? 'cartes' : 'cards'} · {deck.friends.join(', ')}
                     </span>
                   </div>
                   {isSelected && <Icon name="check" className="w-5 h-5 text-amber-400" />}
@@ -346,16 +358,18 @@ export function PlayerSetup({
         <button
           onClick={handleStart}
           disabled={!canStart}
-          className="w-full py-4 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 disabled:from-slate-800 disabled:to-slate-800 text-slate-950 disabled:text-slate-600 font-bold text-lg rounded-2xl transition-all cursor-pointer disabled:cursor-not-allowed shadow-xl shadow-amber-500/10 flex items-center justify-center gap-2"
+          className="w-full py-4 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 disabled:from-slate-800 disabled:to-slate-800 text-slate-950 disabled:text-slate-600 font-bold text-lg rounded-2xl transition-all cursor-pointer disabled:cursor-not-allowed shadow-xl shadow-amber-500/10 flex items-center justify-center gap-2 border-none"
         >
-          C&apos;est parti !
+          {language === 'fr' ? "C'est parti !" : "Let's go!"}
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
         </button>
 
         <p className="text-xs text-center text-slate-500">
-          {players.length} / {maxPlayers} joueurs (minimum {minPlayers} requis)
+          {language === 'fr' 
+            ? `${players.length} / ${maxPlayers} joueurs (minimum ${minPlayers} requis)`
+            : `${players.length} / ${maxPlayers} players (minimum ${minPlayers} required)`}
         </p>
       </div>
     </div>

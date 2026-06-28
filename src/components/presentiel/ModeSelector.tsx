@@ -1,12 +1,13 @@
 'use client';
 
 import { Icon, type IconName } from '@/components/Icon';
+import { useTranslation } from '@/lib/i18n';
 
 interface GameModeItem {
   id: string;
   name: string;
   icon: IconName;
-  description: string;
+  descriptionKey: 'mode_icebreaker_desc' | 'mode_deep_desc' | 'mode_spicy_desc' | 'mode_imposteur_desc' | 'mode_date_desc' | 'mode_family_desc';
   duration: string;
   intensity: 'Chill' | 'Spicy' | 'Deep';
   themeColor: string;
@@ -17,7 +18,7 @@ const GAME_MODES: GameModeItem[] = [
     id: 'ICEBREAKER',
     name: 'Icebreaker',
     icon: 'sparkles',
-    description: 'Brisez la glace avec des questions fun, légères et inattendues. Parfait pour démarrer la soirée !',
+    descriptionKey: 'mode_icebreaker_desc',
     duration: '10-15 min',
     intensity: 'Chill',
     themeColor: 'from-sky-500 to-blue-600'
@@ -26,7 +27,7 @@ const GAME_MODES: GameModeItem[] = [
     id: 'DEEP_CONNECTION',
     name: 'Deep Connection',
     icon: 'sparkles',
-    description: 'Renforcez vos liens grâce à des questions introspectives, sincères et émotionnelles.',
+    descriptionKey: 'mode_deep_desc',
     duration: '20-30 min',
     intensity: 'Deep',
     themeColor: 'from-purple-500 to-indigo-600'
@@ -35,7 +36,7 @@ const GAME_MODES: GameModeItem[] = [
     id: 'SPICY',
     name: 'Spicy',
     icon: 'flame',
-    description: 'Ajoutez un peu de piquant et de tension avec des questions audacieuses et révélatrices.',
+    descriptionKey: 'mode_spicy_desc',
     duration: '15-20 min',
     intensity: 'Spicy',
     themeColor: 'from-orange-500 to-red-600'
@@ -44,7 +45,7 @@ const GAME_MODES: GameModeItem[] = [
     id: 'IMPOSTEUR',
     name: 'Imposteur',
     icon: 'mask',
-    description: 'Un joueur reçoit une question secrète différente. Parviendrez-vous à le démasquer ?',
+    descriptionKey: 'mode_imposteur_desc',
     duration: '15-25 min',
     intensity: 'Chill',
     themeColor: 'from-emerald-500 to-teal-600'
@@ -53,7 +54,7 @@ const GAME_MODES: GameModeItem[] = [
     id: 'DATE_NIGHT',
     name: 'Date Night',
     icon: 'heart',
-    description: 'Conçu spécialement pour les couples. Redécouvrez-vous et approfondissez votre complicité.',
+    descriptionKey: 'mode_date_desc',
     duration: '20-35 min',
     intensity: 'Deep',
     themeColor: 'from-rose-500 to-pink-600'
@@ -62,7 +63,7 @@ const GAME_MODES: GameModeItem[] = [
     id: 'FAMILY',
     name: 'Family',
     icon: 'users',
-    description: 'Des thèmes adaptés à toutes les générations pour rire et partager des souvenirs en famille.',
+    descriptionKey: 'mode_family_desc',
     duration: '15-25 min',
     intensity: 'Chill',
     themeColor: 'from-amber-500 to-orange-600'
@@ -74,14 +75,16 @@ interface ModeSelectorProps {
 }
 
 export function ModeSelector({ onSelect }: ModeSelectorProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col gap-6 p-6 max-w-lg mx-auto text-slate-100 bg-slate-900/60 backdrop-blur-md rounded-3xl border border-slate-700/50 shadow-2xl">
       <div className="text-center flex flex-col gap-1">
         <h2 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-amber-200 to-yellow-400 bg-clip-text text-transparent">
-          Choisissez votre ambiance
+          {t('mode_title')}
         </h2>
         <p className="text-sm text-slate-400">
-          Sélectionnez un mode de jeu adapté à votre groupe ce soir
+          {t('mode_desc')}
         </p>
       </div>
 
@@ -114,12 +117,12 @@ export function ModeSelector({ onSelect }: ModeSelectorProps) {
                     mode.intensity === 'Spicy' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' :
                     'bg-purple-500/10 text-purple-400 border-purple-500/20'
                   }`}>
-                    {mode.intensity}
+                    {mode.intensity === 'Chill' ? t('tree_legend_chill') : mode.intensity === 'Spicy' ? t('tree_legend_spicy') : t('tree_legend_deep')}
                   </span>
                 </div>
               </div>
               <p className="text-xs text-slate-400 leading-relaxed">
-                {mode.description}
+                {t(mode.descriptionKey)}
               </p>
             </div>
           </button>

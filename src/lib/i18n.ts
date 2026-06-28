@@ -57,7 +57,72 @@ const TRANSLATIONS = {
     weekly_gold_node: "Nœud d'Or de la Semaine ({score}%)",
     weekly_dj_analysis: "Analyse du DJ IA",
     weekly_pdf_btn: "Sauvegarder en PDF",
-    weekly_close_btn: "Fermer"
+    weekly_close_btn: "Fermer",
+    
+    // Gameplay presentiel additions
+    room_loading: "Initialisation de la table...",
+    room_err_auth: "Session administrateur manquante. Veuillez créer la partie depuis l'accueil.",
+    room_err_title: "Accès Refusé",
+    room_err_btn: "Retour à l'accueil",
+    
+    setup_title: "Lobby de la Table",
+    setup_desc: "Ajoutez les prénoms des joueurs présents autour de l'écran pour personnaliser le jeu.",
+    setup_name_label: "Prénom du joueur",
+    setup_name_placeholder: "Ex: Camille",
+    setup_add_btn: "Ajouter",
+    setup_rgpd_title: "Consentement Captain Bond",
+    setup_rgpd_checkbox: "J'accepte que mes réponses soient utilisées pour générer mon profil de complicité ludique.",
+    setup_safety_checkbox: "Je m'engage à respecter la bienveillance et le consentement de chacun autour de la table.",
+    setup_safety_desc: "Captain Bond est un espace de connexion safe. Passez n'importe quelle carte sans jugement si elle vous met mal à l'aise.",
+    setup_consent_btn: "Valider les Consentements",
+    setup_couple_title: "Couples & Duos (Optionnel)",
+    setup_couple_desc: "Associez les joueurs en couple pour générer des questions Date Night exclusives.",
+    setup_couple_btn: "Créer un couple",
+    setup_couple_link: "Associer",
+    setup_couple_unlink: "Séparer",
+    setup_deck_custom: "Utiliser un Deck Souvenir personnalisé",
+    setup_start_btn: "Commencer la partie !",
+    
+    mode_title: "Choisissez votre ambiance",
+    mode_desc: "Sélectionnez un mode de jeu adapté à votre groupe ce soir",
+    mode_duration: "durée :",
+    mode_intensity: "intensité :",
+    mode_icebreaker_desc: "Brisez la glace avec des questions fun, légères et inattendues. Parfait pour démarrer la soirée !",
+    mode_deep_desc: "Renforcez vos liens grâce à des questions introspectives, sincères et émotionnelles.",
+    mode_spicy_desc: "Ajoutez un peu de piquant et de tension avec des questions audacieuses et révélatrices.",
+    mode_imposteur_desc: "Un joueur reçoit une question secrète différente. Parviendrez-vous à le démasquer ?",
+    mode_date_desc: "Conçu spécialement pour les couples. Redécouvrez-vous et approfondissez votre complicité.",
+    mode_family_desc: "Des thèmes adaptés à toutes les générations pour rire et partager des souvenirs en famille.",
+    
+    stick_active: "Bâton de parole actif",
+    stick_question_in_progress: "Question en cours :",
+    stick_prepare_pointing: "Préparez-vous à pointer...",
+    stick_reveal_voters: "Révéler les votes",
+    stick_next_turn: "Tour suivant",
+    stick_skip_question: "Passer la question",
+    stick_back_mode: "Retour aux Modes",
+    
+    pass_title: "Meneur de Tour",
+    pass_new_round: "• Nouveau Tour",
+    pass_instruction: "Passez le téléphone à",
+    pass_secret_warning: "Attention : ce mode contient des rôles secrets ! Cachez l'écran aux autres.",
+    pass_theme_selection: "Tu es le premier joueur de cette manche : tu vas pouvoir choisir la thématique !",
+    pass_ready_desc: "Prends l'appareil et prépare-toi à répondre.",
+    pass_ready_btn: "👍 J'ai le téléphone en main !",
+    
+    theme_title: "Choix de la thématique",
+    theme_desc: "Sélectionnez la question qui vous inspire le plus pour ce tour :",
+    theme_keep_btn: "Garder la question par défaut",
+    
+    timer_paused: "PAUSE",
+    timer_pause_btn: "Pause",
+    timer_resume_btn: "Reprendre",
+    
+    end_summary_title: "Fin de la Partie",
+    end_summary_desc: "Votre arbre relationnel a fleuri ! Voici l'analyse de complicité de votre session.",
+    end_summary_score: "Score de Complicité",
+    end_summary_badge: "Trophée de Session",
+    end_summary_exit: "Fermer le salon",
   },
   en: {
     title: "CAPTAIN BOND",
@@ -111,7 +176,72 @@ const TRANSLATIONS = {
     weekly_gold_node: "Golden Node of the Week ({score}%)",
     weekly_dj_analysis: "AI DJ Insights",
     weekly_pdf_btn: "Save as PDF",
-    weekly_close_btn: "Close"
+    weekly_close_btn: "Close",
+    
+    // Gameplay presentiel additions
+    room_loading: "Initializing the table...",
+    room_err_auth: "Missing administrator session. Please create the game from the homepage.",
+    room_err_title: "Access Denied",
+    room_err_btn: "Back to Home",
+    
+    setup_title: "Table Lobby",
+    setup_desc: "Add the first names of the players present around the screen to customize the game.",
+    setup_name_label: "Player first name",
+    setup_name_placeholder: "E.g., Camille",
+    setup_add_btn: "Add",
+    setup_rgpd_title: "Captain Bond Consent",
+    setup_rgpd_checkbox: "I accept that my answers are used to generate my playful complicity profile.",
+    setup_safety_checkbox: "I commit to respecting kindness and consent of everyone around the table.",
+    setup_safety_desc: "Captain Bond is a safe space for connection. Skip any card without judgment if it makes you feel uncomfortable.",
+    setup_consent_btn: "Accept Consents",
+    setup_couple_title: "Couples & Duos (Optional)",
+    setup_couple_desc: "Link players in couple to generate exclusive Date Night questions.",
+    setup_couple_btn: "Create Couple",
+    setup_couple_link: "Link",
+    setup_couple_unlink: "Separate",
+    setup_deck_custom: "Use a custom Memory Deck",
+    setup_start_btn: "Start the game!",
+    
+    mode_title: "Choose your vibe",
+    mode_desc: "Select a game mode adapted to your group tonight",
+    mode_duration: "duration:",
+    mode_intensity: "intensity:",
+    mode_icebreaker_desc: "Break the ice with fun, light, and unexpected questions. Perfect to start the evening!",
+    mode_deep_desc: "Strengthen your bonds with introspective, sincere, and emotional questions.",
+    mode_spicy_desc: "Add some spice and tension with bold and revealing questions.",
+    mode_imposteur_desc: "One player receives a different secret question. Will you be able to unmask them?",
+    mode_date_desc: "Designed especially for couples. Rediscover each other and deepen your complicity.",
+    mode_family_desc: "Themes adapted to all generations to laugh and share memories as a family.",
+    
+    stick_active: "Active Talking Stick",
+    stick_question_in_progress: "Current question:",
+    stick_prepare_pointing: "Prepare to point...",
+    stick_reveal_voters: "Reveal votes",
+    stick_next_turn: "Next turn",
+    stick_skip_question: "Skip question",
+    stick_back_mode: "Back to Modes",
+    
+    pass_title: "Turn Leader",
+    pass_new_round: "• New Round",
+    pass_instruction: "Pass the phone to",
+    pass_secret_warning: "Warning: this mode contains secret roles! Hide the screen from others.",
+    pass_theme_selection: "You are the first player of this round: you will be able to choose the theme!",
+    pass_ready_desc: "Take the device and prepare to answer.",
+    pass_ready_btn: "👍 I have the phone in hand!",
+    
+    theme_title: "Theme Choice",
+    theme_desc: "Select the question that inspires you most for this turn:",
+    theme_keep_btn: "Keep default question",
+    
+    timer_paused: "PAUSED",
+    timer_pause_btn: "Pause",
+    timer_resume_btn: "Resume",
+    
+    end_summary_title: "End of the Game",
+    end_summary_desc: "Your relational tree has flowered! Here is the complicity analysis of your session.",
+    end_summary_score: "Complicity Score",
+    end_summary_badge: "Session Trophy",
+    end_summary_exit: "Close lobby",
   }
 };
 
@@ -157,7 +287,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 export function useTranslation() {
   const context = useContext(LanguageContext);
   if (!context) {
-    // Return a safe fallback context if hook is used outside the provider (e.g. in test environments)
     return {
       language: 'fr' as Language,
       setLanguage: () => {},

@@ -10,6 +10,7 @@ import { BackgroundOrbs } from '@/components/BackgroundOrbs';
 import { ApiClientError } from '@/lib/api/client';
 import { useHostSession } from '@/hooks/useHostSession';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
+import { useTranslation, Language } from '@/lib/i18n';
 
 type Step = 'setup' | 'mode' | 'game';
 
@@ -17,6 +18,7 @@ export default function RoomPage() {
   const params = useParams();
   const router = useRouter();
   const roomCode = (params.code as string).toUpperCase();
+  const { t, language, setLanguage } = useTranslation();
 
   const [step, setStep] = useState<Step>('setup');
   const [players, setPlayers] = useState<Player[]>([]);
@@ -30,16 +32,35 @@ export default function RoomPage() {
   const { hostId: storedHostId, hostToken: storedHostToken } = useHostSession(roomCode);
 
   useEffect(() => {
+    if (!roomCode) return;
+    
+    // Fetch room language to sync translation client-side
+    fetch(`/api/room/info?roomCode=${roomCode}`)
+      .then(res => {
+        if (res.ok) return res.json();
+        throw new Error('Failed to load room language');
+      })
+      .then(data => {
+        if (data.language === 'en' || data.language === 'fr') {
+          setLanguage(data.language as Language);
+        }
+      })
+      .catch((err) => {
+        console.error('Error fetching room language:', err);
+      });
+  }, [roomCode, setLanguage]);
+
+  useEffect(() => {
     requestAnimationFrame(() => {
       if (!storedHostId || !storedHostToken) {
-        setError(new ApiClientError('Session administrateur manquante. Veuillez créer la partie depuis l\'accueil.', 401).message);
+        setError(t('room_err_auth'));
       } else {
         setHostId(storedHostId);
         setHostToken(storedHostToken);
       }
       setLoading(false);
     });
-  }, [storedHostId, storedHostToken]);
+  }, [storedHostId, storedHostToken, t]);
 
   const [showPresentielOnboarding, setShowPresentielOnboarding] = useState(() => {
     if (typeof window === 'undefined') return false;
@@ -77,7 +98,7 @@ export default function RoomPage() {
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-950 text-white relative">
         <BackgroundOrbs />
         <div className="w-12 h-12 border-4 border-white/10 border-t-amber-500 rounded-full animate-spin mb-4" />
-        <p className="text-slate-400 font-medium z-10">Initialisation de la table...</p>
+        <p className="text-slate-400 font-medium z-10">{t('room_loading')}</p>
       </div>
     );
   }
@@ -97,13 +118,13 @@ export default function RoomPage() {
         <BackgroundOrbs />
         <div className="glass-panel p-8 max-w-md w-full flex flex-col items-center gap-6 z-10">
           <span className="text-5xl">🔒</span>
-          <h2 className="text-2xl font-bold text-slate-200">Accès Refusé</h2>
+          <h2 className="text-2xl font-bold text-slate-200">{t('room_err_title')}</h2>
           <p className="text-slate-400 text-sm leading-relaxed">{error}</p>
           <button
-            onClick={() => router.push('/')}
+            onClick={() => router.push(language === 'fr' ? '/fr' : '/')}
             className="w-full py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl transition-all cursor-pointer border border-slate-700"
           >
-            Retour à l&apos;accueil
+            {t('room_err_btn')}
           </button>
         </div>
       </div>

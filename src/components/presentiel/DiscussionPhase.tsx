@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
+
 interface DiscussionPhaseProps {
   onResume: () => void;
   topic?: string;
@@ -8,6 +10,8 @@ interface DiscussionPhaseProps {
 }
 
 export function DiscussionPhase({ onResume, topic, scores, players }: DiscussionPhaseProps) {
+  const { t, language } = useTranslation();
+
   return (
     <div className="flex flex-col items-center justify-between gap-8 p-8 max-w-md mx-auto min-h-[480px] text-slate-100 bg-slate-900/60 backdrop-blur-md rounded-3xl border border-slate-700/50 shadow-2xl text-center">
       <div className="flex flex-col items-center gap-6 mt-6 w-full">
@@ -17,16 +21,20 @@ export function DiscussionPhase({ onResume, topic, scores, players }: Discussion
 
         <div className="flex flex-col gap-2">
           <h2 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-emerald-300 to-green-400 bg-clip-text text-transparent">
-            Moment d&apos;intégration
+            {language === 'fr' ? "Moment d'intégration" : "Discussion Time"}
           </h2>
           <p className="text-sm text-slate-400">
-            Prenez le temps d&apos;échanger librement sur ce qui vient d&apos;être partagé.
+            {language === 'fr' 
+              ? "Prenez le temps d'échanger librement sur ce qui vient d'être partagé." 
+              : "Take time to discuss freely what has just been shared."}
           </p>
         </div>
 
         {topic && (
           <div className="bg-slate-800/40 border border-slate-700/30 px-5 py-4 rounded-2xl w-full">
-            <span className="text-xs text-slate-500 block mb-1">Fil conducteur</span>
+            <span className="text-xs text-slate-500 block mb-1">
+              {language === 'fr' ? "Fil conducteur" : "Discussion Topic"}
+            </span>
             <p className="text-sm font-medium text-slate-300">
               {topic}
             </p>
@@ -60,9 +68,9 @@ export function DiscussionPhase({ onResume, topic, scores, players }: Discussion
         
         <button
           onClick={onResume}
-          className="w-full py-4 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-slate-950 font-bold text-lg rounded-2xl transition-all cursor-pointer shadow-lg shadow-emerald-500/10 flex items-center justify-center gap-2"
+          className="w-full py-4 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-slate-950 font-bold text-lg rounded-2xl transition-all cursor-pointer shadow-lg shadow-emerald-500/10 flex items-center justify-center gap-2 border-none"
         >
-          Reprendre le jeu
+          {language === 'fr' ? "Reprendre le jeu" : "Resume game"}
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
@@ -71,4 +79,3 @@ export function DiscussionPhase({ onResume, topic, scores, players }: Discussion
     </div>
   );
 }
-

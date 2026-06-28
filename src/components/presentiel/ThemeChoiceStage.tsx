@@ -3,6 +3,7 @@
 import { getQuestionTheme } from '@/lib/presentiel/theme';
 import type { ThemedQuestion } from '@/lib/presentiel/theme';
 import type { Player } from './TalkingStick';
+import { useTranslation } from '@/lib/i18n';
 
 interface ThemeChoiceStageProps {
   currentPlayer: Player;
@@ -19,6 +20,7 @@ export function ThemeChoiceStage({
   onKeepCurrentQuestion,
   onSelectQuestion,
 }: ThemeChoiceStageProps) {
+  const { t, language } = useTranslation();
   const indexA = currentQuestionIndex ?? 0;
   const indexB = indexA + 1;
   const hasChoices = questions && questions.length > indexB;
@@ -26,21 +28,25 @@ export function ThemeChoiceStage({
   const qA = hasChoices ? questions[indexA] : null;
   const qB = hasChoices ? questions[indexB] : null;
 
-  const themeA = qA ? getQuestionTheme(qA) : '🎲 Thème A';
-  const rawThemeB = qB ? getQuestionTheme(qB) : '🎲 Thème B';
-  const themeB = rawThemeB === themeA ? `${rawThemeB} (Alternative)` : rawThemeB;
+  const themeA = qA ? getQuestionTheme(qA) : (language === 'fr' ? '🎲 Thème A' : '🎲 Theme A');
+  const rawThemeB = qB ? getQuestionTheme(qB) : (language === 'fr' ? '🎲 Thème B' : '🎲 Theme B');
+  const themeB = rawThemeB === themeA ? `${rawThemeB} (${language === 'fr' ? 'Alternative' : 'Alternative'})` : rawThemeB;
 
   return (
     <div className="flex flex-col items-center justify-between gap-6 p-6 bg-slate-900/40 border border-slate-800/80 rounded-3xl backdrop-blur-md max-w-md mx-auto shadow-xl w-full text-center animate-[fadeIn_0.25s_ease-out]">
       <div className="flex flex-col gap-2 mt-2">
         <span className="text-[10px] text-amber-500 font-bold uppercase tracking-widest font-mono">
-          👑 Choix de Thématique
+          {language === 'fr' ? '👑 Choix de Thématique' : '👑 Theme Selection'}
         </span>
         <h3 className="text-xl font-black text-white tracking-tight uppercase">
-          {currentPlayer.name}, choisis le thème
+          {language === 'fr' 
+            ? `${currentPlayer.name}, choisis le thème` 
+            : `${currentPlayer.name}, choose the theme`}
         </h3>
         <p className="text-slate-400 text-xs leading-relaxed px-2 mt-1">
-          Sélectionne l&apos;ambiance de la question qui sera posée à toute la table.
+          {language === 'fr' 
+            ? "Sélectionne l'ambiance de la question qui sera posée à toute la table." 
+            : "Select the vibe of the question that will be asked to the whole table."}
         </p>
       </div>
 
@@ -74,7 +80,9 @@ export function ThemeChoiceStage({
       </div>
 
       <div className="text-[10px] text-slate-500 italic">
-        Le thème choisi s&apos;appliquera à tous les joueurs de ce tour.
+        {language === 'fr' 
+          ? "Le thème choisi s'appliquera à tous les joueurs de ce tour." 
+          : "The chosen theme will apply to all players this turn."}
       </div>
     </div>
   );

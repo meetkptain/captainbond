@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from '@/lib/i18n';
 
 interface HourglassTimerProps {
   duration: number; // in seconds
@@ -52,6 +53,7 @@ export function HourglassTimer({
   const [isPaused, setIsPaused] = useState(false);
   const [transitionCountdown, setTransitionCountdown] = useState(5);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const { t, language } = useTranslation();
   
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const transitionIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -209,7 +211,7 @@ export function HourglassTimer({
       {/* Transition Toast */}
       {isTransitioning && (
         <div className="text-center bg-amber-500/10 border border-amber-500/20 text-amber-400 px-4 py-2 rounded-xl text-sm font-medium animate-pulse">
-          Joueur suivant dans <span className="font-bold">{transitionCountdown}</span>s...
+          {language === 'fr' ? 'Joueur suivant dans' : 'Next player in'} <span className="font-bold">{transitionCountdown}</span>s...
         </div>
       )}
 
@@ -225,14 +227,14 @@ export function HourglassTimer({
                 <svg className="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                 </svg>
-                Reprendre
+                {t('timer_resume_btn')}
               </>
             ) : (
               <>
                 <svg className="w-5 h-5 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
-                Pause
+                {t('timer_pause_btn')}
               </>
             )}
           </button>
@@ -240,9 +242,9 @@ export function HourglassTimer({
 
         <button
           onClick={skipTimer}
-          className="flex-1 py-3 bg-amber-500 hover:bg-amber-600 active:bg-amber-650 text-slate-950 font-bold rounded-xl transition-all cursor-pointer shadow-lg shadow-amber-500/10 flex items-center justify-center gap-1"
+          className="flex-1 py-3 bg-amber-500 hover:bg-amber-600 active:bg-amber-650 text-slate-950 font-bold rounded-xl transition-all cursor-pointer shadow-lg shadow-amber-500/10 flex items-center justify-center gap-1 border-none"
         >
-          {isTransitioning ? 'Suivant' : 'Passer'}
+          {isTransitioning ? t('onboarding_next') : (language === 'fr' ? 'Passer' : 'Skip')}
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5l7 7m0 0l-7 7m7-7H3" />
           </svg>

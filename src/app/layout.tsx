@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Inter } from "next/font/google";
+import { LanguageProvider } from '@/lib/i18n';
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -45,7 +46,11 @@ export default function RootLayout({
       lang="fr"
       className={`${outfit.variable} ${inter.variable} h-full antialiased font-sans`}
     >
-      <body className="min-h-full flex flex-col bg-slate-950 text-slate-200 selection:bg-neon-purple/30">{children}</body>
+      <body className="min-h-full flex flex-col bg-slate-950 text-slate-200 selection:bg-neon-purple/30">
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
+      </body>
     </html>
   );
 }

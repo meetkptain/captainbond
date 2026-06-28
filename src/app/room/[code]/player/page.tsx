@@ -23,12 +23,14 @@ import { capture, AnalyticsEvents } from '@/lib/analytics';
 import { useHostSession } from '@/hooks/useHostSession';
 import { useCheckoutFeedback, type CheckoutProduct } from '@/hooks/useCheckoutFeedback';
 import { triggerHaptic, triggerHapticDouble } from '@/lib/native/bridge';
+import { useTranslation, Language } from '@/lib/i18n';
 
 export default function PlayerController() {
   const params = useParams();
   const router = useRouter();
   const roomCode = (params.code as string).toUpperCase();
   const { hostId: storedHostId, hostToken: storedHostToken } = useHostSession(roomCode);
+  const { language, setLanguage } = useTranslation();
 
   const [roomId, setRoomId] = useState<string | null>(null);
   const [playerId, setPlayerId] = useState<string | null>(null);
@@ -120,6 +122,9 @@ export default function PlayerController() {
         }
 
         const room = data.room;
+        if (room.language === 'en' || room.language === 'fr') {
+          setLanguage(room.language as Language);
+        }
         const roomPlayers = (data.players || []) as Player[];
         const responses = data.responses || [];
         setPlayers(roomPlayers.filter((p) => !p.isHost));
@@ -414,19 +419,19 @@ export default function PlayerController() {
             onClick={() => setShowUnlockPanel(true)}
             className="text-xs font-mono text-neon-pink hover:text-white transition-colors underline decoration-neon-pink/30"
           >
-            {entitlements?.hasActivePass ? '✓ Pass actif' : '🔓 Débloquer'}
+            {entitlements?.hasActivePass ? (language === 'fr' ? '✓ Pass actif' : '✓ Active Pass') : (language === 'fr' ? '🔓 Débloquer' : '🔓 Unlock')}
           </button>
           {!authUser && (
             <button
               onClick={() => setShowAuthModal(true)}
               className="text-xs font-mono text-slate-400 hover:text-white transition-colors"
             >
-              Sauvegarder
+              {language === 'fr' ? 'Sauvegarder' : 'Save'}
             </button>
           )}
           {freeQuestions && freeQuestions.limit > 0 && !gameModesRegistry[activeMode]?.manifest.isPremium && (
             <span className="text-xs font-mono text-amber-400">
-              🎴 {freeQuestions.used}/{freeQuestions.limit} gratuit
+              🎴 {freeQuestions.used}/{freeQuestions.limit} {language === 'fr' ? 'gratuit' : 'free'}
             </span>
           )}
           {stats && stats.currentStreak > 0 && (
@@ -443,7 +448,7 @@ export default function PlayerController() {
               🏅 {stats.badges.length}
             </button>
           )}
-          <span className="text-sm text-slate-400">Joueur : <strong className="text-white">{playerName}</strong></span>
+          <span className="text-sm text-slate-400">{language === 'fr' ? 'Joueur :' : 'Player:'} <strong className="text-white">{playerName}</strong></span>
         </div>
       </div>
 
@@ -459,7 +464,7 @@ export default function PlayerController() {
         <div className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm p-4 flex items-center justify-center">
           <div className="w-full max-w-md bg-slate-950 border border-white/10 rounded-2xl p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-black text-white">Débloquer Captain Bond</h2>
+              <h2 className="text-xl font-black text-white">{language === 'fr' ? 'Débloquer Captain Bond' : 'Unlock Captain Bond'}</h2>
               <button onClick={() => setShowUnlockPanel(false)} className="text-slate-400 hover:text-white">✕</button>
             </div>
             {playerId && (
@@ -483,13 +488,13 @@ export default function PlayerController() {
           slides={[
             {
               icon: 'smartphone',
-              title: 'Votre téléphone est une manette',
-              description: 'Ne le regardez pas en permanence. La partie s\'affiche sur la TV.',
+              title: language === 'fr' ? 'Votre téléphone est une manette' : 'Your phone is a controller',
+              description: language === 'fr' ? "Ne le regardez pas en permanence. La partie s'affiche sur la TV." : 'Do not look at it constantly. The game is displayed on the TV.',
             },
             {
               icon: 'gamepad',
-              title: 'Répondez quand c\'est votre tour',
-              description: 'Suivez les instructions : votez, répondez ou écrivez. Le Captain guide chaque tour.',
+              title: language === 'fr' ? "Répondez quand c'est votre tour" : "Answer when it's your turn",
+              description: language === 'fr' ? 'Suivez les instructions : votez, répondez ou écrivez. Le Captain guide chaque tour.' : 'Follow the instructions: vote, answer, or write. The Captain guides each turn.',
             },
           ]}
         />
@@ -499,7 +504,7 @@ export default function PlayerController() {
         <div className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm p-4 flex items-center justify-center">
           <div className="w-full max-w-md bg-slate-950 border border-white/10 rounded-2xl p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-black text-white">Votre progression</h2>
+              <h2 className="text-xl font-black text-white">{language === 'fr' ? 'Votre progression' : 'Your progress'}</h2>
               <button onClick={() => setShowBadges(false)} className="text-slate-400 hover:text-white cursor-pointer">
                 <Icon name="x" className="w-5 h-5" />
               </button>
@@ -550,16 +555,16 @@ export default function PlayerController() {
             <div className="w-20 h-20 bg-neon-purple/20 text-neon-purple rounded-full flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
               <span className="text-4xl">🚀</span>
             </div>
-            <h2 className="text-2xl font-bold mb-2">Prêt pour votre profil ?</h2>
+            <h2 className="text-2xl font-bold mb-2">{language === 'fr' ? 'Prêt pour votre profil ?' : 'Ready for your profile?'}</h2>
             <p className="text-slate-400 mb-8 max-w-xs mx-auto">
               {targetType === 'SOLO'
-                ? 'Le test de personnalité Solo va commencer. Répondez honnêtement aux questions.'
-                : 'En attente du tirage de la première carte par l\'hôte.'}
+                ? (language === 'fr' ? 'Le test de personnalité Solo va commencer. Répondez honnêtement aux questions.' : 'The Solo personality test is starting. Answer the questions honestly.')
+                : (language === 'fr' ? "En attente du tirage de la première carte par l'hôte." : 'Waiting for the host to draw the first card.')}
             </p>
             
             {isHost && (
               <button onClick={handleStartRound} className="cb-btn-primary w-full py-4 text-lg">
-                Démarrer le Test
+                {language === 'fr' ? 'Démarrer le Test' : 'Start Test'}
               </button>
             )}
           </div>
@@ -572,18 +577,18 @@ export default function PlayerController() {
                 <div className="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mb-6 border border-green-500/30 shadow-[0_0_30px_rgba(34,197,94,0.2)] animate-pulse">
                   <span className="text-3xl">✓</span>
                 </div>
-                <h2 className="text-2xl font-black mb-2 text-green-400">RÉPONSE ENREGISTRÉE</h2>
+                <h2 className="text-2xl font-black mb-2 text-green-400">{language === 'fr' ? 'RÉPONSE ENREGISTRÉE' : 'ANSWER RECORDED'}</h2>
                 <p className="text-slate-400 mb-8 text-sm leading-relaxed">
-                  Votre décision a été prise en compte par le DJ Émotionnel.
+                  {language === 'fr' ? 'Votre décision a été prise en compte par le DJ Émotionnel.' : 'Your decision has been recorded by the Emotional DJ.'}
                 </p>
                 
                 <div className="flex flex-col gap-4 w-full">
                   <button onClick={handleStartRound} className="cb-btn-primary w-full py-4 text-lg">
-                    Question Suivante
+                    {language === 'fr' ? 'Question Suivante' : 'Next Question'}
                   </button>
                   
                   <button onClick={handleEndGame} className="w-full bg-red-900/30 text-red-400 border border-red-500/20 font-bold py-4 rounded-xl hover:bg-red-900/50 transition-all text-lg mt-2">
-                    Terminer & Révéler mon Profil
+                    {language === 'fr' ? 'Terminer & Révéler mon Profil' : 'Finish & Reveal my Profile'}
                   </button>
                 </div>
               </div>
@@ -593,7 +598,9 @@ export default function PlayerController() {
                   <div className="bg-amber-500/10 border border-amber-500/25 text-amber-400 rounded-xl p-3 mb-4 text-xs font-mono leading-relaxed text-left flex items-start gap-2">
                     <span>🎴</span>
                     <span>
-                      <strong>Encore 1 carte gratuite.</strong> Débloquez tous les modes et dossiers premium !
+                      {language === 'fr'
+                        ? <strong>Encore 1 carte gratuite. Débloquez tous les modes et dossiers premium !</strong>
+                        : <strong>1 free card left. Unlock all premium modes and files!</strong>}
                     </span>
                   </div>
                 )}
@@ -604,9 +611,9 @@ export default function PlayerController() {
                 <div className="flex-1 flex justify-center">
                   {isHost && targetType !== 'SOLO' ? (
                     <div className="flex flex-col items-center justify-center h-full opacity-50 text-center">
-                       <p className="text-slate-400 mb-8">Vous êtes l&apos;Hôte. Les joueurs votent.</p>
+                       <p className="text-slate-400 mb-8">{language === 'fr' ? "Vous êtes l'Hôte. Les joueurs votent." : "You are the Host. Players are voting."}</p>
                        <button onClick={handleReveal} className="cb-btn-secondary w-full py-4 text-lg">
-                          Forcer Révéler
+                          {language === 'fr' ? 'Forcer Révéler' : 'Force Reveal'}
                        </button>
                     </div>
                   ) : (
@@ -636,17 +643,17 @@ export default function PlayerController() {
               <span className="text-4xl">{status === 'DISCUSSION' ? '💬' : '👀'}</span>
             </div>
             <h2 className="text-3xl font-black mb-4 tracking-tight">
-              {status === 'DISCUSSION' ? "C'est le moment d'en parler" : 'Levez les yeux !'}
+              {status === 'DISCUSSION' ? (language === 'fr' ? "C'est le moment d'en parler" : "Time to talk about it") : (language === 'fr' ? 'Levez les yeux !' : 'Look up!')}
             </h2>
             <p className="text-slate-300 text-lg">
               {status === 'DISCUSSION'
-                ? 'Regardez la TV et laissez la conversation vivre.'
-                : 'Les résultats sont affichés sur la TV.'}
+                ? (language === 'fr' ? 'Regardez la TV et laissez la conversation vivre.' : 'Look at the TV and let the conversation live.')
+                : (language === 'fr' ? 'Les résultats sont affichés sur la TV.' : 'The results are displayed on the TV.')}
             </p>
             
             {isHost && (
               <button onClick={handleStartRound} className="cb-btn-primary w-full py-4 text-lg mt-12">
-                {status === 'DISCUSSION' ? 'Passer à la carte suivante' : 'Manche Suivante'}
+                {status === 'DISCUSSION' ? (language === 'fr' ? 'Passer à la carte suivante' : 'Pass to next card') : (language === 'fr' ? 'Manche Suivante' : 'Next Round')}
               </button>
             )}
           </div>
