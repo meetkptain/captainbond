@@ -129,6 +129,7 @@ export interface Couple {
   id: string;
   user1Id: string;
   user2Id: string;
+  timezone?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -200,6 +201,11 @@ export interface DailyQuestion {
   resonanceScore?: number | null;
   analysisJson?: Record<string, unknown> | null;
   analysisStatus: 'PENDING' | 'COMPUTED' | 'REVEALED' | 'EXPIRED';
+  protocolOpened?: boolean;
+  user1Mood?: Record<string, unknown> | null;
+  user2Mood?: Record<string, unknown> | null;
+  isSkipped: boolean;
+  isSafeZoneActive: boolean;
 }
 
 export interface CouplePortrait {
@@ -211,4 +217,58 @@ export interface CouplePortrait {
   coupleDynamic?: Record<string, unknown> | null;
   alignmentTrend: number;
   createdAt?: string;
+}
+
+// --- Totem (Jumeau IA visuel du couple) ---
+
+export interface OrbeState {
+  hue: number;           // HSL hue (0-360)
+  saturation: number;    // HSL saturation (0-100)
+  lightness: number;     // HSL lightness (0-100)
+  energy: number;        // 0.0 – 1.0 (calme → agité)
+  attachmentStyle: 'secure' | 'anxious' | 'avoidant' | 'disorganized';
+  particleDensity: number; // 0.0 – 1.0
+  pulseRate: number;     // battements/sec
+}
+
+export interface FusionState {
+  harmonyRate: number;     // 0.0 – 1.0
+  tensionLevel: number;    // 0.0 – 1.0
+  fusionTexture: 'silk' | 'mercury' | 'crystal' | 'obsidian' | 'gold' | 'quartz';
+  faultLineVisible: boolean;
+  syncScore: number;       // 0.0 – 1.0
+  evolutionStage: number;  // 1 – 10
+}
+
+export interface TotemState {
+  id: string;
+  coupleId: string;
+  stateA: OrbeState;
+  stateB: OrbeState;
+  fusionState: FusionState;
+  lastRitualAt?: string | null;
+  streakDays: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface TimeCapsule {
+  id: string;
+  coupleId: string;
+  senderId: string;
+  content: string;
+  createdAt?: string;
+  unlocksAt: string;
+  isUnlocked: boolean;
+}
+
+export interface MonthlyReport {
+  coupleId: string;
+  month: string;
+  totalQuestionsRevealed: number;
+  avgResonanceScore: number;
+  peakResonanceDay?: string | null;
+  moodProfile: { avgEnergy: number; avgStress: number };
+  highlights: Array<{ questionText: string; resonanceScore: number; releasedAt: string }>;
+  alignmentTrend: number;
 }

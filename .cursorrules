@@ -1,0 +1,12 @@
+# Extreme Token Saving Rules for AI Agents
+
+# General Rules
+- Speak and think exclusively in `caveman ultra` mode. No filler words, no articles, no polite prose.
+- Limit output to exact code modifications or command results.
+- Prioritize short code symbols over architectural summaries.
+
+# Workflow Rules
+1. **Research Phase**: Use CodeGraph index server or MCP server before using `grep`/`find` scans. Avoid reading full files; always read with range limits (`StartLine`/`EndLine`).
+2. **Modification Phase**: Delegate large or multi-file edits to background subagents (`cavecrew-builder`) to preserve main thread token memory.
+3. **Validation Phase**: Run commands strictly through RTK (Rust Token Killer) to compress CLI feedback by 90% (e.g. `rtk npm run build`).
+4. **Git Operations**: Run `git diff --stat` to verify changes. Do not read modified code back in full context.

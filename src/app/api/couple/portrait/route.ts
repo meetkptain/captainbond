@@ -8,6 +8,8 @@ import { dbRetry } from '@/lib/db/withRetry';
 
 import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
 import { Couple, DailyQuestion, CouplePortrait } from '@/lib/db/types';
+import { getUserEntitlements } from '@/lib/monetization/entitlements';
+import { getTotem } from '@/services/totemService';
 
 export const runtime = 'edge';
 
@@ -15,6 +17,7 @@ const querySchema = z.object({
   coupleId: z.string().optional(),
   userId: z.string().optional(),
   list: z.string().optional(),
+  timezone: z.string().optional(),
 });
 
 export const GET = withApiHandler({
@@ -22,7 +25,7 @@ export const GET = withApiHandler({
   async handler({ req, query }) {
     const logger = createLogger({ route: '/api/couple/portrait' });
     const authUser = await getAuthenticatedCoupleUser(req);
-    const { coupleId, list } = query;
+    const { coupleId, list, timezone } = query;
 
     if (list === 'true') {
       const { data: couples, error: coupleError } = await dbRetry<Couple[]>(async () =>
@@ -75,17 +78,32 @@ export const GET = withApiHandler({
 
     const questions = dailyQuestions ?? [];
 
-    // 3. Check if any questions are ready to reveal (COMPUTED + current hour >= 20)
+    // 3. Check if any questions are ready to reveal (COMPUTED + local phone hour >= 20)
     const now = new Date();
-    const currentHour = now.getUTCHours();
-    // Adjust for Paris timezone (UTC+1 in winter, UTC+2 in summer)
-    // Use a conservative approach: check if local hour could be >= 20
-    const parisOffset = getParisUtcOffset(now);
-    const parisHour = (currentHour + parisOffset) % 24;
+    let localHour = 20; // Default fallback to bypass block if check fails
+
+    try {
+      // Déterminer l'heure dans le fuseau du téléphone de l'utilisateur (ex: Europe/Paris, America/New_York)
+      const targetTimezone = couple.timezone || (timezone && Intl.supportedValuesOf('timeZone').includes(timezone)
+        ? timezone
+        : 'Europe/Paris'); // Fallback robuste par défaut
+
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: targetTimezone,
+        hour: 'numeric',
+        hour12: false,
+      });
+      localHour = parseInt(formatter.format(now), 10);
+    } catch (e) {
+      // Si l'API Intl échoue ou fuseau invalide, utiliser le décalage de Paris calculé
+      const currentHour = now.getUTCHours();
+      const parisOffset = getParisUtcOffset(now);
+      localHour = (currentHour + parisOffset) % 24;
+    }
 
     const questionsToReveal = questions.filter(
       (q: { analysisStatus: string; isRevealed: boolean }) =>
-        q.analysisStatus === 'COMPUTED' && !q.isRevealed && parisHour >= 20
+        q.analysisStatus === 'COMPUTED' && !q.isRevealed && localHour >= 20
     );
 
     if (questionsToReveal.length > 0) {
@@ -130,11 +148,23 @@ export const GET = withApiHandler({
       logger.warn('Échec du chargement des portraits', {coupleId}, portraitError);
     }
 
+    const entitlements = await getUserEntitlements(authUser.id);
+
+    // Fetch TotemState (will check sleeping decay dynamically)
+    let totemState = null;
+    try {
+      totemState = await getTotem(coupleId);
+    } catch (e) {
+      logger.warn('Failed to load TotemState', { coupleId }, e);
+    }
+
     // 5. Return aggregated data
     return NextResponse.json({
       couple,
       dailyQuestions: questions,
       portraits: portraits ?? [],
+      entitlements,
+      totemState,
     });
   },
 });

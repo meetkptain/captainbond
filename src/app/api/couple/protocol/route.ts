@@ -9,6 +9,7 @@ import { createLogger } from '@/lib/logger';
 import { dbRetry } from '@/lib/db/withRetry';
 import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
 import { Couple, DailyQuestion } from '@/lib/db/types';
+import { getUserEntitlements } from '@/lib/monetization/entitlements';
 
 export const runtime = 'edge';
 
@@ -74,6 +75,47 @@ export const POST = withApiHandler({
     const analysisJson = dailyQuestion.analysisJson as Record<string, unknown> | null;
     if (!analysisJson) {
       throw new AppError('NOT_FOUND', "Aucune analyse disponible pour cette question.");
+    }
+
+    // Check entitlements and limit free tier to 1 protocol/week
+    if (normalizedStep === 'QUESTIONNER' || normalizedStep === 'AGIR') {
+      const entitlements = await getUserEntitlements(authUser.id);
+      const hasPremium = !!(entitlements?.hasActiveSubscription || entitlements?.hasActivePass || entitlements?.accessibleFeatures?.includes('profiles'));
+
+      if (!hasPremium) {
+        const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+        const { data: unlockedQuestions, error: checkError } = await dbRetry<DailyQuestion[]>(async () =>
+          supabaseAdmin
+            .from('DailyQuestion')
+            .select('id')
+            .eq('coupleId', coupleId)
+            .eq('protocolOpened', true)
+            .neq('id', dailyQuestionId)
+            .gt('releasedAt', sevenDaysAgo)
+        );
+
+        if (checkError) {
+          logger.error('Failed to check protocol opened questions', { coupleId }, checkError);
+          throw new AppError('INTERNAL_ERROR', 'Impossible de valider vos accès.');
+        }
+
+        if (unlockedQuestions && unlockedQuestions.length >= 1) {
+          throw new AppError('PAYMENT_FAILED', 'Vous avez atteint la limite de 1 protocole gratuit par semaine. Abonnez-vous pour un accès illimité.');
+        }
+
+        // Mark as opened if not already
+        if (!dailyQuestion.protocolOpened) {
+          const { error: updateError } = await dbRetry(async () =>
+            supabaseAdmin
+              .from('DailyQuestion')
+              .update({ protocolOpened: true })
+              .eq('id', dailyQuestionId)
+          );
+          if (updateError) {
+            logger.warn('Failed to mark protocolOpened', { dailyQuestionId }, updateError);
+          }
+        }
+      }
     }
 
     // 2. Handle each step

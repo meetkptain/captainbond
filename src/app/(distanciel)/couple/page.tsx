@@ -8,6 +8,11 @@ import { ProtocolWizard } from '@/components/couple/ProtocolWizard';
 import { SyncDropCountdown } from '@/components/couple/SyncDropCountdown';
 import { CouchMode } from '@/components/couple/CouchMode';
 import { CoupleLanding } from '@/components/couple/CoupleLanding';
+import { TotemView } from '@/components/couple/TotemView';
+import { MiniTotemOrbe } from '@/components/couple/MiniTotemOrbe';
+import { TimeCapsulePanel } from '@/components/couple/TimeCapsulePanel';
+import { MonthlyReportCard } from '@/components/couple/MonthlyReportCard';
+import { DetoxChallenge } from '@/components/couple/DetoxChallenge';
 import { Icon } from '@/components/Icon';
 import { api, ApiClientError } from '@/lib/api/client';
 import { getCurrentUser } from '@/lib/supabase-auth';
@@ -58,6 +63,7 @@ interface PortraitResponse {
   couple: CoupleData;
   dailyQuestions: DailyQuestionData[];
   portraits: CouplePortraitData[];
+  totemState?: any;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -116,6 +122,11 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
   const [error, setError] = useState<string | null>(null);
   const [isCouchMode, setIsCouchMode] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [totemState, setTotemState] = useState<any | null>(null);
+  const [moodEnergy, setMoodEnergy] = useState(3);
+  const [moodStress, setMoodStress] = useState(1);
+  const [moodFeeling, setMoodFeeling] = useState('');
+  const [submittingMood, setSubmittingMood] = useState(false);
 
   // Derived
   const todayQuestion = useMemo(() => dailyQuestions[0] ?? null, [dailyQuestions]);
@@ -147,17 +158,26 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
 
   const bothAnswered = hasMyAnswer && hasPartnerAnswer;
 
+  const hasMyMood = useMemo(() => {
+    if (!todayQuestion) return false;
+    return isUser1 ? !!(todayQuestion as any).user1Mood : !!(todayQuestion as any).user2Mood;
+  }, [todayQuestion, isUser1]);
+
   const streak = useMemo(() => calculateStreak(dailyQuestions), [dailyQuestions]);
 
   // ─── Data Fetching ────────────────────────────────────────────────────────
   const fetchData = useCallback(async (coupleId: string) => {
     try {
+      const tz = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : '';
       const data = await api.get<PortraitResponse>(
-        `/api/couple/portrait?coupleId=${coupleId}`
+        `/api/couple/portrait?coupleId=${coupleId}&timezone=${encodeURIComponent(tz)}`
       );
       setCouple(data.couple);
       setDailyQuestions(data.dailyQuestions);
       setPortraits(data.portraits);
+      if (data.totemState) {
+        setTotemState(data.totemState);
+      }
 
       // Check if today's question just got revealed
       const today = data.dailyQuestions[0];
@@ -194,6 +214,21 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
           if (couples.length > 0) {
             await fetchData(couples[0].id);
           } else {
+            // Check if we have an invite parameter to auto-couple
+            const params = new URLSearchParams(window.location.search);
+            const inviteId = params.get('invite');
+            if (inviteId && inviteId !== user.id) {
+              try {
+                const joinRes = await api.post<{ success: boolean; couple: CoupleData }>('/api/couple/join', { partnerId: inviteId });
+                if (joinRes.success && joinRes.couple) {
+                  window.history.replaceState({}, document.title, window.location.pathname);
+                  await fetchData(joinRes.couple.id);
+                  return;
+                }
+              } catch (joinErr) {
+                console.error('Failed to auto-couple', joinErr);
+              }
+            }
             setError('Aucun espace couple trouvé. Invitez votre partenaire pour commencer.');
           }
         }
@@ -220,6 +255,12 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
         userId,
         answer: answer.trim(),
       });
+      
+      // Vibration haptique brève de confirmation (Pro-Max check)
+      if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        navigator.vibrate(50);
+      }
+
       setSubmitted(true);
       setAnswer('');
       // Refresh data
@@ -271,6 +312,85 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
     }
   };
 
+  const handlePassQuestion = async () => {
+    if (!todayQuestion || !couple || submitting) return;
+    if (confirm("Passer cette question ? Un nouveau sujet sera tiré pour vous deux.")) {
+      setSubmitting(true);
+      try {
+        await api.post('/api/couple/pass', {
+          coupleId: couple.id,
+          dailyQuestionId: todayQuestion.id
+        });
+        setAnswer('');
+        await fetchData(couple.id);
+      } catch (err) {
+        console.error('Failed to pass question', err);
+        alert('Impossible de passer la question.');
+      } finally {
+        setSubmitting(false);
+      }
+    }
+  };
+
+  const handleSubmitMood = async () => {
+    if (!todayQuestion || !couple || submittingMood) return;
+    setSubmittingMood(true);
+    try {
+      await api.post('/api/couple/mood', {
+        coupleId: couple.id,
+        dailyQuestionId: todayQuestion.id,
+        mood: {
+          energy: moodEnergy,
+          stress: moodStress,
+          feeling: moodFeeling.trim() || undefined
+        }
+      });
+      await fetchData(couple.id);
+    } catch (err) {
+      console.error('Failed to submit mood', err);
+      alert('Impossible d\'enregistrer votre météo émotionnelle.');
+    } finally {
+      setSubmittingMood(false);
+    }
+  };
+
+  const handleSkipQuestion = async () => {
+    if (!todayQuestion || !couple || submitting) return;
+    if (confirm("Passer définitivement cette question ? Elle sera marquée comme passée sans affecter votre totem.")) {
+      setSubmitting(true);
+      try {
+        await api.post('/api/couple/skip', {
+          coupleId: couple.id,
+          dailyQuestionId: todayQuestion.id
+        });
+        setAnswer('');
+        await fetchData(couple.id);
+      } catch (err) {
+        console.error('Failed to skip question', err);
+        alert('Impossible de passer la question.');
+      } finally {
+        setSubmitting(false);
+      }
+    }
+  };
+
+  const handleToggleSafeZone = async (activate: boolean) => {
+    if (!todayQuestion || !couple || submitting) return;
+    setSubmitting(true);
+    try {
+      await api.post('/api/couple/safezone', {
+        coupleId: couple.id,
+        dailyQuestionId: todayQuestion.id,
+        action: activate ? 'ACTIVATE' : 'DEACTIVATE'
+      });
+      await fetchData(couple.id);
+    } catch (err) {
+      console.error('Failed to toggle safe zone', err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   // ─── Reveal Handler ──────────────────────────────────────────────────────
   const handleRevealTime = useCallback(() => {
     if (couple) {
@@ -301,6 +421,62 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
         <CoupleLanding defaultLang={defaultLang} onStartAuth={() => setShowAuthModal(true)} />
         <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
       </>
+    );
+  }
+
+  // ─── Render: Onboarding Invite ───────────────────────────────────────────
+  if (error && error.includes('Aucun espace couple') && !couple) {
+    const inviteLink = typeof window !== 'undefined' ? `${window.location.origin}/couple?invite=${userId}` : '';
+    return (
+      <div className="couple-page">
+        <BackgroundOrbs />
+        <div className="couple-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '80vh' }}>
+          <div className="couple-card couple-empty" style={{ maxWidth: '440px', width: '100%', padding: '2rem' }}>
+            <span className="couple-empty-icon" style={{ background: 'rgba(168, 85, 247, 0.1)', borderColor: 'rgba(168, 85, 247, 0.2)' }}>
+              <Icon name="heart" className="w-8 h-8 text-purple-400" />
+            </span>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', marginTop: '1.25rem', marginBottom: '0.5rem' }}>Créez votre Espace Couple</h2>
+            <p className="couple-empty-text" style={{ fontSize: '0.875rem', color: '#94a3b8', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+              Envoyez ce lien magique à votre partenaire. Une fois qu&apos;il l&apos;aura ouvert, votre espace de connexion partagé sera créé.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', width: '100%' }}>
+              <div style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '0.75rem',
+                padding: '0.75rem 1rem',
+                fontSize: '0.75rem',
+                color: '#cbd5e1',
+                fontFamily: 'monospace',
+                overflowX: 'auto',
+                whiteSpace: 'nowrap',
+                textAlign: 'left'
+              }}>
+                {inviteLink}
+              </div>
+              <button
+                className="couple-action-btn"
+                onClick={() => {
+                  navigator.clipboard.writeText(inviteLink);
+                  if (typeof navigator !== 'undefined' && navigator.vibrate) {
+                    navigator.vibrate(50);
+                  }
+                  alert('Lien copié ! Envoyez-le à votre partenaire.');
+                }}
+              >
+                <svg className="w-4 h-4 mr-1 inline" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: '1rem', height: '1rem' }}><path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg> Copier le lien
+              </button>
+              <button
+                className="couple-action-btn"
+                style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', opacity: 0.8 }}
+                onClick={() => router.push('/')}
+              >
+                Retour à l&apos;accueil
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 
@@ -338,8 +514,8 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
             <span className="couple-brand-name">CAPTAIN BOND</span>
             <span className="couple-badge">Espace Couple</span>
           </div>
-          <button className="couple-back-link" onClick={() => router.push('/')}>
-            <Icon name="arrowLeft" className="w-3 h-3 inline mr-1" /> Retour
+          <button className="couple-back-link min-h-[44px] min-w-[44px] flex items-center justify-center px-3 py-1 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors duration-200" onClick={() => router.push('/')}>
+            <Icon name="arrowLeft" className="w-4 h-4 mr-1 text-slate-300" /> <span className="text-slate-300 text-sm font-medium">Retour</span>
           </button>
         </header>
 
@@ -377,9 +553,64 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
                     <p className="question-text">{questionText}</p>
                   </div>
 
-                  {/* Answer Phase: Not yet answered */}
-                  {!hasMyAnswer && !submitted && todayQuestion && (
+                  {/* Mood Phase: Pick daily weather first */}
+                  {!hasMyAnswer && !submitted && todayQuestion && !hasMyMood && (
+                    <div className="mood-area" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%', padding: '1rem 0' }}>
+                      <div style={{ background: 'rgba(147, 51, 234, 0.08)', border: '1px solid rgba(147, 51, 234, 0.2)', borderRadius: '0.75rem', padding: '0.75rem 1rem' }}>
+                        <p style={{ fontSize: '0.8125rem', color: '#c084fc', margin: 0, lineHeight: 1.5 }}>
+                          <strong>Météo Émotionnelle :</strong> Partagez brièvement votre état du jour. Si vous êtes stressé ou fatigué, le rituel s&apos;adaptera automatiquement avec des questions plus douces ou des gratitudes.
+                        </p>
+                      </div>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <label style={{ fontSize: '0.8125rem', color: '#cbd5e1', fontWeight: 600 }}>Niveau d&apos;énergie : {moodEnergy} / 5</label>
+                        <input type="range" min="1" max="5" value={moodEnergy} onChange={(e) => setMoodEnergy(Number(e.target.value))} style={{ width: '100%', accentColor: '#a855f7' }} />
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.6875rem', color: '#64748b' }}>
+                          <span>Épuisé(e)</span>
+                          <span>Plein d&apos;énergie</span>
+                        </div>
+                      </div>
+                      
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <label style={{ fontSize: '0.8125rem', color: '#cbd5e1', fontWeight: 600 }}>Niveau de stress : {moodStress} / 5</label>
+                        <input type="range" min="1" max="5" value={moodStress} onChange={(e) => setMoodStress(Number(e.target.value))} style={{ width: '100%', accentColor: '#a855f7' }} />
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.6875rem', color: '#64748b' }}>
+                          <span>Zen</span>
+                          <span>Très stressé(e)</span>
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <label style={{ fontSize: '0.8125rem', color: '#cbd5e1', fontWeight: 600 }}>Comment te sens-tu aujourd&apos;hui ? (optionnel)</label>
+                        <input type="text" className="answer-textarea" style={{ minHeight: '44px', padding: '0.5rem 1rem', borderRadius: '0.5rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)' }} value={moodFeeling} onChange={(e) => setMoodFeeling(e.target.value)} placeholder="ex: fatigué(e), joyeux(se), distrait(e)..." />
+                      </div>
+
+                      <button className="answer-submit" onClick={handleSubmitMood} disabled={submittingMood}>
+                        {submittingMood ? <span className="couple-spinner" /> : "Enregistrer ma météo"}
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Answer Phase: Answer question if mood submitted */}
+                  {!hasMyAnswer && !submitted && todayQuestion && hasMyMood && (
                     <div className="answer-area">
+                      {/* Safe Zone Alert if active */}
+                      {!!(todayQuestion as any).isSafeZoneActive && (
+                        <div style={{
+                          background: 'rgba(239, 68, 68, 0.08)',
+                          border: '1px solid rgba(239, 68, 68, 0.25)',
+                          borderRadius: '0.75rem',
+                          padding: '1rem',
+                          marginBottom: '1.25rem',
+                          fontSize: '0.8125rem',
+                          color: '#f87171',
+                          lineHeight: 1.5
+                        }}>
+                          <Icon name="heartCrack" className="w-5 h-5 inline mr-2 text-red-400 align-middle" />
+                          <strong style={{ color: '#ef4444' }}>Mode Safe Zone Activé :</strong> Communiquez avec bienveillance. Si la tension monte, n&apos;hésitez pas à passer la question sans pénalité.
+                        </div>
+                      )}
+
                       <textarea
                         className="answer-textarea"
                         value={answer}
@@ -413,10 +644,11 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
                           style={{
                             background: 'transparent',
                             border: '1px dashed rgba(255,255,255,0.2)',
-                            color: '#94a3b8',
-                            fontSize: '0.75rem',
+                            color: '#cbd5e1',
+                            fontSize: '0.8125rem',
                             fontWeight: 600,
-                            padding: '0.75rem',
+                            minHeight: '44px',
+                            padding: '0.75rem 1rem',
                             borderRadius: '0.75rem',
                             cursor: 'pointer',
                           }}
@@ -424,6 +656,46 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
                           <Icon name="smartphone" className="w-4 h-4 inline mr-1" />
                           Jouer ensemble sur cet écran (Couch Mode)
                         </button>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', width: '100%' }}>
+                          <button
+                            type="button"
+                            onClick={() => handleToggleSafeZone(!(todayQuestion as any).isSafeZoneActive)}
+                            style={{
+                              background: 'transparent',
+                              border: (todayQuestion as any).isSafeZoneActive ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(251, 191, 36, 0.25)',
+                              color: (todayQuestion as any).isSafeZoneActive ? '#ef4444' : '#fbbf24',
+                              fontSize: '0.75rem',
+                              fontWeight: 600,
+                              minHeight: '44px',
+                              padding: '0.5rem',
+                              borderRadius: '0.75rem',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            <Icon name="alert" className="w-3.5 h-3.5 inline mr-1 align-middle" />
+                            {(todayQuestion as any).isSafeZoneActive ? "Couper Safe Zone" : "Safe Zone (Pause)"}
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={handleSkipQuestion}
+                            style={{
+                              background: 'transparent',
+                              border: '1px solid rgba(255, 255, 255, 0.1)',
+                              color: '#94a3b8',
+                              fontSize: '0.75rem',
+                              fontWeight: 600,
+                              minHeight: '44px',
+                              padding: '0.5rem',
+                              borderRadius: '0.75rem',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            <Icon name="heartCrack" className="w-3.5 h-3.5 inline mr-1 align-middle" />
+                            Passer la question (Skip)
+                          </button>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -463,7 +735,7 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
                       <div style={{
                         textAlign: 'center',
                         padding: '1rem 0',
-                        color: 'rgba(226, 232, 240, 0.8)',
+                        color: '#f1f5f9', // Slate-100 for higher contrast against dark backdrop
                         fontStyle: 'italic',
                         fontSize: '0.9375rem',
                         lineHeight: 1.6,
@@ -531,26 +803,88 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
           {/* ═══ Right Column: Stats & Timeline ═══ */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
 
-            {/* Streak Card */}
-            <div className="couple-card">
-              <div className="couple-stat">
-                <div>
-                  <div className="couple-label">Série de Connexion</div>
-                  <div className="couple-stat-value">
-                    <Icon name="flame" className="w-6 h-6 inline" /> {streak} Jours
-                  </div>
-                </div>
-                <div
-                  className="couple-stat-icon"
-                  style={{
-                    background: 'rgba(244, 63, 94, 0.1)',
-                    border: '1px solid rgba(244, 63, 94, 0.2)',
-                  }}
-                >
-                  <Icon name="heart" className="w-5 h-5" />
-                </div>
+            {/* Totem: Orbe individuel + Sphère de Fusion */}
+            {couple && userId && (
+              <div className="couple-card couple-card-premium">
+                <div className="couple-label">Votre Totem de Couple</div>
+                <TotemView
+                  coupleId={couple.id}
+                  userId={userId}
+                  user1Id={couple.user1Id}
+                />
               </div>
-            </div>
+            )}
+
+             {/* Tamagotchi Vitality Card */}
+             <div className="couple-card">
+               <div className="couple-stat" style={{ flexDirection: 'column', alignItems: 'stretch', gap: '0.75rem' }}>
+                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                   <div>
+                     <div className="couple-label">Vitalité du Totem</div>
+                     <div className="couple-stat-value" style={{ fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                       {totemState?.fusionState?.status === 'SLEEPING' ? (
+                         <>
+                           <Icon name="sprout" className="w-5 h-5 text-indigo-400" />
+                           <span style={{ color: '#818cf8' }}>En Sommeil</span>
+                         </>
+                       ) : (
+                         <>
+                           <Icon name="sparkles" className="w-5 h-5 text-green-400" />
+                           <span style={{ color: '#34d399' }}>Éveillé</span>
+                         </>
+                       )}
+                     </div>
+                   </div>
+                   <div
+                     className="couple-stat-icon"
+                     style={{
+                       background: totemState?.fusionState?.status === 'SLEEPING' ? 'rgba(99, 102, 241, 0.1)' : 'rgba(52, 211, 153, 0.1)',
+                       border: totemState?.fusionState?.status === 'SLEEPING' ? '1px solid rgba(99, 102, 241, 0.2)' : '1px solid rgba(52, 211, 153, 0.2)',
+                     }}
+                   >
+                     <Icon name={totemState?.fusionState?.status === 'SLEEPING' ? 'sprout' : 'heart'} className="w-5 h-5" />
+                   </div>
+                 </div>
+
+                 {/* Energy progress bar */}
+                 <div style={{ width: '100%' }}>
+                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#cbd5e1', marginBottom: '0.25rem' }}>
+                     <span>Énergie du compagnon</span>
+                     <span>{Math.round((totemState?.fusionState?.energy ?? 1.0) * 100)}%</span>
+                   </div>
+                   <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.05)', borderRadius: '3px', overflow: 'hidden' }}>
+                     <div
+                       style={{
+                         width: `${(totemState?.fusionState?.energy ?? 1.0) * 100}%`,
+                         height: '100%',
+                         background: totemState?.fusionState?.status === 'SLEEPING' ? '#818cf8' : '#34d399',
+                         borderRadius: '3px',
+                         transition: 'width 0.3s ease'
+                       }}
+                     />
+                   </div>
+                 </div>
+
+                 <div style={{ fontSize: '0.75rem', color: '#94a3b8', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '0.5rem', display: 'flex', justifyContent: 'space-between' }}>
+                   <span>Rituels accomplis :</span>
+                   <strong>{totemState?.streakDays ?? streak} jours</strong>
+                 </div>
+               </div>
+             </div>
+
+            {/* Digital Detox Challenge */}
+            {couple?.id && (
+              <div className="couple-card">
+                <DetoxChallenge coupleId={couple.id} />
+              </div>
+            )}
+
+            {/* Monthly Resonance Report */}
+            {couple?.id && (
+              <div className="couple-card">
+                <MonthlyReportCard coupleId={couple.id} />
+              </div>
+            )}
 
             {/* Monthly Portrait */}
             {portraits.length > 0 && (
@@ -615,14 +949,20 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
                         }}
                       >
                         <div className={`timeline-dot ${
-                          isRevealed ? 'timeline-dot-revealed' :
+                          isRevealed ? 'timeline-dot-revealed-orbe' :
                           isPending ? 'timeline-dot-pending' :
                           'timeline-dot-sealed'
-                        }`}>
-                          <Icon
-                            name={isRevealed ? 'sparkles' : isPending ? 'hourglass' : 'lock'}
-                            className="w-4 h-4"
-                          />
+                        }`}
+                        style={isRevealed ? { background: 'transparent', border: 'none', padding: 0 } : undefined}
+                        >
+                          {isRevealed ? (
+                            <MiniTotemOrbe score={q.resonanceScore ?? 0.8} hue={Math.round((q.resonanceScore ?? 0.8) * 360)} size={36} />
+                          ) : (
+                            <Icon
+                              name={isPending ? 'hourglass' : 'lock'}
+                              className="w-4 h-4"
+                            />
+                          )}
                         </div>
                         <div className="timeline-info">
                           <div className="timeline-date">{formatDate(q.releasedAt)}</div>
@@ -662,6 +1002,13 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
                 Explorer l&apos;Arbre Neural <Icon name="arrowRight" className="w-4 h-4" />
               </button>
             </div>
+
+            {/* Time Capsule */}
+            {couple?.id && userId && (
+              <div className="couple-card">
+                <TimeCapsulePanel coupleId={couple.id} userId={userId} />
+              </div>
+            )}
           </div>
         </div>
       </div>

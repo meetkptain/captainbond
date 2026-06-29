@@ -1,0 +1,6 @@
+-- 020: Couple therapeutic features
+ALTER TABLE "DailyQuestion" 
+  ADD COLUMN IF NOT EXISTS "user1Mood" JSONB,
+  ADD COLUMN IF NOT EXISTS "user2Mood" JSONB,
+  ADD COLUMN IF NOT EXISTS "isSkipped" BOOLEAN NOT NULL DEFAULT false,
+  ADD COLUMN IF NOT EXISTS "isSafeZoneActive" BOOLEAN NOT NULL DEFAULT false;

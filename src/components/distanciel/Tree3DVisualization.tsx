@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useState, MouseEvent, TouchEvent, useCallback } from 'react';
+import { useRef, useEffect, useState, MouseEvent, TouchEvent, useCallback, useMemo } from 'react';
 import { TreeNode, TreeConnection } from '@/lib/db/types';
 
 interface Tree3DVisualizationProps {
@@ -88,8 +88,8 @@ export function Tree3DVisualization({
     }
   };
 
-  // Generate stable 3D positions for nodes using Spherical Fibonacci lattice
-  const getNodesWithPositions = useCallback((): RenderNode[] => {
+  // Generate stable 3D positions for nodes using Spherical Fibonacci lattice (calculated only when nodes change)
+  const initialNodesWithPositions = useMemo((): RenderNode[] => {
     const total = nodes.length;
     return nodes.map((node, index) => {
       // Deterministic spread on a sphere
@@ -125,6 +125,12 @@ export function Tree3DVisualization({
     if (!ctx) return;
 
     let animationFrameId: number;
+    // Deep clone positions to allow in-place mutations during rotation updates
+    const renderNodes = initialNodesWithPositions.map((node: RenderNode) => ({
+      ...node,
+      rotated: { ...node.rotated },
+      local: { ...node.local }
+    }));
 
     const render = () => {
       // Auto-rotate slowly when not dragging
@@ -140,9 +146,8 @@ export function Tree3DVisualization({
       const focalLength = 300;
       const zOffset = 220;
 
-      // 1. Calculate positions and project
-      const renderNodes = getNodesWithPositions();
-      renderNodes.forEach((rn) => {
+      // 1. Calculate positions and project (Reuse local static positions, avoid recreating arrays)
+      renderNodes.forEach((rn: RenderNode) => {
         const { x, y, z } = rn.local;
 
         // Rotate Y (horizontal rotation)
@@ -166,8 +171,8 @@ export function Tree3DVisualization({
       // 2. Build and map links
       const renderLinks: RenderLink[] = [];
       connections.forEach((conn) => {
-        const sourceNode = renderNodes.find((n) => n.id === conn.sourceId);
-        const targetNode = renderNodes.find((n) => n.id === conn.targetId);
+        const sourceNode = renderNodes.find((n: RenderNode) => n.id === conn.sourceId);
+        const targetNode = renderNodes.find((n: RenderNode) => n.id === conn.targetId);
 
         if (sourceNode && targetNode && sourceNode.visible && targetNode.visible) {
           renderLinks.push({
@@ -281,7 +286,7 @@ export function Tree3DVisualization({
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [nodes, connections, dimensions, selectedNodeId, hoveredNodeId, getNodesWithPositions]);
+  }, [initialNodesWithPositions, connections, dimensions, selectedNodeId, hoveredNodeId]);
 
   // Mouse / Touch Interactivity
   const handleMouseDown = (e: MouseEvent<HTMLCanvasElement>) => {
@@ -311,7 +316,7 @@ export function Tree3DVisualization({
       const mouseY = e.clientY - rect.top;
 
       let foundHover: string | null = null;
-      const renderNodes = getNodesWithPositions();
+      const renderNodes = initialNodesWithPositions;
       const centerX = dimensions.width / 2;
       const centerY = dimensions.height / 2;
       const focalLength = 300;
@@ -354,7 +359,7 @@ export function Tree3DVisualization({
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
 
-      const renderNodes = getNodesWithPositions();
+      const renderNodes = initialNodesWithPositions;
       const centerX = dimensions.width / 2;
       const centerY = dimensions.height / 2;
       const focalLength = 300;

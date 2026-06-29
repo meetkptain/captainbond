@@ -9,6 +9,7 @@ import { createLogger } from '@/lib/logger';
 import { dbRetry } from '@/lib/db/withRetry';
 import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
 import { Couple, DailyQuestion, TreeNode, TreeConnection } from '@/lib/db/types';
+import { mapAnswerToOrbe } from '@/services/totemMappingService';
 
 export const runtime = 'edge';
 
@@ -109,6 +110,11 @@ export const POST = withApiHandler({
       logger.error('Échec de la mise à jour de la DailyQuestion', { dailyQuestionId }, updateError);
       throw new AppError('INTERNAL_ERROR', 'Impossible de sauvegarder votre réponse.');
     }
+
+    // 4b. Update Totem Orbe based on answer content (fire-and-forget)
+    mapAnswerToOrbe(coupleId, userId, couple.user1Id, answer).catch((err) => {
+      logger.warn('Totem orbe mapping failed (non-blocking)', {}, err);
+    });
 
     // 5. Get or create a Tree for this couple
     let tree: { id: string };

@@ -299,11 +299,13 @@ model Couple {
   user2     User     @relation("User2Couples", fields: [user2Id], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  timezone  String   @default("Europe/Paris")
   
   trees           Tree[]
   djProfile       DJProfile?
   dailyQuestions  DailyQuestion[]
   portraits       CouplePortrait[]
+  timeCapsules    TimeCapsule[]
 
   @@unique([user1Id, user2Id])
   @@index([user1Id])
@@ -416,6 +418,11 @@ model DailyQuestion {
   resonanceScore Float?                    // Cosine similarity between embeddings
   analysisJson   Json?                     // AI-generated resonance analysis
   analysisStatus String   @default("PENDING") // PENDING, COMPUTED, REVEALED, EXPIRED
+  protocolOpened Boolean  @default(false)
+  user1Mood      Json?
+  user2Mood      Json?
+  isSkipped      Boolean  @default(false)
+  isSafeZoneActive Boolean @default(false)
 
   @@index([coupleId])
   @@index([questionId])
@@ -435,5 +442,18 @@ model CouplePortrait {
   createdAt       DateTime @default(now())
 
   @@unique([coupleId, month])
+  @@index([coupleId])
+}
+
+model TimeCapsule {
+  id         String   @id @default(cuid())
+  coupleId   String
+  couple     Couple   @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  senderId   String
+  content    String
+  createdAt  DateTime @default(now())
+  unlocksAt  DateTime
+  isUnlocked Boolean  @default(false)
+
   @@index([coupleId])
 }

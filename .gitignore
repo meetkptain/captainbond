@@ -42,4 +42,14 @@ next-env.d.ts
 
 # local skills/tools
 /ui-ux-pro-max-skill
+.aider*
+.gemini*
+.agents/state.json
+*.log
+eslint_report*.json
+ts-errors*.txt
+docs/audits/
+# codegraph
+.codegraph/
+
 

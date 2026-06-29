@@ -5,6 +5,7 @@ import { getTreeById, getTreeByCouple, getTreeByRoom, listTreeNodes, listTreeCon
 import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
 import { supabaseAdmin } from '@/lib/supabase-admin';
 import { AppError } from '@/lib/errors';
+import { getUserEntitlements } from '@/lib/monetization/entitlements';
 
 export const runtime = 'edge';
 
@@ -31,6 +32,8 @@ export const GET = withApiHandler({
       return NextResponse.json({ error: 'Arbre introuvable' }, { status: 404 });
     }
 
+    let isPremium = false;
+
     // Verify couple membership if it's a couple tree
     if (tree.coupleId) {
       const authUser = await getAuthenticatedCoupleUser(req);
@@ -43,6 +46,9 @@ export const GET = withApiHandler({
       if (coupleError || !couple || (couple.user1Id !== authUser.id && couple.user2Id !== authUser.id)) {
         throw new AppError('FORBIDDEN', 'Vous ne faites pas partie de ce couple.');
       }
+
+      const entitlements = await getUserEntitlements(authUser.id);
+      isPremium = !!(entitlements?.hasActiveSubscription || entitlements?.hasActivePass || entitlements?.accessibleFeatures?.includes('profiles'));
     }
 
     const [nodes, connections] = await Promise.all([
@@ -50,6 +56,19 @@ export const GET = withApiHandler({
       listTreeConnections(tree.id),
     ]);
 
-    return NextResponse.json({ tree, nodes, connections });
+    let finalNodes = nodes;
+    let finalConnections = connections;
+
+    // Apply 5-day limit for free couple trees
+    if (tree.coupleId && !isPremium) {
+      const fiveDaysAgo = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
+      finalNodes = nodes.filter(n => n.answeredAt && new Date(n.answeredAt) >= fiveDaysAgo);
+      const filteredNodeIds = new Set(finalNodes.map(n => n.id));
+      finalConnections = connections.filter(
+        c => filteredNodeIds.has(c.sourceId) && filteredNodeIds.has(c.targetId)
+      );
+    }
+
+    return NextResponse.json({ tree, nodes: finalNodes, connections: finalConnections });
   },
 });

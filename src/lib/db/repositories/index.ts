@@ -10,3 +10,4 @@ export * from './coupleRepository';
 export * from './treeRepository';
 export * from './djRepository';
 export * from './dailyQuestionRepository';
+export * from './totemRepository';
