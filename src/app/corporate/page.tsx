@@ -20,6 +20,7 @@ const content = {
     heroDesc: "Brisez la glace, encouragez la parole et connectez vos collaborateurs avec une animation interactive sur écran géant (zéro logistique).",
     quoteBtn: "Demander un devis",
     estimateBtn: "Estimer mon événement",
+    bookInstantBtn: "Réserver mon Team Building (299€ HT)",
     discoverTitle: "Découvrez aussi nos solutions :",
     discoverOnboarding: "📂 Intégration & Onboarding",
     discoverQvt: "📊 Climat Social & QVT",
@@ -54,6 +55,7 @@ const content = {
     heroDesc: "Break the ice, encourage sharing and connect your employees with an interactive animation on giant screens (zero logistics).",
     quoteBtn: "Request a Quote",
     estimateBtn: "Estimate My Event",
+    bookInstantBtn: "Book Team Building (299€)",
     discoverTitle: "Discover our other solutions:",
     discoverOnboarding: "📂 Onboarding & Hiring",
     discoverQvt: "📊 CSR & Work Well-being",
@@ -99,6 +101,7 @@ export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLa
   const [error, setError] = useState<string | null>(null);
   const contactRef = useRef<HTMLElement>(null);
   const estimateurRef = useRef<HTMLElement>(null);
+  const [isBooking, setIsBooking] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -110,6 +113,25 @@ export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLa
   const t = content[lang];
   const quote = getB2BQuote(participants);
   const estimatedPrice = estimateB2BPrice(participants);
+
+  const handleBookInstant = async () => {
+    setIsBooking(true);
+    setError(null);
+    try {
+      const response = await api.post<{ sessionUrl: string }>('/api/checkout/b2b', {
+        successUrl: window.location.origin + getLocalizedPath('/vault?b2bSuccess=true'),
+        cancelUrl: window.location.href,
+      });
+      if (response.sessionUrl) {
+        window.location.href = response.sessionUrl;
+      }
+    } catch (err) {
+      console.error(err);
+      setError(err instanceof ApiClientError ? err.message : t.errorGeneric);
+    } finally {
+      setIsBooking(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -151,14 +173,14 @@ export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLa
             {t.heroDesc}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <LandingButton onClick={() => contactRef.current?.scrollIntoView({ behavior: 'smooth' })}>
-              {t.quoteBtn}
+            <LandingButton onClick={handleBookInstant} disabled={isBooking} className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black">
+              {isBooking ? t.formSubmitting : t.bookInstantBtn}
             </LandingButton>
             <LandingButton
               variant="secondary"
-              onClick={() => estimateurRef.current?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => contactRef.current?.scrollIntoView({ behavior: 'smooth' })}
             >
-              {t.estimateBtn}
+              {t.quoteBtn}
             </LandingButton>
           </div>
 
@@ -219,8 +241,15 @@ export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLa
 
       {/* Calculator */}
       <Section ref={estimateurRef} id="estimateur" compact className="bg-white/[0.02]">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto space-y-6">
           <CorporatePricingCalculator participants={participants} onChange={setParticipants} />
+          {participants <= 40 && (
+            <div className="text-center">
+              <LandingButton onClick={handleBookInstant} disabled={isBooking} className="w-full md:w-auto px-10 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 font-black">
+                {isBooking ? t.formSubmitting : t.bookInstantBtn}
+              </LandingButton>
+            </div>
+          )}
         </div>
       </Section>
 

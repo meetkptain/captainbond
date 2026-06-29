@@ -80,9 +80,51 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
   const metadata = session.metadata || {};
   const { sku, packId, playerId, roomCode, userId, productType } = metadata;
 
-  if (!userId) {
-    logger.error('Missing userId in checkout session metadata', { sessionId: session.id });
-    return;
+  let activeUserId = userId;
+  if (!activeUserId) {
+    if (session.customer_details?.email) {
+      const email = session.customer_details.email;
+      const { data: existingUser } = await dbRetry<{ id: string }>(async () =>
+        supabaseAdmin.from('User').select('id').eq('email', email).maybeSingle()
+      );
+
+      if (existingUser) {
+        activeUserId = existingUser.id;
+      } else {
+        activeUserId = globalThis.crypto.randomUUID();
+        const { error: authError } = await supabaseAdmin.auth.admin.createUser({
+          id: activeUserId,
+          email,
+          email_confirm: true,
+          user_metadata: { name: session.customer_details?.name || 'Collaborateur Pro' },
+        });
+
+        if (authError) {
+          logger.warn('Supabase Auth corporate user creation check', {}, authError);
+          const { data: { users } } = await supabaseAdmin.auth.admin.listUsers();
+          const authUser = users?.find((u) => u.email === email);
+          if (authUser) {
+            activeUserId = authUser.id;
+          } else {
+            throw new AppError('INTERNAL_ERROR', 'Erreur de création utilisateur corporate', { cause: authError });
+          }
+        }
+
+        const { error: userError } = await dbRetry<null>(async () =>
+          supabaseAdmin.from('User').insert({
+            id: activeUserId,
+            email,
+            name: session.customer_details?.name || 'Collaborateur Pro',
+          })
+        );
+        if (userError) {
+          logger.warn('User corporate insertion warning (already created)', {}, userError);
+        }
+      }
+    } else {
+      logger.error('Missing userId in checkout session metadata', { sessionId: session.id });
+      return;
+    }
   }
 
   const pack = packId ? await getPackById(packId) : sku ? await getPackBySku(sku) : null;
@@ -98,7 +140,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
     p_event_type: event.type,
     p_payload: event as unknown as Record<string, unknown>,
     p_stripe_session_id: session.id,
-    p_user_id: userId,
+    p_user_id: activeUserId,
     p_pack_id: pack.id,
     p_room_code: roomCode || '',
     p_player_id: playerId || '',
@@ -119,7 +161,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
   }
 
   if (pack.isSubscription && session.subscription) {
-    await updateUser(userId, {
+    await updateUser(activeUserId, {
       subscriptionStatus: 'ACTIVE',
       stripeSubscriptionId: session.subscription as string,
     });
@@ -131,7 +173,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
     price: pack.price,
     playerId,
     roomCode,
-    userId,
+    userId: activeUserId,
     stripeSessionId: session.id,
   });
 

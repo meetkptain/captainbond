@@ -24,7 +24,7 @@ function generateRoomCode(): string {
 }
 
 export interface CreateRoomInput {
-  targetType?: 'GROUP' | 'SOLO';
+  targetType?: 'GROUP' | 'SOLO' | 'CORPORATE';
   playerName?: string;
   language?: string;
 }

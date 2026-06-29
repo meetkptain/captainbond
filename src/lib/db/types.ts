@@ -8,7 +8,7 @@ export interface Room {
   hostToken: string;
   status: 'WAITING' | 'PLAYING' | 'REVEALING' | 'DISCUSSION' | 'ENDED';
   round: number;
-  targetType?: 'GROUP' | 'SOLO';
+  targetType?: 'GROUP' | 'SOLO' | 'CORPORATE';
   currentMode?: string | null;
   currentQuestionId?: string | null;
   roundConfig?: Record<string, unknown> | null;
