@@ -7,6 +7,7 @@ import { imposteurManifest, imposteurEngine } from './imposteur';
 import { dateNightManifest, baseEngine } from './shared';
 import { familyManifest, familyEngine } from './family';
 import { mostLikelyToManifest, mostLikelyToEngine } from './most-likely-to';
+import { missionImpossibleManifest, missionImpossibleEngine } from './mission-impossible';
 
 export interface RegisteredGameMode {
   manifest: GameModeManifest;
@@ -76,6 +77,12 @@ export const gameModesRegistry: Record<string, RegisteredGameMode> = {
     TVView: dynamic(() => import('./most-likely-to/TVView').then(mod => mod.MostLikelyToTVView as GameModeTVView)),
     PlayerController: dynamic(() => import('./most-likely-to/PlayerController').then(mod => mod.MostLikelyToPlayerController as GameModePlayerController)),
     HostView: dynamic(() => import('./most-likely-to/HostView').then(mod => mod.MostLikelyToHostView))
+  },
+  'MISSION_IMPOSSIBLE': {
+    manifest: missionImpossibleManifest,
+    engine: missionImpossibleEngine,
+    TVView: dynamic(() => import('./mission-impossible/TVView').then(mod => mod.MissionImpossibleTVView as GameModeTVView)),
+    PlayerController: dynamic(() => import('./mission-impossible/PlayerController').then(mod => mod.MissionImpossiblePlayerController as GameModePlayerController))
   }
 };
 

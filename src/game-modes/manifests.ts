@@ -6,6 +6,7 @@ import { imposteurManifest, imposteurEngine } from './imposteur';
 import { dateNightManifest, baseEngine } from './shared';
 import { familyManifest, familyEngine } from './family';
 import { mostLikelyToManifest, mostLikelyToEngine } from './most-likely-to';
+import { missionImpossibleManifest, missionImpossibleEngine } from './mission-impossible';
 
 /**
  * Registre server-safe des modes de jeu.
@@ -48,6 +49,10 @@ export const gameModesServerRegistry: Record<string, ServerGameMode> = {
   'MOST_LIKELY_TO': {
     manifest: mostLikelyToManifest,
     engine: mostLikelyToEngine,
+  },
+  'MISSION_IMPOSSIBLE': {
+    manifest: missionImpossibleManifest,
+    engine: missionImpossibleEngine,
   }
 };
 

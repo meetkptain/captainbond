@@ -13,7 +13,7 @@ export interface GameModeManifest {
   minPlayers: number;
   maxPlayers: number;
   isPremium: boolean;
-  category: 'pei' | 'soiree' | 'standard';
+  category: 'pei' | 'soiree' | 'standard' | 'corporate';
   roundDurationSeconds?: number; // Default: 30. Override for modes with custom durations.
   profilingCapabilities?: ProfilingCapabilities;
   activeFrom?: string;    // ISO date pour modes éphémères
@@ -72,6 +72,7 @@ export interface GameModeQuestion {
   text?: string;
   metadata?: Record<string, unknown> | null;
   correctAnswer?: string;
+  options?: string[];
 }
 
 export interface GameModeTVViewProps {

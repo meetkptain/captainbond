@@ -9,6 +9,7 @@ describe('gameModesServerRegistry', () => {
       'FAMILY',
       'ICEBREAKER',
       'IMPOSTEUR',
+      'MISSION_IMPOSSIBLE',
       'MOST_LIKELY_TO',
       'SPICY',
     ]);
