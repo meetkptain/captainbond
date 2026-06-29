@@ -14,10 +14,36 @@ import { computeRevealResult, findImpostorPlayerId, RawResponse } from '@/lib/ga
 import { getUserEntitlements, roomHasActivePass, canAccessMode, getRoomPassInfo, getPlayerEntitlements, canViewProfile, canViewCoupleProfile } from '@/lib/monetization/entitlements';
 import { calculateProfile, EnrichedResponse } from '@/lib/profiling/calculateProfile';
 import { safeJsonParseRecord } from '@/lib/json';
-import { buildQuestionPool } from '@/lib/questions/deck';
+import { buildQuestionPool, QuestionForDeck } from '@/lib/questions/deck';
 import { recordGamePlayed, GameSummary } from './statsService';
 
 const FREE_QUESTIONS_LIMIT = 3;
+
+function injectCorporateQuestions(
+  room: Room,
+  allQuestions: QuestionForDeck[],
+  currentMode: string
+): QuestionForDeck[] {
+  if (room.targetType !== 'CORPORATE') {
+    return allQuestions;
+  }
+
+  const customAnecdotes = Array.isArray(room.customAnecdotes)
+    ? (room.customAnecdotes as Array<{ id: string; question: string; answer: string }>)
+    : [];
+
+  const customCorporateQuestions = customAnecdotes.map((anec) => ({
+    id: `anec-${anec.id}`,
+    text: room.language === 'fr'
+      ? `Qui est l'auteur de ce Dossier Secret : "${anec.question}" ?`
+      : `Who is the author of this Secret File: "${anec.question}" ?`,
+    mode: currentMode,
+    intensityLevel: 1,
+    tags: ['corporate', 'anecdote'],
+  }));
+
+  return [...allQuestions, ...customCorporateQuestions];
+}
 
 function calculateFreeQuestionsUsed(isPremiumMode: boolean, roomRound: number): number {
   return isPremiumMode ? 0 : Math.min(roomRound, FREE_QUESTIONS_LIMIT);
@@ -104,7 +130,8 @@ export async function startNextRound(roomCode: string, hostId: string): Promise<
     previousIntensity = pq?.intensityLevel || 1;
   }
 
-  const allQuestions = await listQuestionsForDeck(room.language || 'fr');
+  const allQuestionsRaw = await listQuestionsForDeck(room.language || 'fr');
+  const allQuestions = injectCorporateQuestions(room, allQuestionsRaw, currentMode);
 
   // Anti-répétition : exclure les questions déjà jouées dans cette room
   const existingConfig = (room.roundConfig || {}) as { playedQuestionIds?: string[] };
@@ -641,7 +668,8 @@ export async function skipQuestion(roomCode: string, playerId: string): Promise<
     previousIntensity = pq?.intensityLevel || 1;
   }
 
-  const allQuestions = await listQuestionsForDeck(room.language || 'fr');
+  const allQuestionsRaw = await listQuestionsForDeck(room.language || 'fr');
+  const allQuestions = injectCorporateQuestions(room, allQuestionsRaw, currentMode);
   const existingConfig = (room.roundConfig || {}) as { playedQuestionIds?: string[] };
   const playedQuestionIds = new Set(existingConfig.playedQuestionIds || []);
 

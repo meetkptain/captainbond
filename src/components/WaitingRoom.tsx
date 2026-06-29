@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { api } from '@/lib/api/client';
 import { Icon } from '@/components/Icon';
 import type { Player } from '@/lib/db/types';
+import { useTranslation } from '@/lib/i18n';
 
 interface WaitingRoomProps {
   roomCode: string;
@@ -11,6 +12,7 @@ interface WaitingRoomProps {
   myPlayerId?: string | null;
   isHost?: boolean;
   onStart?: () => void;
+  targetType?: string;
 }
 
 const FUN_FACTS = [
@@ -22,7 +24,29 @@ const FUN_FACTS = [
   "Une question absurde détend plus qu'un compliment.",
 ];
 
-export function WaitingRoom({ roomCode, players, myPlayerId, isHost, onStart }: WaitingRoomProps) {
+export function WaitingRoom({ roomCode, players, myPlayerId, isHost, onStart, targetType }: WaitingRoomProps) {
+  const { language } = useTranslation();
+  const [anecdoteText, setAnecdoteText] = useState('');
+  const [anecdoteSubmitted, setAnecdoteSubmitted] = useState(false);
+  const [submittingAnecdote, setSubmittingAnecdote] = useState(false);
+
+  const handleAnecdoteSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (anecdoteText.trim().length < 3 || submittingAnecdote) return;
+    setSubmittingAnecdote(true);
+    try {
+      await api.post('/api/room/anecdotes/submit', {
+        roomCode,
+        playerId: myPlayerId,
+        anecdoteText: anecdoteText.trim(),
+      });
+      setAnecdoteSubmitted(true);
+    } catch (err) {
+      console.error('Error submitting anecdote:', err);
+    } finally {
+      setSubmittingAnecdote(false);
+    }
+  };
   const [readyMap, setReadyMap] = useState<Record<string, boolean>>(() => {
     const map: Record<string, boolean> = {};
     for (const p of players) {
@@ -100,6 +124,46 @@ export function WaitingRoom({ roomCode, players, myPlayerId, isHost, onStart }: 
           ))
         )}
       </div>
+
+      {targetType === 'CORPORATE' && !isHost && myPlayerId && (
+        <div className="w-full p-5 bg-violet-950/20 border border-violet-850/80 rounded-2xl mb-6 text-left space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="text-xl">🕵️</span>
+            <h3 className="text-sm font-bold text-violet-300 uppercase tracking-wide">
+              {language === 'fr' ? 'Dossier Secret (Anecdote)' : 'Secret File (Anecdote)'}
+            </h3>
+          </div>
+          {anecdoteSubmitted ? (
+            <p className="text-xs text-green-400 font-semibold flex items-center gap-1.5">
+              <span>✓</span> {language === 'fr' ? 'Anecdote enregistrée avec succès pour le jeu.' : 'Anecdote successfully registered for the game.'}
+            </p>
+          ) : (
+            <form onSubmit={handleAnecdoteSubmit} className="space-y-3">
+              <p className="text-xs text-slate-400 leading-relaxed">
+                {language === 'fr' 
+                  ? "Saisissez une anecdote insolite sur votre passé ou parcours. Elle sera devinée anonymement par le groupe." 
+                  : "Enter a unique anecdote about your past or career. The group will guess it anonymously."}
+              </p>
+              <input
+                type="text"
+                required
+                maxLength={250}
+                value={anecdoteText}
+                onChange={(e) => setAnecdoteText(e.target.value)}
+                placeholder={language === 'fr' ? 'Mon secret croustillant ou insolite...' : 'My secret or funny story...'}
+                className="w-full bg-slate-900/80 border border-slate-850 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-violet-500/50"
+              />
+              <button
+                type="submit"
+                disabled={anecdoteText.trim().length < 3 || submittingAnecdote}
+                className="w-full py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-xs font-bold transition-all disabled:opacity-50 border-none cursor-pointer"
+              >
+                {submittingAnecdote ? (language === 'fr' ? 'Envoi...' : 'Sending...') : (language === 'fr' ? 'Valider mon anecdote' : 'Submit my anecdote')}
+              </button>
+            </form>
+          )}
+        </div>
+      )}
 
       {!isHost && myPlayerId && (
         <button

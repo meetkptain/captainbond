@@ -547,6 +547,7 @@ export default function PlayerController() {
             myPlayerId={playerId}
             isHost={isHost}
             onStart={handleStartRound}
+            targetType={targetType}
           />
         )}
 
