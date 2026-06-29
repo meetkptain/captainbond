@@ -46,6 +46,14 @@ function injectCorporateQuestions(
   return [...allQuestions, ...customCorporateQuestions];
 }
 
+function selectCorporateQuestion(pool: QuestionForDeck[]): QuestionForDeck {
+  const anecdotes = pool.filter((q) => q.id.startsWith('anec-'));
+  if (anecdotes.length > 0) {
+    return anecdotes[Math.floor(Math.random() * anecdotes.length)];
+  }
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
 function calculateFreeQuestionsUsed(isPremiumMode: boolean, roomRound: number): number {
   return isPremiumMode ? 0 : Math.min(roomRound, FREE_QUESTIONS_LIMIT);
 }
@@ -150,7 +158,7 @@ export async function startNextRound(roomCode: string, hostId: string): Promise<
     throw new AppError('NOT_FOUND', 'Database is empty or missing content');
   }
 
-  const selectedQuestion = pool[Math.floor(Math.random() * pool.length)];
+  const selectedQuestion = room.targetType === 'CORPORATE' ? selectCorporateQuestion(pool) : pool[Math.floor(Math.random() * pool.length)];
 
   // Mémoriser la question jouée
   const updatedPlayedIds = Array.from(new Set([...Array.from(playedQuestionIds), selectedQuestion.id]));
@@ -686,7 +694,7 @@ export async function skipQuestion(roomCode: string, playerId: string): Promise<
     throw new AppError('NOT_FOUND', 'Aucune question disponible');
   }
 
-  const selectedQuestion = pool[Math.floor(Math.random() * pool.length)];
+  const selectedQuestion = room.targetType === 'CORPORATE' ? selectCorporateQuestion(pool) : pool[Math.floor(Math.random() * pool.length)];
   const updatedPlayedIds = Array.from(new Set([...Array.from(playedQuestionIds), selectedQuestion.id]));
 
   let roundConfig = {
