@@ -13,6 +13,7 @@ interface WaitingRoomProps {
   isHost?: boolean;
   onStart?: () => void;
   targetType?: string;
+  customAnecdotes?: any[] | null;
 }
 
 const FUN_FACTS = [
@@ -24,7 +25,7 @@ const FUN_FACTS = [
   "Une question absurde détend plus qu'un compliment.",
 ];
 
-export function WaitingRoom({ roomCode, players, myPlayerId, isHost, onStart, targetType }: WaitingRoomProps) {
+export function WaitingRoom({ roomCode, players, myPlayerId, isHost, onStart, targetType, customAnecdotes }: WaitingRoomProps) {
   const { language } = useTranslation();
   const [anecdoteText, setAnecdoteText] = useState('');
   const [anecdoteSubmitted, setAnecdoteSubmitted] = useState(false);
@@ -107,21 +108,29 @@ export function WaitingRoom({ roomCode, players, myPlayerId, isHost, onStart, ta
         {players.length === 0 ? (
           <p className="text-slate-500 italic">Personne n&apos;est encore arrivé...</p>
         ) : (
-          players.map((p) => (
-            <div key={p.id} className="flex flex-col items-center gap-2">
-              <div
-                className={`w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold transition-all ${
-                  readyMap[p.id]
-                    ? 'bg-gradient-to-br from-neon-purple to-neon-pink text-white ring-4 ring-neon-purple/30'
-                    : 'bg-white/10 text-slate-300'
-                }`}
-              >
-                {p.name.charAt(0).toUpperCase()}
+          players.map((p) => {
+            const hasSubmittedSecret = Array.isArray(customAnecdotes) && customAnecdotes.some((anec) => anec.id === p.id);
+            return (
+              <div key={p.id} className="flex flex-col items-center gap-2 relative">
+                <div
+                  className={`w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold transition-all relative ${
+                    readyMap[p.id]
+                      ? 'bg-gradient-to-br from-neon-purple to-neon-pink text-white ring-4 ring-neon-purple/30'
+                      : 'bg-white/10 text-slate-300'
+                  }`}
+                >
+                  {p.name.charAt(0).toUpperCase()}
+                  {targetType === 'CORPORATE' && (
+                    <span className="absolute -top-1.5 -right-1.5 bg-slate-900 border border-white/10 text-[10px] w-5 h-5 rounded-full flex items-center justify-center shadow-lg">
+                      {hasSubmittedSecret ? '🕵️' : '📝'}
+                    </span>
+                  )}
+                </div>
+                <span className="text-xs text-slate-300 font-medium max-w-[80px] truncate">{p.name}</span>
+                {readyMap[p.id] && <span className="text-[10px] text-neon-purple font-bold uppercase">Prêt</span>}
               </div>
-              <span className="text-xs text-slate-300 font-medium max-w-[80px] truncate">{p.name}</span>
-              {readyMap[p.id] && <span className="text-[10px] text-neon-purple font-bold uppercase">Prêt</span>}
-            </div>
-          ))
+            );
+          })
         )}
       </div>
 
@@ -182,10 +191,14 @@ export function WaitingRoom({ roomCode, players, myPlayerId, isHost, onStart, ta
       {isHost && (
         <button
           onClick={onStart}
-          disabled={!allReady}
+          disabled={!allReady || (targetType === 'CORPORATE' && (!customAnecdotes || customAnecdotes.length < 2))}
           className="w-full cb-btn-primary py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed mb-6"
         >
-          {allReady ? 'Lancer la partie' : `Attendre les joueurs (${readyCount}/${players.length})`}
+          {targetType === 'CORPORATE' && (!customAnecdotes || customAnecdotes.length < 2)
+            ? (language === 'fr' 
+                ? `Attente des secrets (${customAnecdotes?.length || 0}/${players.length})` 
+                : `Waiting for secrets (${customAnecdotes?.length || 0}/${players.length})`)
+            : (allReady ? 'Lancer la partie' : `Attendre les joueurs (${readyCount}/${players.length})`)}
         </button>
       )}
 

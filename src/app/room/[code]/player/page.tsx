@@ -41,6 +41,7 @@ export default function PlayerController() {
   const [status, setStatus] = useState<'WAITING' | 'PLAYING' | 'REVEALING' | 'DISCUSSION' | 'ENDED'>('WAITING');
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [activeMode, setActiveMode] = useState('ICEBREAKER');
+  const [customAnecdotes, setCustomAnecdotes] = useState<any[] | null>(null);
   
   const [myAnswer, setMyAnswer] = useState<string | null>(null);
   const [hasVoted, setHasVoted] = useState(false);
@@ -140,6 +141,7 @@ export default function PlayerController() {
 
         const roomType = room.targetType || 'GROUP';
         setTargetType(roomType);
+        setCustomAnecdotes(room.customAnecdotes || null);
 
         const isUserHost = storedHostId === room.hostId;
         setIsHost(isUserHost);
@@ -548,6 +550,7 @@ export default function PlayerController() {
             isHost={isHost}
             onStart={handleStartRound}
             targetType={targetType}
+            customAnecdotes={customAnecdotes}
           />
         )}
 
