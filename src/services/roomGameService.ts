@@ -40,6 +40,7 @@ function injectCorporateQuestions(
     mode: currentMode,
     intensityLevel: 1,
     tags: ['corporate', 'anecdote'],
+    correctAnswer: anec.answer,
   }));
 
   return [...allQuestions, ...customCorporateQuestions];

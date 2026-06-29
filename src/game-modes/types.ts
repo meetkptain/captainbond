@@ -71,6 +71,7 @@ export interface GameModeQuestion {
   id?: string;
   text?: string;
   metadata?: Record<string, unknown> | null;
+  correctAnswer?: string;
 }
 
 export interface GameModeTVViewProps {

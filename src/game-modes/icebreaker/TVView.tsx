@@ -76,19 +76,38 @@ export function IcebreakerTVView({ question, responses, gameState, timerDisplay,
       winnerName: winner?.name,
       questionText: question?.text as string,
     });
+    
+    const displayTitle = question?.correctAnswer
+      ? (question?.text?.includes("Qui est l'auteur") 
+          ? `Parole à ${question.correctAnswer} !` 
+          : `Microphone to ${question.correctAnswer}!`)
+      : prompt.title;
+
+    const displaySubtitle = question?.correctAnswer
+      ? (question?.text?.includes("Qui est l'auteur") 
+          ? `Racontez-nous l'histoire derrière votre secret...` 
+          : `Tell us the story behind your secret...`)
+      : prompt.subtitle;
+
     return (
       <div className="flex flex-col items-center w-full max-w-4xl text-center animate-in zoom-in duration-500">
-        <span className="text-emerald-400 font-mono tracking-widest font-bold uppercase mb-4">Moment de parole</span>
+        <span className="text-emerald-400 font-mono tracking-widest font-bold uppercase mb-4">
+          {question?.correctAnswer 
+            ? (question?.text?.includes("Qui est l'auteur") ? 'Le Secret Révélé' : 'The Secret Revealed')
+            : 'Moment de parole'}
+        </span>
         <h2 className="text-4xl md:text-6xl font-black leading-tight text-white mb-6">
-          {prompt.title}
+          {displayTitle}
         </h2>
-        <p className="text-xl text-slate-300 mb-2">{prompt.subtitle}</p>
-        <p className="text-lg text-neon-pink font-medium mt-4">{prompt.action}</p>
-        {winner && (
-          <div className="mt-8 p-4 bg-white/5 border border-white/10 rounded-2xl">
-            <span className="text-4xl">🎤</span>
-          </div>
-        )}
+        <p className="text-xl text-slate-300 mb-2">{displaySubtitle}</p>
+        <p className="text-lg text-neon-pink font-medium mt-4">
+          {question?.correctAnswer 
+            ? (question?.text?.includes("Qui est l'auteur") ? 'Partagez les coulisses avec l\'équipe !' : 'Share the behind-the-scenes with the team!')
+            : prompt.action}
+        </p>
+        <div className="mt-8 p-4 bg-white/5 border border-white/10 rounded-2xl">
+          <span className="text-4xl">🎤</span>
+        </div>
       </div>
     );
   }
@@ -96,7 +115,18 @@ export function IcebreakerTVView({ question, responses, gameState, timerDisplay,
   // Phase REVEALING
   return (
     <div className="flex flex-col items-center w-full max-w-5xl animate-in slide-in-from-bottom-10 fade-in duration-700">
-      <h2 className="text-2xl font-bold text-slate-400 mb-2">Le Tribunal a rendu son verdict</h2>
+      {question?.correctAnswer ? (
+        <div className="mb-10 px-6 py-3 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 text-emerald-300 font-bold rounded-2xl flex items-center gap-3 text-lg md:text-xl shadow-[0_0_20px_rgba(16,185,129,0.15)] animate-pulse">
+          <span>🔎</span>
+          <span>
+            {question?.text?.includes("Qui est l'auteur") 
+              ? `L'auteur de ce Dossier Secret était : ${question.correctAnswer} !` 
+              : `The author of this Secret File was: ${question.correctAnswer}!`}
+          </span>
+        </div>
+      ) : (
+        <h2 className="text-2xl font-bold text-slate-400 mb-2">Le Tribunal a rendu son verdict</h2>
+      )}
       <h3 className="text-3xl md:text-4xl font-black text-white mb-16 text-center px-4">
         &ldquo;{question?.text}&rdquo;
       </h3>

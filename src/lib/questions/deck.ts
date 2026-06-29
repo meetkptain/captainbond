@@ -1,6 +1,6 @@
 import { Question } from '@/lib/db/types';
 
-export type QuestionForDeck = Pick<Question, 'id' | 'text' | 'mode' | 'intensityLevel' | 'tags'>;
+export type QuestionForDeck = Pick<Question, 'id' | 'text' | 'mode' | 'intensityLevel' | 'tags' | 'correctAnswer'>;
 
 export interface BuildQuestionPoolInput {
   allQuestions: QuestionForDeck[];
