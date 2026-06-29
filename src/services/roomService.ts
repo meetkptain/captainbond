@@ -392,7 +392,14 @@ export async function getRoomDashboardStats(roomCode: string, token?: string | n
 
   if (isAdmin) {
     result.players = nonHostPlayers.map((p) => ({ id: p.id, name: p.name }));
-    result.customAnecdotes = customAnecdotes;
+    if (playersCount < 4) {
+      result.customAnecdotes = customAnecdotes.map((anec) => ({
+        ...anec,
+        answer: room.language === 'fr' ? 'Anonymisé (Équipe < 4)' : 'Anonymized (Team < 4)'
+      }));
+    } else {
+      result.customAnecdotes = customAnecdotes;
+    }
   } else {
     // Pseudonymized players list for safety
     result.players = nonHostPlayers.map((p, idx) => ({ id: p.id, name: `Agent ${idx + 1}` }));

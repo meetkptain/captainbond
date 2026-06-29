@@ -5,6 +5,7 @@ import { GET } from './route';
 vi.mock('@/services/roomService', () => ({
   getRoomDashboardStats: vi.fn().mockImplementation((roomCode, token) => {
     const isAdmin = token === 'host-token-xyz';
+    const isSmall = roomCode === 'SMALL';
     return Promise.resolve({
       roomCode,
       targetType: 'CORPORATE',
@@ -14,7 +15,7 @@ vi.mock('@/services/roomService', () => ({
       participationRate: 90,
       consensusRate: 80,
       iceScore: 86,
-      playersCount: 5,
+      playersCount: isSmall ? 3 : 5,
       isAdmin,
       customAnecdotesCount: 3,
       modeStats: { 'ICEBREAKER': 10 },
@@ -22,7 +23,7 @@ vi.mock('@/services/roomService', () => ({
         ? [{ id: 'p1', name: 'Alice' }]
         : [{ id: 'p1', name: 'Agent 1' }],
       customAnecdotes: isAdmin
-        ? [{ id: 'p1', question: 'Secret', answer: 'Alice' }]
+        ? [{ id: 'p1', question: 'Secret', answer: isSmall ? 'Anonymisé (Équipe < 4)' : 'Alice' }]
         : undefined,
     });
   }),
@@ -56,5 +57,17 @@ describe('GET /api/room/stats', () => {
     expect(data.players[0].name).toBe('Alice');
     expect(data.customAnecdotes).toBeDefined();
     expect(data.customAnecdotes[0].answer).toBe('Alice');
+  });
+
+  it('anonymizes secret authors if group is too small even for admin/host', async () => {
+    const req = new NextRequest('http://localhost/api/room/stats?roomCode=SMALL&token=host-token-xyz', {
+      method: 'GET',
+    });
+
+    const res = await GET(req);
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.isAdmin).toBe(true);
+    expect(data.customAnecdotes[0].answer).toBe('Anonymisé (Équipe < 4)');
   });
 });

@@ -221,6 +221,30 @@ function DashboardContent({ defaultLang }: Props) {
           </div>
         </div>
 
+        {/* Nudge QVT / Psychologist Recommendations */}
+        <div className="glass-panel p-6 border border-white/10 rounded-2xl bg-white/[0.02] shadow-xl space-y-3 relative overflow-hidden">
+          <div className="flex items-center gap-3">
+            <span className="text-xl">💡</span>
+            <h3 className="text-lg font-bold text-slate-200">
+              {language === 'fr' ? 'Recommandations d\'experts QVT' : 'QVT Expert Insights'}
+            </h3>
+          </div>
+          <p className="text-sm text-slate-300 leading-relaxed italic">
+            {stats.iceScore >= 85
+              ? (language === 'fr'
+                  ? "Votre équipe affiche une cohésion exceptionnelle ! C'est le moment idéal pour lancer de nouveaux projets transverses ou donner plus d'autonomie à vos collaborateurs. Célébrez cette réussite sur vos canaux internes."
+                  : "Your team displays outstanding cohesion! This is the perfect time to launch cross-functional projects or grant more autonomy to team members. Celebrate this synergy on your internal channels.")
+              : stats.iceScore >= 70
+              ? (language === 'fr'
+                  ? "Bonne synergie globale. Quelques silos peuvent encore exister entre certains départements. N'hésitez pas à organiser un déjeuner d'équipe informel pour renforcer ces ponts."
+                  : "Good general synergy. Some minor silos might still exist between departments. Consider hosting an informal team lunch to build stronger bonds.")
+              : (language === 'fr'
+                  ? "Alignement en cours de construction. Le dialogue au sein du groupe peut être fluidifié. Nous vous conseillons d'intégrer des sessions courtes de jeu (15 min) lors de vos réunions d'équipe hebdomadaires pour libérer la parole."
+                  : "Alignment is still building up. Communication within the unit can be fluidified. We recommend integrating short 15-minute game sessions into your weekly team syncs to open up discussions.")
+            }
+          </p>
+        </div>
+
         {/* Dynamic game mode breakdowns & players mapping */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Players overview panel */}
