@@ -290,3 +290,114 @@ export async function getRoomForPlayer(playerId: string): Promise<{ room: Room; 
   }
   return { room, player };
 }
+
+export interface RoomDashboardStats {
+  roomCode: string;
+  targetType: string;
+  status: string;
+  language: string;
+  roundCount: number;
+  participationRate: number;
+  consensusRate: number;
+  iceScore: number;
+  playersCount: number;
+  isAdmin: boolean;
+  players?: Array<{ id: string; name: string }>;
+  customAnecdotesCount: number;
+  customAnecdotes?: Array<{ id: string; question: string; answer: string }> | null;
+  modeStats: Record<string, number>;
+}
+
+export async function getRoomDashboardStats(roomCode: string, token?: string | null): Promise<RoomDashboardStats> {
+  const room = await getRoomByCode(roomCode);
+  if (!room) {
+    throw new AppError('NOT_FOUND', 'Salle introuvable');
+  }
+
+  const { supabaseAdmin } = await import('@/lib/supabase-admin');
+  const [{ data: dbPlayers }, { data: dbResponses }] = await Promise.all([
+    supabaseAdmin.from('Player').select('*').eq('roomId', room.id),
+    supabaseAdmin.from('Response').select('*').eq('roomId', room.id),
+  ]);
+
+  const players = dbPlayers || [];
+  const responses = dbResponses || [];
+
+  const nonHostPlayers = players.filter((p) => !p.isHost);
+  const playersCount = nonHostPlayers.length;
+  const roundCount = room.round || 0;
+
+  // Calculate participation rate
+  const maxPossibleResponses = roundCount * playersCount;
+  const actualResponses = responses.length;
+  const participationRate = maxPossibleResponses > 0 ? Math.min(100, Math.round((actualResponses / maxPossibleResponses) * 100)) : 100;
+
+  // Calculate consensus rate
+  const responsesByQuestion: Record<string, string[]> = {};
+  responses.forEach((r) => {
+    if (r.questionId && r.answer && r.answer !== '__SKIP__') {
+      if (!responsesByQuestion[r.questionId]) {
+        responsesByQuestion[r.questionId] = [];
+      }
+      responsesByQuestion[r.questionId].push(r.answer);
+    }
+  });
+
+  let sumConsensus = 0;
+  let questionCount = 0;
+  Object.values(responsesByQuestion).forEach((answers) => {
+    if (answers.length === 0) return;
+    const counts: Record<string, number> = {};
+    let maxCount = 0;
+    answers.forEach((ans) => {
+      counts[ans] = (counts[ans] || 0) + 1;
+      if (counts[ans] > maxCount) {
+        maxCount = counts[ans];
+      }
+    });
+    sumConsensus += maxCount / answers.length;
+    questionCount++;
+  });
+
+  const consensusRate = questionCount > 0 ? Math.round((sumConsensus / questionCount) * 100) : 100;
+
+  // Calculate ICE
+  const iceScore = Math.round((consensusRate * 0.6) + (participationRate * 0.4));
+
+  // Mode stats
+  const modeStats: Record<string, number> = {};
+  if (room.currentMode) {
+    modeStats[room.currentMode] = roundCount;
+  } else {
+    modeStats['ICEBREAKER'] = roundCount;
+  }
+
+  const customAnecdotes = Array.isArray(room.customAnecdotes) ? room.customAnecdotes : [];
+  const isAdmin = !!token && room.hostToken === token;
+
+  const result: RoomDashboardStats = {
+    roomCode: room.code,
+    targetType: room.targetType || 'GROUP',
+    status: room.status,
+    language: room.language || 'fr',
+    roundCount,
+    participationRate,
+    consensusRate,
+    iceScore,
+    playersCount,
+    isAdmin,
+    customAnecdotesCount: customAnecdotes.length,
+    modeStats,
+  };
+
+  if (isAdmin) {
+    result.players = nonHostPlayers.map((p) => ({ id: p.id, name: p.name }));
+    result.customAnecdotes = customAnecdotes;
+  } else {
+    // Pseudonymized players list for safety
+    result.players = nonHostPlayers.map((p, idx) => ({ id: p.id, name: `Agent ${idx + 1}` }));
+  }
+
+  return result;
+}
+
