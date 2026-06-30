@@ -22,16 +22,16 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Captain Bond — Le DJ de votre soirée",
-  description: "Jeu d'ambiance autour de la TV. Icebreaker, Spicy, Deep Connection, Imposteur, Date Night. 3 cartes gratuites, puis débloquez la soirée.",
+  title: "Captain Bond — Le DJ de ta soirée",
+  description: "Jeu d'ambiance autour de la TV. Icebreaker, Spicy, Deep Connection, Imposteur, Date Night. 3 cartes gratuites, puis débloque la soirée.",
   openGraph: {
-    title: "Captain Bond — Le DJ de votre soirée",
+    title: "Captain Bond — Le DJ de ta soirée",
     description: "Jeu d'ambiance autour de la TV. Icebreaker, Spicy, Deep Connection, Imposteur, Date Night. 3 cartes gratuites.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Captain Bond — Le DJ de votre soirée",
+    title: "Captain Bond — Le DJ de ta soirée",
     description: "Jeu d'ambiance autour de la TV. 3 cartes gratuites.",
   },
 };
