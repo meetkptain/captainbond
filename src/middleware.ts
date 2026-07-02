@@ -78,7 +78,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
         if (pathname === '/vault') dest = '/fr/vault';
         if (pathname === '/b2b/bars-cafes') dest = '/fr/b2b/bars-cafes';
         if (pathname.startsWith('/group/')) dest = `/fr${pathname}`;
-        const response = NextResponse.redirect(new URL(dest, req.url), 302);
+        const response = NextResponse.redirect(new URL(dest, req.url), 301);
         response.headers.set('x-request-id', requestId);
         return response;
       }
