@@ -664,7 +664,7 @@ export async function skipQuestion(roomCode: string, playerId: string): Promise<
   const selectedQuestion = room.targetType === 'CORPORATE' ? selectCorporateQuestion(pool) : pool[Math.floor(Math.random() * pool.length)];
   const updatedPlayedIds = Array.from(new Set([...Array.from(playedQuestionIds), selectedQuestion.id]));
 
-  let roundConfig = {
+  const roundConfig = {
     ...existingConfig,
     playedQuestionIds: updatedPlayedIds,
   };

@@ -1,5 +1,4 @@
 import { describe, it, expect, vi } from 'vitest';
-import { supabaseAdmin } from '@/lib/supabase-admin';
 import { getPlayersByRoomWithUserId } from '../playerRepository';
 
 vi.mock('@/lib/supabase-admin', () => ({

@@ -8,7 +8,7 @@ vi.mock('@/lib/supabase-admin', () => ({
 
 describe('joinRoomRpc', () => {
   it('returns the rpc result', async () => {
-    vi.mocked(supabaseAdmin.rpc).mockResolvedValue({
+    (supabaseAdmin.rpc as ReturnType<typeof vi.fn>).mockResolvedValue({
       data: { player_id: 'p1', room_id: 'r1', room_code: 'CODE' },
       error: null,
     });
