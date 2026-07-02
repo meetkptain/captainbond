@@ -39,17 +39,18 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 - Appliquer les migrations dans `supabase/migrations/` par ordre numérique.
 
-## 13. Token Optimization
-
-- **Caveman mode** : use `/caveman ultra` on user request or for subagent output, not by default. Superpowers skills override this when active.
-- **Research** : prefer `codegraph explore "<symbol>"` for symbols and call graphs. Use targeted `Grep` for text patterns when CodeGraph is overkill.
-- **Subagents** : in Kimi Code, use `Agent(subagent_type="explore"|"coder"|"plan")`. Use `Skill("cavecrew")` to decide when compressed cavecrew-style delegation saves context.
-- **Validation** : compress long command output with `rtk` when available (e.g. `rtk npm run build`).
-- **Git checks** : use `git diff --stat` to verify changes, not full file reads.
-- **Search exclusions** : never search `.next`, `node_modules`, `.git`, or build logs.
-- **CLI logging** : cap output (e.g. `git log -n 1`, `head -n 20`).
-- **Formatting** : keep responses concise. Avoid decorative emojis/tables unless they genuinely improve readability.
-- **SQL / Schema** : read `supabase/schema_summary.sql` before multiple migrations. Run `python3 scripts/update-schema-summary.py` after any schema change.
+## 13. Token Optimization (CRITICAL)
+- **Always activate** `/caveman ultra` mode. No filler, no prose.
+- **Workflow Strategy**:
+  1. **Research (CodeGraph)**: Use CodeGraph index server or MCP server before using `grep`/`find` scans. Use `codegraph explore "<symbol>"` or MCP tool `codegraph_explore` to inspect syntax trees, callers, and exact file paths without parsing entire folders. Avoid global grep entirely.
+  2. **Modification (Cavecrew)**: Delegate edits to `cavecrew-builder` for isolated context. Use surgical `view_file` (Start/End lines).
+  3. **Validation (RTK & Reviewer)**: Compress command output using `rtk` (e.g. `rtk npm run build`). Audit diffs via `cavecrew-reviewer`.
+- **Git checks**: Use `git diff --stat` to verify changes, not full file reads.
+- **Search Exclusions**: Never search `.next`, `node_modules`, `.git`, or build logs. Add to `.gitignore` or specify exclusions explicitly.
+- **CLI Logging**: Limit terminal logs. Use commands with page caps (e.g. `git log -n 1`, `head -n 20`).
+- **Zero Formatting**: Keep responses text-only, no decorative tables/emojis or useless markdown structures.
+- **Session Rotation**: If conversation history exceeds 20k tokens, export task progress state to `.agents/state.json` (keys: `current_task`, `modified_files`, `next_steps`) and prompt user to refresh session.
+- **SQL / Schema optimization**: Never read multiple migrations from `supabase/migrations/` to understand table structures. Always query `supabase/schema_summary.sql` first. If database schemas or migrations are modified, you MUST run `python3 scripts/update-schema-summary.py` to regenerate the summary file immediately.
 
 
 ## couple/page.tsx State Variables (CRITICAL)
