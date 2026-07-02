@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { recordVote, revealRound, skipQuestion, startNextRound } from '../roomGameService';
 import { AppError } from '@/lib/errors';
+import { listQuestionsForDeck } from '@/lib/db/repositories/roomQuestionRepository';
 
 import type { Room, Player, Question } from '@/lib/db/types';
 
@@ -22,7 +23,6 @@ vi.mock('@/lib/db/repositories', () => ({
   getPlayerInRoom: vi.fn(),
   getPlayersByRoomWithUserId: vi.fn(),
   getQuestionById: vi.fn(),
-  listQuestionsForDeck: vi.fn(),
   listQuestionsByIds: vi.fn(),
   getResponsesByRoomAndQuestion: vi.fn(),
   getResponsesForProfileInputs: vi.fn(),
@@ -32,6 +32,10 @@ vi.mock('@/lib/db/repositories', () => ({
   updateRoomStatusWithGuard: vi.fn(),
   recordVoteRpc: vi.fn(),
   upsertRevealScoresRpc: vi.fn(),
+}));
+
+vi.mock('@/lib/db/repositories/roomQuestionRepository', () => ({
+  listQuestionsForDeck: vi.fn(),
 }));
 
 import {
@@ -44,7 +48,6 @@ import {
   upsertRevealScoresRpc,
   getResponsesByRoomAndQuestion,
   getPlayersInRoom,
-  listQuestionsForDeck,
 } from '@/lib/db/repositories';
 
 describe('roomGameService', () => {

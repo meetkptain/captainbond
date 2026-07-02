@@ -5,7 +5,6 @@ import {
   getPlayerInRoom,
   getPlayersByRoomWithUserId,
   getQuestionById,
-  listQuestionsForDeck,
   listQuestionsByIds,
   getResponsesByRoomAndQuestion,
   getResponsesForProfileInputs,
@@ -16,6 +15,7 @@ import {
   recordVoteRpc,
   upsertRevealScoresRpc,
 } from '@/lib/db/repositories';
+import { listQuestionsForDeck } from '@/lib/db/repositories/roomQuestionRepository';
 import { Room, Question } from '@/lib/db/types';
 import { AppError } from '@/lib/errors';
 import { getServerGameMode } from '@/game-modes/manifests';
