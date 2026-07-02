@@ -523,13 +523,14 @@ Captain Bond EST :
 export async function generateMetadata({ params }) {
   const locale = params.locale || 'en';
   const baseUrl = 'https://captainbond.com';
+  const path = locale === 'fr' ? '/fr/' : '/';
 
   return {
     alternates: {
-      canonical: `${baseUrl}/${locale === 'fr' ? 'fr/' : ''}`,
+      canonical: `${baseUrl}${path}`,
       languages: {
-        'en-US': `${baseUrl}/`,
-        'en-GB': `${baseUrl}/`,
+        'en': `${baseUrl}/`,
+        'fr': `${baseUrl}/fr/`,
         'fr-FR': `${baseUrl}/fr/`,
         'fr-CA': `${baseUrl}/fr/`,
         'x-default': `${baseUrl}/`,
@@ -539,7 +540,13 @@ export async function generateMetadata({ params }) {
 }
 ```
 
+> **Important :** Ne pas lister `en-US` et `en-GB` séparément vers la même URL. Google considère cela comme un signal faible ou erroné. Utiliser une seule entrée `'en'`.
+>
+> Pour les pages profondes (`/party/`, `/fr/soiree/`, etc.), générer les hreflang dynamiquement à partir de la table de correspondance URL EN/FR (§3.1).
+
 #### 4.2.2 Sitemap.xml Multi-langue
+
+Générer le sitemap dynamiquement à partir de la table de correspondance URL EN/FR (§3.1). Exemple :
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -552,15 +559,26 @@ export async function generateMetadata({ params }) {
     <xhtml:link rel="alternate" hreflang="x-default" href="https://captainbond.com/"/>
   </url>
   <url>
-    <loc>https://captainbond.com/soiree/</loc>
+    <loc>https://captainbond.com/party/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://captainbond.com/party/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://captainbond.com/fr/soiree/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://captainbond.com/party/"/>
   </url>
-  <!-- ... etc ... -->
+  <url>
+    <loc>https://captainbond.com/couple/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://captainbond.com/couple/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://captainbond.com/fr/couple/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://captainbond.com/couple/"/>
+  </url>
+  <!-- ... etc pour /family/, /company/, /bars/, /creators/, /blog/ ... -->
 </urlset>
 ```
 
+> **Règle :** Chaque URL EN doit avoir son alter ego FR. Pas de `/soiree/` seul sans `/party/`.
+
 #### 4.2.3 Redirections Géographiques
+
+Ne jamais rediriger aveuglément. Utiliser un cookie de préférence de langue et un sélecteur visible.
 
 ```tsx
 // middleware.ts
@@ -570,17 +588,29 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const country = request.geo?.country || 'US';
   const path = request.nextUrl.pathname;
+  const preferredLocale = request.cookies.get('preferred_locale')?.value;
 
-  // Si visiteur FR et sur /, rediriger vers /fr/
-  if (country === 'FR' && path === '/') {
-    return NextResponse.redirect(new URL('/fr/', request.url));
+  // Si l'utilisateur a déjà choisi, respecter son choix
+  if (preferredLocale) {
+    return NextResponse.next();
+  }
+
+  // Redirection par défaut seulement pour la homepage racine
+  if (path === '/' && country === 'FR') {
+    const response = NextResponse.redirect(new URL('/fr/', request.url));
+    response.cookies.set('preferred_locale', 'fr', { maxAge: 60 * 60 * 24 * 365 });
+    return response;
   }
 
   return NextResponse.next();
 }
 ```
 
-⚠️ **Attention :** Ajouter un bouton "Switch to English" pour ne pas piéger les expats.
+> **Bonnes pratiques :**
+> - Toujours afficher un sélecteur de langue dans le header/footer.
+> - Ne jamais rediriger un expat ou un voyageur sans possibilité de revenir en EN.
+> - Utiliser `NextResponse.redirect` (302) et non pas une 301, car la préférence peut changer.
+> - Persister la préférence dans un cookie `preferred_locale` dès que l'utilisateur clique sur un sélecteur.
 
 ### 4.3 Stratégie SEO par Langue
 
