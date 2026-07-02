@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { sanitizeString, sanitizeRoomCode } from '@/lib/sanitize';
+import { gameModesServerRegistry } from '@/game-modes/manifests';
 
 // ---------- Primitives ----------
 
@@ -51,9 +52,11 @@ export const roomCodeOnlySchema = z.object({
 
 export type RoomCodeOnlyInput = z.infer<typeof roomCodeOnlySchema>;
 
+const serverGameModeIds = Object.keys(gameModesServerRegistry) as [string, ...string[]];
+
 export const roomSetModeSchema = z.object({
   roomCode: roomCodeSchema,
-  mode: z.enum(['DEEP_CONNECTION', 'DATE_NIGHT', 'IMPOSTEUR']),
+  mode: z.enum(serverGameModeIds),
 });
 
 export type RoomSetModeInput = z.infer<typeof roomSetModeSchema>;
