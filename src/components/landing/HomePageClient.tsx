@@ -192,6 +192,7 @@ export default function HomePageClient({ defaultLang = 'en' }: { defaultLang?: '
             step="01"
             title={t.step1Title}
             description={t.step1Desc}
+            titleAs="h2"
             visual={
               <div className="aspect-video bg-[#0a0f1e] rounded-2xl border border-white/10 flex items-center justify-center">
                 <Icon name="tv" className="w-20 h-20 text-white/20" />
@@ -202,6 +203,7 @@ export default function HomePageClient({ defaultLang = 'en' }: { defaultLang?: '
             step="02"
             title={t.step2Title}
             description={t.step2Desc}
+            titleAs="h2"
             visual={
               <div className="aspect-video bg-[#0a0f1e] rounded-2xl border border-white/10 flex items-center justify-center">
                 <Icon name="qrCode" className="w-20 h-20 text-white/20" />
@@ -213,6 +215,7 @@ export default function HomePageClient({ defaultLang = 'en' }: { defaultLang?: '
             step="03"
             title={t.step3Title}
             description={t.step3Desc}
+            titleAs="h2"
             visual={
               <div className="aspect-video bg-[#0a0f1e] rounded-2xl border border-white/10 flex items-center justify-center">
                 <Icon name="gamepad" className="w-20 h-20 text-white/20" />

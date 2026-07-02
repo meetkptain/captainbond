@@ -6,6 +6,7 @@ interface FeatureShowcaseProps {
   title: string;
   description: string;
   reverse?: boolean;
+  titleAs?: 'h2' | 'h3';
 }
 
 export function FeatureShowcase({
@@ -14,6 +15,7 @@ export function FeatureShowcase({
   title,
   description,
   reverse = false,
+  titleAs: TitleComponent = 'h3',
 }: FeatureShowcaseProps) {
   return (
     <div
@@ -28,9 +30,9 @@ export function FeatureShowcase({
             {step}
           </span>
         )}
-        <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight">
+        <TitleComponent className="text-2xl md:text-3xl font-black text-white tracking-tight">
           {title}
-        </h3>
+        </TitleComponent>
         <p className="text-base text-white/70 leading-relaxed">{description}</p>
       </div>
     </div>

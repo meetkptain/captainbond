@@ -130,6 +130,7 @@ export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLa
           <FeatureShowcase
             title={t.feat1Title}
             description={t.feat1Desc}
+            titleAs="h2"
             visual={
               <div className="aspect-video bg-[#0a0f1e] rounded-2xl border border-white/10 flex items-center justify-center">
                 <Icon name="check" className="w-20 h-20 text-white/20" />
@@ -139,6 +140,7 @@ export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLa
           <FeatureShowcase
             title={t.feat2Title}
             description={t.feat2Desc}
+            titleAs="h2"
             visual={
               <div className="aspect-video bg-[#0a0f1e] rounded-2xl border border-white/10 flex items-center justify-center">
                 <Icon name="users" className="w-20 h-20 text-white/20" />
