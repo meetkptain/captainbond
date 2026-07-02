@@ -176,147 +176,162 @@ Captain Bond EST :
 ### 3.1 Architecture URL Complète
 
 ```
-# 🌍 INTERNATIONAL
-/                                    → Homepage EN (marché international)
-/en/                                 → (optionnel, si besoin de séparer)
-
-# 🇫🇷 FRANCE
-/fr/                                 → Homepage FR
-
-# 🎯 ICP 1 — HÔTE SOCIAL
-/soiree/                             → Landing principale ICP1
-/soiree/anniversaire/                → Sous-niche : Anniversaires
-/soiree/afterwork/                   → Sous-niche : Afterworks
-/soiree/etudiants/                   → Sous-niche : Soirées étudiantes
-/fr/soiree/                          → Version FR
-/fr/soiree/anniversaire/             → Version FR
-
-# 💑 ICP 2 — COUPLE
+# 🌍 INTERNATIONAL (EN)
+/                                    → Homepage EN
+/party/                              → Landing principale ICP1 (soirée amis)
+/party/birthday/                     → Sous-niche : Anniversaires
+/party/afterwork/                    → Sous-niche : Afterworks
+/party/students/                     → Sous-niche : Soirées étudiantes
 /couple/                             → Landing principale ICP2
 /couple/date-night/                  → Sous-niche : Date Night
-/couple/anniversaire/                → Sous-niche : Anniversaire couple
-/fr/couple/                          → Version FR
-/fr/couple/date-night/               → Version FR
-
-# 👨‍👩‍👧‍👦 ICP 3 — FAMILLE
 /family/                             → Landing principale ICP3
 /family/christmas/                   → Sous-niche : Noël
 /family/holidays/                    → Sous-niche : Vacances
-/fr/famille/                         → Version FR
-/fr/famille/noel/                    → Version FR
-
-# 💼 ICP 4 — ENTREPRISE
-/company/                            → Landing principale ICP4
+/company/                            → Landing principale ICP4 (B2B)
 /company/team-building/              → Team Building
 /company/onboarding/                 → Onboarding RH
 /company/wellbeing/                  → QVT/RSE
-/fr/entreprise/                      → Version FR
-/fr/entreprise/team-building/        → Version FR
-
-# 🍻 ICP 4b — BARS
-/bars/                               → Landing principale Bars
-/fr/bars/                            → Version FR
-
-# 🎥 ICP 5 — CRÉATEURS
+/bars/                               → Landing Bars / Cafés
 /creators/                           → Programme affiliation
 /creators/media-kit/                 → Kit média
-/fr/createurs/                       → Version FR
-/fr/createurs/kit-media/             → Version FR
-
-# 📚 CONTENT MARKETING
 /blog/                               → Blog EN
 /blog/[slug]/                        → Articles EN
+
+# 🇫🇷 FRANCE
+/fr/                                 → Homepage FR
+/fr/soiree/                          → Landing principale ICP1 FR
+/fr/soiree/anniversaire/             → Sous-niche : Anniversaires
+/fr/soiree/afterwork/                → Sous-niche : Afterworks
+/fr/soiree/etudiants/                → Sous-niche : Soirées étudiantes
+/fr/couple/                          → Landing ICP2 FR
+/fr/couple/date-night/               → Sous-niche : Date Night
+/fr/famille/                         → Landing ICP3 FR
+/fr/famille/noel/                    → Sous-niche : Noël
+/fr/famille/vacances/                → Sous-niche : Vacances
+/fr/entreprise/                      → Landing ICP4 FR
+/fr/entreprise/team-building/        → Team Building
+/fr/entreprise/onboarding/           → Onboarding RH
+/fr/entreprise/qvt/                  → QVT/RSE
+/fr/bars/                            → Landing Bars FR
+/fr/createurs/                       → Programme affiliation FR
+/fr/createurs/kit-media/             → Kit média FR
 /fr/blog/                            → Blog FR
 /fr/blog/[slug]/                     → Articles FR
 ```
+
+> **Note migration :** Les routes actuelles `/corporate/` et `/b2b/` sont des versions temporaires. La cible à terme est `/company/` et `/bars/` pour l'EN, `/fr/entreprise/` et `/fr/bars/` pour le FR. Planifier des redirects 301 une fois les nouvelles pages en place.
 
 ### 3.2 Structure Homepage (`/`)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  HERO SECTION                                                │
-│  "Captain Bond: The game that creates memorable connections"│
+│  "Captain Bond : le jeu qui pose les bonnes questions       │
+│   à votre soirée."                                          │
+│  "TV + téléphones. 3 minutes pour briser la glace."         │
 │                                                              │
-│  [3 CTA principaux]                                          │
-│  🎉 Friends    💑 Couples    👨‍👩‍👧‍👦 Family                  │
-│  💼 Companies  🍻 Bars       🎥 Creators                    │
-│                                                              │
-│  [Social Proof] "10,000+ rooms created this month"          │
+│  [CTA principal] "Lancer une partie gratuite"               │
+│  [CTA secondaire] "Voir la démo"                            │
+│  [Social Proof] "X parties créées ce mois-ci"               │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│  DÉMO 6 SECONDES                                             │
+│  [GIF/Vidéo] TV + téléphones + question + réactions         │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  ICP SELECTOR (Grid 2x3)                                    │
-│  "You are:"                                                  │
-│  [6 cards with emoji + title + subtitle]                    │
+│  "Vous êtes :"                                               │
+│  🎉 Soirée    💑 Couple    👨‍👩‍👧‍👦 Famille                 │
+│  💼 Entreprise  🍻 Bar       🎥 Créateur                    │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  HOW IT WORKS (3 steps universelles)                        │
-│  1. Create a room    2. Scan QR code    3. Play             │
+│  1. Créez une room    2. Scannez le QR    3. Jouez          │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  TESTIMONIALS CAROUSEL (par ICP)                            │
-│  [Slide 1: Friends] [Slide 2: Couple] [Slide 3: Company]   │
+│  [Slide 1: Soirée] [Slide 2: Couple] [Slide 3: Entreprise] │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  FOOTER CTA                                                  │
-│  "Ready to play? [Start a game] [Join a table]"             │
+│  "Prêt à jouer ? [Créer une partie] [Rejoindre une table]"  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### 3.3 Structure Landing ICP1 (`/soiree/`)
+### 3.3 Structure Landing ICP1 (`/party/` EN, `/fr/soiree/` FR)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  HERO                                                        │
-│  "The party everyone will talk about on Monday"             │
-│  "Break the ice in 3 minutes. Zero awkwardness."            │
-│  [CTA] "Start my party (free)"                              │
-│  [Social Proof] "127 parties launched this weekend"         │
+│  "La soirée dont tout le monde parlera lundi"               │
+│  "Brisez la glace en 3 minutes. Sans awkwardness."          │
+│  [CTA] "Lancer 3 cartes gratuites"                          │
+│  [Social Proof] "127 parties lancées ce week-end"           │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  PROBLEM → SOLUTION                                          │
-│  ❌ "You know this?"                                         │
-│     - Party dies after 30 min                               │
-│     - Everyone on their phone                               │
-│     - Boring board games                                    │
-│  ✅ "With Captain Bond"                                      │
-│     - Instant icebreaker (3 free cards)                     │
-│     - Everyone on phone BUT together                        │
-│     - Spicy, Deep, Impostor modes                           │
+│  ❌ "Vous connaissez ça ?"                                   │
+│     - La soirée meurt après 30 min                          │
+│     - Tout le monde sur son téléphone                       │
+│     - Jeux de société ringards                              │
+│  ✅ "Avec Captain Bond"                                      │
+│     - Icebreaker instantané (3 cartes gratuites)            │
+│     - Tout le monde sur son téléphone MAIS ensemble         │
+│     - Modes Icebreaker, Spicy, Deep, Impostor               │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
-│  DEMO VIDEO (30 sec)                                         │
-│  Group of friends laughing + TV + smartphones mockup        │
+│  DÉMO VIDEO (6-30 sec)                                       │
+│  Groupe d'amis qui rit + TV + smartphones mockup            │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
-│  GAME MODES (3 cards)                                        │
-│  🧊 Icebreaker    🌶️ Spicy    🎭 Impostor                   │
-│  [CTA] "Try free (3 cards)"                                 │
+│  JEU FREEMIUM                                                │
+│  Jauge "Carte gratuite 1/3" visible sur TV + téléphone      │
+│  Bandeau au tour 2 : "Encore 1 carte gratuite..."           │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│  GAME MODES (4 cards)                                        │
+│  🧊 Icebreaker    🌶️ Spicy    💑 Deep    🎭 Impostor        │
+│  [CTA] "Essayer gratuitement"                               │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│  PAYWALL MULTI-OFFRES                                        │
+│  Pass 24h : 2.99€  |  Pass Week-end : 4.99€                 │
+│  Premium mensuel : 7.99€  |  Premium annuel : 39.99€        │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│  VIRAL LOOP                                                  │
+│  Bouton "Inviter sur WhatsApp" dans le lobby                │
+│  Partage Story natif avec le résultat de la partie          │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  SOCIAL PROOF ICP1                                           │
-│  Testimonials + Instagram UGC + Rating 4.8/5                │
+│  Témoignages + UGC Instagram + Note 4.8/5                   │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  FAQ                                                         │
-│  - Is it free? (3 cards yes, then €2.99)                    │
-│  - How many players? (3-20)                                 │
-│  - Do I need an app? (No, QR code)                          │
-│  - Does it work remotely? (Yes)                             │
+│  - C'est gratuit ? (3 cartes oui, puis 2.99€)               │
+│  - Combien de joueurs ? (3-20)                              │
+│  - Besoin d'une app ? (Non, QR code)                        │
+│  - Ça marche à distance ? (Oui)                             │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  CTA FINAL                                                   │
-│  "Ready to host your next party?"                           │
-│  [Start my party] [Join a table]                            │
+│  "Prêt à animer votre prochaine soirée ?"                   │
+│  [Créer une partie] [Rejoindre une table]                   │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -325,98 +340,100 @@ Captain Bond EST :
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  HERO                                                        │
-│  "Rediscover your partner. Every evening."                  │
-│  "1 question per day. 20h of revelation.                    │
-│   Months of deep connection."                               │
-│  [CTA] "Start free trial (7 days)"                          │
-│  [Social Proof] "2,847 couples connected this month"        │
+│  "Redécouvrez votre partenaire. Chaque soir."               │
+│  "1 question par jour. Des révélations. Des mois de         │
+│   connexion profonde."                                       │
+│  [CTA] "Essai gratuit 7 jours"                              │
+│  ⚠️ Disclaimer : outil ludique, pas un substitut à la       │
+│     thérapie de couple.                                     │
+│  [Social Proof] "2 847 couples connectés ce mois"           │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  PROBLEM → SOLUTION                                          │
-│  ❌ "Routine sets in"                                        │
-│  ✅ "With Captain Bond Couple"                               │
-│     - 1 deep question per day (AI-generated)                │
-│     - Synchronized revelation at 8pm (couple ritual)        │
-│     - Resonance score + personalized insights               │
+│  ❌ "La routine s'installe"                                  │
+│  ✅ "Avec Captain Bond Couple"                               │
+│     - 1 question profonde par jour (générée par IA)         │
+│     - Révélation synchronisée à 20h (rituel du couple)      │
+│     - Score de résonance + insights personnalisés           │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  HOW IT WORKS (3 steps)                                      │
-│  1. Answer separately (5 min)                               │
-│  2. Revelation at 8pm (connection moment)                   │
-│  3. Discover resonance score + AI insights                  │
+│  1. Répondez séparément (5 min)                             │
+│  2. Révélation à 20h (moment de connexion)                  │
+│  3. Découvrez le score de résonance + insights IA           │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  UNIQUE FEATURES                                             │
-│  🌙 Evening ritual    📊 Resonance score                    │
-│  🧠 AI insights       🌳 Couple totem                       │
-│  💊 Safe Zone                                                │
+│  🌙 Rituel du soir    📊 Score de résonance                 │
+│  🧠 Insights IA       🌳 Totem de couple                    │
+│  💊 Safe Word / Pause                                        │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  SOCIAL PROOF ICP2                                           │
-│  "We rediscovered each other after 5 years" - Marc & Sarah  │
-│  "82% of couples report better communication"               │
-│  Rating 4.9/5 on 1,203 couples                              │
+│  "Nous nous sommes redécouverts après 5 ans" - Marc & Sarah │
+│  "82% des couples rapportent une meilleure communication"   │
+│  Note 4.9/5 sur 1 203 couples                               │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  PRICING                                                     │
-│  Free: 7-day trial (1 question/day)                         │
-│  Premium: €4.99/month (unlimited + AI insights)             │
-│  Annual: €39.99/year (save 33%)                             │
-│  [CTA] "Start free trial"                                   │
+│  Essai gratuit : 7 jours (1 question/jour)                  │
+│  Premium mensuel : 7.99€/mois (illimité + insights IA)      │
+│  Premium annuel : 39.99€/an (3.33€/mois, économisez 58%)    │
+│  [CTA] "Démarrer l'essai gratuit"                           │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  FAQ                                                         │
-│  - Does my partner need the app? (Yes)                      │
-│  - What if we miss a day? (No penalty)                      │
-│  - Is it private? (Your data is private)                    │
-│  - Can I cancel? (Yes, 1 click)                             │
+│  - Mon partenaire doit-il avoir l'app ? (Oui)               │
+│  - Et si on rate un jour ? (Pas de pénalité)                │
+│  - C'est privé ? (Vos données restent privées)              │
+│  - Je peux résilier ? (Oui, 1 clic)                         │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  ⚠️ DISCLAIMER (OBLIGATOIRE)                                 │
-│  "Captain Bond Couple is a playful connection tool, not a   │
-│   substitute for couples therapy. If you're in distress,    │
-│   please reach out to professional resources."              │
-│  [Link to resources page]                                   │
+│  "Captain Bond Couple est un outil ludique de connexion,    │
+│   pas un substitut à une thérapie de couple. Si vous êtes   │
+│   en détresse, consultez les ressources professionnelles."  │
+│  [Lien vers la page Ressources]                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### 3.5 Structure Landing ICP4 (`/company/`)
+### 3.5 Structure Landing ICP4 (`/company/` EN, `/fr/entreprise/` FR)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  HERO                                                        │
-│  "Team building that doesn't suck"                          │
-│  "100% digital. 0 logistics. 100% engagement."              │
-│  [CTA] "Book a demo"                                        │
+│  "Un team building qui ne fait pas pschitt"                 │
+│  "100% digital. 0 logistique. 100% d'engagement."           │
+│  [CTA] "Réserver une démo"                                  │
 │  [Social Proof] Logos entreprises clientes                  │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  USE CASES                                                   │
 │  🎯 Team Building    🚀 Onboarding    🌱 QVT/RSE            │
-│  🎪 Seminars         🌍 Remote teams                        │
+│  🎪 Séminaires       🌍 Équipes distantes                   │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  ROI FOR COMPANIES                                           │
-│  +35% engagement (vs traditional team building)             │
-│  -60% cost (vs escape games)                                │
+│  +35% engagement (vs team building traditionnel)            │
+│  -60% de coût (vs escape games)                             │
 │  100% remote-friendly                                       │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  PRICING                                                     │
-│  Standard: €399 (up to 20 people)                           │
-│  Premium: €799 (custom + analytics)                         │
-│  Enterprise: Custom pricing                                 │
-│  [CTA] "Book a demo"                                        │
+│  Pack Événement : 399€ (jusqu'à 20 personnes)               │
+│  Premium B2B : 799€ (personnalisé + analytics)              │
+│  Enterprise : sur mesure, à partir de 1 500€                │
+│  [CTA] "Réserver une démo"                                  │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
@@ -426,7 +443,31 @@ Captain Bond EST :
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  CONTACT FORM                                                │
-│  Name, Email, Company size, Use case, Message               │
+│  Nom, Email, Taille entreprise, Use case, Message           │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 3.5b Structure Landing Bars (`/bars/`)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  HERO                                                        │
+│  "Animez vos soirées mortes avec un jeu digital"            │
+│  "QR code sur la table. Les clients jouent entre eux."      │
+│  [CTA] "Devenir partenaire"                                 │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│  AVANTAGES POUR LES BARS                                     │
+│  - Augmente le temps de présence                            │
+│  - Différenciateur vs concurrents                           │
+│  - QR codes trackés par établissement                       │
+│  - Offre spéciale : 29.99€/soirée ou abonnement mensuel     │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│  CONTACT FORM                                                │
+│  Nom établissement, Ville, Email, Téléphone, Créneaux       │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -435,32 +476,32 @@ Captain Bond EST :
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  HERO                                                        │
-│  "Turn your content into viral moments"                     │
-│  "Join the Captain Bond Creator Program"                    │
-│  [CTA] "Apply now"                                          │
+│  "Transformez votre contenu en moments viraux"              │
+│  "Rejoignez le programme Captain Bond Creator"              │
+│  [CTA] "Postuler"                                           │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  WHAT YOU GET                                                │
-│  💰 50% commission on sales                                 │
-│  🎁 Free premium access                                     │
+│  💰 30% commission sur les ventes                           │
+│  🎁 Accès premium gratuit                                   │
 │  📦 Media kit + assets                                      │
-│  🤝 Direct support team                                     │
+│  🤝 Support dédié                                           │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  HOW IT WORKS                                                │
-│  1. Apply → 2. Get your code → 3. Create content → 4. Earn │
+│  1. Postuler → 2. Recevoir son code → 3. Créer → 4. Gagner │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  SUCCESS STORIES                                             │
-│  Top 5 creators + earnings                                  │
+│  Top 5 créateurs + revenus estimés                          │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  APPLICATION FORM                                            │
-│  Name, Platform, Followers, Content niche, Why you?         │
+│  Nom, Plateforme, Followers, Niche, Pourquoi vous ?         │
 └─────────────────────────────────────────────────────────────┘
 ```
 
