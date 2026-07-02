@@ -261,11 +261,12 @@ model User {
 
 // Journal des événements webhook traités (idempotence)
 model WebhookEvent {
-  id          String   @id
-  type        String
-  payload     Json?
-  processedAt DateTime @default(now())
-  createdAt   DateTime @default(now())
+  id            String   @id
+  stripeEventId String   @unique
+  type          String
+  payload       Json?
+  processedAt   DateTime @default(now())
+  createdAt     DateTime @default(now())
 
   @@index([type, processedAt])
 }

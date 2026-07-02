@@ -21,7 +21,7 @@ export async function getCoupleByUsers(user1Id: string, user2Id: string): Promis
 export async function createCouple(user1Id: string, user2Id: string, timezone?: string): Promise<Couple> {
   // Sort user IDs lexicographically to enforce strict unique constraint (user1Id, user2Id)
   const [first, second] = [user1Id, user2Id].sort();
-  const insertData: Record<string, any> = { user1Id: first, user2Id: second };
+  const insertData: Record<string, string> = { user1Id: first, user2Id: second };
   if (timezone) {
     insertData.timezone = timezone;
   }

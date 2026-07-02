@@ -1,8 +1,10 @@
 import os
 import re
 
-migrations_dir = "/Users/nicolasvirin/Desktop/toto/mescodes/captainbond/supabase/migrations"
-output_file = "/Users/nicolasvirin/Desktop/toto/mescodes/captainbond/supabase/schema_summary.sql"
+root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+prisma_migrations_dir = os.path.join(root_dir, "prisma", "migrations")
+supabase_migrations_dir = os.path.join(root_dir, "supabase", "migrations")
+output_file = os.path.join(root_dir, "supabase", "schema_summary.sql")
 
 
 def strip_comments(sql: str) -> str:
@@ -101,6 +103,39 @@ def parse_alter_table_add_constraint(sql: str, tables: dict[str, dict]):
             tables[clean_name]["columns"].append(f"CONSTRAINT {cleaned}")
 
 
+def parse_alter_table_alter_column(sql: str, tables: dict[str, dict]):
+    """Apply ALTER TABLE ALTER COLUMN SET NOT NULL / DROP NOT NULL statements."""
+    pattern = re.compile(
+        r"alter\s+table\s+(?:if\s+exists\s+)?([\w\.\"]+)\s+alter\s+column\s+(?:if\s+exists\s+)?[\"]?([\w\"]+)[\"]?\s+(set\s+not\s+null|drop\s+not\s+null)\s*;",
+        re.IGNORECASE | re.DOTALL,
+    )
+    for table_name, column_name, action in pattern.findall(sql):
+        clean_name = normalize_name(table_name)
+        clean_col = normalize_name(column_name)
+        if clean_name not in tables:
+            continue
+        action_lower = action.lower()
+        for i, line in enumerate(tables[clean_name]["columns"]):
+            stripped = line.strip()
+            first_lower = stripped.lower()
+            # Skip constraints and indexes; only update plain column definitions.
+            if first_lower.startswith((
+                "constraint ", "primary ", "unique ", "foreign ",
+                "check ", "index ", "unique index ",
+            )):
+                continue
+            first_word = stripped.split()[0] if stripped.split() else ""
+            if normalize_name(first_word) == clean_col:
+                if action_lower == "set not null":
+                    if " not null" not in first_lower:
+                        tables[clean_name]["columns"][i] = f"{stripped} NOT NULL"
+                elif action_lower == "drop not null":
+                    tables[clean_name]["columns"][i] = re.sub(
+                        r"\s+NOT NULL", "", stripped, flags=re.IGNORECASE
+                    ).strip()
+                break
+
+
 def parse_indexes(sql: str, tables: dict[str, dict]):
     """Extract CREATE INDEX / CREATE UNIQUE INDEX statements."""
     pattern = re.compile(
@@ -122,47 +157,53 @@ def parse_indexes(sql: str, tables: dict[str, dict]):
 def main():
     tables: dict[str, dict] = {}
 
-    files = sorted(os.listdir(migrations_dir))
-    for file in files:
-        if not file.endswith(".sql"):
+    # Process Prisma baseline migrations first, then Supabase migrations so that
+    # later ALTER statements take precedence over the baseline CREATE TABLE.
+    # Prisma migrations live in subdirectories (each contains a migration.sql file),
+    # while Supabase migrations are flat .sql files.
+    migrations_dirs = [prisma_migrations_dir, supabase_migrations_dir]
+    sql_files: list[str] = []
+    for migrations_dir in migrations_dirs:
+        if not os.path.isdir(migrations_dir):
             continue
-        path = os.path.join(migrations_dir, file)
+        for dirpath, _, filenames in os.walk(migrations_dir):
+            for file in filenames:
+                if file.endswith(".sql"):
+                    sql_files.append(os.path.join(dirpath, file))
+
+    for path in sorted(sql_files):
         with open(path, "r", encoding="utf-8", errors="ignore") as f:
             content = f.read()
 
-        content = strip_comments(content)
-        parse_create_table(content, tables)
-        parse_alter_table_add_column(content, tables)
-        parse_alter_table_add_constraint(content, tables)
-        parse_indexes(content, tables)
+            content = strip_comments(content)
+            parse_create_table(content, tables)
+            parse_alter_table_add_column(content, tables)
+            parse_alter_table_add_constraint(content, tables)
+            parse_alter_table_alter_column(content, tables)
+            parse_indexes(content, tables)
 
     # Deduplicate lines that represent the same column/constraint/index.
+    # Later occurrences win so that Supabase migrations override the baseline.
     def normalize_for_dedup(line: str) -> str:
         lowered = line.lower()
         for prefix in ("add constraint ", "constraint ", "add column ", "add "):
             if lowered.startswith(prefix):
                 line = line[len(prefix):].strip()
                 break
+        line = line.replace('"', "")
         return re.sub(r"\s+", " ", line).strip()
 
-    for table_name in tables:
-        seen = set()
-        unique_columns = []
-        for line in tables[table_name]["columns"]:
+    def dedup_lines(lines: list[str]) -> list[str]:
+        seen: dict[str, str] = {}
+        for line in lines:
             key = normalize_for_dedup(line)
-            if key and key not in seen:
-                seen.add(key)
-                unique_columns.append(line)
-        tables[table_name]["columns"] = unique_columns
+            if key:
+                seen[key] = line
+        return list(seen.values())
 
-        seen = set()
-        unique_indexes = []
-        for line in tables[table_name]["indexes"]:
-            key = normalize_for_dedup(line)
-            if key and key not in seen:
-                seen.add(key)
-                unique_indexes.append(line)
-        tables[table_name]["indexes"] = unique_indexes
+    for table_name in tables:
+        tables[table_name]["columns"] = dedup_lines(tables[table_name]["columns"])
+        tables[table_name]["indexes"] = dedup_lines(tables[table_name]["indexes"])
 
     with open(output_file, "w", encoding="utf-8") as f:
         f.write("-- Database Schema Summary (Generated automatically for AI context optimization)\n\n")

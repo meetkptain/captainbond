@@ -1,7 +1,5 @@
 import Stripe from 'stripe';
 import {
-  createWebhookEvent,
-  getWebhookEventById,
   getUserByStripeCustomerId,
   updateUser,
   getPurchaseByStripePaymentId,
@@ -9,7 +7,7 @@ import {
   getPurchaseByStripeInvoiceId,
 } from '@/lib/db/repositories';
 import { getPackById, getPackBySku } from '@/lib/monetization/catalog';
-import { invalidateUserEntitlements, invalidateRoomPassInfo } from '@/lib/monetization/entitlements';
+import { invalidateUserEntitlements } from '@/lib/monetization/entitlements';
 import { captureServer, AnalyticsEvents } from '@/lib/analytics';
 import { AppError } from '@/lib/errors';
 import { supabaseAdmin } from '@/lib/supabase-admin';
@@ -43,11 +41,6 @@ export async function verifyStripeWebhook(
   }
 }
 
-export async function isWebhookEventProcessed(eventId: string): Promise<boolean> {
-  const existing = await getWebhookEventById(eventId);
-  return !!existing;
-}
-
 export async function processStripeEvent(event: Stripe.Event): Promise<void> {
   switch (event.type) {
     case 'checkout.session.completed':
@@ -68,22 +61,19 @@ export async function processStripeEvent(event: Stripe.Event): Promise<void> {
   }
 }
 
-export async function recordWebhookEvent(event: Stripe.Event): Promise<void> {
-  await createWebhookEvent({
-    id: event.id,
-    type: event.type,
-    payload: event as unknown as Record<string, unknown>,
-  });
-}
-
 async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, event: Stripe.Event) {
   const metadata = session.metadata || {};
-  const { sku, packId, playerId, roomCode, userId, productType } = metadata;
+  const { sku, packId, playerId, roomCode, userId } = metadata;
 
   let activeUserId = userId;
+  let userEmail = '';
+  let userName = '';
+
   if (!activeUserId) {
     if (session.customer_details?.email) {
       const email = session.customer_details.email;
+      userEmail = email;
+      userName = session.customer_details?.name || 'Collaborateur Pro';
       const { data: existingUser } = await dbRetry<{ id: string }>(async () =>
         supabaseAdmin.from('User').select('id').eq('email', email).maybeSingle()
       );
@@ -96,7 +86,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
           id: activeUserId,
           email,
           email_confirm: true,
-          user_metadata: { name: session.customer_details?.name || 'Collaborateur Pro' },
+          user_metadata: { name: userName },
         });
 
         if (authError) {
@@ -108,17 +98,6 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
           } else {
             throw new AppError('INTERNAL_ERROR', 'Erreur de création utilisateur corporate', { cause: authError });
           }
-        }
-
-        const { error: userError } = await dbRetry<null>(async () =>
-          supabaseAdmin.from('User').insert({
-            id: activeUserId,
-            email,
-            name: session.customer_details?.name || 'Collaborateur Pro',
-          })
-        );
-        if (userError) {
-          logger.warn('User corporate insertion warning (already created)', {}, userError);
         }
       }
     } else {
@@ -134,13 +113,16 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
   }
 
   const durationHours = pack.productType === 'PASS_WEEKEND' ? 72 : 24;
+  const subscriptionId = pack.isSubscription && session.subscription ? (session.subscription as string) : null;
 
-  const { error: fulfillError } = await dbRetry<null>(async () => supabaseAdmin.rpc('fulfill_checkout', {
+  const { error: fulfillError } = await dbRetry<null>(async () => supabaseAdmin.rpc('fulfill_checkout_v2', {
     p_event_id: event.id,
     p_event_type: event.type,
     p_payload: event as unknown as Record<string, unknown>,
     p_stripe_session_id: session.id,
     p_user_id: activeUserId,
+    p_email: userEmail,
+    p_name: userName,
     p_pack_id: pack.id,
     p_room_code: roomCode || '',
     p_player_id: playerId || '',
@@ -153,18 +135,12 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
       paymentIntent: session.payment_intent,
       invoice: session.invoice,
     },
+    p_subscription_id: subscriptionId,
   }));
 
   if (fulfillError) {
-    logger.error('RPC fulfill_checkout error', {}, fulfillError);
+    logger.error('RPC fulfill_checkout_v2 error', {}, fulfillError);
     throw new AppError('INTERNAL_ERROR', `Fulfillment failed: ${(fulfillError as Error).message || String(fulfillError)}`);
-  }
-
-  if (pack.isSubscription && session.subscription) {
-    await updateUser(activeUserId, {
-      subscriptionStatus: 'ACTIVE',
-      stripeSubscriptionId: session.subscription as string,
-    });
   }
 
   await captureServer(AnalyticsEvents.PURCHASE_COMPLETED, {
@@ -177,7 +153,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
     stripeSessionId: session.id,
   });
 
-  logger.info('Purchase completed', { sku: pack.sku, userId, stripeSessionId: session.id });
+  logger.info('Purchase completed', { sku: pack.sku, userId: activeUserId, stripeSessionId: session.id });
 }
 
 async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
@@ -286,6 +262,13 @@ async function handleChargeRefunded(charge: Stripe.Charge) {
 // ---------- Reconciliation ----------
 
 export async function reconcileCheckoutSession(session: Stripe.Checkout.Session): Promise<void> {
+  const existingPurchase = await getPurchaseByStripePaymentId(session.id);
+
+  if (existingPurchase) {
+    logger.info('Checkout session already reconciled', { sessionId: session.id });
+    return;
+  }
+
   const fakeEvent = {
     id: `reconcile_${crypto.randomUUID()}`,
     object: 'event',

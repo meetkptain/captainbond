@@ -4,17 +4,15 @@ import { POST } from './route';
 
 vi.mock('@/services/paymentService', () => ({
   verifyStripeWebhook: vi.fn(),
-  isWebhookEventProcessed: vi.fn(),
   processStripeEvent: vi.fn(),
-  recordWebhookEvent: vi.fn(),
 }));
 
-import {
-  verifyStripeWebhook,
-  isWebhookEventProcessed,
-  processStripeEvent,
-  recordWebhookEvent,
-} from '@/services/paymentService';
+vi.mock('@/lib/db/repositories/webhookEventRepository', () => ({
+  insertWebhookEventIfNotExists: vi.fn(),
+}));
+
+import { verifyStripeWebhook, processStripeEvent } from '@/services/paymentService';
+import { insertWebhookEventIfNotExists } from '@/lib/db/repositories/webhookEventRepository';
 
 describe('POST /api/webhook', () => {
   beforeEach(() => {
@@ -31,7 +29,7 @@ describe('POST /api/webhook', () => {
 
   it('returns idempotent response when event already processed', async () => {
     vi.mocked(verifyStripeWebhook).mockResolvedValue({ id: 'evt_123', type: 'checkout.session.completed' } as unknown as Awaited<ReturnType<typeof verifyStripeWebhook>>);
-    vi.mocked(isWebhookEventProcessed).mockResolvedValue(true);
+    vi.mocked(insertWebhookEventIfNotExists).mockResolvedValue({ inserted: false });
 
     const res = await POST(createWebhookRequest('body', 'sig'));
     const json = await res.json();
@@ -39,20 +37,19 @@ describe('POST /api/webhook', () => {
     expect(res.status).toBe(200);
     expect(json.idempotent).toBe(true);
     expect(processStripeEvent).not.toHaveBeenCalled();
-    expect(recordWebhookEvent).not.toHaveBeenCalled();
   });
 
-  it('processes new checkout event and records it', async () => {
+  it('processes new checkout event and records it atomically', async () => {
     const event = { id: 'evt_456', type: 'checkout.session.completed' };
     vi.mocked(verifyStripeWebhook).mockResolvedValue(event as unknown as Awaited<ReturnType<typeof verifyStripeWebhook>>);
-    vi.mocked(isWebhookEventProcessed).mockResolvedValue(false);
+    vi.mocked(insertWebhookEventIfNotExists).mockResolvedValue({ inserted: true });
 
     const res = await POST(createWebhookRequest('body', 'sig'));
     const json = await res.json();
 
     expect(res.status).toBe(200);
     expect(json.received).toBe(true);
+    expect(insertWebhookEventIfNotExists).toHaveBeenCalledWith(event.id, event.type, event);
     expect(processStripeEvent).toHaveBeenCalledWith(event);
-    expect(recordWebhookEvent).toHaveBeenCalledWith(event);
   });
 });

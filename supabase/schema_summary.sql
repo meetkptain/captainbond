@@ -104,28 +104,56 @@ CREATE TABLE DailyQuestion (
   INDEX "DailyQuestion_coupleId_analysisStatus_isRevealed_idx" ("coupleId", "analysisStatus", "isRevealed")
 );
 
+CREATE TABLE Pack (
+  "sku" TEXT UNIQUE,
+  "productType" "ProductType" NOT NULL DEFAULT 'PACK',
+  "scope" JSONB,
+  "stripeProductId" TEXT,
+  INDEX "Pack_sku_idx" ("sku")
+);
+
 CREATE TABLE Player (
+  "consentGivenAt" TIMESTAMPTZ,
   "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   INDEX "Player_createdAt_idx" ("createdAt")
 );
 
+CREATE TABLE Purchase (
+  "userId" TEXT,
+  "status" "PurchaseStatus" NOT NULL DEFAULT 'COMPLETED',
+  "refundedAt" TIMESTAMPTZ,
+  "metadata" JSONB,
+  "currency" TEXT NOT NULL DEFAULT 'eur',
+  "stripeInvoiceId" TEXT,
+  CONSTRAINT "Purchase_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"(id) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT "Purchase_packId_fkey" FOREIGN KEY ("packId") REFERENCES "Pack"(id) ON DELETE SET NULL ON UPDATE CASCADE,
+  INDEX "Purchase_userId_idx" ("userId"),
+  INDEX "Purchase_stripePaymentId_idx" ("stripePaymentId"),
+  INDEX "Purchase_packId_idx" ("packId")
+);
+
 CREATE TABLE Question (
+  "theme" TEXT,
+  "suggestedAction" TEXT,
+  "therapistGuide" TEXT,
   "correctAnswer" TEXT,
   "options" TEXT[] DEFAULT '{}',
   "explanation" TEXT,
   "category" TEXT NOT NULL DEFAULT 'GENERAL',
   "difficulty" INTEGER NOT NULL DEFAULT 1,
   "language" VARCHAR(5) DEFAULT 'fr',
-  "theme" TEXT,
-  "suggestedAction" TEXT,
-  "therapistGuide" TEXT,
   INDEX "Question_category_idx" ("category"),
   INDEX "Question_language_idx" ("language")
 );
 
 CREATE TABLE Room (
+  "paidByUserId" TEXT,
+  "passExpiresAt" TIMESTAMPTZ,
+  CONSTRAINT "Room_paidByUserId_fkey" FOREIGN KEY ("paidByUserId") REFERENCES "User"(id) ON DELETE SET NULL ON UPDATE CASCADE,
+  "hostToken" TEXT NOT NULL,
   "customAnecdotes" JSONB DEFAULT '[]'::jsonb,
   "language" VARCHAR(5) DEFAULT 'fr',
+  UNIQUE INDEX "Room_hostToken_key" ("hostToken"),
   INDEX "Room_language_idx" ("language")
 );
 
@@ -226,11 +254,56 @@ CREATE TABLE TreeNode (
   INDEX "TreeNode_questionId_idx" ("questionId")
 );
 
+CREATE TABLE User (
+  "subscriptionStatus" "SubscriptionStatus" NOT NULL DEFAULT 'NONE',
+  "stripeSubscriptionId" TEXT
+);
+
+CREATE TABLE UserPack (
+  "id" TEXT NOT NULL,
+  "userId" TEXT NOT NULL,
+  "packId" TEXT NOT NULL,
+  "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT "UserPack_pkey" PRIMARY KEY ("id"),
+  CONSTRAINT "UserPack_userId_packId_key" UNIQUE ("userId", "packId"),
+  CONSTRAINT "UserPack_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT "UserPack_packId_fkey" FOREIGN KEY ("packId") REFERENCES "Pack"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  INDEX "UserPack_userId_idx" ("userId")
+);
+
+CREATE TABLE UserPass (
+  "id" TEXT NOT NULL,
+  "userId" TEXT NOT NULL,
+  "packId" TEXT NOT NULL,
+  "startedAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "expiresAt" TIMESTAMPTZ NOT NULL,
+  "source" TEXT NOT NULL DEFAULT 'stripe',
+  "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT "UserPass_pkey" PRIMARY KEY ("id"),
+  CONSTRAINT "UserPass_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT "UserPass_packId_fkey" FOREIGN KEY ("packId") REFERENCES "Pack"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  INDEX "UserPass_userId_expiresAt_idx" ("userId", "expiresAt")
+);
+
 CREATE TABLE UserStats (
+  "badges" JSONB NOT NULL DEFAULT '[]'::jsonb,
+  "archetypesUnlocked" JSONB NOT NULL DEFAULT '[]'::jsonb,
   "currentStreak" INTEGER NOT NULL DEFAULT 0,
   "gamesPlayedToday" INTEGER NOT NULL DEFAULT 0,
   "lastPlayedAt" TIMESTAMPTZ,
   "badges" JSONB NOT NULL DEFAULT '[]',
   "archetypesUnlocked" JSONB NOT NULL DEFAULT '[]'
+);
+
+CREATE TABLE WebhookEvent (
+  "id" TEXT NOT NULL,
+  "type" TEXT NOT NULL,
+  "payload" JSONB,
+  "processedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT "WebhookEvent_pkey" PRIMARY KEY ("id"),
+  "stripeEventId" TEXT NOT NULL,
+  CONSTRAINT webhook_event_stripe_event_id_unique UNIQUE ("stripeEventId"),
+  INDEX "WebhookEvent_type_processedAt_idx" ("type", "processedAt")
 );
 

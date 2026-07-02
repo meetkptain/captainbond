@@ -1,11 +1,7 @@
 import { NextResponse } from 'next/server';
 import { withApiHandler } from '@/lib/api/withApiHandler';
-import {
-  verifyStripeWebhook,
-  isWebhookEventProcessed,
-  processStripeEvent,
-  recordWebhookEvent,
-} from '@/services/paymentService';
+import { insertWebhookEventIfNotExists } from '@/lib/db/repositories/webhookEventRepository';
+import { verifyStripeWebhook, processStripeEvent } from '@/services/paymentService';
 
 export const runtime = 'edge';
 
@@ -16,13 +12,16 @@ export const POST = withApiHandler({
 
     const event = await verifyStripeWebhook(body, signature);
 
-    if (await isWebhookEventProcessed(event.id)) {
+    const { inserted } = await insertWebhookEventIfNotExists(
+      event.id,
+      event.type,
+      event as unknown as Record<string, unknown>
+    );
+    if (!inserted) {
       return NextResponse.json({ received: true, idempotent: true });
     }
 
     await processStripeEvent(event);
-    await recordWebhookEvent(event);
-
     return NextResponse.json({ received: true });
   },
 });

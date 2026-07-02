@@ -8,7 +8,7 @@ export * from './responseRepository';
 export * from './roomRpcRepository';
 export * from './scoreRepository';
 export * from './purchaseRepository';
-export * from './webhookRepository';
+export * from './webhookEventRepository';
 export * from './userRepository';
 export * from './coupleRepository';
 export * from './treeRepository';

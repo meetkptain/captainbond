@@ -122,6 +122,7 @@ export interface UserPack {
 
 export interface WebhookEvent {
   id: string;
+  stripeEventId: string;
   type: string;
   payload: Record<string, unknown>;
   processedAt?: string;
