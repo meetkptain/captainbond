@@ -2,11 +2,7 @@ import { validateEnv, getPublicEnvSummary } from '@/lib/env';
 import { logger } from '@/lib/logger';
 
 export function register() {
-  const result = validateEnv();
-
-  if (!result.valid) {
-    throw new Error('Invalid environment configuration');
-  }
+  validateEnv();
 
   logger.info('Koze server boot', {
     version: process.env.NEXT_PUBLIC_APP_VERSION || 'unknown',

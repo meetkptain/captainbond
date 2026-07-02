@@ -1,5 +1,4 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { supabaseAdmin } from '@/lib/supabase-admin';
 import { generateUniqueRoomCode } from '../roomCodeRepository';
 import { AppError } from '@/lib/errors';
 
