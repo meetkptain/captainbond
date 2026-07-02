@@ -3,19 +3,14 @@ import { createRoom, joinRoom } from '../roomService';
 import { AppError } from '@/lib/errors';
 import { getRoomByCode } from '@/lib/db/repositories';
 import { createRoom as createRoomInDb } from '@/lib/db/repositories';
-import { supabaseAdmin } from '@/lib/supabase-admin';
+import { joinRoomRpc } from '@/lib/db/repositories';
 
 vi.mock('@/lib/db/repositories', () => ({
   createRoom: vi.fn(),
   getRoomByCode: vi.fn(),
   getRoomById: vi.fn(),
   createPlayer: vi.fn(),
-}));
-
-vi.mock('@/lib/supabase-admin', () => ({
-  supabaseAdmin: {
-    rpc: vi.fn(),
-  },
+  joinRoomRpc: vi.fn(),
 }));
 
 vi.mock('@/lib/crypto', () => ({
@@ -100,10 +95,11 @@ describe('roomService', () => {
         currentMode: 'icebreaker',
       } as unknown as Awaited<ReturnType<typeof getRoomByCode>>);
 
-      vi.mocked(supabaseAdmin.rpc).mockResolvedValueOnce({
-        data: [{ player_id: 'player-1', room_id: 'room-1', room_code: 'ABCD' }],
-        error: null,
-      } as unknown as Awaited<ReturnType<typeof supabaseAdmin.rpc>>);
+      vi.mocked(joinRoomRpc).mockResolvedValueOnce({
+        player_id: 'player-1',
+        room_id: 'room-1',
+        room_code: 'ABCD',
+      } as unknown as Awaited<ReturnType<typeof joinRoomRpc>>);
 
       const result = await joinRoom({ roomCode: 'ABCD', playerName: 'Alice' });
       expect(result.player.id).toBe('player-1');
@@ -118,10 +114,9 @@ describe('roomService', () => {
         status: 'WAITING',
       } as unknown as Awaited<ReturnType<typeof getRoomByCode>>);
 
-      vi.mocked(supabaseAdmin.rpc).mockResolvedValueOnce({
-        data: null,
-        error: { message: 'Ce nom est déjà pris', details: '', hint: '', code: '' },
-      } as unknown as Awaited<ReturnType<typeof supabaseAdmin.rpc>>);
+      vi.mocked(joinRoomRpc).mockRejectedValueOnce(
+        new Error('Ce nom est déjà pris')
+      );
 
       await expect(joinRoom({ roomCode: 'ABCD', playerName: 'Alice' })).rejects.toThrow(
         new AppError('PLAYER_NAME_TAKEN', 'The name "Alice" is already taken in this lobby')
@@ -136,10 +131,9 @@ describe('roomService', () => {
         currentMode: 'icebreaker',
       } as unknown as Awaited<ReturnType<typeof getRoomByCode>>);
 
-      vi.mocked(supabaseAdmin.rpc).mockResolvedValueOnce({
-        data: null,
-        error: { message: 'Cette table est complète', details: '', hint: '', code: '' },
-      } as unknown as Awaited<ReturnType<typeof supabaseAdmin.rpc>>);
+      vi.mocked(joinRoomRpc).mockRejectedValueOnce(
+        new Error('Cette table est complète')
+      );
 
       await expect(joinRoom({ roomCode: 'ABCD', playerName: 'Alice' })).rejects.toThrow(
         new AppError('ROOM_FULL', 'Cette table est complète (8 joueurs max pour ce mode).')

@@ -3,11 +3,15 @@ import {
   getRoomByCode,
   getRoomById,
   updateRoom,
-} from '@/lib/db/repositories';
-import {
   createPlayer,
   countNonHostPlayersInRoom,
   getPlayerById,
+  getPlayersInRoom,
+  updatePlayersInRoom,
+  getResponsesByRoomAndQuestion,
+  getResponsesByRoom,
+  deleteScoresByRoom,
+  joinRoomRpc,
 } from '@/lib/db/repositories';
 import { Room, Player, Response } from '@/lib/db/types';
 import { AppError } from '@/lib/errors';
@@ -109,17 +113,18 @@ export async function joinRoom(input: JoinRoomInput): Promise<JoinRoomResult> {
   const playerId = crypto.randomUUID();
   const consentGivenAt = new Date().toISOString();
 
-  const { supabaseAdmin } = await import('@/lib/supabase-admin');
-  const { data, error } = await supabaseAdmin.rpc('join_room', {
-    p_room_code: input.roomCode.trim(),
-    p_player_name: input.playerName.trim(),
-    p_player_id: playerId,
-    p_max_players: maxPlayers,
-    p_consent_given_at: consentGivenAt,
-  });
-
-  if (error) {
-    const message = error.message || '';
+  let result;
+  try {
+    result = await joinRoomRpc({
+      roomCode: input.roomCode.trim(),
+      playerName: input.playerName.trim(),
+      playerId,
+      maxPlayers,
+      consentGivenAt,
+    });
+  } catch (err: unknown) {
+    const rpcError = err as { message?: string };
+    const message = rpcError.message || '';
     if (message.includes('Salle introuvable')) {
       throw new AppError('NOT_FOUND', `Room code "${input.roomCode}" not found`);
     }
@@ -138,10 +143,9 @@ export async function joinRoom(input: JoinRoomInput): Promise<JoinRoomResult> {
         `Cette table est complète (${maxPlayers} joueurs max pour ce mode).`
       );
     }
-    throw new AppError('INTERNAL_ERROR', 'Failed to join room', { cause: error });
+    throw new AppError('INTERNAL_ERROR', 'Failed to join room', { cause: err });
   }
 
-  const result = Array.isArray(data) ? data[0] : data;
   if (!result || !result.player_id) {
     throw new AppError('INTERNAL_ERROR', 'L\'inscription a réussi mais aucune donnée n\'a été renvoyée');
   }
@@ -174,21 +178,16 @@ export async function getRoomState(roomCode: string): Promise<RoomState> {
     throw new AppError('NOT_FOUND', 'Salle introuvable');
   }
 
-  const { supabaseAdmin } = await import('@/lib/supabase-admin');
-  const [{ data: players }, { data: responses }] = await Promise.all([
-    supabaseAdmin.from('Player').select('*').eq('roomId', room.id),
-    supabaseAdmin
-      .from('Response')
-      .select('*')
-      .eq('roomId', room.id)
-      .eq('questionId', room.currentQuestionId ?? ''),
+  const [players, responses] = await Promise.all([
+    getPlayersInRoom(room.id),
+    getResponsesByRoomAndQuestion(room.id, room.currentQuestionId ?? ''),
   ]);
 
   const safeRoom = { ...room } as Partial<Room>;
   delete safeRoom.hostToken;
   delete safeRoom.paidByUserId;
 
-  const safePlayers = (players || []).map((p) => {
+  const safePlayers = players.map((p) => {
     const rest = { ...p } as Partial<Player> & { userId?: string | null; consentGivenAt?: string | null };
     delete rest.userId;
     delete rest.consentGivenAt;
@@ -198,7 +197,7 @@ export async function getRoomState(roomCode: string): Promise<RoomState> {
   return {
     room: safeRoom as Omit<Room, 'hostToken'>,
     players: safePlayers as Player[],
-    responses: (responses || []) as Response[],
+    responses,
   };
 }
 
@@ -249,16 +248,11 @@ export async function resetRoom(
     throw new AppError('FORBIDDEN', 'Seul l\'hôte peut réinitialiser la room');
   }
 
-  const { supabaseAdmin } = await import('@/lib/supabase-admin');
-
   if (resetScores) {
-    await supabaseAdmin.from('Score').delete().eq('roomId', room.id);
+    await deleteScoresByRoom(room.id);
   }
 
-  await supabaseAdmin
-    .from('Player')
-    .update({ isReady: false })
-    .eq('roomId', room.id);
+  await updatePlayersInRoom(room.id, { isReady: false });
 
   return updateRoom(room.id, {
     status: 'WAITING',
@@ -314,14 +308,10 @@ export async function getRoomDashboardStats(roomCode: string, token?: string | n
     throw new AppError('NOT_FOUND', 'Salle introuvable');
   }
 
-  const { supabaseAdmin } = await import('@/lib/supabase-admin');
-  const [{ data: dbPlayers }, { data: dbResponses }] = await Promise.all([
-    supabaseAdmin.from('Player').select('*').eq('roomId', room.id),
-    supabaseAdmin.from('Response').select('*').eq('roomId', room.id),
+  const [players, responses] = await Promise.all([
+    getPlayersInRoom(room.id),
+    getResponsesByRoom(room.id),
   ]);
-
-  const players = dbPlayers || [];
-  const responses = dbResponses || [];
 
   const nonHostPlayers = players.filter((p) => !p.isHost);
   const playersCount = nonHostPlayers.length;
