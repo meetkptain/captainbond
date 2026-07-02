@@ -153,6 +153,8 @@ CREATE TABLE Room (
   "hostToken" TEXT NOT NULL,
   "customAnecdotes" JSONB DEFAULT '[]'::jsonb,
   "language" VARCHAR(5) DEFAULT 'fr',
+  CONSTRAINT "Room_currentMode_check" CHECK ("currentMode" IS NULL OR "currentMode" IN ( 'ICEBREAKER','DEEP_CONNECTION','SPICY','IMPOSTEUR','DATE_NIGHT', 'FAMILY','MOST_LIKELY_TO','MISSION_IMPOSSIBLE' )),
+  CONSTRAINT "Room_targetType_check" CHECK ("targetType" IN ('GROUP','SOLO','CORPORATE')),
   UNIQUE INDEX "Room_hostToken_key" ("hostToken"),
   INDEX "Room_language_idx" ("language")
 );

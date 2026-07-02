@@ -1,0 +1,15 @@
+ALTER TABLE "Room" DROP CONSTRAINT IF EXISTS "Room_currentMode_check";
+ALTER TABLE "Room" DROP CONSTRAINT IF EXISTS "Room_targetType_check";
+
+ALTER TABLE "Room" ADD CONSTRAINT "Room_currentMode_check"
+  CHECK ("currentMode" IS NULL OR "currentMode" IN (
+    'ICEBREAKER','DEEP_CONNECTION','SPICY','IMPOSTEUR','DATE_NIGHT',
+    'FAMILY','MOST_LIKELY_TO','MISSION_IMPOSSIBLE'
+  ))
+  NOT VALID;
+ALTER TABLE "Room" VALIDATE CONSTRAINT "Room_currentMode_check";
+
+ALTER TABLE "Room" ADD CONSTRAINT "Room_targetType_check"
+  CHECK ("targetType" IN ('GROUP','SOLO','CORPORATE'))
+  NOT VALID;
+ALTER TABLE "Room" VALIDATE CONSTRAINT "Room_targetType_check";

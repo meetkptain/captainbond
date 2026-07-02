@@ -50,7 +50,7 @@ model Room {
   hostId            String
   hostToken         String     @unique // Token signé pour authentifier l'hôte
   status            RoomStatus @default(WAITING)
-  currentMode       String?
+  currentMode       String? /// Must be one of ICEBREAKER|DEEP_CONNECTION|SPICY|IMPOSTEUR|DATE_NIGHT|FAMILY|MOST_LIKELY_TO|MISSION_IMPOSSIBLE or NULL
   round             Int        @default(0)
   currentQuestionId String?
   createdAt         DateTime   @default(now())
@@ -61,7 +61,7 @@ model Room {
   currentQuestion Question? @relation("RoomCurrentQuestion", fields: [currentQuestionId], references: [id])
   roundConfig     Json?
 
-  targetType         String  @default("GROUP")
+  targetType         String  @default("GROUP") /// Must be one of GROUP|SOLO|CORPORATE
   isProfilingEnabled Boolean @default(true)
 
   hostUserId    String?

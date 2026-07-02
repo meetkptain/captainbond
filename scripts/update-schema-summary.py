@@ -103,6 +103,31 @@ def parse_alter_table_add_constraint(sql: str, tables: dict[str, dict]):
             tables[clean_name]["columns"].append(f"CONSTRAINT {cleaned}")
 
 
+def parse_alter_table_validate_constraint(sql: str, tables: dict[str, dict]):
+    """Apply ALTER TABLE VALIDATE CONSTRAINT statements by stripping NOT VALID."""
+    pattern = re.compile(
+        r"alter\s+table\s+(?:if\s+exists\s+)?([\w\.\"]+)\s+validate\s+constraint\s+([\"]?[\w\"]+[\"]?)\s*;",
+        re.IGNORECASE | re.DOTALL,
+    )
+    for table_name, constraint_name in pattern.findall(sql):
+        clean_name = normalize_name(table_name)
+        clean_constraint = normalize_name(constraint_name)
+        if clean_name not in tables:
+            continue
+        for i, line in enumerate(tables[clean_name]["columns"]):
+            # Match constraints stored as "CONSTRAINT <name> CHECK (...) NOT VALID"
+            match = re.match(
+                r"constraint\s+([\"]?[\w\"]+[\"]?)\s+(.*)",
+                line,
+                re.IGNORECASE,
+            )
+            if match and normalize_name(match.group(1)) == clean_constraint:
+                tables[clean_name]["columns"][i] = re.sub(
+                    r"\s+NOT VALID", "", line, flags=re.IGNORECASE
+                ).strip()
+                break
+
+
 def parse_alter_table_alter_column(sql: str, tables: dict[str, dict]):
     """Apply ALTER TABLE ALTER COLUMN SET NOT NULL / DROP NOT NULL statements."""
     pattern = re.compile(
@@ -179,6 +204,7 @@ def main():
             parse_create_table(content, tables)
             parse_alter_table_add_column(content, tables)
             parse_alter_table_add_constraint(content, tables)
+            parse_alter_table_validate_constraint(content, tables)
             parse_alter_table_alter_column(content, tables)
             parse_indexes(content, tables)
 
