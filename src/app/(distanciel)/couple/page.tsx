@@ -1,6 +1,5 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { BackgroundOrbs } from '@/components/BackgroundOrbs';
 import { ResonanceCircle } from '@/components/couple/ResonanceCircle';
@@ -18,72 +17,9 @@ import { RitualCard } from '@/components/couple/RitualCard';
 import { RevealCard } from '@/components/couple/RevealCard';
 import { WeeklyRecap } from '@/components/couple/WeeklyRecap';
 import { Icon } from '@/components/Icon';
-import { api, ApiClientError } from '@/lib/api/client';
-import { getCurrentUser } from '@/lib/supabase-auth';
 import { AuthModal } from '@/components/AuthModal';
+import { useCoupleDashboard, AnalysisData } from './_hooks/useCoupleDashboard';
 import './couple.css';
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-interface DailyQuestionData {
-  id: string;
-  coupleId: string;
-  questionId?: string | null;
-  customText?: string | null;
-  releasedAt: string;
-  isAnswered: boolean;
-  user1Answer?: string | null;
-  user2Answer?: string | null;
-  user1Answered: boolean;
-  user2Answered: boolean;
-  isRevealed: boolean;
-  resonanceScore?: number | null;
-  analysisJson?: AnalysisData | null;
-  analysisStatus: 'PENDING' | 'COMPUTED' | 'REVEALED' | 'EXPIRED';
-  question?: { text: string } | null;
-  theme?: string | null;
-  intensity?: number;
-  ritualAction?: string | null;
-  therapistGuide?: string | null;
-  isSafeZoneActive?: boolean;
-  user1Mood?: Record<string, unknown> | null;
-  user2Mood?: Record<string, unknown> | null;
-}
-
-interface AnalysisData {
-  alignmentScore: number;
-  resonanceInsight: string;
-  partnerAProfile: { traits: string[] };
-  partnerBProfile: { traits: string[] };
-  actionSuggestion: string;
-}
-
-interface CouplePortraitData {
-  id: string;
-  month: string;
-  alignmentTrend: number;
-  coupleDynamic?: Record<string, unknown> | null;
-}
-
-interface CoupleData {
-  id: string;
-  user1Id: string;
-  user2Id: string;
-}
-
-interface PortraitResponse {
-  couple: CoupleData;
-  dailyQuestions: DailyQuestionData[];
-  portraits: CouplePortraitData[];
-  totemState?: PageTotemState | null;
-}
-
-interface PageTotemState {
-  fusionState?: {
-    status?: string;
-    energy?: number;
-  };
-  streakDays?: number;
-}
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function formatDate(dateStr: string): string {
@@ -104,297 +40,55 @@ function getScoreLabel(score: number): string {
   return 'Exploration';
 }
 
-function calculateStreak(questions: DailyQuestionData[]): number {
-  let streak = 0;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  for (const q of questions) {
-    const qDate = new Date(q.releasedAt);
-    qDate.setHours(0, 0, 0, 0);
-    const diff = Math.floor((today.getTime() - qDate.getTime()) / (1000 * 60 * 60 * 24));
-    if (diff === streak && q.isAnswered) {
-      streak++;
-    } else {
-      break;
-    }
-  }
-  return streak;
-}
-
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 'fr' | 'en' }) {
   const router = useRouter();
 
-  // State
-  const [loading, setLoading] = useState(true);
-  const [userId, setUserId] = useState<string | null>(null);
-  const [couple, setCouple] = useState<CoupleData | null>(null);
-  const [dailyQuestions, setDailyQuestions] = useState<DailyQuestionData[]>([]);
-  const [portraits, setPortraits] = useState<CouplePortraitData[]>([]);
-  const [answer, setAnswer] = useState('');
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [showProtocol, setShowProtocol] = useState(false);
-  const [selectedQuestion, setSelectedQuestion] = useState<DailyQuestionData | null>(null);
-  const [revealAnimation, setRevealAnimation] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [isCouchMode, setIsCouchMode] = useState(false);
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [totemState, setTotemState] = useState<PageTotemState | null>(null);
-  const [moodEnergy, setMoodEnergy] = useState(3);
-  const [moodStress, setMoodStress] = useState(1);
-  const [moodFeeling, setMoodFeeling] = useState('');
-  const [submittingMood, setSubmittingMood] = useState(false);
-
-  // Derived
-  const todayQuestion = useMemo(() => dailyQuestions[0] ?? null, [dailyQuestions]);
-  const pastQuestions = useMemo(() => dailyQuestions.slice(1), [dailyQuestions]);
-
-  const isUser1 = useMemo(
-    () => couple && userId ? couple.user1Id === userId : false,
-    [couple, userId]
-  );
-
-  const partnerName = useMemo(() => {
-    if (!couple || !userId) return 'Ton partenaire';
-    return 'Ton partenaire';
-  }, [couple, userId]);
-
-  const myName = useMemo(() => {
-    return isUser1 ? 'Partenaire A' : 'Partenaire B';
-  }, [isUser1]);
-
-  const hasMyAnswer = useMemo(() => {
-    if (!todayQuestion) return false;
-    return isUser1 ? todayQuestion.user1Answered : todayQuestion.user2Answered;
-  }, [todayQuestion, isUser1]);
-
-  const hasPartnerAnswer = useMemo(() => {
-    if (!todayQuestion) return false;
-    return isUser1 ? todayQuestion.user2Answered : todayQuestion.user1Answered;
-  }, [todayQuestion, isUser1]);
-
-  const bothAnswered = hasMyAnswer && hasPartnerAnswer;
-
-  const hasMyMood = useMemo(() => {
-    if (!todayQuestion) return false;
-    return isUser1 ? !!todayQuestion.user1Mood : !!todayQuestion.user2Mood;
-  }, [todayQuestion, isUser1]);
-
-  const streak = useMemo(() => calculateStreak(dailyQuestions), [dailyQuestions]);
-
-  // ─── Data Fetching ────────────────────────────────────────────────────────
-  const fetchData = useCallback(async (coupleId: string) => {
-    try {
-      const tz = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : '';
-      const data = await api.get<PortraitResponse>(
-        `/api/couple/portrait?coupleId=${coupleId}&timezone=${encodeURIComponent(tz)}`
-      );
-      setCouple(data.couple);
-      setDailyQuestions(data.dailyQuestions);
-      setPortraits(data.portraits);
-      if (data.totemState) {
-        setTotemState(data.totemState);
-      }
-
-      // Check if today's question just got revealed
-      const today = data.dailyQuestions[0];
-      if (today?.isRevealed && today.analysisStatus === 'REVEALED') {
-        setRevealAnimation(true);
-      }
-    } catch (err) {
-      if (err instanceof ApiClientError) {
-        setError(err.message);
-      } else {
-        setError('Impossible de charger les données du couple.');
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function init() {
-      try {
-        const user = await getCurrentUser();
-        if (!user) {
-          setUserId(null);
-          setLoading(false);
-          return;
-        }
-        if (!cancelled) {
-          setUserId(user.id);
-          // Find the user's couple
-          const couples = await api.get<CoupleData[]>(
-            `/api/couple/portrait?userId=${user.id}&list=true`
-          ).catch(() => [] as CoupleData[]);
-
-          if (couples.length > 0) {
-            await fetchData(couples[0].id);
-          } else {
-            // Check if we have an invite parameter to auto-couple
-            const params = new URLSearchParams(window.location.search);
-            const inviteId = params.get('invite');
-            if (inviteId && inviteId !== user.id) {
-              try {
-                const joinRes = await api.post<{ success: boolean; couple: CoupleData }>('/api/couple/join', { partnerId: inviteId });
-                if (joinRes.success && joinRes.couple) {
-                  window.history.replaceState({}, document.title, window.location.pathname);
-                  await fetchData(joinRes.couple.id);
-                  return;
-                }
-              } catch (joinErr) {
-                console.error('Failed to auto-couple', joinErr);
-              }
-            }
-            setError('Aucun espace couple trouvé. Invitez votre partenaire pour commencer.');
-          }
-        }
-      } catch {
-        if (!cancelled) setError('Erreur de connexion.');
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    init();
-    return () => { cancelled = true; };
-  }, [router, fetchData]);
-
-  // ─── Submit Answer ────────────────────────────────────────────────────────
-  const handleSubmitAnswer = async (submittedAnswer?: string) => {
-    const answerText = (submittedAnswer ?? answer).trim();
-    if (!answerText || !todayQuestion || !couple || !userId) return;
-
-    setSubmitting(true);
-    try {
-      await api.post('/api/couple/analyze', {
-        coupleId: couple.id,
-        dailyQuestionId: todayQuestion.id,
-        userId,
-        answer: answerText,
-      });
-      
-      // Vibration haptique brève de confirmation (Pro-Max check)
-      if (typeof navigator !== 'undefined' && navigator.vibrate) {
-        navigator.vibrate(50);
-      }
-
-      setSubmitted(true);
-      setAnswer('');
-      // Refresh data
-      await fetchData(couple.id);
-    } catch (err) {
-      if (err instanceof ApiClientError) {
-        setError(err.message);
-      }
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const handleSubmitCouchAnswers = async (answerAVal: string, answerBVal: string) => {
-    if (!answerAVal.trim() || !answerBVal.trim() || !todayQuestion || !couple || !userId) return;
-
-    setSubmitting(true);
-    setError(null);
-    try {
-      // Couch mode only submits the currently authenticated partner's answer.
-      // Submitting on behalf of the other partner is blocked by the API for security.
-      await api.post('/api/couple/analyze', {
-        coupleId: couple.id,
-        dailyQuestionId: todayQuestion.id,
-        userId,
-        answer: answerAVal.trim(),
-      });
-
-      setSubmitted(true);
-      setAnswer('');
-      setIsCouchMode(false);
-      await fetchData(couple.id);
-
-      setError(
-        "Ta réponse est enregistrée. Demande à ton partenaire de se connecter (ou d'ouvrir ce lien avec son compte) pour ajouter sa réponse."
-      );
-    } catch (err) {
-      if (err instanceof ApiClientError) {
-        setError(err.message);
-      } else {
-        setError('Impossible de sceller les réponses.');
-      }
-      throw err;
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const handleSubmitMood = async () => {
-    if (!todayQuestion || !couple || submittingMood) return;
-    setSubmittingMood(true);
-    try {
-      await api.post('/api/couple/mood', {
-        coupleId: couple.id,
-        dailyQuestionId: todayQuestion.id,
-        mood: {
-          energy: moodEnergy,
-          stress: moodStress,
-          feeling: moodFeeling.trim() || undefined
-        }
-      });
-      await fetchData(couple.id);
-    } catch (err) {
-      console.error('Failed to submit mood', err);
-      alert('Impossible d\'enregistrer votre météo émotionnelle.');
-    } finally {
-      setSubmittingMood(false);
-    }
-  };
-
-  const handleSkipQuestion = async () => {
-    if (!todayQuestion || !couple || submitting) return;
-    if (confirm("Passer définitivement cette question ? Elle sera marquée comme passée sans affecter votre totem.")) {
-      setSubmitting(true);
-      try {
-        await api.post('/api/couple/skip', {
-          coupleId: couple.id,
-          dailyQuestionId: todayQuestion.id
-        });
-        setAnswer('');
-        await fetchData(couple.id);
-      } catch (err) {
-        console.error('Failed to skip question', err);
-        alert('Impossible de passer la question.');
-      } finally {
-        setSubmitting(false);
-      }
-    }
-  };
-
-  const handleToggleSafeZone = async (activate: boolean) => {
-    if (!todayQuestion || !couple || submitting) return;
-    setSubmitting(true);
-    try {
-      await api.post('/api/couple/safezone', {
-        coupleId: couple.id,
-        dailyQuestionId: todayQuestion.id,
-        action: activate ? 'ACTIVATE' : 'DEACTIVATE'
-      });
-      await fetchData(couple.id);
-    } catch (err) {
-      console.error('Failed to toggle safe zone', err);
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  // ─── Reveal Handler ──────────────────────────────────────────────────────
-  const handleRevealTime = useCallback(() => {
-    if (couple) {
-      setRevealAnimation(true);
-      fetchData(couple.id);
-    }
-  }, [couple, fetchData]);
+  const {
+    loading,
+    userId,
+    couple,
+    dailyQuestions,
+    portraits,
+    answer,
+    setAnswer,
+    submitting,
+    submitted,
+    showProtocol,
+    setShowProtocol,
+    selectedQuestion,
+    setSelectedQuestion,
+    revealAnimation,
+    error,
+    isCouchMode,
+    setIsCouchMode,
+    showAuthModal,
+    setShowAuthModal,
+    totemState,
+    moodEnergy,
+    setMoodEnergy,
+    moodStress,
+    setMoodStress,
+    moodFeeling,
+    setMoodFeeling,
+    submittingMood,
+    todayQuestion,
+    pastQuestions,
+    isUser1,
+    partnerName,
+    myName,
+    hasMyAnswer,
+    hasPartnerAnswer,
+    bothAnswered,
+    hasMyMood,
+    streak,
+    submitAnswer: handleSubmitAnswer,
+    submitCouchAnswers: handleSubmitCouchAnswers,
+    submitMood: handleSubmitMood,
+    skipQuestion: handleSkipQuestion,
+    toggleSafeZone: handleToggleSafeZone,
+    triggerReveal: handleRevealTime,
+  } = useCoupleDashboard();
 
   // ─── Render: Loading ──────────────────────────────────────────────────────
   if (loading) {
@@ -526,10 +220,10 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
         {/* Main Grid */}
         <div className="couple-grid">
 
-          {/* ═══ Left Column: Today's Ritual ═══ */}
+          {/* ═══ Left Column: Today&apos;s Ritual ═══ */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
 
-            {/* Today's Question Card */}
+            {/* Today&apos;s Question Card */}
             <div className="couple-card couple-card-premium">
               {isCouchMode ? (
                 <CouchMode
