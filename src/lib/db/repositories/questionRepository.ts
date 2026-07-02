@@ -1,6 +1,8 @@
 import { supabaseAdmin } from '@/lib/supabase-admin';
 import { Question } from '../types';
 
+export { listQuestionsForDeck } from './roomQuestionRepository';
+
 export async function findRandomCoupleQuestion(limit = 30): Promise<Question | null> {
   const { data, error } = await supabaseAdmin
     .from('Question')
@@ -46,15 +48,6 @@ export async function listQuestions(options: {
   const { data, count, error } = await query.order('createdAt', { ascending: false }).range(from, to);
   if (error) throw error;
   return { questions: (data || []) as Question[], total: count || 0 };
-}
-
-export async function listQuestionsForDeck(language: string = 'fr'): Promise<Pick<Question, 'id' | 'text' | 'intensityLevel' | 'tags' | 'mode'>[]> {
-  const { data, error } = await supabaseAdmin
-    .from('Question')
-    .select('id, text, intensityLevel, tags, mode')
-    .eq('language', language);
-  if (error) throw error;
-  return (data || []) as Pick<Question, 'id' | 'text' | 'intensityLevel' | 'tags' | 'mode'>[];
 }
 
 export async function listQuestionsByIds(ids: string[]): Promise<Question[]> {
