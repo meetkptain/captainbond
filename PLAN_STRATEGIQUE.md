@@ -54,16 +54,16 @@ Captain Bond EST :
 ┌─────────────────────────────────────────────────────────────┐
 │  MIDDLE OF FUNNEL (Conversion)                              │
 │  Révélation Profil Psychologique (Effet Barnum)             │
-│  → "Vous avez 82% de compatibilité avec X"                  │
+│  → "Découvrez votre profil de compatibilité"                │
 │  → CTA : "Découvrez votre Date Night"                       │
-│  → Monetisation : Profile Pack (9.99€)                      │
+│  → Monetisation : Dossier Couple (9.99€)                    │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  BOTTOM OF FUNNEL (Rétention MRR)                           │
 │  Abonnement Couple (rituel quotidien)                       │
 │  → LTV élevée (12-24 mois)                                  │
-│  → Monetisation : 4.99€/mois                                │
+│  → Monetisation : 7.99€/mois ou 39.99€/an                   │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -86,10 +86,10 @@ Captain Bond EST :
 | ICP | Nom | Âge | Mode(s) | Monetisation | LTV | Priorité |
 |-----|-----|-----|---------|--------------|-----|----------|
 | **ICP 1** | Hôte Social | 25-35 | Icebreaker, Spicy, Imposteur | Pass 24h (2.99€) | 8-15€ | 🔴 P0 |
-| **ICP 2** | Couple | 28-45 | Date Night, Deep Connection | Abonnement (4.99€/m) | 60-120€/an | 🟢 P1 |
+| **ICP 2** | Couple | 28-45 | Date Night, Deep Connection | Abonnement (7.99€/m ou 39.99€/an) | 60-120€/an | 🟢 P1 |
 | **ICP 3** | Famille | Parents + ados | Family | Pass Famille (4.99€) | 12-20€/an | 🟡 P2 |
-| **ICP 4** | Entreprise | DRH, Managers | Team Building | B2B (399€+) | 400-2000€/an | 🟠 P3 |
-| **ICP 5** | Créateurs | 18-30 | Tous + partage | Freemium (ambassadeur) | 0€ (viralité) | 🔵 P0 |
+| **ICP 4** | Entreprise | DRH, Managers | Team Building | B2B (399€ à 9 600€/an) | 400-2000€/an | 🟠 P3 |
+| **ICP 5** | Créateurs | 18-30 | Tous + partage | Freemium (ambassadeur, 30% commission) | 0€ (viralité) | 🔵 P0 |
 
 ### 2.2 Détail ICP 1 — Hôte Social (Patient Zero)
 
@@ -109,7 +109,7 @@ Captain Bond EST :
 **Stratégie :**
 - Canal : TikTok/Reels (réactions hilarantes)
 - Message : "Le jeu qui a mis le feu hier soir 🔥"
-- CTA : "3 cartes gratuites, puis 2.99€"
+- CTA : "3 cartes gratuites, puis Pass 24h à 2.99€"
 
 ### 2.3 Détail ICP 2 — Couple (Mine d'Or MRR)
 
@@ -127,8 +127,8 @@ Captain Bond EST :
 
 **Stratégie :**
 - Canal : Upsell post-partie (CTA après révélation profil)
-- Message : "Vous avez 82% de compatibilité. Découvrez votre Date Night."
-- CTA : "Essai gratuit 7 jours, puis 4.99€/mois"
+- Message : "Découvrez votre profil de compatibilité. Passez en Date Night."
+- CTA : "Essai gratuit 7 jours, puis 7.99€/mois ou 39.99€/an"
 
 ### 2.4 Détail ICP 3 — Famille
 
@@ -1250,17 +1250,18 @@ Un seul focus par mois. Pas de dispersion.
 
 ### Ce qui doit être corrigé
 
-1. 🔴 SEO international (hreflang + structure URLs)
-2. 🔴 Landing pages dédiées par ICP (pas de homepage générique)
-3. 🔴 Pricing couple trop cher (7.99€ → 4.99€)
-4. 🔴 Disclaimers éthiques manquants
-5. 🔴 B2B sous-exploité (marges 90%)
+1. 🔴 SEO international (hreflang corrigé, sitemap cohérent, redirections avec cookie)
+2. 🔴 Landing pages dédiées par ICP avec URL EN/FR alignées
+3. 🔴 Pricing : maintenir l'abonnement couple à 7.99€/mois, pousser l'annual à 39.99€/an
+4. 🔴 Disclaimers éthiques et page "Ressources" à ajouter
+5. 🔴 B2B sous-exploité : prioriser bars/cafés puis entreprises (marge brute élevée)
+6. 🔴 Modèle financier : unifier les 3 scénarios contradictoires
 
 ### Les 3 Actions Prioritaires
 
-1. **Corriger le SEO international** (hreflang + choix `/` EN vs `/fr/` FR) — 2 jours
-2. **Ajouter les disclaimers éthiques** (pas un outil thérapeutique, ressources) — 1 jour
-3. **Focus B2B outbound** (1 jour/semaine de prospection LinkedIn) — continu
+1. **Corriger le SEO international** (hreflang + table URL EN/FR + redirections avec cookie) — 2 jours
+2. **Ajouter les disclaimers éthiques** (pas un outil thérapeutique, page Ressources) — 1 jour
+3. **Focus B2B outbound** (1 jour/semaine de prospection bars/cafés puis LinkedIn) — continu
 
 ### La Vérité Finale
 
@@ -1274,6 +1275,13 @@ Un seul focus par mois. Pas de dispersion.
 ---
 
 ## 📚 Ressources & Références
+
+### Références internes
+- `docs/audits/AUDIT_BUSINESS_IRL_PRODUIT_2026.md` — Audit produit/business IRL (juin 2026)
+- `docs/AUDIT_GAME_DESIGN_UX_MARKET_2026-06-20.md` — Audit game design & UX
+- `docs/superpowers/plans/PLAN_STRATEGIQUE_financial_model.xlsx` — Modèle financier unique
+- `src/lib/monetization/catalog.ts` — Catalogue produits/prix en production
+- `src/lib/config/monetization.ts` — Configuration centralisée de monétisation
 
 ### Études Scientifiques
 - Yeh et al. (2019) — Jeu et réduction du cortisol
