@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import {
   isRitualDay,
   pickIntensity,
-  getTodayNoon,
   generateRitualForCouple,
 } from '@/services/ritualService';
 import * as dailyQuestionRepository from '@/lib/db/repositories/dailyQuestionRepository';
@@ -72,22 +71,6 @@ describe('ritualService', () => {
     it('returns a valid intensity when no recent ritual', () => {
       const intensity = pickIntensity([]);
       expect([1, 2, 3]).toContain(intensity);
-    });
-  });
-
-  describe('getTodayNoon', () => {
-    it('returns a date whose time in the target timezone is noon', () => {
-      const result = getTodayNoon('Europe/Paris');
-      const hourInParis = Number(
-        new Intl.DateTimeFormat('en-US', {
-          timeZone: 'Europe/Paris',
-          hour: 'numeric',
-          hour12: false,
-        }).format(result)
-      );
-      expect(hourInParis).toBe(12);
-      expect(result.getMinutes()).toBe(0);
-      expect(result.getSeconds()).toBe(0);
     });
   });
 

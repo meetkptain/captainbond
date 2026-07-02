@@ -1,4 +1,5 @@
 import { AppError } from '@/lib/errors';
+import { getLocalDateString, PARIS_TZ, setHourInTz } from '@/lib/time';
 import { DailyQuestion, Couple, CoupleThemeCycle } from '@/lib/db/types';
 import {
   createDailyQuestion,
@@ -39,36 +40,6 @@ export function isRitualDay(date: Date, timezone?: string): boolean {
   return RITUAL_DAYS.includes(day);
 }
 
-export function getTodayNoon(timezone: string, now: Date = new Date()): Date {
-  const dateFormatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: timezone,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
-  const parts = dateFormatter.formatToParts(now);
-  const year = Number(parts.find((p) => p.type === 'year')?.value ?? now.getFullYear());
-  const month = Number(parts.find((p) => p.type === 'month')?.value ?? 1);
-  const day = Number(parts.find((p) => p.type === 'day')?.value ?? 1);
-
-  const hourFormatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: timezone,
-    hour: 'numeric',
-    hour12: false,
-  });
-
-  // Start with UTC noon for the target date, then adjust until the target timezone sees 12:00
-  let candidate = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
-  for (let i = 0; i < 3; i++) {
-    const hourInTz = Number(hourFormatter.format(candidate));
-    if (hourInTz === 12) break;
-    const diff = hourInTz - 12;
-    candidate = new Date(candidate.getTime() - diff * 60 * 60 * 1000);
-  }
-
-  return candidate;
-}
-
 export async function getOrCreateThemeCycle(
   coupleId: string
 ): Promise<CoupleThemeCycle> {
@@ -91,11 +62,11 @@ export async function generateRitualForCouple(
   couple: Couple,
   now: Date = new Date()
 ): Promise<DailyQuestion> {
-  if (!isRitualDay(now, couple.timezone || 'Europe/Paris')) {
+  if (!isRitualDay(now, couple.timezone || PARIS_TZ)) {
     throw new AppError('BAD_REQUEST', 'Today is not a ritual day');
   }
 
-  const timezone = couple.timezone || 'Europe/Paris';
+  const timezone = couple.timezone || PARIS_TZ;
   const existingToday = await getCurrentRitual(couple.id, timezone);
   if (existingToday) {
     return existingToday;
@@ -120,7 +91,7 @@ export async function generateRitualForCouple(
     intensity,
     ritualAction: question.suggestedAction,
     therapistGuide: question.therapistGuide,
-    releasedAt: getTodayNoon(timezone, now).toISOString(),
+    releasedAt: new Date(setHourInTz(getLocalDateString(now, timezone), 12, timezone)).toISOString(),
   });
 
   return ritual;

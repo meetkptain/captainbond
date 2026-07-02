@@ -1,35 +1,7 @@
 import { supabaseAdmin } from '@/lib/supabase-admin';
 import { withRetry } from '@/lib/db/withRetry';
+import { getLocalDateString, getLocalHour, startOfDayInTz } from '@/lib/time';
 import { DailyQuestion } from '../types';
-
-function startOfDayInTimezone(timezone: string): Date {
-  const now = new Date();
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: timezone,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
-  const parts = formatter.formatToParts(now);
-  const year = Number(parts.find((p) => p.type === 'year')?.value ?? now.getFullYear());
-  const month = Number(parts.find((p) => p.type === 'month')?.value ?? 1);
-  const day = Number(parts.find((p) => p.type === 'day')?.value ?? 1);
-
-  // Build a UTC noon candidate for that local date, then adjust to local midnight
-  let candidate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
-  const hourFormatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: timezone,
-    hour: 'numeric',
-    hour12: false,
-  });
-  for (let i = 0; i < 3; i++) {
-    const hourInTz = Number(hourFormatter.format(candidate));
-    if (hourInTz === 0) break;
-    const diff = hourInTz;
-    candidate = new Date(candidate.getTime() - diff * 60 * 60 * 1000);
-  }
-  return candidate;
-}
 
 // ─── DailyQuestion Queries ──────────────────────────────────────────────────
 
@@ -156,17 +128,12 @@ export async function revealDueQuestions(
   allowCatchUp = false
 ): Promise<DailyQuestion[]> {
   const now = new Date();
-  const currentHour = Number(
-    new Intl.DateTimeFormat('en-US', {
-      timeZone: timezone,
-      hour: 'numeric',
-      hour12: false,
-    }).format(now)
-  );
+  const currentHour = getLocalHour(now, timezone);
 
   // Reveal at 20h+ for today's ritual. If allowCatchUp is true, also reveal
   // any older COMPUTED rituals that were missed by a previous run.
-  const startOfToday = startOfDayInTimezone(timezone);
+  const todayStr = getLocalDateString(now, timezone);
+  const startOfToday = new Date(startOfDayInTz(todayStr, timezone));
 
   const { data, error } = await supabaseAdmin
     .from('DailyQuestion')
@@ -225,7 +192,8 @@ export async function getCurrentRitual(
   coupleId: string,
   timezone = 'Europe/Paris'
 ): Promise<DailyQuestion | null> {
-  const startOfToday = startOfDayInTimezone(timezone);
+  const todayStr = getLocalDateString(new Date(), timezone);
+  const startOfToday = new Date(startOfDayInTz(todayStr, timezone));
 
   const { data, error } = await supabaseAdmin
     .from('DailyQuestion')

@@ -4,6 +4,7 @@ import { createLogger, Logger } from '@/lib/logger';
 import { supabaseAdmin } from '@/lib/supabase-admin';
 import { dbRetry, withRetry } from '@/lib/db/withRetry';
 import { Entitlements, getUserEntitlements } from '@/lib/monetization/entitlements';
+import { getLocalHour, PARIS_TZ } from '@/lib/time';
 import { getTotem } from '@/services/totemService';
 import { getCoupleById, listCouplesForUser } from '@/lib/db/repositories/coupleRepository';
 import { listDailyQuestions } from '@/lib/db/repositories/dailyQuestionRepository';
@@ -83,7 +84,12 @@ async function revealComputedDailyQuestions(
   requestTimezone?: string,
   logger?: Logger
 ): Promise<DailyQuestion[]> {
-  const localHour = getLocalHour(couple.timezone, requestTimezone);
+  const timezone =
+    couple.timezone ||
+    (requestTimezone && Intl.supportedValuesOf('timeZone').includes(requestTimezone)
+      ? requestTimezone
+      : PARIS_TZ);
+  const localHour = getLocalHour(new Date(), timezone);
   if (localHour < 20) return [];
 
   const idsToReveal = questions
@@ -120,49 +126,4 @@ async function revealComputedDailyQuestions(
   }
 }
 
-function getLocalHour(coupleTimezone?: string | null, requestTimezone?: string): number {
-  const now = new Date();
 
-  try {
-    const targetTimezone =
-      coupleTimezone ||
-      (requestTimezone && Intl.supportedValuesOf('timeZone').includes(requestTimezone)
-        ? requestTimezone
-        : 'Europe/Paris');
-
-    const formatter = new Intl.DateTimeFormat('en-US', {
-      timeZone: targetTimezone,
-      hour: 'numeric',
-      hour12: false,
-    });
-    return parseInt(formatter.format(now), 10);
-  } catch {
-    const currentHour = now.getUTCHours();
-    const parisOffset = getParisUtcOffset(now);
-    return (currentHour + parisOffset) % 24;
-  }
-}
-
-/**
- * Returns the UTC offset for Paris timezone (handles CET/CEST).
- * CET = UTC+1 (last Sunday of October → last Sunday of March)
- * CEST = UTC+2 (last Sunday of March → last Sunday of October)
- */
-function getParisUtcOffset(date: Date): number {
-  const year = date.getUTCFullYear();
-
-  // Last Sunday of March (start of CEST)
-  const marchLast = new Date(Date.UTC(year, 2, 31));
-  marchLast.setUTCDate(31 - marchLast.getUTCDay());
-  marchLast.setUTCHours(1, 0, 0, 0); // transition at 01:00 UTC
-
-  // Last Sunday of October (end of CEST)
-  const octoberLast = new Date(Date.UTC(year, 9, 31));
-  octoberLast.setUTCDate(31 - octoberLast.getUTCDay());
-  octoberLast.setUTCHours(1, 0, 0, 0); // transition at 01:00 UTC
-
-  if (date.getTime() >= marchLast.getTime() && date.getTime() < octoberLast.getTime()) {
-    return 2; // CEST (summer)
-  }
-  return 1; // CET (winter)
-}
