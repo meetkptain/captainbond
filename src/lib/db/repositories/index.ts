@@ -1,4 +1,5 @@
 export * from './roomRepository';
+export * from './roomCodeRepository';
 export * from './playerRepository';
 export * from './questionRepository';
 export * from './coupleQuestionRepository';

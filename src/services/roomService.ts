@@ -1,5 +1,6 @@
 import {
   createRoom as createRoomInDb,
+  generateUniqueRoomCode,
   getRoomByCode,
   getRoomById,
   updateRoom,
@@ -18,15 +19,6 @@ import { AppError } from '@/lib/errors';
 import { signHostToken } from '@/lib/crypto';
 import { getServerGameMode } from '@/game-modes/manifests';
 
-function generateRoomCode(): string {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let code = '';
-  for (let i = 0; i < 4; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return code;
-}
-
 export interface CreateRoomInput {
   targetType?: 'GROUP' | 'SOLO' | 'CORPORATE';
   playerName?: string;
@@ -43,38 +35,17 @@ export async function createRoom(input: CreateRoomInput = {}): Promise<{
   const language = input.language ?? 'fr';
 
   const hostId = crypto.randomUUID();
-  let room: Room | null = null;
-  let attempts = 0;
+  const code = await generateUniqueRoomCode();
 
-  while (attempts < 5) {
-    const code = generateRoomCode();
-    const hostToken = await signHostToken(code, hostId);
-
-    try {
-      room = await createRoomInDb({
-        code,
-        hostId,
-        hostToken,
-        status: targetType === 'SOLO' ? 'PLAYING' : 'WAITING',
-        round: 0,
-        targetType,
-        language,
-      });
-      break;
-    } catch (err: unknown) {
-      // Postgres error code 23505 is unique_violation (duplicate code key)
-      const postgrestError = err as { code?: string; message?: string };
-      if (postgrestError && (postgrestError.code === '23505' || postgrestError.message?.includes('duplicate key') || postgrestError.message?.includes('violates unique constraint'))) {
-        attempts++;
-        continue;
-      }
-      throw err;
-    }
-  }
-
-  if (!room) {
-    throw new AppError('SERVICE_UNAVAILABLE', 'Impossible de générer un code unique');
-  }
+  const room = await createRoomInDb({
+    code,
+    hostId,
+    hostToken: await signHostToken(code, hostId),
+    status: targetType === 'SOLO' ? 'PLAYING' : 'WAITING',
+    round: 0,
+    targetType,
+    language,
+  });
 
   if (targetType === 'SOLO') {
     await createPlayer({

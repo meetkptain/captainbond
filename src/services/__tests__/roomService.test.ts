@@ -3,10 +3,12 @@ import { createRoom, joinRoom } from '../roomService';
 import { AppError } from '@/lib/errors';
 import { getRoomByCode } from '@/lib/db/repositories';
 import { createRoom as createRoomInDb } from '@/lib/db/repositories';
+import { generateUniqueRoomCode } from '@/lib/db/repositories';
 import { joinRoomRpc } from '@/lib/db/repositories';
 
 vi.mock('@/lib/db/repositories', () => ({
   createRoom: vi.fn(),
+  generateUniqueRoomCode: vi.fn(),
   getRoomByCode: vi.fn(),
   getRoomById: vi.fn(),
   createPlayer: vi.fn(),
@@ -29,6 +31,10 @@ describe('roomService', () => {
   });
 
   describe('createRoom', () => {
+    beforeEach(() => {
+      vi.mocked(generateUniqueRoomCode).mockResolvedValue('ABCD');
+    });
+
     it('creates room successfully on first attempt', async () => {
       const mockRoomObj = {
         id: 'room-1',
@@ -44,37 +50,19 @@ describe('roomService', () => {
       const result = await createRoom({ targetType: 'GROUP' });
       expect(result.room.id).toBe('room-1');
       expect(result.hostId).toBeDefined();
+      expect(generateUniqueRoomCode).toHaveBeenCalledTimes(1);
       expect(createRoomInDb).toHaveBeenCalledTimes(1);
     });
 
-    it('retries on duplicate code unique constraint violation and succeeds', async () => {
-      const mockRoomObj = {
-        id: 'room-1',
-        code: 'ABCD',
-        hostId: 'host-1',
-        hostToken: 'mock-host-token',
-        status: 'WAITING',
-        round: 0,
-        targetType: 'GROUP',
-      };
-
-      // First call throws duplicate key error code 23505
-      vi.mocked(createRoomInDb)
-        .mockRejectedValueOnce({ code: '23505', message: 'duplicate key value violates unique constraint' })
-        .mockResolvedValueOnce(mockRoomObj as unknown as Awaited<ReturnType<typeof createRoomInDb>>);
-
-      const result = await createRoom({ targetType: 'GROUP' });
-      expect(result.room.id).toBe('room-1');
-      expect(createRoomInDb).toHaveBeenCalledTimes(2);
-    });
-
-    it('throws error if attempts limit is reached', async () => {
-      vi.mocked(createRoomInDb).mockRejectedValue({ code: '23505', message: 'duplicate key' });
+    it('propagates error when room code generation fails', async () => {
+      vi.mocked(generateUniqueRoomCode).mockRejectedValueOnce(
+        new AppError('ROOM_CODE_COLLISION', 'Could not generate a unique room code')
+      );
 
       await expect(createRoom({ targetType: 'GROUP' })).rejects.toThrow(
-        new AppError('SERVICE_UNAVAILABLE', 'Impossible de générer un code unique')
+        new AppError('ROOM_CODE_COLLISION', 'Could not generate a unique room code')
       );
-      expect(createRoomInDb).toHaveBeenCalledTimes(5);
+      expect(createRoomInDb).not.toHaveBeenCalled();
     });
   });
 

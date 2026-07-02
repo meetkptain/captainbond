@@ -31,7 +31,8 @@ export type ErrorCode =
   | 'INTERNAL_ERROR'
   | 'CONFIG_MISSING'
   | 'RATE_LIMITED'
-  | 'SERVICE_UNAVAILABLE';
+  | 'SERVICE_UNAVAILABLE'
+  | 'ROOM_CODE_COLLISION';
 
 export class AppError extends Error {
   public readonly code: ErrorCode;
@@ -81,6 +82,7 @@ export function mapCodeToStatus(code: ErrorCode): number {
     case 'RATE_LIMITED':
       return 429;
     case 'SERVICE_UNAVAILABLE':
+    case 'ROOM_CODE_COLLISION':
       return 503;
     case 'ROOM_CLOSED':
     case 'ROOM_FULL':
