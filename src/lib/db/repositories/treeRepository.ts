@@ -7,18 +7,6 @@ export async function getTreeById(id: string): Promise<Tree | null> {
   return data as Tree | null;
 }
 
-export async function getTreeByCouple(coupleId: string): Promise<Tree | null> {
-  const { data, error } = await supabaseAdmin.from('Tree').select('*').eq('coupleId', coupleId).maybeSingle();
-  if (error) throw error;
-  return data as Tree | null;
-}
-
-export async function getTreeByRoom(roomId: string): Promise<Tree | null> {
-  const { data, error } = await supabaseAdmin.from('Tree').select('*').eq('roomId', roomId).maybeSingle();
-  if (error) throw error;
-  return data as Tree | null;
-}
-
 export async function createTree(input: Partial<Tree>): Promise<Tree> {
   const { data, error } = await supabaseAdmin.from('Tree').insert(input).select().single();
   if (error) throw error;
@@ -41,6 +29,25 @@ export async function listTreeNodes(treeId: string): Promise<TreeNode[]> {
   const { data, error } = await supabaseAdmin.from('TreeNode').select('*').eq('treeId', treeId).order('answeredAt', { ascending: true });
   if (error) throw error;
   return data as TreeNode[];
+}
+
+export async function listTreeNodesByQuestion(
+  treeId: string,
+  questionId: string | null | undefined,
+  limit = 10
+): Promise<TreeNode[]> {
+  let query = supabaseAdmin
+    .from('TreeNode')
+    .select('*')
+    .eq('treeId', treeId)
+    .order('answeredAt', { ascending: false })
+    .limit(limit);
+  if (questionId) {
+    query = query.eq('questionId', questionId);
+  }
+  const { data, error } = await query;
+  if (error) throw error;
+  return (data ?? []) as TreeNode[];
 }
 
 export async function createTreeConnection(input: Partial<TreeConnection>): Promise<TreeConnection> {

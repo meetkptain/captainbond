@@ -9,6 +9,15 @@ export * from './webhookRepository';
 export * from './userRepository';
 export * from './coupleRepository';
 export * from './treeRepository';
+export {
+  getTreeByCouple,
+  createTreeForCouple,
+  findSimilarNodes,
+} from './coupleTreeRepository';
+export {
+  getTreeByRoom,
+  createTreeForRoom,
+} from './roomTreeRepository';
 export * from './djRepository';
 export * from './dailyQuestionRepository';
 export * from './couplePortraitRepository';

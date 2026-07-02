@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
-import { getTreeById, getTreeByCouple, getTreeByRoom, listTreeNodes, listTreeConnections } from '@/lib/db/repositories';
-import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
+import { getTreeById, listTreeNodes, listTreeConnections } from '@/lib/db/repositories';
+import { getTreeByCouple } from '@/lib/db/repositories/coupleTreeRepository';
+import { getTreeByRoom } from '@/lib/db/repositories/roomTreeRepository';
+import { getAuthenticatedUser } from '@/lib/auth/user';
 import { supabaseAdmin } from '@/lib/supabase-admin';
 import { AppError } from '@/lib/errors';
 import { getUserEntitlements } from '@/lib/monetization/entitlements';
@@ -36,7 +38,7 @@ export const GET = withApiHandler({
 
     // Verify couple membership if it's a couple tree
     if (tree.coupleId) {
-      const authUser = await getAuthenticatedCoupleUser(req);
+      const authUser = await getAuthenticatedUser(req);
       const { data: couple, error: coupleError } = await supabaseAdmin
         .from('Couple')
         .select('*')

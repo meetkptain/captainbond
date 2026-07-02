@@ -1,4 +1,15 @@
-import * as repositories from '@/lib/db/repositories';
+import {
+  getTreeByCouple,
+  createTreeForCouple as createCoupleTreeRecord,
+  addNode,
+  createConnection,
+  findSimilarNodes,
+} from '@/lib/db/repositories/coupleTreeRepository';
+import {
+  getTreeByRoom,
+  createTreeForRoom as createRoomTreeRecord,
+} from '@/lib/db/repositories/roomTreeRepository';
+import { getQuestionById } from '@/lib/db/repositories/questionRepository';
 import { Tree, TreeNode } from '@/lib/db/types';
 import { getEmbedding } from '@/lib/gemini';
 import { AppError } from '@/lib/errors';
@@ -9,10 +20,10 @@ import { logger } from '@/lib/logger';
  * @param coupleId Unique couple ID
  */
 export async function createTreeForCouple(coupleId: string): Promise<Tree> {
-  const existing = await repositories.getTreeByCouple(coupleId);
+  const existing = await getTreeByCouple(coupleId);
   if (existing) return existing;
 
-  return repositories.createTree({ coupleId });
+  return createCoupleTreeRecord(coupleId);
 }
 
 /**
@@ -20,10 +31,10 @@ export async function createTreeForCouple(coupleId: string): Promise<Tree> {
  * @param roomId Unique room ID
  */
 export async function createTreeForRoom(roomId: string): Promise<Tree> {
-  const existing = await repositories.getTreeByRoom(roomId);
+  const existing = await getTreeByRoom(roomId);
   if (existing) return existing;
 
-  return repositories.createTree({ roomId });
+  return createRoomTreeRecord(roomId);
 }
 
 interface AddNodeInput {
@@ -47,7 +58,7 @@ export async function addNodeToTree(treeId: string, input: AddNodeInput): Promis
   let category = 'GENERAL';
 
   if (input.questionId) {
-    const question = await repositories.getQuestionById(input.questionId);
+    const question = await getQuestionById(input.questionId);
     if (!question) {
       throw new AppError('NOT_FOUND', `Question avec l'ID ${input.questionId} introuvable.`);
     }
@@ -68,8 +79,7 @@ export async function addNodeToTree(treeId: string, input: AddNodeInput): Promis
   }
 
   // 3. Create the TreeNode
-  const node = await repositories.createTreeNode({
-    treeId,
+  const node = await addNode(treeId, {
     questionId: input.questionId,
     customText: input.customText,
     intensity,
@@ -82,13 +92,13 @@ export async function addNodeToTree(treeId: string, input: AddNodeInput): Promis
   if (embedding && embedding.length > 0) {
     try {
       // Find similar nodes with similarity >= 0.75 (cosine distance <= 0.25)
-      const similarNodes = await repositories.findSimilarTreeNodes(treeId, embedding, 0.75, 10);
+      const similarNodes = await findSimilarNodes(treeId, embedding, 0.75, 10);
 
       // Filter out the node itself
       const validMatches = similarNodes.filter((m) => m.id !== node.id);
 
       for (const match of validMatches) {
-        await repositories.createTreeConnection({
+        await createConnection({
           treeId,
           sourceId: node.id,
           targetId: match.id,
