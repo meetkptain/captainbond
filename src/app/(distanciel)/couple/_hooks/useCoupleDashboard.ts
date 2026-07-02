@@ -388,6 +388,7 @@ export function useCoupleDashboard() {
     selectedQuestion,
     setSelectedQuestion,
     revealAnimation,
+    setRevealAnimation,
     error,
     isCouchMode,
     setIsCouchMode,
