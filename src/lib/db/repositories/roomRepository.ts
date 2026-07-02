@@ -45,6 +45,31 @@ export async function updateRoomStatus(id: string, status: Room['status']): Prom
   if (error) throw error;
 }
 
+export async function updateRoomWithStatusGuard(
+  id: string,
+  updates: Partial<Room>,
+  requiredStatus: Room['status']
+): Promise<Room> {
+  const { data, error } = await supabaseAdmin
+    .from('Room')
+    .update(updates)
+    .eq('id', id)
+    .eq('status', requiredStatus)
+    .select()
+    .single();
+  if (error) throw error;
+  if (!data) throw new Error('Room update conflict: status guard rejected');
+  return data as Room;
+}
+
+export async function updateRoomStatusWithGuard(
+  id: string,
+  status: Room['status'],
+  requiredStatus: Room['status']
+): Promise<Room> {
+  return updateRoomWithStatusGuard(id, { status }, requiredStatus);
+}
+
 export async function listActiveRooms(): Promise<Room[]> {
   const { data, error } = await supabaseAdmin
     .from('Room')
