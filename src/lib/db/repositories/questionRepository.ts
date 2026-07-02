@@ -45,6 +45,13 @@ export async function listQuestionsForDeck(language: string = 'fr'): Promise<Pic
   return (data || []) as Pick<Question, 'id' | 'text' | 'intensityLevel' | 'tags' | 'mode'>[];
 }
 
+export async function listQuestionsByIds(ids: string[]): Promise<Question[]> {
+  if (ids.length === 0) return [];
+  const { data, error } = await supabaseAdmin.from('Question').select('*').in('id', ids);
+  if (error) throw error;
+  return (data || []) as Question[];
+}
+
 export async function countQuestions(): Promise<number> {
   const { count, error } = await supabaseAdmin.from('Question').select('*', { count: 'exact', head: true });
   if (error) throw error;

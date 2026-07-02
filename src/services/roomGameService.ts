@@ -1,10 +1,20 @@
-import { supabaseAdmin } from '@/lib/supabase-admin';
 import {
   getRoomByCode,
   getRoomById,
   getPlayersInRoom,
+  getPlayerInRoom,
+  getPlayersByRoomWithUserId,
   getQuestionById,
   listQuestionsForDeck,
+  listQuestionsByIds,
+  getResponsesByRoomAndQuestion,
+  getResponsesForProfileInputs,
+  getScoresByRoom,
+  updateRoom,
+  updateRoomWithStatusGuard,
+  updateRoomStatusWithGuard,
+  recordVoteRpc,
+  upsertRevealScoresRpc,
 } from '@/lib/db/repositories';
 import { Room, Question } from '@/lib/db/types';
 import { AppError } from '@/lib/errors';
@@ -15,6 +25,7 @@ import { getUserEntitlements, roomHasActivePass, canAccessMode, getRoomPassInfo,
 import { calculateProfile, EnrichedResponse } from '@/lib/profiling/calculateProfile';
 import { safeJsonParseRecord } from '@/lib/json';
 import { buildQuestionPool, QuestionForDeck } from '@/lib/questions/deck';
+import { MONETIZATION_CONFIG } from '@/lib/config/monetization';
 import { recordGamePlayed, GameSummary } from './statsService';
 
 const FREE_QUESTIONS_LIMIT = 3;
@@ -127,7 +138,7 @@ export async function startNextRound(roomCode: string, hostId: string): Promise<
       throw new AppError(
         'FORBIDDEN',
         'Ce mode premium nécessite le Pass 24h ou un abonnement Premium.',
-        { details: { passPriceCents: 299 } }
+        { details: { passPriceCents: MONETIZATION_CONFIG.PASS_24H_PRICE_CENTS } }
       );
     }
   }
@@ -181,20 +192,19 @@ export async function startNextRound(roomCode: string, hostId: string): Promise<
     };
   }
 
-  const { data: updatedRoom, error: updateError } = await supabaseAdmin
-    .from('Room')
-    .update({
-      status: 'PLAYING',
-      currentQuestionId: selectedQuestion.id,
-      round: room.round + 1,
-      roundConfig,
-    })
-    .eq('id', room.id)
-    .not('status', 'eq', 'PLAYING')
-    .select()
-    .single();
-
-  if (updateError || !updatedRoom) {
+  let updatedRoom: Room;
+  try {
+    updatedRoom = await updateRoomWithStatusGuard(
+      room.id,
+      {
+        status: 'PLAYING',
+        currentQuestionId: selectedQuestion.id,
+        round: room.round + 1,
+        roundConfig,
+      },
+      'WAITING'
+    );
+  } catch {
     throw new AppError('CONFLICT', 'Une manche est déjà en cours');
   }
 
@@ -243,15 +253,9 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
     throw new AppError('BAD_REQUEST', 'No active question found to calculate scores for');
   }
 
-  const { data: lockedRoom, error: lockError } = await supabaseAdmin
-    .from('Room')
-    .update({ status: 'REVEALING' })
-    .eq('id', room.id)
-    .eq('status', 'PLAYING')
-    .select()
-    .single();
-
-  if (lockError || !lockedRoom) {
+  try {
+    await updateRoomStatusWithGuard(room.id, 'REVEALING', 'PLAYING');
+  } catch {
     throw new AppError('CONFLICT', 'La révélation est déjà en cours ou la room n\'est plus en jeu');
   }
 
@@ -268,13 +272,10 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
         )
       : undefined;
 
-  const { data: responses, error: responsesError } = await supabaseAdmin
-    .from('Response')
-    .select('*')
-    .eq('roomId', room.id)
-    .eq('questionId', question.id);
-
-  if (responsesError) {
+  let responses: Awaited<ReturnType<typeof getResponsesByRoomAndQuestion>>;
+  try {
+    responses = await getResponsesByRoomAndQuestion(room.id, question.id);
+  } catch (responsesError) {
     throw new AppError('INTERNAL_ERROR', 'Failed to fetch player responses', { cause: responsesError });
   }
 
@@ -288,8 +289,8 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
       ? safeJsonParseRecord(room.roundConfig)
       : (room.roundConfig ?? null);
 
-  const rawResponses: RawResponse[] = (responses || []).map((r) => ({
-    id: r.id,
+  const rawResponses: RawResponse[] = responses.map((r) => ({
+    id: r.id!,
     playerId: r.playerId,
     answer: r.answer,
     timestamp: r.timestamp ?? new Date().toISOString(),
@@ -306,7 +307,7 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
   const responseUpdates = revealResult.scores
     .filter((s) => s.rawResponseId)
     .map((s) => ({
-      response_id: s.rawResponseId,
+      response_id: s.rawResponseId!,
       is_correct: s.isCorrect,
     }));
 
@@ -315,27 +316,21 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
     points_to_add: s.pointsEarned,
   }));
 
-  const { error: rpcError } = await supabaseAdmin.rpc('upsert_reveal_scores', {
-    p_room_id: room.id,
-    p_response_updates: responseUpdates,
-    p_score_upserts: scoreUpserts,
-  });
+  const updatedRoom = await updateRoomStatusWithGuard(room.id, 'DISCUSSION', 'REVEALING');
 
-  if (rpcError) {
+  try {
+    await upsertRevealScoresRpc({
+      roomId: room.id,
+      responseUpdates,
+      scoreUpserts,
+    });
+  } catch (rpcError) {
     throw new AppError('INTERNAL_ERROR', 'Failed to save scores', { cause: rpcError });
   }
 
-  const { data: updatedRoom } = await supabaseAdmin
-    .from('Room')
-    .update({ status: 'DISCUSSION' })
-    .eq('id', room.id)
-    .eq('status', 'REVEALING')
-    .select()
-    .single();
-
   return {
     success: true,
-    status: updatedRoom?.status || 'DISCUSSION',
+    status: updatedRoom.status,
     scores: revealResult.scores,
     question: {
       correctAnswer: revealResult.correctAnswer,
@@ -363,15 +358,16 @@ export async function recordVote(
     throw new AppError('FORBIDDEN', 'Cette question n\'est pas active');
   }
 
-  const { data, error } = await supabaseAdmin.rpc('record_vote', {
-    p_player_id: playerId,
-    p_room_code: roomCode.toUpperCase().trim(),
-    p_question_id: questionId,
-    p_answer: answer.trim(),
-  });
-
-  if (error) {
-    const message = error.message || '';
+  let responseId: string;
+  try {
+    responseId = await recordVoteRpc({
+      playerId,
+      roomCode: roomCode.toUpperCase().trim(),
+      questionId,
+      answer: answer.trim(),
+    });
+  } catch (error) {
+    const message = (error as Error)?.message || '';
     if (message.includes('déjà voté')) {
       throw new AppError('CONFLICT', 'You have already submitted an answer for this question');
     }
@@ -384,7 +380,6 @@ export async function recordVote(
     throw new AppError('INTERNAL_ERROR', 'Failed to record response', { cause: error });
   }
 
-  const responseId = (data as { responseId?: string } | null)?.responseId;
   if (!responseId) {
     throw new AppError('INTERNAL_ERROR', 'Le vote a été enregistré mais aucun identifiant de réponse n\'a été retourné');
   }
@@ -394,21 +389,10 @@ export async function recordVote(
 // ---------- Active question ----------
 
 export async function getActiveQuestionForPlayer(roomId: string, playerId: string): Promise<Question> {
-  const { data: player } = await supabaseAdmin
-    .from('Player')
-    .select('id, roomId')
-    .eq('id', playerId)
-    .eq('roomId', roomId)
-    .maybeSingle();
-
+  const player = await getPlayerInRoom(playerId, roomId);
   if (!player) throw new AppError('UNAUTHORIZED', 'Unauthorized: Player not registered in this room');
 
-  const { data: room } = await supabaseAdmin
-    .from('Room')
-    .select('id, status, currentQuestionId')
-    .eq('id', roomId)
-    .maybeSingle();
-
+  const room = await getRoomById(roomId);
   if (!room) throw new AppError('NOT_FOUND', 'Room not found');
   if (room.status !== 'PLAYING') {
     throw new AppError('BAD_REQUEST', 'No active question: Room is not in playing mode');
@@ -428,13 +412,7 @@ export async function getImposteurRole(playerId: string, roomId: string): Promis
   word: string;
   role: string;
 }> {
-  const { data: player } = await supabaseAdmin
-    .from('Player')
-    .select('id, roomId')
-    .eq('id', playerId)
-    .eq('roomId', roomId)
-    .maybeSingle();
-
+  const player = await getPlayerInRoom(playerId, roomId);
   if (!player) throw new AppError('UNAUTHORIZED', 'Unauthorized: Player not registered in this room');
 
   const room = await getRoomById(roomId);
@@ -484,24 +462,21 @@ type EnrichedResponseInput = {
 };
 
 async function buildProfileInputs(roomId: string) {
-  const [{ data: allResponses }, { data: allScores }] = await Promise.all([
-    supabaseAdmin.from('Response').select('playerId, answer, questionId, isCorrect').eq('roomId', roomId),
-    supabaseAdmin.from('Score').select('playerId, points').eq('roomId', roomId),
+  const [allResponses, allScores] = await Promise.all([
+    getResponsesForProfileInputs(roomId),
+    getScoresByRoom(roomId),
   ]);
 
-  const questionIds = Array.from(new Set((allResponses || []).map((r) => r.questionId).filter(Boolean)));
+  const questionIds = Array.from(new Set(allResponses.map((r) => r.questionId).filter(Boolean)));
 
-  const { data: questions } =
-    questionIds.length > 0
-      ? await supabaseAdmin.from('Question').select('id, mode').in('id', questionIds)
-      : { data: [] };
+  const questions = questionIds.length > 0 ? await listQuestionsByIds(questionIds) : [];
 
   const questionModes = new Map<string, string>();
-  for (const q of questions || []) {
+  for (const q of questions) {
     questionModes.set(q.id, q.mode);
   }
 
-  const enrichedResponses = (allResponses || []).map((r) => ({
+  const enrichedResponses = allResponses.map((r) => ({
     playerId: r.playerId,
     answer: r.answer,
     questionId: r.questionId,
@@ -511,7 +486,7 @@ async function buildProfileInputs(roomId: string) {
   return {
     enrichedResponses,
     questionModes,
-    allScores: allScores || [],
+    allScores,
   };
 }
 
@@ -542,13 +517,7 @@ export async function getPlayerGameProfile(playerId: string, roomCode: string): 
   const room = await getRoomByCode(roomCode);
   if (!room) throw new AppError('NOT_FOUND', 'Salle introuvable');
 
-  const { data: player } = await supabaseAdmin
-    .from('Player')
-    .select('*')
-    .eq('id', playerId)
-    .eq('roomId', room.id)
-    .maybeSingle();
-
+  const player = await getPlayerInRoom(playerId, room.id);
   if (!player) throw new AppError('UNAUTHORIZED', 'Joueur introuvable dans cette salle');
 
   if (room.status !== 'ENDED') {
@@ -616,21 +585,19 @@ export async function endRoomAndBuildProfiles(roomCode: string, hostId: string):
   if (!room) throw new AppError('NOT_FOUND', 'Salle introuvable');
   checkHost(room, hostId);
 
-  const { supabaseAdmin } = await import('@/lib/supabase-admin');
-  const { error } = await supabaseAdmin.from('Room').update({ status: 'ENDED' }).eq('id', room.id);
-  if (error) throw new AppError('INTERNAL_ERROR', 'Impossible de terminer la salle', { cause: error });
+  try {
+    await updateRoomStatusWithGuard(room.id, 'ENDED', room.status);
+  } catch (error) {
+    throw new AppError('INTERNAL_ERROR', 'Impossible de terminer la salle', { cause: error });
+  }
 
   // Construire les profils avant de mettre à jour les stats (badges/archetypes)
   const profiles = await buildProfilesForRoom({ ...room, status: 'ENDED' }, false);
 
   // Mettre à jour les stats Daily Bond + badges de chaque joueur authentifié
-  const { data: players } = await supabaseAdmin
-    .from('Player')
-    .select('id, userId, isHost')
-    .eq('roomId', room.id)
-    .not('userId', 'is', null);
+  const players = await getPlayersByRoomWithUserId(room.id);
 
-  const userIds = new Set((players || []).map((p) => p.userId).filter(Boolean) as string[]);
+  const userIds = new Set(players.map((p) => p.userId).filter(Boolean) as string[]);
   await Promise.allSettled(
     Array.from(userIds).map((userId) => {
       const player = players?.find((p) => p.userId === userId);
@@ -702,17 +669,13 @@ export async function skipQuestion(roomCode: string, playerId: string): Promise<
     playedQuestionIds: updatedPlayedIds,
   };
 
-  const { data: updatedRoom, error: updateError } = await supabaseAdmin
-    .from('Room')
-    .update({
+  let updatedRoom: Room;
+  try {
+    updatedRoom = await updateRoom(room.id, {
       currentQuestionId: selectedQuestion.id,
       roundConfig,
-    })
-    .eq('id', room.id)
-    .select()
-    .single();
-
-  if (updateError || !updatedRoom) {
+    });
+  } catch {
     throw new AppError('CONFLICT', 'Impossible de passer la question');
   }
 
