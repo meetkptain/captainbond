@@ -49,6 +49,7 @@ describe('admin auth', () => {
   it('throws internal error when ADMIN_PASSWORD_HASH is missing', async () => {
     vi.unstubAllEnvs();
     vi.stubEnv('ADMIN_JWT_SECRET', 'admin-secret-test-32-chars-long!!');
+    delete process.env.ADMIN_PASSWORD_HASH;
     await expect(verifyAdminPassword(TEST_PASSWORD)).rejects.toThrow("ADMIN_PASSWORD_HASH n'est pas configuré");
   });
 

@@ -1,23 +1,11 @@
-import { logger } from './logger';
+import { envSchema, Env } from '@/lib/schemas/env';
+import { logger } from '@/lib/logger';
 
 export interface EnvValidationResult {
   valid: boolean;
   missing: string[];
   warnings: string[];
 }
-
-const REQUIRED_STRING_VARS = [
-  'NEXT_PUBLIC_SUPABASE_URL',
-  'NEXT_PUBLIC_SUPABASE_ANON_KEY',
-  'SUPABASE_SERVICE_ROLE_KEY',
-  'ADMIN_PASSWORD_HASH',
-  'ADMIN_JWT_SECRET',
-  'PLAYER_JWT_SECRET',
-  'HOST_TOKEN_SECRET',
-  'HMAC_IMPOSTEUR_SECRET',
-  'STRIPE_SECRET_KEY',
-  'STRIPE_WEBHOOK_SECRET',
-] as const;
 
 const OPTIONAL_BUT_RECOMMENDED = [
   'UPSTASH_REDIS_REST_URL',
@@ -33,42 +21,45 @@ const OPTIONAL_BUT_RECOMMENDED = [
   'GEMINI_API_KEY',
 ] as const;
 
+const SECRET_LENGTH_VARS = [
+  'NEXT_PUBLIC_SUPABASE_ANON_KEY',
+  'SUPABASE_SERVICE_ROLE_KEY',
+  'ADMIN_PASSWORD_HASH',
+  'ADMIN_JWT_SECRET',
+  'PLAYER_JWT_SECRET',
+  'HOST_TOKEN_SECRET',
+  'HMAC_IMPOSTEUR_SECRET',
+  'STRIPE_SECRET_KEY',
+  'STRIPE_WEBHOOK_SECRET',
+  'CRON_SECRET',
+] as const;
+
 const MIN_SECRET_LENGTH = 32;
 
 function isMissing(value: string | undefined): boolean {
   return !value || value.trim().length === 0;
 }
 
-function checkSecretLength(name: string, value: string | undefined): string | null {
-  if (!value) return null;
-  if (value.length < MIN_SECRET_LENGTH) {
-    return `${name} doit faire au moins ${MIN_SECRET_LENGTH} caractères.`;
-  }
-  return null;
-}
-
-export function requireEnv(name: string): string {
-  const value = process.env[name];
-  if (!value || value.trim().length === 0) {
-    if (process.env.NEXT_PHASE === 'phase-production-build') {
-      return `mock-${name.toLowerCase().replace(/_/g, '-')}-value-for-build-32-chars-long`;
-    }
-    throw new Error(`Missing required environment variable: ${name}`);
-  }
-  return value;
-}
-
 export function validateEnv(): EnvValidationResult {
+  const parsed = envSchema.safeParse(process.env);
   const missing: string[] = [];
   const warnings: string[] = [];
 
-  for (const key of REQUIRED_STRING_VARS) {
-    const value = process.env[key];
-    if (isMissing(value)) {
-      missing.push(key);
-    } else if (key.includes('SECRET') || key.includes('PASSWORD') || key.includes('KEY')) {
-      const warning = checkSecretLength(key, value);
-      if (warning) warnings.push(warning);
+  if (!parsed.success) {
+    const formatted = parsed.error.format();
+    for (const key of Object.keys(formatted)) {
+      if (key === '_errors') continue;
+      const field = formatted[key as keyof typeof formatted];
+      if (field && Array.isArray((field as { _errors?: string[] })._errors) && (field as { _errors: string[] })._errors.length > 0) {
+        missing.push(key);
+      }
+    }
+  } else {
+    for (const key of SECRET_LENGTH_VARS) {
+      const value = process.env[key];
+      if (value && value.length < MIN_SECRET_LENGTH) {
+        warnings.push(`${key} doit faire au moins ${MIN_SECRET_LENGTH} caractères.`);
+      }
     }
   }
 
@@ -84,25 +75,43 @@ export function validateEnv(): EnvValidationResult {
   }
 
   const result: EnvValidationResult = {
-    valid: missing.length === 0,
+    valid: parsed.success && missing.length === 0,
     missing,
     warnings,
   };
 
   if (!result.valid) {
-    logger.error('Environment validation failed', {
-      missing: result.missing,
-      warnings: result.warnings,
-    });
+    logger.error('Environment validation failed', { missing, warnings });
   } else if (result.warnings.length > 0) {
-    logger.warn('Environment validation completed with warnings', {
-      warnings: result.warnings,
-    });
+    logger.warn('Environment validation completed with warnings', { warnings });
   } else {
     logger.info('Environment validation passed');
   }
 
   return result;
+}
+
+let cachedEnv: Env | null = null;
+export function getEnv(): Env {
+  if (!cachedEnv) {
+    const result = validateEnv();
+    if (!result.valid) {
+      throw new Error('Invalid environment configuration');
+    }
+    cachedEnv = envSchema.parse(process.env);
+  }
+  return cachedEnv;
+}
+
+export function requireEnv(name: keyof Env): string {
+  const raw = process.env[name];
+  if (!raw || raw.trim().length === 0) {
+    if (process.env.NEXT_PHASE === 'phase-production-build') {
+      return `mock-${String(name).toLowerCase().replace(/_/g, '-')}-value-for-build-32-chars-long`;
+    }
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+  return raw;
 }
 
 export function getPublicEnvSummary(): Record<string, boolean> {
