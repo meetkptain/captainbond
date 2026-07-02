@@ -808,21 +808,23 @@ Marge nette (75%) : 623 700€/an
 | Étape | Taux | Volume | Revenu |
 |-------|------|--------|--------|
 | Visiteurs | 100% | 10 000 | - |
-| Room créée | 10% | 1 000 | - |
-| 3 cartes jouées | 70% | 700 | - |
-| Pass 24h (2.99€) | 3% | 30 | 89.70€ |
-| Profile Pack (9.99€) | 7% | 2 | 19.98€ |
-| Abonnement Couple (4.99€/m) | 5% | 0.1 | 0.50€/m |
+| Room créée | 12% | 1 200 | - |
+| 3 cartes jouées | 75% | 900 | - |
+| Pass 24h (2.99€) | 10% | 120 | 358.80€ |
+| Dossier individuel (4.99€) | 20% | 240 | 1 197.60€ |
+| Dossier couple (9.99€) | 8% | 96 | 959.04€ |
+| Abonnement couple (7.99€/m) | 15% | 14 | 111.86€/m |
 
-**Total M1 : ~110€**
+**Total M1 direct : ~2 600€**
 
 **Pour atteindre 10k MRR uniquement sur l'abonnement couple :**
-- 2 004 abonnés nécessaires
-- → 40 080 acheteurs Pass 24h
-- → 1 336 000 rooms créées
-- → **13 360 000 visiteurs/mois**
+- 1 252 abonnés nécessaires
+- → 8 347 acheteurs Dossier couple
+- → 104 333 Dossiers individuels vendus
+- → **868 000 rooms créées**
+- → **7 230 000 visiteurs/mois**
 
-**Conclusion :** L'abonnement couple seul ne suffit pas. Il faut diversifier.
+**Conclusion :** L'abonnement couple seul est trop lent. Le vrai moteur économique est le B2B + la conversion groupe → couple via le Dossier de Compatibilité.
 
 ### 6.2 Les 5 Leviers d'Acquisition
 
@@ -830,59 +832,65 @@ Marge nette (75%) : 623 700€/an
 
 - **Coût :** 0€ (mais 20h/semaine de contenu)
 - **Timeline :** 6-12 mois
-- **Estimation M12 :** 5 000-15 000 visiteurs/mois
+- **Estimation M12 :** 20 000-50 000 visiteurs/mois (2 langues × 2 articles/semaine)
 
 #### Levier #2 : TikTok/Reels Organique
 
 - **Coût :** 0€ (mais 5-10h/semaine)
 - **Timeline :** 1-3 mois
+- **Format :** 1 vidéo/jour minimum, 9:16, 7-15s
 - **Estimation :** 1 vidéo virale (100k+ vues) = 500-2 000 installs
 
-⚠️ **Honnêteté :** Les vidéos virales sont rares. Stratégie fragile.
+⚠️ **Honnêteté :** Les vidéos virales sont rares. Stratégie fragile, à traiter comme un "bonus".
 
 #### Levier #3 : Programme d'Affiliation (ICP5)
 
-- **Coût :** 50% de commission
+- **Coût :** 30% de commission
 - **Timeline :** 1-2 mois pour 20 créateurs
-- **Estimation :** 20 × 5 × 2.99€ × 50% = 149.50€/mois
+- **Estimation :** 20 créateurs × 3 ventes/mois × 2.99€ × 30% = 53.82€/mois
 
-**Faible revenu direct, fort effet de marque.**
+**Faible revenu direct, fort effet de marque et de preuve sociale.**
 
 #### Levier #4 : Paid Ads (Meta/TikTok)
 
 - **Coût :** 1-3€ par install
 - **Timeline :** Immédiat
-- **Estimation :** 5 000€ budget = 1 600-5 000 installs
+- **Estimation :** 1 000€ budget = 300-1 000 installs
 
-⚠️ **Rentable seulement si LTV > CAC.** Avec LTV 8-15€, tu es limite.
+⚠️ **Ne scaler que si LTV > 3× CAC.** Avec LTV couple ~60-120€ et LTV soirée ~8-15€, tester uniquement après avoir atteint un taux de conversion Pass > 8%.
 
 #### Levier #5 : B2B Outbound
 
 - **Coût :** Temps (1 jour/semaine)
-- **Timeline :** 3-6 mois pour 1er client
-- **Estimation :** 2-5 clients/mois × 399€ = 800-2 000€/mois
+- **Timeline :** 1-3 mois pour 1er client bars/cafés, 3-6 mois pour 1er client entreprise
+- **Estimation :** 3-5 clients/mois × 800€/mois de MRR = 2 400-4 000€/mois de MRR cumulé
 
-**🏆 Levier le plus rentable à court terme. Marges 90%.**
+**🏆 Levier le plus rentable à court terme. Marge brute élevée (~70% après support commercial).**
 
 ### 6.3 Recommandations par Phase
 
-#### Mois 1-3 : Focus B2B + SEO
+#### Mois 1-3 : Fondations Produit + Bars/cafés
 
-- 1 jour/semaine prospection LinkedIn (DRH, bars)
-- 2 articles/semaine sur blog (SEO longue traîne)
-- **Objectif :** 2-5 clients B2B + 1 000 visiteurs organiques
+- Corriger les P0 produit (bug engines, pricing, paywall, onboarding)
+- 1 jour/semaine prospection bars/cafés (marché B2B le plus rapide)
+- 2 articles/semaine sur le blog (SEO longue traîne)
+- **Objectif :** 1-2 clients bars/cafés + 1 000 visiteurs organiques + 0 crash
 
-#### Mois 4-6 : Activation Créateurs
+#### Mois 4-6 : B2B Entreprise + Créateurs
 
+- 1 jour/semaine prospection LinkedIn (DRH, managers)
 - Recruter 20 micro-influenceurs (10k-50k followers)
-- Accès premium + 50% commission
-- **Objectif :** 500-2 000 installs via affiliation
+- Accès premium + 30% commission
+- Exposer le Pass Week-end
+- **Objectif :** 3-5 clients B2B + 500-2 000 installs via affiliation
 
-#### Mois 7-12 : Paid Ads (si rentable)
+#### Mois 7-12 : Paid Ads + Scale B2B
 
-- Tester avec 1 000€ de budget
+- Tester paid ads avec 1 000€/mois de budget
 - Mesurer CAC vs LTV
-- Si LTV > 3x CAC, scaler
+- Automatiser la prospection B2B
+- Si LTV > 3× CAC, scaler les ads
+- **Objectif :** 10+ clients B2B cumulés + 20 000€ MRR
 
 ### 6.4 Ce qu'il ne faut PAS faire
 
