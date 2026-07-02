@@ -1,4 +1,18 @@
-import * as repositories from '@/lib/db/repositories';
+import {
+  getDJProfileById,
+  getTreeByCouple,
+  getTreeByRoom,
+  listTreeNodes,
+  listTreeConnections,
+  getQuestionById,
+  getRoomById,
+} from '@/lib/db/repositories';
+import {
+  updateProfile,
+  createQuestion,
+  getQuestionById as getDJQuestionById,
+  updateQuestion,
+} from '@/lib/db/repositories/coupleDjRepository';
 import { generateContent } from '@/lib/gemini';
 import { AppError } from '@/lib/errors';
 import { logger } from '@/lib/logger';
@@ -26,10 +40,10 @@ const fallbackQuestions: Record<string, string[]> = {
 async function compileTreeContext(profile: Pick<DJProfile, 'coupleId' | 'roomId'>): Promise<TreeContext> {
   let treeId: string | null = null;
   if (profile.coupleId) {
-    const tree = await repositories.getTreeByCouple(profile.coupleId);
+    const tree = await getTreeByCouple(profile.coupleId);
     treeId = tree?.id || null;
   } else if (profile.roomId) {
-    const tree = await repositories.getTreeByRoom(profile.roomId);
+    const tree = await getTreeByRoom(profile.roomId);
     treeId = tree?.id || null;
   }
 
@@ -40,8 +54,8 @@ async function compileTreeContext(profile: Pick<DJProfile, 'coupleId' | 'roomId'
   if (treeId) {
     try {
       const [nodes, connections] = await Promise.all([
-        repositories.listTreeNodes(treeId),
-        repositories.listTreeConnections(treeId)
+        listTreeNodes(treeId),
+        listTreeConnections(treeId)
       ]);
 
       // Compile last 10 questions/topics
@@ -49,7 +63,7 @@ async function compileTreeContext(profile: Pick<DJProfile, 'coupleId' | 'roomId'
       const historyItems: string[] = [];
       for (const node of recentNodes) {
         if (node.questionId) {
-          const q = await repositories.getQuestionById(node.questionId);
+          const q = await getQuestionById(node.questionId);
           if (q) historyItems.push(`- ${q.text} (Catégorie: ${q.category}, Intensité: ${q.intensityLevel})`);
         } else if (node.customText) {
           historyItems.push(`- ${node.customText} (DJ IA, Intensité: ${node.intensity})`);
@@ -101,7 +115,7 @@ function compileInteractionHistoryText(profileHistory: unknown): string {
  * @param profileId Unique DJProfile id
  */
 export async function generateDJQuestion(profileId: string): Promise<string> {
-  const profile = await repositories.getDJProfileById(profileId);
+  const profile = await getDJProfileById(profileId);
   if (!profile) {
     throw new AppError('NOT_FOUND', `Profil DJ avec l'ID ${profileId} introuvable.`);
   }
@@ -109,7 +123,7 @@ export async function generateDJQuestion(profileId: string): Promise<string> {
   let customAnecdotesText = '';
   let language = 'fr';
   if (profile.roomId) {
-    const room = await repositories.getRoomById(profile.roomId);
+    const room = await getRoomById(profile.roomId);
     if (room) {
       language = room.language || 'fr';
       if (room.customAnecdotes && Array.isArray(room.customAnecdotes) && room.customAnecdotes.length > 0) {
@@ -141,7 +155,7 @@ export async function generateDJQuestion(profileId: string): Promise<string> {
     mood: profile.mood,
   });
 
-  await repositories.createDJQuestion({
+  await createQuestion({
     profileId,
     text: generatedText,
     status: 'PENDING',
@@ -159,16 +173,16 @@ export async function updateDJQuestionFeedback(
   status: 'ACCEPTED' | 'REJECTED',
   feedback?: string
 ): Promise<void> {
-  const question = await repositories.getDJQuestionById(questionId);
+  const question = await getDJQuestionById(questionId);
   if (!question) {
     throw new AppError('NOT_FOUND', `Question DJ avec l'ID ${questionId} introuvable.`);
   }
 
   // Update status in database
-  await repositories.updateDJQuestionStatus(questionId, { status, feedback });
+  await updateQuestion(questionId, { status, feedback });
 
   // Update profile interaction history
-  const profile = await repositories.getDJProfileById(question.profileId);
+  const profile = await getDJProfileById(question.profileId);
   if (profile) {
     const history = (profile.interactionHistory || { items: [] }) as { items?: InteractionItem[] };
     if (!history.items) history.items = [];
@@ -180,7 +194,7 @@ export async function updateDJQuestionFeedback(
       timestamp: new Date().toISOString(),
     });
 
-    await repositories.updateDJProfile(profile.id, {
+    await updateProfile(profile.id, {
       interactionHistory: history as unknown as Record<string, unknown>, // Cast to Json format compatible with prisma/supabase JSONB
     });
   }

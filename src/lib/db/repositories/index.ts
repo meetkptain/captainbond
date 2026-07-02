@@ -19,6 +19,14 @@ export {
   createTreeForRoom,
 } from './roomTreeRepository';
 export * from './djRepository';
+export {
+  getProfileByCouple,
+  createProfileForCouple,
+} from './coupleDjRepository';
+export {
+  getProfileByRoom,
+  createProfileForRoom,
+} from './roomDjRepository';
 export * from './dailyQuestionRepository';
 export * from './couplePortraitRepository';
 export * from './totemRepository';

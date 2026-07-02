@@ -9,10 +9,14 @@ vi.mock('@/lib/db/repositories', () => ({
   listTreeNodes: vi.fn(),
   listTreeConnections: vi.fn(),
   getQuestionById: vi.fn(),
-  createDJQuestion: vi.fn(),
-  updateDJProfile: vi.fn(),
-  getDJQuestionById: vi.fn(),
-  updateDJQuestionStatus: vi.fn(),
+  getRoomById: vi.fn(),
+}));
+
+vi.mock('@/lib/db/repositories/coupleDjRepository', () => ({
+  updateProfile: vi.fn(),
+  createQuestion: vi.fn(),
+  getQuestionById: vi.fn(),
+  updateQuestion: vi.fn(),
 }));
 
 vi.mock('@/lib/gemini', () => ({
@@ -25,11 +29,13 @@ import {
   listTreeNodes,
   listTreeConnections,
   getQuestionById,
-  createDJQuestion,
-  updateDJProfile,
-  getDJQuestionById,
-  updateDJQuestionStatus,
 } from '@/lib/db/repositories';
+import {
+  createQuestion,
+  updateProfile,
+  getQuestionById as getDJQuestionById,
+  updateQuestion,
+} from '@/lib/db/repositories/coupleDjRepository';
 import { generateContent } from '@/lib/gemini';
 
 describe('djEngine', () => {
@@ -64,7 +70,7 @@ describe('djEngine', () => {
 
       expect(result).toBe(mockGeneratedText);
       expect(generateContent).toHaveBeenCalled();
-      expect(createDJQuestion).toHaveBeenCalledWith({
+      expect(createQuestion).toHaveBeenCalledWith({
         profileId: 'prof-1',
         text: mockGeneratedText,
         status: 'PENDING',
@@ -85,7 +91,7 @@ describe('djEngine', () => {
 
       expect(result).toBeTypeOf('string');
       expect(result.length).toBeGreaterThan(0);
-      expect(createDJQuestion).toHaveBeenCalledWith({
+      expect(createQuestion).toHaveBeenCalledWith({
         profileId: 'prof-1',
         text: result,
         status: 'PENDING',
@@ -110,8 +116,8 @@ describe('djEngine', () => {
 
       await updateDJQuestionFeedback('q-123', 'REJECTED', 'Trop sensible');
 
-      expect(updateDJQuestionStatus).toHaveBeenCalledWith('q-123', { status: 'REJECTED', feedback: 'Trop sensible' });
-      expect(updateDJProfile).toHaveBeenCalledWith('prof-1', {
+      expect(updateQuestion).toHaveBeenCalledWith('q-123', { status: 'REJECTED', feedback: 'Trop sensible' });
+      expect(updateProfile).toHaveBeenCalledWith('prof-1', {
         interactionHistory: {
           items: [
             expect.objectContaining({

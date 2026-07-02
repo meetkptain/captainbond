@@ -1,20 +1,8 @@
 import { supabaseAdmin } from '@/lib/supabase-admin';
-import { DJProfile, DJQuestion, DailyQuestion } from '../types';
+import { DJProfile, DJQuestion } from '../types';
 
 export async function getDJProfileById(id: string): Promise<DJProfile | null> {
   const { data, error } = await supabaseAdmin.from('DJProfile').select('*').eq('id', id).maybeSingle();
-  if (error) throw error;
-  return data as DJProfile | null;
-}
-
-export async function getDJProfileByCouple(coupleId: string): Promise<DJProfile | null> {
-  const { data, error } = await supabaseAdmin.from('DJProfile').select('*').eq('coupleId', coupleId).maybeSingle();
-  if (error) throw error;
-  return data as DJProfile | null;
-}
-
-export async function getDJProfileByRoom(roomId: string): Promise<DJProfile | null> {
-  const { data, error } = await supabaseAdmin.from('DJProfile').select('*').eq('roomId', roomId).maybeSingle();
   if (error) throw error;
   return data as DJProfile | null;
 }
