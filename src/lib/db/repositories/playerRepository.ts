@@ -24,6 +24,18 @@ export async function getPlayersInRoom(roomId: string): Promise<Player[]> {
   return (data || []) as Player[];
 }
 
+export async function getPlayersByRoomWithUserId(
+  roomId: string
+): Promise<Array<Pick<Player, 'id' | 'userId' | 'isHost'>>> {
+  const { data, error } = await supabaseAdmin
+    .from('Player')
+    .select('id, userId, isHost')
+    .eq('roomId', roomId)
+    .not('userId', 'is', null);
+  if (error) throw error;
+  return (data || []) as Array<Pick<Player, 'id' | 'userId' | 'isHost'>>;
+}
+
 export async function countNonHostPlayersInRoom(roomId: string): Promise<number> {
   const { data, error } = await supabaseAdmin
     .from('Player')
