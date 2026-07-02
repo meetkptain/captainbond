@@ -22,10 +22,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: {
-    template: '%s | Captain Bond',
-    default: 'Captain Bond — Le DJ de ta soirée',
-  },
+  title: 'Captain Bond — Le DJ de ta soirée',
   description: "Jeu d'ambiance autour de la TV. Icebreaker, Spicy, Deep Connection, Imposteur, Date Night.",
   openGraph: {
     type: 'website',
