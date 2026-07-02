@@ -1126,32 +1126,61 @@ Un seul focus par mois. Pas de dispersion.
 
 ### 9.2 Projections Réalistes
 
-**⚠️ HONNÊTETÉ :** Ces projections sont des estimations basses. Le succès dépend à 80% de l'exécution.
+**⚠️ HONNÊTETÉ :** Ces projections sont des estimations. Le succès dépend à 80% de l'exécution.
 
 | Timeline | Users Actifs | Visiteurs/mois | Revenus/mois | Objectif |
 |----------|--------------|----------------|--------------|----------|
-| M3 | 2 000 | 3 000-5 000 | 2 300€ | Product-market fit |
-| M6 | 5 000 | 10 000-15 000 | 9 500€ | 10 clients B2B |
-| M12 | 15 000 | 30 000-50 000 | 29 000€ | Break-even |
-| M18 | 25 000 | 60 000-100 000 | 55 000€ | Scale |
-| M24 | 40 000 | 100 000-200 000 | 90 000€ | Expansion |
+| M3 | 1 000 | 2 000-3 000 | 2 300€ | Fondations produit |
+| M6 | 3 000 | 10 000-15 000 | 6 700€ | 3-5 clients B2B |
+| M12 | 10 000 | 30 000-50 000 | 19 700€ | Break-even |
+| M18 | 20 000 | 60 000-100 000 | 44 500€ | Scale B2B |
+| M24 | 35 000 | 100 000-150 000 | 69 300€ | Expansion |
+
+> **Source :** scénario Optimisé du modèle financier `docs/superpowers/plans/PLAN_STRATEGIQUE_financial_model.xlsx`
 
 ### 9.3 Conditions de Succès
 
 **Pour atteindre ces chiffres, il faut :**
 - ✅ Exécuter la roadmap à 80%+
 - ✅ Publier 4 articles/semaine (2 EN + 2 FR)
-- ✅ Prospecter B2B 1 jour/semaine
+- ✅ Prospecter B2B 1 jour/semaine (bars d'abord, entreprises ensuite)
 - ✅ Recruter 20+ créateurs affiliés
 - ✅ Ne pas pivoter (garder le hybrid model)
 - ✅ A/B tester continuellement (pricing, copy, UX)
+- ✅ Corriger les P0 produit avant toute acquisition payante
 
 **Ce qui peut faire échouer :**
 - ❌ Pivoter vers app 100% couple (perte de viralité)
 - ❌ Négliger le SEO (6-12 mois de retard)
 - ❌ Ignorer l'éthique (bad buzz, problèmes RGPD)
-- ❌ Sous-estimer le B2B (marges 90%)
+- ❌ Sous-estimer le B2B (marge brute élevée, mais long à démarrer)
 - ❌ Brûler le cash en ads avant product-market fit
+
+### 9.4 Risques Opérationnels
+
+#### Risque Produit
+- **Crash en production** sur les modes non-Imposteur (bug `gameEnginesRegistry`).
+- **Mitigation :** correction P0 avant toute acquisition.
+
+#### Risque Juridique / RGPD
+- Les réponses de couple sont des données sensibles. Risque de sanction CNIL si consentement ou chiffrement insuffisant.
+- **Mitigation :** audit RGPD, DPO externe, chiffrement bout-en-bout, droit à l'oubli.
+
+#### Risque Éthique
+- Bad buzz si le produit est perçu comme "thérapie de couple déguisée" ou si des questions IA génèrent des réponses inappropriées.
+- **Mitigation :** disclaimers clairs, validation psychologue, safe word, modération humaine.
+
+#### Risque Monétisation
+- LTV couple faible si churn élevé. Le modèle dépend fortement de la conversion groupe → couple.
+- **Mitigation :** tracker le taux "Party → Dossier couple → Abonnement" dès M1.
+
+#### Risque Distribution
+- Dépendance à une seule personne pour la prospection B2B et le contenu.
+- **Mitigation :** documenter les playbooks dès le premier client/réussite.
+
+#### Risque Technique
+- Dépendance à Stripe / Supabase / Vercel. Panne = arrêt total.
+- **Mitigation :** monitoring (Sentry), backups, runbooks d'incident.
 
 ---
 
