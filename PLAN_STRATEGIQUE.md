@@ -1004,124 +1004,97 @@ Marge nette (75%) : 623 700€/an
 
 ### Phase 1 : Fondations (Mois 1-3)
 
-#### Semaine 1-2 : SEO + Homepage
+Un seul focus par mois. Pas de dispersion.
 
-- [ ] Ajouter balises hreflang
-- [ ] Refondre homepage en "hub central" avec ICP selector
-- [ ] Créer landing page `/party/` (ICP1 EN)
-- [ ] Créer landing page `/fr/soiree/` (ICP1 FR)
-- [ ] A/B tester pricing (1.99€ vs 2.99€ vs 4.99€)
-- [ ] Ajouter compteur de parties en temps réel
+#### Mois 1 — Fondations Produit P0
 
-**Livrables :**
-- Nouvelle homepage avec 6 CTA (1 par ICP)
-- Landing page ICP1 EN + FR
-- Système de tracking conversion par ICP
+- [ ] Fix bug `gameEnginesRegistry` (modes non-Imposteur)
+- [ ] Aligner prix config + catalogue + UI
+- [ ] Ajouter vérification min/max joueurs dans `next-round`
+- [ ] Permettre à n'importe quel joueur de payer pour la room
+- [ ] Ajouter jauge "Carte gratuite X/3"
+- [ ] Ajouter micro-onboarding hôte + joueur
+- [ ] Ajouter bouton pause / safe word
 
-**ROI attendu :** +200% de conversions B2C
+**Objectif M1 :**
+- 50 rooms créées
+- 5% conversion Pass 24h
+- 0 crash en production
+- **~500€ de revenus**
 
-#### Semaine 3-4 : Landing ICP2 + ICP3
+#### Mois 2 — Conversion & Landing Pages
 
-- [ ] Créer landing page `/couple/` (EN) + `/fr/couple/` (FR)
-- [ ] Créer landing page `/family/` (EN) + `/fr/famille/` (FR)
-- [ ] Optimiser pricing couple : 4.99€/mois
-- [ ] Ajouter essai gratuit 7 jours
-- [ ] Créer vidéo démo 60 sec
+- [ ] Refaire homepage avec démo 6s
+- [ ] Créer `/party/` EN + `/fr/soiree/` FR
+- [ ] Créer `/couple/` EN + `/fr/couple/` FR
+- [ ] Refaire paywall multi-offres (Pass / Mensuel / Annuel)
+- [ ] Exposer Pass Week-end
+- [ ] Ajouter disclaimers éthiques couple
 
-**Livrables :**
-- Landing pages ICP2 + ICP3 EN/FR
-- Système d'essai gratuit
-- Vidéo de démo
+**Objectif M2 :**
+- 300 rooms créées
+- 8% conversion Pass 24h
+- 15% conversion Dossier individuel
+- **~1 500€ de revenus**
 
-**ROI attendu :** +400% de conversions couple
+#### Mois 3 — B2B & Distribution IRL
 
-#### Semaine 5-8 : B2B + Blog
-
-- [ ] Créer landing page `/company/` (EN) + `/fr/entreprise/` (FR)
-- [ ] Créer landing page `/bars/` (EN) + `/fr/bars/` (FR)
-- [ ] Nettoyer structure URL (fusionner /b2b et /corporate)
+- [ ] Créer `/company/` EN + `/fr/entreprise/` FR
+- [ ] Créer `/bars/` EN + `/fr/bars/` FR
 - [ ] Lancer blog EN + FR (2 articles/semaine par langue)
-- [ ] 1 jour/semaine prospection LinkedIn B2B
-
-**Livrables :**
-- Landing pages ICP4 EN/FR
-- 16 articles de blog (8 EN + 8 FR)
-- 8-12 prospects B2B contactés
-
-**ROI attendu :** 2-5 clients B2B
-
-#### Semaine 9-12 : Éthique + Créateurs
-
-- [ ] Ajouter tous les disclaimers éthiques
+- [ ] Prospecter 10 bars/cafés
+- [ ] Recruter 5 premiers créateurs
 - [ ] Créer page "Ressources" (lignes d'écoute)
-- [ ] Faire valider 100 questions par psychologue
-- [ ] Créer landing page `/creators/` (EN) + `/fr/createurs/` (FR)
-- [ ] Recruter 10 premiers créateurs (programme affiliation)
-
-**Livrables :**
-- Disclaimers sur toutes les pages couple
-- Page ressources avec liens d'aide
-- Corpus de questions validé
-- Landing page créateurs
-- 10 créateurs affiliés
 
 **Objectif M3 :**
-- 2 000 users actifs
-- 1 500€ revenus B2C
-- 800€ revenus B2B
-- **Total : 2 300€/mois**
+- 1 000 users actifs
+- 1 client B2B signé
+- **~2 300€ de revenus**
 
 ---
 
 ### Phase 2 : Growth (Mois 4-6)
 
-- [ ] Recruter 20 micro-influenceurs (programme affiliation)
-- [ ] Lancer campagne SEO longue traîne (20 articles)
-- [ ] Optimiser funnel conversion (A/B testing)
+- [ ] Recruter 20 micro-influenceurs (programme affiliation, 30% commission)
+- [ ] Lancer campagne SEO longue traîne (20 articles EN + FR)
+- [ ] Optimiser funnel conversion (A/B testing pricing, copy, CTA)
 - [ ] Ajouter "Tip Jar" (pourboires)
 - [ ] Ajouter "Room Skins" (0.99-2.99€)
-- [ ] Signer 5-10 clients B2B
+- [ ] Signer 3-5 clients B2B / bars
 
 **Objectif M6 :**
-- 5 000 users actifs
-- 7 500€ revenus B2C
-- 2 000€ revenus B2B
-- **Total : 9 500€/mois**
+- 3 000 users actifs
+- **~6 700€ de revenus**
 
 ---
 
 ### Phase 3 : Scale (Mois 7-12)
 
-- [ ] Tester paid ads (1 000€ budget)
+- [ ] Tester paid ads avec 1 000€/mois de budget
 - [ ] Lancer marketplace créateurs (30% commission)
 - [ ] Développer offre white label enterprise
 - [ ] Automatiser prospection B2B
 - [ ] Internationalisation (ES, DE, IT)
 
 **Objectif M12 :**
-- 15 000 users actifs
-- 20 000€ revenus B2C
-- 6 000€ revenus B2B
-- 3 000€ marketplace
-- **Total : 29 000€/mois**
+- 10 000 users actifs
+- **~19 700€ de revenus**
 
 ---
 
 ### Phase 4 : Expansion (Mois 13-24)
 
-- [ ] Scaler paid ads (si LTV > 3x CAC)
+- [ ] Scaler paid ads (si LTV > 3× CAC)
 - [ ] Lancer app mobile native (iOS + Android)
 - [ ] Développer mode "Remote" avancé
 - [ ] Partenariats stratégiques (bars, entreprises)
 - [ ] Levée de fonds (si pertinent)
 
 **Objectif M24 :**
-- 40 000 users actifs
-- 50 000€ revenus B2C
-- 15 000€ revenus B2B
-- 15 000€ marketplace
-- 10 000€ white label
-- **Total : 90 000€/mois**
+- 35 000 users actifs
+- **~69 300€ de revenus**
+
+> **Source des objectifs financiers :** `docs/superpowers/plans/PLAN_STRATEGIQUE_financial_model.xlsx`
 
 ---
 
