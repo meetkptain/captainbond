@@ -1,5 +1,11 @@
-import { supabaseAdmin } from '@/lib/supabase-admin';
 import { AppError } from '@/lib/errors';
+import {
+  loadByUser,
+  createForUser,
+  update,
+  getSummaryByUser,
+  type UserStatsRow,
+} from '@/lib/db/repositories/userStatsRepository';
 import {
   computeNextStats,
   type GameSummaryInput,
@@ -37,31 +43,12 @@ export const BADGE_DEFINITIONS: Record<string, Badge> = {
   streak_30: { id: 'streak_30', name: 'Légende', emoji: '👑', description: '30 jours de suite sur Captain Bond.' },
 };
 
-type UserStatsRow = UserStatsData & { id: string };
-
 async function loadUserStats(userId: string): Promise<UserStatsRow | null> {
-  const { data, error } = await supabaseAdmin
-    .from('UserStats')
-    .select('id, totalGamesPlayed, currentStreak, gamesPlayedToday, lastPlayedAt, badges, archetypesUnlocked')
-    .eq('userId', userId)
-    .maybeSingle();
-
-  if (error) {
+  try {
+    return await loadByUser(userId);
+  } catch (error) {
     throw new AppError('INTERNAL_ERROR', 'Impossible de récupérer les statistiques', { cause: error });
   }
-
-  if (!data) return null;
-
-  return {
-    id: data.id,
-    totalGamesPlayed: data.totalGamesPlayed ?? 0,
-    totalBetrayals: (data as { totalBetrayals?: number }).totalBetrayals ?? 0,
-    currentStreak: data.currentStreak ?? 0,
-    gamesPlayedToday: data.gamesPlayedToday ?? 0,
-    lastPlayedAt: data.lastPlayedAt ?? null,
-    badges: (data.badges as string[]) ?? [],
-    archetypesUnlocked: (data.archetypesUnlocked as string[]) ?? [],
-  };
 }
 
 async function persistUserStats(
@@ -70,64 +57,38 @@ async function persistUserStats(
   nextStats: UserStatsData,
   now: Date,
 ): Promise<void> {
-  if (!existing) {
-    const { error: insertError } = await supabaseAdmin.from('UserStats').insert({
-      id: crypto.randomUUID(),
-      userId,
-      totalGamesPlayed: nextStats.totalGamesPlayed,
-      totalBetrayals: 0,
-      currentStreak: nextStats.currentStreak,
-      gamesPlayedToday: nextStats.gamesPlayedToday,
-      lastPlayedAt: now.toISOString(),
-      badges: nextStats.badges,
-      archetypesUnlocked: nextStats.archetypesUnlocked,
-    });
+  const row: Omit<UserStatsRow, 'id'> = {
+    totalGamesPlayed: nextStats.totalGamesPlayed,
+    totalBetrayals: nextStats.totalBetrayals,
+    currentStreak: nextStats.currentStreak,
+    gamesPlayedToday: nextStats.gamesPlayedToday,
+    lastPlayedAt: now.toISOString(),
+    badges: nextStats.badges,
+    archetypesUnlocked: nextStats.archetypesUnlocked,
+  };
 
-    if (insertError) {
-      throw new AppError('INTERNAL_ERROR', 'Impossible de créer les statistiques', { cause: insertError });
+  try {
+    if (!existing) {
+      await createForUser(userId, row);
+      return;
     }
 
-    return;
-  }
-
-  const { error: updateError } = await supabaseAdmin
-    .from('UserStats')
-    .update({
-      totalGamesPlayed: nextStats.totalGamesPlayed,
-      currentStreak: nextStats.currentStreak,
-      gamesPlayedToday: nextStats.gamesPlayedToday,
-      lastPlayedAt: now.toISOString(),
-      updatedAt: now.toISOString(),
-      badges: nextStats.badges,
-      archetypesUnlocked: nextStats.archetypesUnlocked,
-    })
-    .eq('id', existing.id);
-
-  if (updateError) {
-    throw new AppError('INTERNAL_ERROR', 'Impossible de mettre à jour les statistiques', { cause: updateError });
+    await update(existing.id, row);
+  } catch (error) {
+    throw new AppError(
+      'INTERNAL_ERROR',
+      existing ? 'Impossible de mettre à jour les statistiques' : 'Impossible de créer les statistiques',
+      { cause: error },
+    );
   }
 }
 
 export async function getUserStats(userId: string): Promise<UserStatsSummary> {
-  const { data, error } = await supabaseAdmin
-    .from('UserStats')
-    .select('totalGamesPlayed, totalBetrayals, currentStreak, gamesPlayedToday, lastPlayedAt, badges, archetypesUnlocked')
-    .eq('userId', userId)
-    .maybeSingle();
-
-  if (error) {
+  try {
+    return await getSummaryByUser(userId);
+  } catch (error) {
     throw new AppError('INTERNAL_ERROR', 'Impossible de récupérer les statistiques', { cause: error });
   }
-
-  return {
-    totalGamesPlayed: data?.totalGamesPlayed ?? 0,
-    totalBetrayals: data?.totalBetrayals ?? 0,
-    currentStreak: data?.currentStreak ?? 0,
-    gamesPlayedToday: data?.gamesPlayedToday ?? 0,
-    lastPlayedAt: data?.lastPlayedAt ?? null,
-    badges: (data?.badges as string[]) ?? [],
-    archetypesUnlocked: (data?.archetypesUnlocked as string[]) ?? [],
-  };
 }
 
 export async function recordGamePlayed(

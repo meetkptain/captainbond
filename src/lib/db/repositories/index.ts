@@ -30,3 +30,4 @@ export {
 export * from './dailyQuestionRepository';
 export * from './couplePortraitRepository';
 export * from './totemRepository';
+export * from './userStatsRepository';
