@@ -9,7 +9,6 @@ import { playerActionIpLimiter } from '@/lib/rate-limit';
 export const runtime = 'edge';
 
 const voteSchema = z.object({
-  playerId: uuidSchema,
   roomCode: roomCodeSchema,
   questionId: uuidSchema,
   answer: z.union([z.string(), z.number(), z.boolean()]).transform(String),
@@ -22,10 +21,7 @@ export const POST = withApiHandler({
     if (!body) {
       return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
     }
-    const { playerId } = await getAuthenticatedPlayer(req, {
-      playerId: body.playerId,
-      roomCode: body.roomCode,
-    });
+    const { playerId } = await getAuthenticatedPlayer(req);
 
     const result = await recordVote(playerId, body.roomCode, body.questionId, body.answer);
     return NextResponse.json({ success: true, ...result });

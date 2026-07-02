@@ -65,7 +65,6 @@ export function UnlockPanel({ roomCode, playerId, packs, freeQuestionsUsed, free
 
       const data = await api.post<{ sessionUrl?: string; error?: string }>('/api/checkout', {
         sku: pack.sku,
-        playerId,
         roomCode,
         successUrl: successUrl || `${origin}/room/${roomCode}/player?paid=pass`,
         cancelUrl: cancelUrl || `${origin}/room/${roomCode}/player`,

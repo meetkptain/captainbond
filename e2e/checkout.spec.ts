@@ -18,7 +18,6 @@ test.describe('checkout flow', () => {
     const response = await request.post('/api/checkout/pass', {
       headers: { Cookie: player.cookies },
       data: {
-        playerId: player.playerId,
         roomCode: player.roomCode,
         successUrl: process.env.NEXT_PUBLIC_SITE_URL
           ? `${process.env.NEXT_PUBLIC_SITE_URL}/success`
@@ -35,6 +34,6 @@ test.describe('checkout flow', () => {
     expect(body).toHaveProperty('sessionUrl');
     expect(body.sessionUrl).toContain('checkout.stripe.com');
 
-    await cleanupPlayer(player.playerId, room.roomCode);
+    await cleanupPlayer(room.roomCode, player.cookies);
   });
 });

@@ -13,7 +13,6 @@ export interface CreatedRoom {
 }
 
 export interface JoinedPlayer {
-  playerId: string;
   playerName: string;
   roomId: string;
   roomCode: string;
@@ -47,7 +46,6 @@ export async function joinRoom(roomCode: string, playerName = 'Bond'): Promise<J
   const cookies = Array.isArray(setCookie) ? setCookie.join('; ') : setCookie || '';
   await context.dispose();
   return {
-    playerId: body.playerId,
     playerName: body.playerName,
     roomId: body.roomId,
     roomCode: body.roomCode,
@@ -69,12 +67,12 @@ export async function adminLogin(password: string): Promise<string> {
   return cookie || '';
 }
 
-export async function cleanupPlayer(playerId: string, roomCode: string, cookies?: string): Promise<void> {
+export async function cleanupPlayer(roomCode: string, cookies?: string): Promise<void> {
   const context = await request.newContext({
     extraHTTPHeaders: cookies ? { Cookie: cookies } : undefined,
   });
   await context.post('/api/player/delete-me', {
-    data: { playerId, roomCode },
+    data: { roomCode },
   });
   await context.dispose();
 }

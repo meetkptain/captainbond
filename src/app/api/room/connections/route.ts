@@ -3,22 +3,23 @@ import { withApiHandler } from '@/lib/api/withApiHandler';
 import { getRoomByCode, getPlayersInRoom } from '@/lib/db/repositories';
 import { supabaseAdmin } from '@/lib/supabase-admin';
 import { checkoutLimiter } from '@/lib/rate-limit';
-import { requirePlayerSessionFor } from '@/lib/auth/player-session';
+import { getAuthenticatedPlayer } from '@/lib/auth/player-session';
+import { roomCodeSchema } from '@/lib/schemas/api';
 import { z } from 'zod';
 
 export const runtime = 'edge';
 
-// GET for teaser (accessible to everyone in the room)
-export const GET = withApiHandler({
-  async handler({ req }) {
-    const { searchParams } = new URL(req.url);
-    const roomCode = searchParams.get('roomCode');
-    const playerId = searchParams.get('playerId');
-    if (!roomCode || !playerId) {
-      return NextResponse.json({ error: 'Paramètres manquants', code: 'BAD_REQUEST' }, { status: 400 });
-    }
+const connectionsQuerySchema = z.object({
+  roomCode: roomCodeSchema,
+});
 
-    const room = await getRoomByCode(roomCode);
+// GET for teaser (requires authentication)
+export const GET = withApiHandler({
+  querySchema: connectionsQuerySchema,
+  async handler({ req, query }) {
+    const { playerId } = await getAuthenticatedPlayer(req);
+
+    const room = await getRoomByCode(query.roomCode);
     if (!room) {
       return NextResponse.json({ error: 'Salle introuvable', code: 'NOT_FOUND' }, { status: 404 });
     }
@@ -63,8 +64,7 @@ export const GET = withApiHandler({
 
 // POST for revealing (requires entitlement check / unlock session)
 const revealSchema = z.object({
-  roomCode: z.string().min(1),
-  playerId: z.string().min(1),
+  roomCode: roomCodeSchema,
 });
 
 export const POST = withApiHandler({
@@ -74,8 +74,8 @@ export const POST = withApiHandler({
     if (!body) {
       return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
     }
-    const { roomCode, playerId } = body;
-    await requirePlayerSessionFor(req, playerId, roomCode);
+    const { playerId } = await getAuthenticatedPlayer(req);
+    const roomCode = body.roomCode;
 
     const room = await getRoomByCode(roomCode);
     if (!room) {
@@ -89,7 +89,7 @@ export const POST = withApiHandler({
     }
 
     // Check if player unlocked the profile
-    const { data: entitlements, error: entError } = await supabaseAdmin.rpc('get_user_entitlements_v2', {
+    const { data: entitlements } = await supabaseAdmin.rpc('get_user_entitlements_v2', {
       p_user_id: targetPlayer.userId || null,
       p_room_id: room.id,
     });

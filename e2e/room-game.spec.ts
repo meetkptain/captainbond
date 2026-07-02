@@ -18,7 +18,7 @@ test.describe('room game actions', () => {
 
     const playerContext = await browser.newContext();
     const playerPage = await playerContext.newPage();
-    await playerPage.goto(`/room/${room.roomCode}/player?playerId=${player.playerId}`);
+    await playerPage.goto(`/room/${room.roomCode}/player`);
 
     // Player marks ready if button exists
     const readyButton = playerPage.locator('button:has-text("Prêt")');
@@ -29,7 +29,7 @@ test.describe('room game actions', () => {
 
     await hostContext.close();
     await playerContext.close();
-    await cleanupPlayer(player.playerId, room.roomCode);
+    await cleanupPlayer(room.roomCode, player.cookies);
   });
 
   test('host can start a round when all players are ready', async ({ browser }) => {
@@ -57,7 +57,7 @@ test.describe('room game actions', () => {
             },
             { roomCode: room.roomCode }
           );
-          await page.goto(`/room/${room.roomCode}/player?playerId=${player.playerId}`);
+          await page.goto(`/room/${room.roomCode}/player`);
           const readyButton = page.locator('button:has-text("Je suis prêt")');
           await expect(readyButton).toBeVisible({ timeout: 5000 });
           await readyButton.click();
@@ -72,7 +72,7 @@ test.describe('room game actions', () => {
         },
         { roomCode: room.roomCode, hostId: room.hostId, hostToken: room.hostToken }
       );
-      await hostPage.goto(`/room/${room.roomCode}/player?playerId=host`);
+      await hostPage.goto(`/room/${room.roomCode}/player`);
 
       const startButton = hostPage.locator('button:has-text("Lancer la partie")');
       await expect(startButton).toBeVisible({ timeout: 5000 });
@@ -85,7 +85,7 @@ test.describe('room game actions', () => {
     } finally {
       await hostContext.close();
       await playerContext.close();
-      await Promise.all(players.map((player) => cleanupPlayer(player.playerId, room.roomCode)));
+      await Promise.all(players.map((player) => cleanupPlayer(room.roomCode, player.cookies)));
       await cleanupRoom(room.roomCode, room.hostId, room.hostToken);
     }
   });
@@ -101,7 +101,7 @@ test.describe('room game actions', () => {
       },
       { roomCode: room.roomCode }
     );
-    await page.goto(`/room/${room.roomCode}/player?playerId=${player.playerId}`);
+    await page.goto(`/room/${room.roomCode}/player`);
 
     const safeButton = page.locator('button:has-text("Safe word")');
     await expect(safeButton).toBeVisible();
@@ -109,6 +109,6 @@ test.describe('room game actions', () => {
 
     await expect(page.locator('h2:has-text("Vous avez le contrôle")')).toBeVisible();
 
-    await cleanupPlayer(player.playerId, room.roomCode);
+    await cleanupPlayer(room.roomCode, player.cookies);
   });
 });

@@ -3,11 +3,11 @@ import { NextRequest } from 'next/server';
 import { POST } from './route';
 import { AppError } from '@/lib/errors';
 import { createCheckoutSession } from '@/services/paymentService';
-import { requirePlayerSessionFor } from '@/lib/auth/player-session';
+import { getAuthenticatedPlayer } from '@/lib/auth/player-session';
 import { getRoomByCode } from '@/lib/db/repositories';
 
 vi.mock('@/lib/auth/player-session', () => ({
-  requirePlayerSessionFor: vi.fn(),
+  getAuthenticatedPlayer: vi.fn(),
 }));
 
 vi.mock('@/lib/db/repositories', () => ({
@@ -18,20 +18,21 @@ vi.mock('@/services/paymentService', () => ({
   createCheckoutSession: vi.fn(),
 }));
 
+const playerId = '550e8400-e29b-41d4-a716-446655440000';
+
 describe('POST /api/checkout/profile', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   it('rejects unauthenticated requests', async () => {
-    vi.mocked(requirePlayerSessionFor).mockRejectedValue(
+    vi.mocked(getAuthenticatedPlayer).mockRejectedValue(
       new AppError('UNAUTHORIZED', 'Session joueur manquante')
     );
 
     const req = new NextRequest('http://localhost/api/checkout/profile', {
       method: 'POST',
       body: JSON.stringify({
-        playerId: '550e8400-e29b-41d4-a716-446655440000',
         roomCode: 'ABCD',
         successUrl: 'http://localhost/success',
         cancelUrl: 'http://localhost/cancel',
@@ -43,10 +44,9 @@ describe('POST /api/checkout/profile', () => {
   });
 
   it('creates a profile checkout for an authenticated player in a standard room', async () => {
-    vi.mocked(requirePlayerSessionFor).mockResolvedValue({
-      playerId: '550e8400-e29b-41d4-a716-446655440000',
+    vi.mocked(getAuthenticatedPlayer).mockResolvedValue({
+      playerId,
       roomId: 'room-1',
-      fromCookie: true,
     });
     vi.mocked(getRoomByCode).mockResolvedValue({
       id: 'room-1',
@@ -61,7 +61,6 @@ describe('POST /api/checkout/profile', () => {
     const req = new NextRequest('http://localhost/api/checkout/profile', {
       method: 'POST',
       body: JSON.stringify({
-        playerId: '550e8400-e29b-41d4-a716-446655440000',
         roomCode: 'ABCD',
         successUrl: 'http://localhost/success',
         cancelUrl: 'http://localhost/cancel',
@@ -74,16 +73,15 @@ describe('POST /api/checkout/profile', () => {
     expect(body.sessionUrl).toBe('https://checkout.stripe.com/sess_profile');
     expect(createCheckoutSession).toHaveBeenCalledWith(expect.objectContaining({
       sku: 'PROFILE',
-      playerId: '550e8400-e29b-41d4-a716-446655440000',
+      playerId,
       roomCode: 'ABCD',
     }));
   });
 
   it('creates a couple profile checkout for an authenticated player in a date night room', async () => {
-    vi.mocked(requirePlayerSessionFor).mockResolvedValue({
-      playerId: '550e8400-e29b-41d4-a716-446655440000',
+    vi.mocked(getAuthenticatedPlayer).mockResolvedValue({
+      playerId,
       roomId: 'room-1',
-      fromCookie: true,
     });
     vi.mocked(getRoomByCode).mockResolvedValue({
       id: 'room-1',
@@ -98,7 +96,6 @@ describe('POST /api/checkout/profile', () => {
     const req = new NextRequest('http://localhost/api/checkout/profile', {
       method: 'POST',
       body: JSON.stringify({
-        playerId: '550e8400-e29b-41d4-a716-446655440000',
         roomCode: 'ABCD',
         successUrl: 'http://localhost/success',
         cancelUrl: 'http://localhost/cancel',

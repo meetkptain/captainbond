@@ -8,17 +8,13 @@ import { getAuthenticatedPlayer } from '@/lib/auth/player-session';
 export const runtime = 'edge';
 
 const roleQuerySchema = z.object({
-  playerId: uuidSchema,
   roomId: uuidSchema,
 });
 
 export const GET = withApiHandler({
   querySchema: roleQuerySchema,
   async handler({ req, query }) {
-    const { playerId } = await getAuthenticatedPlayer(req, {
-      playerId: query.playerId,
-      roomId: query.roomId,
-    });
+    const { playerId } = await getAuthenticatedPlayer(req);
 
     const result = await getImposteurRole(playerId, query.roomId);
     return NextResponse.json({ success: true, ...result });

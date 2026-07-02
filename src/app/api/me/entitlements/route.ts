@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
-import { uuidSchema, roomCodeSchema } from '@/lib/schemas/api';
+import { roomCodeSchema } from '@/lib/schemas/api';
 import { getPlayerById } from '@/lib/db/repositories';
 import { getRoomPassInfo, getUserEntitlements, getPlayerEntitlements } from '@/lib/monetization/entitlements';
 import { getRoomByCode } from '@/lib/db/repositories';
@@ -12,41 +12,28 @@ import { ipLimiter, rateLimiters } from '@/lib/rate-limit';
 export const runtime = 'edge';
 
 const entitlementsQuerySchema = z.object({
-  playerId: uuidSchema.optional(),
   roomCode: roomCodeSchema.optional(),
-}).refine((data) => data.playerId || data.roomCode, {
-  message: 'playerId ou roomCode requis',
 });
 
 export const GET = withApiHandler({
   querySchema: entitlementsQuerySchema,
   rateLimit: ipLimiter(rateLimiters.ip),
   async handler({ req, query }) {
-    let targetUserId: string | null = null;
-    let roomId: string | null = null;
-
-    if (query.playerId) {
-      const ctx = await getAuthenticatedPlayer(req, {
-        playerId: query.playerId,
-        roomCode: query.roomCode,
-      });
-      const player = await getPlayerById(ctx.playerId);
-      if (!player) {
-        throw new AppError('NOT_FOUND', 'Joueur introuvable');
-      }
-      targetUserId = player.userId || null;
-      roomId = player.roomId;
+    const ctx = await getAuthenticatedPlayer(req);
+    const player = await getPlayerById(ctx.playerId);
+    if (!player) {
+      throw new AppError('NOT_FOUND', 'Joueur introuvable');
     }
 
-    if (query.roomCode && !roomId) {
+    const targetUserId = player.userId || null;
+    let roomId = player.roomId;
+
+    if (query.roomCode) {
       const room = await getRoomByCode(query.roomCode);
       if (room) roomId = room.id;
     }
 
-    let entitlements = null;
-    if (query.playerId) {
-      entitlements = (await getPlayerEntitlements(query.playerId)) || null;
-    }
+    let entitlements = (await getPlayerEntitlements(ctx.playerId)) || null;
     if (!entitlements && targetUserId) {
       entitlements = await getUserEntitlements(targetUserId);
     }

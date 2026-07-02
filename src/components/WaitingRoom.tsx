@@ -38,7 +38,6 @@ export function WaitingRoom({ roomCode, players, myPlayerId, isHost, onStart, ta
     try {
       await api.post('/api/room/anecdotes/submit', {
         roomCode,
-        playerId: myPlayerId,
         anecdoteText: anecdoteText.trim(),
       });
       setAnecdoteSubmitted(true);
@@ -84,7 +83,7 @@ export function WaitingRoom({ roomCode, players, myPlayerId, isHost, onStart, ta
     setIsToggling(true);
     const next = !myReady;
     try {
-      await api.post('/api/room/ready', { roomCode, playerId: myPlayerId, isReady: next });
+      await api.post('/api/room/ready', { roomCode, isReady: next });
       setReadyMap((prev) => ({ ...prev, [myPlayerId]: next }));
     } catch (e) {
       console.error('Erreur toggle ready:', e);

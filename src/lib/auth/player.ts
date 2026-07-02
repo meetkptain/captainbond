@@ -1,4 +1,3 @@
-import { NextRequest } from 'next/server';
 import { SignJWT, jwtVerify } from 'jose';
 import { AppError } from '@/lib/errors';
 
@@ -39,14 +38,6 @@ export async function verifyPlayerSession(token: string): Promise<PlayerSessionP
   } catch {
     throw new AppError('UNAUTHORIZED', 'Session joueur invalide ou expirée');
   }
-}
-
-export async function requirePlayerSession(req: NextRequest): Promise<PlayerSessionPayload> {
-  const token = req.cookies.get(PLAYER_COOKIE_NAME)?.value;
-  if (!token) {
-    throw new AppError('UNAUTHORIZED', 'Session joueur manquante');
-  }
-  return verifyPlayerSession(token);
 }
 
 export function getPlayerCookieOptions() {

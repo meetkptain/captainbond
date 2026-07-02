@@ -9,18 +9,14 @@ export const runtime = 'edge';
 
 const questionQuerySchema = z.object({
   roomId: uuidSchema,
-  playerId: uuidSchema,
 });
 
 export const GET = withApiHandler({
   querySchema: questionQuerySchema,
   async handler({ req, query }) {
-    await getAuthenticatedPlayer(req, {
-      playerId: query.playerId,
-      roomId: query.roomId,
-    });
+    const { playerId } = await getAuthenticatedPlayer(req);
 
-    const question = await getActiveQuestionForPlayer(query.roomId, query.playerId);
+    const question = await getActiveQuestionForPlayer(query.roomId, playerId);
     return NextResponse.json({
       success: true,
       question: {

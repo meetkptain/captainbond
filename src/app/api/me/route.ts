@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
-import { uuidSchema, roomCodeSchema } from '@/lib/schemas/api';
+import { roomCodeSchema } from '@/lib/schemas/api';
 import { getPlayerEntitlementsSummary } from '@/services/playerService';
 import { getRoomPassInfo } from '@/lib/monetization/entitlements';
 import { getRoomByCode } from '@/lib/db/repositories';
@@ -10,17 +10,13 @@ import { getAuthenticatedPlayer } from '@/lib/auth/player-session';
 export const runtime = 'edge';
 
 const meQuerySchema = z.object({
-  playerId: uuidSchema,
   roomCode: roomCodeSchema.optional(),
 });
 
 export const GET = withApiHandler({
   querySchema: meQuerySchema,
   async handler({ req, query }) {
-    const { playerId } = await getAuthenticatedPlayer(req, {
-      playerId: query.playerId,
-      roomCode: query.roomCode,
-    });
+    const { playerId } = await getAuthenticatedPlayer(req);
 
     const entitlements = await getPlayerEntitlementsSummary(playerId);
 

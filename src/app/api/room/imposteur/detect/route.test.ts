@@ -27,7 +27,6 @@ describe('POST /api/room/imposteur/detect', () => {
     vi.mocked(getAuthenticatedPlayer).mockResolvedValueOnce({
       playerId,
       roomId: 'room-1',
-      fromCookie: false,
     });
     vi.mocked(getRoomByCode).mockResolvedValueOnce({
       id: 'room-1',
@@ -38,7 +37,6 @@ describe('POST /api/room/imposteur/detect', () => {
       method: 'POST',
       body: JSON.stringify({
         roomCode: 'ABCD',
-        playerId,
         targetPlayerId: playerId, // same
         lieIndex: 1,
       }),
@@ -52,7 +50,6 @@ describe('POST /api/room/imposteur/detect', () => {
     vi.mocked(getAuthenticatedPlayer).mockResolvedValueOnce({
       playerId,
       roomId: 'room-1',
-      fromCookie: false,
     });
     vi.mocked(getRoomByCode).mockResolvedValueOnce({
       id: 'room-1',
@@ -67,7 +64,6 @@ describe('POST /api/room/imposteur/detect', () => {
       method: 'POST',
       body: JSON.stringify({
         roomCode: 'ABCD',
-        playerId,
         targetPlayerId,
         lieIndex: 1,
       }),
@@ -87,7 +83,6 @@ describe('POST /api/room/imposteur/detect', () => {
     vi.mocked(getAuthenticatedPlayer).mockResolvedValueOnce({
       playerId,
       roomId: 'room-1',
-      fromCookie: false,
     });
     vi.mocked(getRoomByCode).mockResolvedValueOnce({
       id: 'room-1',
@@ -102,7 +97,6 @@ describe('POST /api/room/imposteur/detect', () => {
       method: 'POST',
       body: JSON.stringify({
         roomCode: 'ABCD',
-        playerId,
         targetPlayerId,
         lieIndex: 1,
       }),

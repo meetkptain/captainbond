@@ -101,7 +101,7 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
           return;
         }
         const data = await api.get<{ profile?: PlayerProfile; currentMode?: string }>(
-          `/api/room/profile?roomCode=${roomCode}&playerId=${playerId}`
+          `/api/room/profile?roomCode=${roomCode}`
         );
         if (data.profile) {
           setProfile(data.profile);
@@ -127,7 +127,7 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
           return;
         }
         const data = await api.get<{ hasConnections: boolean; teaseName?: string }>(
-          `/api/room/connections?roomCode=${roomCode}&playerId=${playerId}`
+          `/api/room/connections?roomCode=${roomCode}`
         );
         setConnectionsTeaser(data);
       } catch (e) {
@@ -151,7 +151,7 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
         }
         const data = await api.post<{ connections: Array<{ voterName: string; voteCount: number }> }>(
           '/api/room/connections',
-          { roomCode, playerId }
+          { roomCode }
         );
         if (data.connections) {
           setRevealedConnections(data.connections);
@@ -171,7 +171,7 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
           return;
         }
         const data = await api.get<{ accessibleFeatures?: string[] }>(
-          `/api/me/entitlements?playerId=${playerId}&roomCode=${roomCode}`
+          `/api/me/entitlements?roomCode=${roomCode}`
         );
         const isCouple = currentMode === 'DATE_NIGHT';
         const shouldUnlock = isCouple
@@ -192,7 +192,6 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
       const successUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/room/${roomCode}/player?paid=profile`;
       const cancelUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/room/${roomCode}/player`;
       const data = await api.post<{ sessionUrl?: string; error?: string }>('/api/checkout/profile', {
-        playerId,
         roomCode,
         successUrl,
         cancelUrl,
@@ -242,7 +241,7 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
         // Achat réussi ! Re-vérifier les entitlements après un court délai pour laisser le webhook s'exécuter
         setTimeout(async () => {
           try {
-            const data = await api.get<{ accessibleFeatures?: string[] }>(`/api/me/entitlements?playerId=${playerId}&roomCode=${roomCode}`);
+            const data = await api.get<{ accessibleFeatures?: string[] }>(`/api/me/entitlements?roomCode=${roomCode}`);
             const isCouple = currentMode === 'DATE_NIGHT';
             const shouldUnlock = isCouple
               ? data.accessibleFeatures?.includes('profile_couple') || data.accessibleFeatures?.includes('profiles') || data.accessibleFeatures?.includes('profile')
@@ -269,7 +268,7 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
     const params = new URLSearchParams(window.location.search);
     if (params.get('paid') === 'profile') {
       // Re-vérifier les entitlements serveur
-      api.get<{ accessibleFeatures?: string[] }>(`/api/me/entitlements?playerId=${playerId}&roomCode=${roomCode}`)
+      api.get<{ accessibleFeatures?: string[] }>(`/api/me/entitlements?roomCode=${roomCode}`)
         .then(data => {
           const isCouple = currentMode === 'DATE_NIGHT';
           const shouldUnlock = isCouple

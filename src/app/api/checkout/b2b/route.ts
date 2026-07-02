@@ -15,7 +15,7 @@ const b2bCheckoutSchema = z.object({
 export const POST = withApiHandler({
   bodySchema: b2bCheckoutSchema,
   rateLimit: checkoutLimiter,
-  async handler({ req, body }) {
+  async handler({ body }) {
     if (!body) {
       return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
     }

@@ -1,27 +1,28 @@
 import { NextResponse } from 'next/server';
 import { withApiHandler } from '@/lib/api/withApiHandler';
 import { supabaseAdmin } from '@/lib/supabase-admin';
-import { checkoutLimiter } from '@/lib/rate-limit';
+import { playerActionIpLimiter } from '@/lib/rate-limit';
 import { getRoomByCode } from '@/lib/db/repositories';
+import { getAuthenticatedPlayer } from '@/lib/auth/player-session';
 import { z } from 'zod';
 
 export const runtime = 'edge';
 
 const submitAnecdoteSchema = z.object({
   roomCode: z.string().min(1),
-  playerId: z.string().min(1),
   anecdoteText: z.string().min(3).max(250),
 });
 
 export const POST = withApiHandler({
   bodySchema: submitAnecdoteSchema,
-  rateLimit: checkoutLimiter,
-  async handler({ body }) {
+  rateLimit: playerActionIpLimiter,
+  async handler({ req, body }) {
     if (!body) {
       return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
     }
 
-    const { roomCode, playerId, anecdoteText } = body;
+    const { playerId } = await getAuthenticatedPlayer(req);
+    const { roomCode, anecdoteText } = body;
     const room = await getRoomByCode(roomCode);
     if (!room) {
       return NextResponse.json({ error: 'Salle introuvable', code: 'NOT_FOUND' }, { status: 404 });

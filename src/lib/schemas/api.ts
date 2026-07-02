@@ -105,25 +105,12 @@ const checkoutUrlSchema = z.string().refine(
 );
 
 export const checkoutSessionSchema = z.object({
-  playerId: uuidSchema,
   roomCode: roomCodeSchema,
   successUrl: checkoutUrlSchema,
   cancelUrl: checkoutUrlSchema,
 });
 
 export type CheckoutSessionInput = z.infer<typeof checkoutSessionSchema>;
-
-// ---------- Query helpers ----------
-
-export const playerIdQuerySchema = z.object({
-  playerId: uuidSchema,
-});
-
-export const entitlementsQuerySchema = z.object({
-  playerId: uuidSchema.optional(),
-  userId: uuidSchema.optional(),
-  roomCode: roomCodeSchema.optional(),
-});
 
 // ---------- Admin questions ----------
 

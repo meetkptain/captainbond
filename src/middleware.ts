@@ -29,8 +29,31 @@ function isAdminRoute(pathname: string): boolean {
   return pathname.startsWith('/admin') || pathname.startsWith('/api/admin');
 }
 
+const PLAYER_ROUTE_PREFIXES = ['/api/me/'];
+
+const PLAYER_ROUTE_EXACT = new Set([
+  '/api/me',
+  '/api/player/delete-me',
+  '/api/checkout',
+  '/api/checkout/pass',
+  '/api/checkout/profile',
+  '/api/room/state',
+  '/api/room/profile',
+  '/api/room/ready',
+  '/api/room/vote',
+  '/api/room/leave',
+  '/api/room/skip',
+  '/api/room/connections',
+  '/api/room/question',
+  '/api/room/anecdotes/submit',
+  '/api/room/imposteur/role',
+  '/api/room/imposteur/statements',
+  '/api/room/imposteur/detect',
+]);
+
 function isPlayerRoute(pathname: string): boolean {
-  return pathname.startsWith('/api/room') || pathname.startsWith('/api/me');
+  if (PLAYER_ROUTE_PREFIXES.some((prefix) => pathname.startsWith(prefix))) return true;
+  return PLAYER_ROUTE_EXACT.has(pathname);
 }
 
 export async function middleware(req: NextRequest): Promise<NextResponse> {
@@ -106,23 +129,28 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   }
 
   if (isPlayerRoute(pathname)) {
-    const playerSecret = process.env.PLAYER_JWT_SECRET;
-    if (playerSecret) {
-      const token = req.cookies.get(PLAYER_COOKIE_NAME)?.value;
-      if (token) {
-        try {
-          await verifyPlayerSession(token);
-        } catch {
-          logger.warn('Invalid player session', { requestId, pathname });
-          const response = NextResponse.json(
-            { error: 'Session joueur invalide', code: 'UNAUTHORIZED' },
-            { status: 401 }
-          );
-          response.cookies.set(PLAYER_COOKIE_NAME, '', { maxAge: 0, path: '/' });
-          response.headers.set('x-request-id', requestId);
-          return response;
-        }
-      }
+    const token = req.cookies.get(PLAYER_COOKIE_NAME)?.value;
+    if (!token) {
+      logger.warn('Missing player session', { requestId, pathname });
+      const response = NextResponse.json(
+        { error: 'Unauthorized', code: 'UNAUTHORIZED' },
+        { status: 401 }
+      );
+      response.headers.set('x-request-id', requestId);
+      return response;
+    }
+
+    try {
+      await verifyPlayerSession(token);
+    } catch {
+      logger.warn('Invalid player session', { requestId, pathname });
+      const response = NextResponse.json(
+        { error: 'Session joueur invalide', code: 'UNAUTHORIZED' },
+        { status: 401 }
+      );
+      response.cookies.set(PLAYER_COOKIE_NAME, '', { maxAge: 0, path: '/' });
+      response.headers.set('x-request-id', requestId);
+      return response;
     }
 
     return NextResponse.next({ request: { headers: requestHeaders } });
@@ -132,5 +160,5 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
 }
 
 export const config = {
-  matcher: ['/', '/corporate', '/couple', '/vault', '/b2b/bars-cafes', '/group/:path*', '/admin/:path*', '/api/admin/:path*', '/api/room/:path*', '/api/me/:path*'],
+  matcher: ['/', '/corporate', '/couple', '/vault', '/b2b/bars-cafes', '/group/:path*', '/admin/:path*', '/api/admin/:path*', '/api/room/:path*', '/api/me/:path*', '/api/checkout/:path*', '/api/player/delete-me'],
 };

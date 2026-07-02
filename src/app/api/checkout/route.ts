@@ -4,7 +4,7 @@ import { withApiHandler } from '@/lib/api/withApiHandler';
 import { checkoutSessionSchema } from '@/lib/schemas/api';
 import { createCheckoutSession } from '@/services/paymentService';
 import { checkoutLimiter } from '@/lib/rate-limit';
-import { requirePlayerSessionFor } from '@/lib/auth/player-session';
+import { getAuthenticatedPlayer } from '@/lib/auth/player-session';
 
 export const runtime = 'edge';
 
@@ -19,10 +19,10 @@ export const POST = withApiHandler({
     if (!body) {
       return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
     }
-    await requirePlayerSessionFor(req, body.playerId, body.roomCode);
+    const { playerId } = await getAuthenticatedPlayer(req);
     const result = await createCheckoutSession({
       sku: body.sku,
-      playerId: body.playerId,
+      playerId,
       roomCode: body.roomCode,
       successUrl: body.successUrl,
       cancelUrl: body.cancelUrl,

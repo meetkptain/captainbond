@@ -16,7 +16,7 @@ const stateQuerySchema = z.object({
 export const GET = withApiHandler({
   querySchema: stateQuerySchema,
   async handler({ req, query }) {
-    const playerContext = await getAuthenticatedPlayer(req, { roomCode: query.roomCode });
+    const playerContext = await getAuthenticatedPlayer(req);
     
     // Resolve the room to verify ownership alignment
     const room = await getRoomByCode(query.roomCode);

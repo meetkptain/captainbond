@@ -204,7 +204,7 @@ export default function PlayerController() {
 
         // Charger les entitlements
         if (effectivePlayerId && effectivePlayerId !== 'host') {
-          api.get<{ accessibleFeatures?: string[]; hasActivePass?: boolean }>(`/api/me/entitlements?playerId=${effectivePlayerId}&roomCode=${roomCode}`)
+          api.get<{ accessibleFeatures?: string[]; hasActivePass?: boolean }>(`/api/me/entitlements?roomCode=${roomCode}`)
             .then(setEntitlements)
             .catch(console.error);
         }
@@ -216,7 +216,7 @@ export default function PlayerController() {
 
         // Charger les stats Daily Bond + badges
         if (effectivePlayerId && effectivePlayerId !== 'host') {
-          api.get<{ currentStreak?: number; gamesPlayedToday?: number; badges?: string[]; archetypesUnlocked?: string[] }>(`/api/me/stats?playerId=${effectivePlayerId}&roomCode=${roomCode}`)
+          api.get<{ currentStreak?: number; gamesPlayedToday?: number; badges?: string[]; archetypesUnlocked?: string[] }>(`/api/me/stats?roomCode=${roomCode}`)
             .then((data) => setStats({
               currentStreak: data.currentStreak ?? 0,
               gamesPlayedToday: data.gamesPlayedToday ?? 0,
@@ -310,7 +310,7 @@ export default function PlayerController() {
         }, 1500);
         return;
       }
-      await api.post('/api/room/vote', { roomCode, playerId, answer, questionId: currentQuestion?.id });
+      await api.post('/api/room/vote', { roomCode, answer, questionId: currentQuestion?.id });
       capture(AnalyticsEvents.QUESTION_ANSWERED, {
         room_code: roomCode,
         question_id: currentQuestion?.id,
@@ -357,7 +357,7 @@ export default function PlayerController() {
 
   const refreshEntitlements = useCallback(async () => {
     if (!playerId) return;
-    const data = await api.get<{ accessibleFeatures?: string[]; hasActivePass?: boolean }>(`/api/me/entitlements?playerId=${playerId}&roomCode=${roomCode}`);
+    const data = await api.get<{ accessibleFeatures?: string[]; hasActivePass?: boolean }>(`/api/me/entitlements?roomCode=${roomCode}`);
     setEntitlements(data);
   }, [playerId, roomCode]);
 
@@ -537,7 +537,7 @@ export default function PlayerController() {
             setShowSafeWord(false);
             triggerHapticDouble();
             try {
-              await api.post('/api/room/skip', { playerId, roomCode });
+              await api.post('/api/room/skip', { roomCode });
               const channel = supabase.channel(`room-events-${roomCode}`);
               await channel.send({
                 type: 'broadcast',

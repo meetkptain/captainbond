@@ -9,7 +9,6 @@ import { z } from 'zod';
 
 const detectSchema = z.object({
   roomCode: z.string().min(4).max(4),
-  playerId: z.string().uuid(),
   targetPlayerId: z.string().uuid(),
   lieIndex: z.number().int().min(0).max(2),
 });
@@ -23,7 +22,7 @@ export const POST = withApiHandler({
     if (!body) {
       return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
     }
-    const { playerId } = await getAuthenticatedPlayer(req, { playerId: body.playerId, roomCode: body.roomCode });
+    const { playerId } = await getAuthenticatedPlayer(req);
     const room = await getRoomByCode(body.roomCode);
     if (!room) throw new AppError('NOT_FOUND', 'Salle introuvable');
     if (playerId === body.targetPlayerId) throw new AppError('BAD_REQUEST', 'Vous ne pouvez pas voter pour vous-même');

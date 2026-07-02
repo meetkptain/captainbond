@@ -140,7 +140,7 @@ export function usePresentialDeck(input: UsePresentialDeckInput): UsePresentialD
         setQuestions(preparedDeck.slice(0, 6));
 
         const entitlementsRes = await fetch(
-          `/api/me/entitlements?playerId=${hostId}&roomCode=${roomCode}`
+          `/api/me/entitlements?roomCode=${roomCode}`
         ).catch(() => null);
 
         if (entitlementsRes && entitlementsRes.ok) {

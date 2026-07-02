@@ -10,7 +10,7 @@ export const runtime = 'edge';
 export const GET = withApiHandler({
   querySchema: hostAuthQuerySchema,
   rateLimit: hostActionLimiter,
-  async handler({ req, query }) {
+  async handler({ req }) {
     const auth = await requireHostAuthQuery(req);
     if (auth instanceof Response) return auth;
 

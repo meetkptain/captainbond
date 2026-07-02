@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
-import { uuidSchema, roomCodeSchema } from '@/lib/schemas/api';
+import { roomCodeSchema } from '@/lib/schemas/api';
 import { setPlayerReady } from '@/services/playerService';
 import { getAuthenticatedPlayer } from '@/lib/auth/player-session';
 import { playerActionIpLimiter } from '@/lib/rate-limit';
@@ -9,7 +9,6 @@ import { playerActionIpLimiter } from '@/lib/rate-limit';
 export const runtime = 'edge';
 
 const readySchema = z.object({
-  playerId: uuidSchema,
   isReady: z.boolean(),
   roomCode: roomCodeSchema.optional(),
 });
@@ -21,10 +20,7 @@ export const POST = withApiHandler({
     if (!body) {
       return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
     }
-    const { playerId } = await getAuthenticatedPlayer(req, {
-      playerId: body.playerId,
-      roomCode: body.roomCode,
-    });
+    const { playerId } = await getAuthenticatedPlayer(req);
 
     await setPlayerReady(playerId, body.isReady);
     return NextResponse.json({ success: true });

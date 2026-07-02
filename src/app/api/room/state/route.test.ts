@@ -36,7 +36,6 @@ describe('GET /api/room/state', () => {
     vi.mocked(getAuthenticatedPlayer).mockResolvedValueOnce({
       playerId: 'player-1',
       roomId: 'room-1',
-      fromCookie: true,
     });
     vi.mocked(getRoomByCode).mockResolvedValueOnce(null);
 
@@ -52,7 +51,6 @@ describe('GET /api/room/state', () => {
     vi.mocked(getAuthenticatedPlayer).mockResolvedValueOnce({
       playerId: 'player-1',
       roomId: 'room-1', // Player belongs to room-1
-      fromCookie: true,
     });
     vi.mocked(getRoomByCode).mockResolvedValueOnce({
       id: 'room-2', // Requested room is room-2
@@ -72,7 +70,6 @@ describe('GET /api/room/state', () => {
     vi.mocked(getAuthenticatedPlayer).mockResolvedValueOnce({
       playerId: 'player-1',
       roomId: 'room-1',
-      fromCookie: true,
     });
     vi.mocked(getRoomByCode).mockResolvedValueOnce({
       id: 'room-1',

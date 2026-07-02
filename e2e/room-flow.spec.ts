@@ -20,7 +20,7 @@ test.describe('room lifecycle', () => {
     expect(player.roomCode).toBe(room.roomCode);
 
     // Cleanup
-    await cleanupPlayer(player.playerId, room.roomCode);
+    await cleanupPlayer(room.roomCode, player.cookies);
   });
 
   test('invalid room code shows an error after consent', async ({ page }) => {
@@ -47,11 +47,11 @@ test.describe('room lifecycle', () => {
       },
       { roomCode: room.roomCode }
     );
-    await page.goto(`/room/${room.roomCode}/player?playerId=${player.playerId}`);
+    await page.goto(`/room/${room.roomCode}/player`);
 
     await expect(page.locator('body')).toContainText('0/3');
     await expect(page.locator('body')).toContainText('Débloquer');
 
-    await cleanupPlayer(player.playerId, room.roomCode);
+    await cleanupPlayer(room.roomCode, player.cookies);
   });
 });

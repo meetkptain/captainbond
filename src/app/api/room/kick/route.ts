@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
 import { uuidSchema, hostAuthSchema } from '@/lib/schemas/api';
 import { kickPlayerFromRoom } from '@/services/playerService';

@@ -2,15 +2,15 @@ import { NextResponse } from 'next/server';
 import { withApiHandler } from '@/lib/api/withApiHandler';
 import { skipQuestion } from '@/services/roomGameService';
 import { checkoutLimiter } from '@/lib/rate-limit';
-import { requirePlayerSessionFor } from '@/lib/auth/player-session';
+import { getAuthenticatedPlayer } from '@/lib/auth/player-session';
 import { captureServer, AnalyticsEvents } from '@/lib/analytics';
+import { roomCodeSchema } from '@/lib/schemas/api';
 import { z } from 'zod';
 
 export const runtime = 'edge';
 
 const skipSchema = z.object({
-  playerId: z.string().min(1, 'ID joueur requis'),
-  roomCode: z.string().min(1, 'Code salle requis'),
+  roomCode: roomCodeSchema,
 });
 
 export const POST = withApiHandler({
@@ -20,13 +20,13 @@ export const POST = withApiHandler({
     if (!body) {
       return NextResponse.json({ error: 'Corps de requête manquant', code: 'BAD_REQUEST' }, { status: 400 });
     }
-    await requirePlayerSessionFor(req, body.playerId, body.roomCode);
-    const result = await skipQuestion(body.roomCode, body.playerId);
+    const { playerId } = await getAuthenticatedPlayer(req);
+    const result = await skipQuestion(body.roomCode, playerId);
 
     // Track the safe word usage
     try {
       await captureServer(AnalyticsEvents.SAFE_WORD_TRIGGERED, {
-        distinct_id: body.playerId,
+        distinct_id: playerId,
         room_code: body.roomCode,
         new_question_id: result.question?.id || 'unknown',
       });

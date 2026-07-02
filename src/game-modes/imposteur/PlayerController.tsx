@@ -85,7 +85,7 @@ export function ImposteurPlayerController({ hasSubmitted, onSubmitAnswer }: Game
       setLoading(true);
     });
     api
-      .get<{ statements: PublicStatement[] }>(`/api/room/imposteur/statements?roomCode=${roomCode}&playerId=${playerId}`)
+      .get<{ statements: PublicStatement[] }>(`/api/room/imposteur/statements?roomCode=${roomCode}`)
       .then((data) => {
         setStatements(data.statements || []);
         setLoading(false);
@@ -123,7 +123,6 @@ export function ImposteurPlayerController({ hasSubmitted, onSubmitAnswer }: Game
     try {
       await api.post('/api/room/imposteur/detect', {
         roomCode,
-        playerId,
         targetPlayerId,
         lieIndex,
       });

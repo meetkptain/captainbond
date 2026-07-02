@@ -10,7 +10,6 @@ import { z } from 'zod';
 
 const querySchema = z.object({
   roomCode: z.string().min(4).max(4),
-  playerId: z.string().uuid(),
 });
 
 export const runtime = 'edge';
@@ -19,7 +18,7 @@ export const GET = withApiHandler({
   querySchema,
   rateLimit: playerActionIpLimiter,
   async handler({ req, query }) {
-    const { playerId } = await getAuthenticatedPlayer(req, { playerId: query.playerId, roomCode: query.roomCode });
+    const { playerId } = await getAuthenticatedPlayer(req);
     const room = await getRoomByCode(query.roomCode);
     if (!room) throw new AppError('NOT_FOUND', 'Salle introuvable');
     if (room.currentMode !== 'IMPOSTEUR') throw new AppError('BAD_REQUEST', 'Mode invalide');

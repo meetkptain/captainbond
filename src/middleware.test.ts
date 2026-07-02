@@ -71,6 +71,15 @@ async function signAdminToken(): Promise<string> {
     .sign(secret);
 }
 
+async function signPlayerToken(): Promise<string> {
+  const secret = new TextEncoder().encode('player-jwt-secret-32-chars-long!');
+  return new SignJWT({ playerId: '550e8400-e29b-41d4-a716-446655440000', roomId: 'room-1' })
+    .setProtectedHeader({ alg: 'HS256' })
+    .setIssuedAt()
+    .setExpirationTime('1h')
+    .sign(secret);
+}
+
 describe('middleware', () => {
   beforeEach(() => {
     vi.stubEnv('ADMIN_JWT_SECRET', 'admin-jwt-secret-32-chars-long!!');
@@ -169,7 +178,7 @@ describe('middleware', () => {
     expect(res.cookies.set).toHaveBeenCalledWith(PLAYER_COOKIE_NAME, '', { maxAge: 0, path: '/' });
   });
 
-  it('allows /api/room/vote through when no player cookie is present', async () => {
+  it('returns 401 for /api/room/vote when no player cookie is present', async () => {
     const req = new NextRequest(
       new Request('http://localhost/api/room/vote', {
         headers: { 'x-request-id': 'req-6' },
@@ -177,8 +186,26 @@ describe('middleware', () => {
     );
     const res = await middleware(req);
 
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(401);
     expect(res.headers.get('x-request-id')).toBe('req-6');
+    const body = await res.json();
+    expect(body.error).toBe('Unauthorized');
+  });
+
+  it('allows /api/room/vote with a valid player cookie', async () => {
+    const token = await signPlayerToken();
+    const req = new NextRequest(
+      new Request('http://localhost/api/room/vote', {
+        headers: {
+          cookie: `${PLAYER_COOKIE_NAME}=${token}`,
+          'x-request-id': 'req-7',
+        },
+      })
+    );
+    const res = await middleware(req);
+
+    expect(res.status).toBe(200);
+    expect(res.headers.get('x-request-id')).toBe('req-7');
   });
 
   it('exports a matcher for admin and player routes', () => {
@@ -193,6 +220,8 @@ describe('middleware', () => {
       '/api/admin/:path*',
       '/api/room/:path*',
       '/api/me/:path*',
+      '/api/checkout/:path*',
+      '/api/player/delete-me',
     ]);
   });
 });
