@@ -29,7 +29,7 @@ export const GET = withApiHandler({
     }
 
     const state = await getRoomState(query.roomCode);
-    return NextResponse.json(state);
+    return NextResponse.json({ ...state, currentPlayerId: playerContext.playerId });
   },
 });
 

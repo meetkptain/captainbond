@@ -88,5 +88,6 @@ describe('GET /api/room/state', () => {
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(data.room.id).toBe('room-1');
+    expect(data.currentPlayerId).toBe('player-1');
   });
 });

@@ -112,11 +112,23 @@ export default function PlayerController() {
           return;
         }
 
-        const data = await api.get<{
-          room: Room & { currentQuestion?: Question | null };
-          players?: Player[];
-          responses?: Partial<GameResponse & { answer?: string }>[];
-        }>(`/api/room/state?roomCode=${roomCode}`);
+        let data;
+        try {
+          data = await api.get<{
+            room: Room & { currentQuestion?: Question | null };
+            players?: Player[];
+            responses?: Partial<GameResponse & { answer?: string }>[];
+            currentPlayerId?: string;
+          }>(`/api/room/state?roomCode=${roomCode}`);
+        } catch (err) {
+          if (err instanceof ApiClientError && (err.status === 401 || err.status === 403)) {
+            // Guard: cookie is absent or invalid; clear any stale sessionStorage hint and redirect to join.
+            sessionStorage.removeItem(`player_${roomCode}`);
+            router.push(`/join/${roomCode}`);
+            return;
+          }
+          throw err;
+        }
         if (!data.room) {
           router.push('/');
           return;
@@ -173,33 +185,40 @@ export default function PlayerController() {
           effectivePlayerId = 'host';
           setPlayerId('host');
           setPlayerName('Hôte');
-        } else if (storedPlayerRaw) {
-          const parsedPlayer = safeJsonParse<{ id?: string }>(storedPlayerRaw, {});
-          const parsedPlayerId = parsedPlayer.id || storedPlayerRaw;
+        } else {
+          // API identity comes from the signed cookie (returned by the server as currentPlayerId).
+          // sessionStorage is kept only as a UI convenience / fallback for the display name.
+          const apiPlayerId = data.currentPlayerId;
+          const parsedStored = safeJsonParse<{ id?: string; name?: string }>(storedPlayerRaw, {});
+          const storedPlayerId = parsedStored.id || storedPlayerRaw || null;
+          const candidateId = apiPlayerId || storedPlayerId;
 
-          const pData = roomPlayers.find((p) => p.id === parsedPlayerId);
-          if (pData) {
-            effectivePlayerId = pData.id;
-            setPlayerId(pData.id);
-            setPlayerName(pData.name);
+          if (candidateId) {
+            const pData = roomPlayers.find((p) => p.id === candidateId);
+            if (pData) {
+              effectivePlayerId = pData.id;
+              setPlayerId(pData.id);
+              setPlayerName(pData.name);
 
-            if (room.currentQuestion) {
-              const myResp = responses.find(
-                (r) => r.playerId === pData.id && r.questionId === room.currentQuestion?.id
-              );
-              if (myResp) {
-                setHasVoted(true);
-                setMyAnswer(myResp.answer ?? null);
+              if (room.currentQuestion) {
+                const myResp = responses.find(
+                  (r) => r.playerId === pData.id && r.questionId === room.currentQuestion?.id
+                );
+                if (myResp) {
+                  setHasVoted(true);
+                  setMyAnswer(myResp.answer ?? null);
+                }
               }
+            } else {
+              // Stale identity (player removed or cookie mismatched): clear UI hint and redirect.
+              sessionStorage.removeItem(`player_${roomCode}`);
+              router.push(`/join/${roomCode}`);
+              return;
             }
           } else {
-            sessionStorage.removeItem(`player_${roomCode}`);
             router.push(`/join/${roomCode}`);
             return;
           }
-        } else {
-          router.push(`/join/${roomCode}`);
-          return;
         }
 
         // Charger les entitlements
