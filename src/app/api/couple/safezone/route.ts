@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
-import { supabaseAdmin } from '@/lib/supabase-admin';
-import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
+import { coupleActionLimiter } from '@/lib/rate-limit';
+import { getAuthenticatedUser } from '@/lib/auth/user';
 import { AppError } from '@/lib/errors';
-import { dbRetry } from '@/lib/db/withRetry';
-import { Couple, DailyQuestion } from '@/lib/db/types';
+import { toggleSafeZone } from '@/services/coupleDailyQuestionService';
 
 export const runtime = 'edge';
 
@@ -17,60 +16,15 @@ const bodySchema = z.object({
 
 export const POST = withApiHandler({
   bodySchema,
+  rateLimit: coupleActionLimiter,
   async handler({ req, body }) {
     if (!body) {
       throw new AppError('BAD_REQUEST', 'Corps de requête manquant');
     }
-    const authUser = await getAuthenticatedCoupleUser(req);
+    const authUser = await getAuthenticatedUser(req);
     const { coupleId, dailyQuestionId, action } = body;
 
-    // Verify couple membership
-    const { data: couple, error: coupleError } = await dbRetry<Couple>(async () =>
-      supabaseAdmin
-        .from('Couple')
-        .select('*')
-        .eq('id', coupleId)
-        .single()
-    );
-
-    if (coupleError || !couple || (couple.user1Id !== authUser.id && couple.user2Id !== authUser.id)) {
-      throw new AppError('FORBIDDEN', 'Vous ne faites pas partie de ce couple.');
-    }
-
-    // Fetch the daily question
-    const { data: dailyQuestion, error: dqError } = await dbRetry<DailyQuestion>(async () =>
-      supabaseAdmin
-        .from('DailyQuestion')
-        .select('*')
-        .eq('id', dailyQuestionId)
-        .single()
-    );
-
-    if (dqError || !dailyQuestion) {
-      throw new AppError('NOT_FOUND', 'Question quotidienne introuvable.');
-    }
-
-    if (dailyQuestion.coupleId !== coupleId) {
-      throw new AppError('FORBIDDEN', 'Cette question ne correspond pas à votre couple.');
-    }
-
-    const isSafeZoneActive = action === 'ACTIVATE';
-
-    // Update DailyQuestion table
-    const { data: updated, error: updateError } = await dbRetry<DailyQuestion>(async () =>
-      supabaseAdmin
-        .from('DailyQuestion')
-        .update({
-          isSafeZoneActive,
-        })
-        .eq('id', dailyQuestionId)
-        .select()
-        .single()
-    );
-
-    if (updateError || !updated) {
-      throw new AppError('INTERNAL_ERROR', 'Impossible de modifier le mode Safe Zone.');
-    }
+    const updated = await toggleSafeZone(coupleId, dailyQuestionId, authUser.id, action === 'ACTIVATE');
 
     return NextResponse.json({ success: true, dailyQuestion: updated });
   },

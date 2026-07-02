@@ -1,6 +1,18 @@
 import { supabaseAdmin } from '@/lib/supabase-admin';
 import { Question } from '../types';
 
+export async function findRandomCoupleQuestion(limit = 30): Promise<Question | null> {
+  const { data, error } = await supabaseAdmin
+    .from('Question')
+    .select('*')
+    .contains('audiences', ['couple'])
+    .limit(limit);
+  if (error) throw error;
+  const questions = (data ?? []) as Question[];
+  if (questions.length === 0) return null;
+  return questions[Math.floor(Math.random() * questions.length)];
+}
+
 export async function getQuestionById(id: string): Promise<Question | null> {
   const { data, error } = await supabaseAdmin.from('Question').select('*').eq('id', id).maybeSingle();
   if (error) throw error;

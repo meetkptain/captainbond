@@ -55,6 +55,10 @@ export const rateLimiters = {
   // Player actions.
   playerAction: createRatelimit(30, '1 m'),
   deleteMe: createRatelimit(5, '1 h'),
+  // Couple actions.
+  coupleAnalyze: createRatelimit(10, '1 m'),
+  coupleProtocol: createRatelimit(10, '1 m'),
+  coupleAction: createRatelimit(30, '1 m'),
 };
 
 function getClientIp(req: NextRequest): string {
@@ -128,6 +132,9 @@ export const hostActionLimiter = ipLimiter(rateLimiters.hostAction);
 export const checkoutLimiter = ipLimiter(rateLimiters.checkout);
 export const playerActionIpLimiter = ipLimiter(rateLimiters.playerAction);
 export const deleteMeIpLimiter = ipLimiter(rateLimiters.deleteMe);
+export const coupleAnalyzeLimiter = ipLimiter(rateLimiters.coupleAnalyze);
+export const coupleProtocolLimiter = ipLimiter(rateLimiters.coupleProtocol);
+export const coupleActionLimiter = ipLimiter(rateLimiters.coupleAction);
 
 export async function pingRedis(): Promise<'ok' | 'skipped' | 'error'> {
   if (!redis) return 'skipped';

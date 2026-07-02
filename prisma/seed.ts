@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client'
+import { seedRitualQuestions } from './seeds/runRitualSeeds'
+
 const prisma = new PrismaClient()
 
 async function main() {
@@ -206,6 +208,8 @@ async function main() {
   }
 
   console.log(`✅ ${questions.length} questions ont été insérées dans la base de données.`)
+
+  await seedRitualQuestions(prisma)
 }
 
 main()

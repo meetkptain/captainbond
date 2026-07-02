@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
 import { createCouple, getCoupleByUsers } from '@/lib/db/repositories/coupleRepository';
-import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
+import { getAuthenticatedUser } from '@/lib/auth/user';
 import { AppError } from '@/lib/errors';
 
 export const runtime = 'edge';
@@ -17,7 +17,7 @@ export const POST = withApiHandler({
     if (!body) {
       throw new AppError('BAD_REQUEST', 'Corps de requête manquant');
     }
-    const authUser = await getAuthenticatedCoupleUser(req);
+    const authUser = await getAuthenticatedUser(req);
     const { partnerId } = body;
 
     if (authUser.id === partnerId) {

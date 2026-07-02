@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
-import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
+import { getAuthenticatedUser } from '@/lib/auth/user';
 import { supabaseAdmin } from '@/lib/supabase-admin';
 import { AppError } from '@/lib/errors';
-import { completeRitual, computeFusion } from '@/services/totemService';
+import { completeRitual } from '@/services/totemService';
 
 export const runtime = 'edge';
 
@@ -19,7 +19,7 @@ export const POST = withApiHandler({
   async handler({ req, body }) {
     if (!body) throw new AppError('BAD_REQUEST', 'Corps requis.');
 
-    const authUser = await getAuthenticatedCoupleUser(req);
+    const authUser = await getAuthenticatedUser(req);
 
     const { data: couple } = await supabaseAdmin
       .from('Couple')

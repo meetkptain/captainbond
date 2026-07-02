@@ -35,4 +35,23 @@ test.describe('room lifecycle', () => {
 
     await expect(page.locator('p.text-red-400')).toContainText('Impossible de rejoindre');
   });
+
+  test('player sees free card gauge and unlock option after joining', async ({ page }) => {
+    const room = await createRoom('HostGauge');
+    const player = await joinRoom(room.roomCode, 'GaugePlayer');
+
+    await page.goto('/');
+    await page.evaluate(
+      ({ roomCode }) => {
+        sessionStorage.setItem(`cb_consent_${roomCode}`, 'true');
+      },
+      { roomCode: room.roomCode }
+    );
+    await page.goto(`/room/${room.roomCode}/player?playerId=${player.playerId}`);
+
+    await expect(page.locator('body')).toContainText('0/3');
+    await expect(page.locator('body')).toContainText('Débloquer');
+
+    await cleanupPlayer(player.playerId, room.roomCode);
+  });
 });

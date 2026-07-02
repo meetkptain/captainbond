@@ -202,6 +202,19 @@ export function WaitingRoom({ roomCode, players, myPlayerId, isHost, onStart, ta
         </button>
       )}
 
+      {!isHost && (
+        <div className="w-full p-4 bg-amber-500/5 border border-amber-500/20 rounded-xl mb-6 text-left">
+          <p className="text-xs text-amber-400 font-mono font-bold uppercase tracking-wider mb-1">
+            {language === 'fr' ? 'En attendant le Captain' : 'Waiting for the Captain'}
+          </p>
+          <p className="text-xs text-slate-400 leading-relaxed">
+            {language === 'fr'
+              ? "Appuyez sur 'Je suis prêt' dès que vous êtes prêt. L'hôte lancera la première carte quand tout le monde est prêt."
+              : "Press 'I am ready' when you are set. The host will start the first card when everyone is ready."}
+          </p>
+        </div>
+      )}
+
       <div className="w-full p-4 bg-white/5 border border-white/10 rounded-xl">
         <p className="text-xs font-mono text-slate-500 uppercase tracking-widest mb-2">Le saviez-vous ?</p>
         <p className="text-sm text-slate-300 italic min-h-[40px] transition-all duration-500" key={factIndex}>

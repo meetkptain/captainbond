@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
-import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
+import { getAuthenticatedUser } from '@/lib/auth/user';
 import { supabaseAdmin } from '@/lib/supabase-admin';
 import { AppError } from '@/lib/errors';
 import { getTotem, updatePartnerOrbe, computeFusion } from '@/services/totemService';
@@ -17,7 +17,7 @@ const getQuerySchema = z.object({
 export const GET = withApiHandler({
   querySchema: getQuerySchema,
   async handler({ req, query }) {
-    const authUser = await getAuthenticatedCoupleUser(req);
+    const authUser = await getAuthenticatedUser(req);
 
     // Vérifier l'appartenance au couple
     const { data: couple } = await supabaseAdmin
@@ -63,7 +63,7 @@ export const PATCH = withApiHandler({
   async handler({ req, body }) {
     if (!body) throw new AppError('BAD_REQUEST', 'Corps requis.');
 
-    const authUser = await getAuthenticatedCoupleUser(req);
+    const authUser = await getAuthenticatedUser(req);
 
     const { data: couple } = await supabaseAdmin
       .from('Couple')
@@ -75,7 +75,7 @@ export const PATCH = withApiHandler({
       throw new AppError('FORBIDDEN', 'Vous ne faites pas partie de ce couple.');
     }
 
-    const updated = await updatePartnerOrbe(
+    await updatePartnerOrbe(
       body.coupleId,
       authUser.id,
       couple.user1Id,

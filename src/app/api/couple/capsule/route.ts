@@ -1,11 +1,9 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
-import { supabaseAdmin } from '@/lib/supabase-admin';
-import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
+import { getAuthenticatedUser } from '@/lib/auth/user';
 import { AppError } from '@/lib/errors';
-import { dbRetry } from '@/lib/db/withRetry';
-import { Couple } from '@/lib/db/types';
+import { requireCoupleMembership } from '@/lib/auth/coupleMembership';
 import { getCapsules, sealCapsule } from '@/services/timeCapsuleService';
 
 export const runtime = 'edge';
@@ -24,15 +22,10 @@ const postBodySchema = z.object({
 export const GET = withApiHandler({
   querySchema: getQuerySchema,
   async handler({ req, query }) {
-    const authUser = await getAuthenticatedCoupleUser(req);
+    const authUser = await getAuthenticatedUser(req);
     const { coupleId } = query;
 
-    const { data: couple, error: coupleError } = await dbRetry<Couple>(async () =>
-      supabaseAdmin.from('Couple').select('*').eq('id', coupleId).single()
-    );
-    if (coupleError || !couple || (couple.user1Id !== authUser.id && couple.user2Id !== authUser.id)) {
-      throw new AppError('FORBIDDEN', 'Vous ne faites pas partie de ce couple.');
-    }
+    await requireCoupleMembership(coupleId, authUser.id);
 
     const capsules = await getCapsules(coupleId);
     return NextResponse.json({ capsules });
@@ -44,15 +37,10 @@ export const POST = withApiHandler({
   bodySchema: postBodySchema,
   async handler({ req, body }) {
     if (!body) throw new AppError('BAD_REQUEST', 'Corps de requête manquant');
-    const authUser = await getAuthenticatedCoupleUser(req);
+    const authUser = await getAuthenticatedUser(req);
     const { coupleId, content, daysUntilUnlock } = body;
 
-    const { data: couple, error: coupleError } = await dbRetry<Couple>(async () =>
-      supabaseAdmin.from('Couple').select('*').eq('id', coupleId).single()
-    );
-    if (coupleError || !couple || (couple.user1Id !== authUser.id && couple.user2Id !== authUser.id)) {
-      throw new AppError('FORBIDDEN', 'Vous ne faites pas partie de ce couple.');
-    }
+    await requireCoupleMembership(coupleId, authUser.id);
 
     const capsule = await sealCapsule(coupleId, authUser.id, content, daysUntilUnlock);
     return NextResponse.json({ success: true, capsule });

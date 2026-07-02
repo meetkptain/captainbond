@@ -13,6 +13,10 @@ import { MiniTotemOrbe } from '@/components/couple/MiniTotemOrbe';
 import { TimeCapsulePanel } from '@/components/couple/TimeCapsulePanel';
 import { MonthlyReportCard } from '@/components/couple/MonthlyReportCard';
 import { DetoxChallenge } from '@/components/couple/DetoxChallenge';
+import { ThemeLabel } from '@/components/couple/ThemeLabel';
+import { RitualCard } from '@/components/couple/RitualCard';
+import { RevealCard } from '@/components/couple/RevealCard';
+import { WeeklyRecap } from '@/components/couple/WeeklyRecap';
 import { Icon } from '@/components/Icon';
 import { api, ApiClientError } from '@/lib/api/client';
 import { getCurrentUser } from '@/lib/supabase-auth';
@@ -36,6 +40,13 @@ interface DailyQuestionData {
   analysisJson?: AnalysisData | null;
   analysisStatus: 'PENDING' | 'COMPUTED' | 'REVEALED' | 'EXPIRED';
   question?: { text: string } | null;
+  theme?: string | null;
+  intensity?: number;
+  ritualAction?: string | null;
+  therapistGuide?: string | null;
+  isSafeZoneActive?: boolean;
+  user1Mood?: Record<string, unknown> | null;
+  user2Mood?: Record<string, unknown> | null;
 }
 
 interface AnalysisData {
@@ -63,7 +74,15 @@ interface PortraitResponse {
   couple: CoupleData;
   dailyQuestions: DailyQuestionData[];
   portraits: CouplePortraitData[];
-  totemState?: any;
+  totemState?: PageTotemState | null;
+}
+
+interface PageTotemState {
+  fusionState?: {
+    status?: string;
+    energy?: number;
+  };
+  streakDays?: number;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -122,7 +141,7 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
   const [error, setError] = useState<string | null>(null);
   const [isCouchMode, setIsCouchMode] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [totemState, setTotemState] = useState<any | null>(null);
+  const [totemState, setTotemState] = useState<PageTotemState | null>(null);
   const [moodEnergy, setMoodEnergy] = useState(3);
   const [moodStress, setMoodStress] = useState(1);
   const [moodFeeling, setMoodFeeling] = useState('');
@@ -138,9 +157,9 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
   );
 
   const partnerName = useMemo(() => {
-    if (!couple || !userId) return 'Partenaire';
-    return isUser1 ? 'Partenaire B' : 'Partenaire A';
-  }, [couple, userId, isUser1]);
+    if (!couple || !userId) return 'Ton partenaire';
+    return 'Ton partenaire';
+  }, [couple, userId]);
 
   const myName = useMemo(() => {
     return isUser1 ? 'Partenaire A' : 'Partenaire B';
@@ -160,7 +179,7 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
 
   const hasMyMood = useMemo(() => {
     if (!todayQuestion) return false;
-    return isUser1 ? !!(todayQuestion as any).user1Mood : !!(todayQuestion as any).user2Mood;
+    return isUser1 ? !!todayQuestion.user1Mood : !!todayQuestion.user2Mood;
   }, [todayQuestion, isUser1]);
 
   const streak = useMemo(() => calculateStreak(dailyQuestions), [dailyQuestions]);
@@ -244,8 +263,9 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
   }, [router, fetchData]);
 
   // ─── Submit Answer ────────────────────────────────────────────────────────
-  const handleSubmitAnswer = async () => {
-    if (!answer.trim() || !todayQuestion || !couple || !userId) return;
+  const handleSubmitAnswer = async (submittedAnswer?: string) => {
+    const answerText = (submittedAnswer ?? answer).trim();
+    if (!answerText || !todayQuestion || !couple || !userId) return;
 
     setSubmitting(true);
     try {
@@ -253,7 +273,7 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
         coupleId: couple.id,
         dailyQuestionId: todayQuestion.id,
         userId,
-        answer: answer.trim(),
+        answer: answerText,
       });
       
       // Vibration haptique brève de confirmation (Pro-Max check)
@@ -275,31 +295,28 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
   };
 
   const handleSubmitCouchAnswers = async (answerAVal: string, answerBVal: string) => {
-    if (!answerAVal.trim() || !answerBVal.trim() || !todayQuestion || !couple) return;
+    if (!answerAVal.trim() || !answerBVal.trim() || !todayQuestion || !couple || !userId) return;
 
     setSubmitting(true);
     setError(null);
     try {
-      // 1. Submit Partner A's answer
+      // Couch mode only submits the currently authenticated partner's answer.
+      // Submitting on behalf of the other partner is blocked by the API for security.
       await api.post('/api/couple/analyze', {
         coupleId: couple.id,
         dailyQuestionId: todayQuestion.id,
-        userId: couple.user1Id,
+        userId,
         answer: answerAVal.trim(),
-      });
-
-      // 2. Submit Partner B's answer
-      await api.post('/api/couple/analyze', {
-        coupleId: couple.id,
-        dailyQuestionId: todayQuestion.id,
-        userId: couple.user2Id,
-        answer: answerBVal.trim(),
       });
 
       setSubmitted(true);
       setAnswer('');
       setIsCouchMode(false);
       await fetchData(couple.id);
+
+      setError(
+        "Ta réponse est enregistrée. Demande à ton partenaire de se connecter (ou d'ouvrir ce lien avec son compte) pour ajouter sa réponse."
+      );
     } catch (err) {
       if (err instanceof ApiClientError) {
         setError(err.message);
@@ -309,26 +326,6 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
       throw err;
     } finally {
       setSubmitting(false);
-    }
-  };
-
-  const handlePassQuestion = async () => {
-    if (!todayQuestion || !couple || submitting) return;
-    if (confirm("Passer cette question ? Un nouveau sujet sera tiré pour vous deux.")) {
-      setSubmitting(true);
-      try {
-        await api.post('/api/couple/pass', {
-          coupleId: couple.id,
-          dailyQuestionId: todayQuestion.id
-        });
-        setAnswer('');
-        await fetchData(couple.id);
-      } catch (err) {
-        console.error('Failed to pass question', err);
-        alert('Impossible de passer la question.');
-      } finally {
-        setSubmitting(false);
-      }
     }
   };
 
@@ -513,6 +510,7 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
           <div className="couple-brand">
             <span className="couple-brand-name">CAPTAIN BOND</span>
             <span className="couple-badge">Espace Couple</span>
+            {todayQuestion?.theme && <ThemeLabel theme={todayQuestion.theme} className="ml-2" />}
           </div>
           <button className="couple-back-link min-h-[44px] min-w-[44px] flex items-center justify-center px-3 py-1 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors duration-200" onClick={() => router.push('/')}>
             <Icon name="arrowLeft" className="w-4 h-4 mr-1 text-slate-300" /> <span className="text-slate-300 text-sm font-medium">Retour</span>
@@ -591,11 +589,25 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
                     </div>
                   )}
 
-                  {/* Answer Phase: Answer question if mood submitted */}
-                  {!hasMyAnswer && !submitted && todayQuestion && hasMyMood && (
+                  {/* Answer Phase: themed ritual card or legacy answer form */}
+                  {!hasMyAnswer && !submitted && todayQuestion && hasMyMood && todayQuestion.theme && (
+                    <RitualCard
+                      id={todayQuestion.id}
+                      theme={todayQuestion.theme}
+                      questionText={questionText}
+                      intensity={todayQuestion.intensity}
+                      hasAnswered={hasMyAnswer}
+                      partnerHasAnswered={hasPartnerAnswer}
+                      onSubmit={(value) => handleSubmitAnswer(value)}
+                      onSkip={handleSkipQuestion}
+                      disabled={submitting}
+                    />
+                  )}
+
+                  {!hasMyAnswer && !submitted && todayQuestion && hasMyMood && !todayQuestion.theme && (
                     <div className="answer-area">
                       {/* Safe Zone Alert if active */}
-                      {!!(todayQuestion as any).isSafeZoneActive && (
+                      {!!todayQuestion.isSafeZoneActive && (
                         <div style={{
                           background: 'rgba(239, 68, 68, 0.08)',
                           border: '1px solid rgba(239, 68, 68, 0.25)',
@@ -623,7 +635,7 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.75rem', width: '100%' }}>
                         <button
                           className="answer-submit"
-                          onClick={handleSubmitAnswer}
+                          onClick={() => handleSubmitAnswer()}
                           disabled={!answer.trim() || submitting}
                         >
                           {submitting ? (
@@ -660,11 +672,11 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', width: '100%' }}>
                           <button
                             type="button"
-                            onClick={() => handleToggleSafeZone(!(todayQuestion as any).isSafeZoneActive)}
+                            onClick={() => handleToggleSafeZone(!todayQuestion.isSafeZoneActive)}
                             style={{
                               background: 'transparent',
-                              border: (todayQuestion as any).isSafeZoneActive ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(251, 191, 36, 0.25)',
-                              color: (todayQuestion as any).isSafeZoneActive ? '#ef4444' : '#fbbf24',
+                              border: todayQuestion.isSafeZoneActive ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(251, 191, 36, 0.25)',
+                              color: todayQuestion.isSafeZoneActive ? '#ef4444' : '#fbbf24',
                               fontSize: '0.75rem',
                               fontWeight: 600,
                               minHeight: '44px',
@@ -674,7 +686,7 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
                             }}
                           >
                             <Icon name="alert" className="w-3.5 h-3.5 inline mr-1 align-middle" />
-                            {(todayQuestion as any).isSafeZoneActive ? "Couper Safe Zone" : "Safe Zone (Pause)"}
+                            {todayQuestion.isSafeZoneActive ? "Couper Safe Zone" : "Safe Zone (Pause)"}
                           </button>
 
                           <button
@@ -720,8 +732,22 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
                     />
                   )}
 
-                  {/* Revealed: Show Resonance */}
-                  {todayQuestion?.isRevealed && todayQuestion.analysisJson && (
+                  {/* Revealed: Show ritual reveal card (themed, score hidden) */}
+                  {todayQuestion?.isRevealed && todayQuestion.theme && (
+                    <RevealCard
+                      theme={todayQuestion.theme}
+                      questionText={questionText}
+                      myAnswer={isUser1 ? todayQuestion.user1Answer ?? '' : todayQuestion.user2Answer ?? ''}
+                      partnerAnswer={isUser1 ? todayQuestion.user2Answer ?? '' : todayQuestion.user1Answer ?? ''}
+                      myName="Vous"
+                      partnerName={partnerName}
+                      therapistGuide={todayQuestion.therapistGuide}
+                      ritualAction={todayQuestion.ritualAction}
+                    />
+                  )}
+
+                  {/* Revealed: Legacy resonance view (kept for non-ritual questions) */}
+                  {todayQuestion?.isRevealed && !todayQuestion.theme && todayQuestion.analysisJson && (
                     <div className={revealAnimation ? 'reveal-container' : ''}>
                       <ResonanceCircle
                         resonanceScore={todayQuestion.resonanceScore ?? 0}
@@ -735,7 +761,7 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
                       <div style={{
                         textAlign: 'center',
                         padding: '1rem 0',
-                        color: '#f1f5f9', // Slate-100 for higher contrast against dark backdrop
+                        color: '#f1f5f9',
                         fontStyle: 'italic',
                         fontSize: '0.9375rem',
                         lineHeight: 1.6,
@@ -877,6 +903,15 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
               <div className="couple-card">
                 <DetoxChallenge coupleId={couple.id} />
               </div>
+            )}
+
+            {/* Weekly Recap (ritual theme, no score) */}
+            {todayQuestion?.theme && (
+              <WeeklyRecap
+                theme={todayQuestion.theme}
+                answeredCount={dailyQuestions.filter((q) => q.theme === todayQuestion.theme && q.user1Answered && q.user2Answered).length}
+                totalCount={Math.max(1, dailyQuestions.filter((q) => q.theme === todayQuestion.theme).length)}
+              />
             )}
 
             {/* Monthly Resonance Report */}

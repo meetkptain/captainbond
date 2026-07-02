@@ -2,14 +2,12 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
 import { AppError } from '@/lib/errors';
-import { supabaseAdmin } from '@/lib/supabase-admin';
 import { createLogger } from '@/lib/logger';
-import { dbRetry } from '@/lib/db/withRetry';
-
-import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
-import { Couple, DailyQuestion, CouplePortrait } from '@/lib/db/types';
-import { getUserEntitlements } from '@/lib/monetization/entitlements';
-import { getTotem } from '@/services/totemService';
+import { getAuthenticatedUser } from '@/lib/auth/user';
+import {
+  getCouplePortraitData,
+  listCouplesForPortraitUser,
+} from '@/services/couplePortraitService';
 
 export const runtime = 'edge';
 
@@ -24,172 +22,24 @@ export const GET = withApiHandler({
   querySchema,
   async handler({ req, query }) {
     const logger = createLogger({ route: '/api/couple/portrait' });
-    const authUser = await getAuthenticatedCoupleUser(req);
+    const authUser = await getAuthenticatedUser(req);
     const { coupleId, list, timezone } = query;
 
     if (list === 'true') {
-      const { data: couples, error: coupleError } = await dbRetry<Couple[]>(async () =>
-        supabaseAdmin
-          .from('Couple')
-          .select('*')
-          .or(`user1Id.eq.${authUser.id},user2Id.eq.${authUser.id}`)
-      );
-      if (coupleError) {
-        logger.error('Échec du chargement des couples', { userId: authUser.id }, coupleError);
+      try {
+        const couples = await listCouplesForPortraitUser(authUser.id);
+        return NextResponse.json(couples || []);
+      } catch (e) {
+        logger.error('Échec du chargement des couples', { userId: authUser.id }, e);
         throw new AppError('INTERNAL_ERROR', 'Impossible de charger la liste des couples.');
       }
-      return NextResponse.json(couples || []);
     }
 
     if (!coupleId) {
       throw new AppError('BAD_REQUEST', 'coupleId est requis.');
     }
 
-    // 1. Fetch the Couple
-    const { data: couple, error: coupleError } = await dbRetry<Couple>(async () =>
-      supabaseAdmin
-        .from('Couple')
-        .select('*')
-        .eq('id', coupleId)
-        .single()
-    );
-
-    if (coupleError || !couple) {
-      throw new AppError('COUPLE_NOT_FOUND', 'Couple introuvable.');
-    }
-
-    if (couple.user1Id !== authUser.id && couple.user2Id !== authUser.id) {
-      throw new AppError('FORBIDDEN', 'Vous ne faites pas partie de ce couple.');
-    }
-
-    // 2. Fetch all DailyQuestions for this couple, ordered by releasedAt DESC
-    const { data: dailyQuestions, error: dqError } = await dbRetry<DailyQuestion[]>(async () =>
-      supabaseAdmin
-        .from('DailyQuestion')
-        .select('*')
-        .eq('coupleId', coupleId)
-        .order('releasedAt', { ascending: false })
-    );
-
-    if (dqError) {
-      logger.error('Échec du chargement des questions quotidiennes', { coupleId }, dqError);
-      throw new AppError('INTERNAL_ERROR', 'Impossible de charger les questions quotidiennes.');
-    }
-
-    const questions = dailyQuestions ?? [];
-
-    // 3. Check if any questions are ready to reveal (COMPUTED + local phone hour >= 20)
-    const now = new Date();
-    let localHour = 20; // Default fallback to bypass block if check fails
-
-    try {
-      // Déterminer l'heure dans le fuseau du téléphone de l'utilisateur (ex: Europe/Paris, America/New_York)
-      const targetTimezone = couple.timezone || (timezone && Intl.supportedValuesOf('timeZone').includes(timezone)
-        ? timezone
-        : 'Europe/Paris'); // Fallback robuste par défaut
-
-      const formatter = new Intl.DateTimeFormat('en-US', {
-        timeZone: targetTimezone,
-        hour: 'numeric',
-        hour12: false,
-      });
-      localHour = parseInt(formatter.format(now), 10);
-    } catch (e) {
-      // Si l'API Intl échoue ou fuseau invalide, utiliser le décalage de Paris calculé
-      const currentHour = now.getUTCHours();
-      const parisOffset = getParisUtcOffset(now);
-      localHour = (currentHour + parisOffset) % 24;
-    }
-
-    const questionsToReveal = questions.filter(
-      (q: { analysisStatus: string; isRevealed: boolean }) =>
-        q.analysisStatus === 'COMPUTED' && !q.isRevealed && localHour >= 20
-    );
-
-    if (questionsToReveal.length > 0) {
-      const idsToReveal = questionsToReveal.map((q: { id: string }) => q.id);
-
-      const { error: revealError } = await dbRetry<DailyQuestion>(async () =>
-        supabaseAdmin
-          .from('DailyQuestion')
-          .update({
-            isRevealed: true,
-            analysisStatus: 'REVEALED',
-            revealedAt: now.toISOString(),
-          })
-          .in('id', idsToReveal)
-      );
-
-      if (revealError) {
-        logger.warn('Échec de la révélation automatique', { idsToReveal }, revealError);
-      } else {
-        // Update local data to reflect reveal
-        for (const q of questions) {
-          if (idsToReveal.includes(q.id)) {
-            q.isRevealed = true;
-            q.analysisStatus = 'REVEALED';
-            q.revealedAt = now.toISOString();
-          }
-        }
-        logger.info('Questions révélées automatiquement', { count: idsToReveal.length });
-      }
-    }
-
-    // 4. Fetch CouplePortraits ordered by month DESC
-    const { data: portraits, error: portraitError } = await dbRetry<CouplePortrait[]>(async () =>
-      supabaseAdmin
-        .from('CouplePortrait')
-        .select('*')
-        .eq('coupleId', coupleId)
-        .order('month', { ascending: false })
-    );
-
-    if (portraitError) {
-      logger.warn('Échec du chargement des portraits', {coupleId}, portraitError);
-    }
-
-    const entitlements = await getUserEntitlements(authUser.id);
-
-    // Fetch TotemState (will check sleeping decay dynamically)
-    let totemState = null;
-    try {
-      totemState = await getTotem(coupleId);
-    } catch (e) {
-      logger.warn('Failed to load TotemState', { coupleId }, e);
-    }
-
-    // 5. Return aggregated data
-    return NextResponse.json({
-      couple,
-      dailyQuestions: questions,
-      portraits: portraits ?? [],
-      entitlements,
-      totemState,
-    });
+    const data = await getCouplePortraitData(coupleId, authUser.id, timezone);
+    return NextResponse.json(data);
   },
 });
-
-
-/**
- * Returns the UTC offset for Paris timezone (handles CET/CEST).
- * CET = UTC+1 (last Sunday of October → last Sunday of March)
- * CEST = UTC+2 (last Sunday of March → last Sunday of October)
- */
-function getParisUtcOffset(date: Date): number {
-  const year = date.getUTCFullYear();
-
-  // Last Sunday of March (start of CEST)
-  const marchLast = new Date(Date.UTC(year, 2, 31));
-  marchLast.setUTCDate(31 - marchLast.getUTCDay());
-  marchLast.setUTCHours(1, 0, 0, 0); // transition at 01:00 UTC
-
-  // Last Sunday of October (end of CEST)
-  const octoberLast = new Date(Date.UTC(year, 9, 31));
-  octoberLast.setUTCDate(31 - octoberLast.getUTCDay());
-  octoberLast.setUTCHours(1, 0, 0, 0); // transition at 01:00 UTC
-
-  if (date.getTime() >= marchLast.getTime() && date.getTime() < octoberLast.getTime()) {
-    return 2; // CEST (summer)
-  }
-  return 1; // CET (winter)
-}

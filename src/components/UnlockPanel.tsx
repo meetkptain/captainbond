@@ -7,6 +7,7 @@ import { PricingComparison } from './PricingComparison';
 import { Icon } from '@/components/Icon';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
 import { isNativeApp, purchaseNativeProduct, triggerHaptic } from '@/lib/native/bridge';
+import { useTranslation } from '@/lib/i18n';
 
 interface UnlockPanelProps {
   roomCode: string;
@@ -21,6 +22,7 @@ interface UnlockPanelProps {
 }
 
 export function UnlockPanel({ roomCode, playerId, packs, freeQuestionsUsed, freeQuestionsLimit, onCheckoutStart, onCheckoutError, successUrl, cancelUrl }: UnlockPanelProps) {
+  const { t } = useTranslation();
   const [loadingSku, setLoadingSku] = useState<string | null>(null);
 
   useEffect(() => {
@@ -82,23 +84,37 @@ export function UnlockPanel({ roomCode, playerId, packs, freeQuestionsUsed, free
 
   if (packs.length === 0) {
     return (
-      <p className="text-slate-400 text-sm">Aucune offre disponible pour le moment.</p>
+      <p className="text-slate-400 text-sm">{t('no_offers_available')}</p>
     );
   }
 
   const limit = freeQuestionsLimit ?? 3;
-  const used = freeQuestionsUsed ?? limit;
+  const used = Math.min(freeQuestionsUsed ?? 0, limit);
   const remaining = Math.max(0, limit - used);
 
   return (
     <div className="w-full max-w-2xl mx-auto flex flex-col gap-4">
       <div className="text-center space-y-2">
         <p className="text-sm text-slate-300 font-medium">
-          {remaining === 0
-            ? 'Vous avez utilisé toutes vos cartes gratuites.'
-            : `Il vous reste ${remaining} carte${remaining > 1 ? 's' : ''} gratuite${remaining > 1 ? 's' : ''}.`}
+          <strong className="text-white">{t('free_cards_used', { used, limit })}</strong>
+          {remaining > 0 && (
+            <span className="block text-xs text-slate-400 mt-1">
+              {remaining === 1
+                ? t('free_cards_remaining_one')
+                : t('free_cards_remaining_many', { remaining })}
+            </span>
+          )}
+          {remaining === 0 && (
+            <span className="block text-xs text-amber-400 mt-1">
+              {t('free_cards_empty')}
+            </span>
+          )}
         </p>
-        <div className="w-full max-w-xs mx-auto h-2 bg-white/10 rounded-full overflow-hidden">
+        <div
+          className="w-full max-w-xs mx-auto h-2 bg-white/10 rounded-full overflow-hidden"
+          aria-label={t('free_cards_gauge_label', { used, limit })}
+          role="img"
+        >
           <div
             className="h-full bg-neon-purple transition-all duration-500"
             style={{ width: `${(used / limit) * 100}%` }}
@@ -107,7 +123,7 @@ export function UnlockPanel({ roomCode, playerId, packs, freeQuestionsUsed, free
       </div>
       <PricingComparison packs={packs} onSelect={handleCheckout} loadingSku={loadingSku} />
       <p className="text-xs text-slate-500 text-center flex items-center justify-center gap-1">
-        <Icon name="check" className="w-3 h-3" /> Paiement sécurisé · Satisfait ou remboursé sous 7 jours
+        <Icon name="check" className="w-3 h-3" /> {t('secure_payment_guarantee')}
       </p>
     </div>
   );

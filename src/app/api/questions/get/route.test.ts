@@ -4,7 +4,7 @@ import { GET } from './route';
 import { getQuestionById } from '@/lib/db/repositories';
 import { requireAdminSession } from '@/lib/auth/admin';
 import { getPlayerSessionFromCookie } from '@/lib/auth/player-session';
-import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
+import { getAuthenticatedUser } from '@/lib/auth/user';
 
 vi.mock('@/lib/db/repositories', () => ({
   getQuestionById: vi.fn(),
@@ -18,8 +18,8 @@ vi.mock('@/lib/auth/player-session', () => ({
   getPlayerSessionFromCookie: vi.fn(),
 }));
 
-vi.mock('@/lib/auth/couple', () => ({
-  getAuthenticatedCoupleUser: vi.fn(),
+vi.mock('@/lib/auth/user', () => ({
+  getAuthenticatedUser: vi.fn(),
 }));
 
 const mockQuestionObj = {
@@ -35,7 +35,7 @@ describe('GET /api/questions/get', () => {
   it('throws UNAUTHORIZED if not authenticated', async () => {
     vi.mocked(requireAdminSession).mockRejectedValueOnce(new Error('unauthorized'));
     vi.mocked(getPlayerSessionFromCookie).mockResolvedValueOnce(null);
-    vi.mocked(getAuthenticatedCoupleUser).mockRejectedValueOnce(new Error('unauthorized'));
+    vi.mocked(getAuthenticatedUser).mockRejectedValueOnce(new Error('unauthorized'));
 
     const req = new NextRequest(`http://localhost/api/questions/get?id=${mockQuestionObj.id}`);
     const res = await GET(req);
@@ -73,7 +73,7 @@ describe('GET /api/questions/get', () => {
   it('returns masked question details for couple users', async () => {
     vi.mocked(requireAdminSession).mockRejectedValueOnce(new Error('unauthorized'));
     vi.mocked(getPlayerSessionFromCookie).mockResolvedValueOnce(null);
-    vi.mocked(getAuthenticatedCoupleUser).mockResolvedValueOnce({ id: 'user-1' });
+    vi.mocked(getAuthenticatedUser).mockResolvedValueOnce({ id: 'user-1' });
     vi.mocked(getQuestionById).mockResolvedValueOnce(mockQuestionObj as unknown as Awaited<ReturnType<typeof getQuestionById>>);
 
     const req = new NextRequest(`http://localhost/api/questions/get?id=${mockQuestionObj.id}`);

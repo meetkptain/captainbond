@@ -139,14 +139,38 @@ export default function RoomPage() {
 
       {/* Header */}
       {step !== 'game' && (
-        <div className="flex justify-between items-center max-w-md mx-auto w-full mb-8 z-10">
-          <div className="flex items-center gap-3">
-            <span className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-yellow-400 tracking-tight">
-              CAPTAIN BOND
-            </span>
-            <div className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 font-mono text-amber-400 font-bold tracking-widest text-sm shadow-[0_0_10px_rgba(245,158,11,0.15)]">
-              {roomCode}
+        <div className="flex flex-col max-w-md mx-auto w-full mb-6 z-10 gap-2">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <span className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-yellow-400 tracking-tight">
+                CAPTAIN BOND
+              </span>
+              <div className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 font-mono text-amber-400 font-bold tracking-widest text-sm shadow-[0_0_10px_rgba(245,158,11,0.15)]">
+                {roomCode}
+              </div>
             </div>
+          </div>
+          <div className="w-full p-3 bg-amber-500/5 border border-amber-500/20 rounded-xl text-left">
+            <p className="text-xs text-amber-400 font-mono font-bold uppercase tracking-wider mb-1.5">
+              {language === 'fr' ? '3 étapes pour lancer la partie' : '3 steps to start the game'}
+            </p>
+            <ol className="text-xs text-slate-400 space-y-1 list-decimal list-inside leading-relaxed">
+              <li>
+                {language === 'fr'
+                  ? 'Partagez le code ci-dessus à vos amis.'
+                  : 'Share the code above with your friends.'}
+              </li>
+              <li>
+                {language === 'fr'
+                  ? 'Choisissez un mode adapté à votre groupe.'
+                  : 'Pick a mode suited to your group.'}
+              </li>
+              <li>
+                {language === 'fr'
+                  ? "Attendez que tout le monde soit prêt, puis lancez la carte."
+                  : 'Wait for everyone to be ready, then start the round.'}
+              </li>
+            </ol>
           </div>
         </div>
       )}

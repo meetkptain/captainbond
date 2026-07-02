@@ -6,6 +6,7 @@ import { getRoomByCode } from '@/lib/db/repositories';
 import { checkoutLimiter } from '@/lib/rate-limit';
 import { requirePlayerSessionFor } from '@/lib/auth/player-session';
 import { AppError } from '@/lib/errors';
+import { resolveProfileSku } from '@/lib/monetization/skuResolver';
 
 export const runtime = 'edge';
 
@@ -21,8 +22,7 @@ export const POST = withApiHandler({
     if (!room) {
       throw new AppError('NOT_FOUND', 'Salle introuvable');
     }
-    const isCouple = room.currentMode === 'DATE_NIGHT';
-    const sku = isCouple ? 'PROFILE_COUPLE' : 'PROFILE';
+    const sku = resolveProfileSku(room.currentMode);
 
     const result = await createCheckoutSession({
       sku,

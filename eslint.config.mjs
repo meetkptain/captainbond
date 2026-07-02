@@ -13,6 +13,12 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "ui-ux-pro-max-skill/**",
+    // Build outputs
+    ".vercel/**",
+    "playwright-report/**",
+    "test-results/**",
+    "archive_koze/**",
+    "archive_old_stack/**",
   ]),
 ]);
 

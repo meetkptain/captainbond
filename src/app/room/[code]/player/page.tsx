@@ -414,10 +414,10 @@ export default function PlayerController() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setShowSafeWord(true)}
-            className="text-xs font-mono text-amber-400 hover:text-white transition-colors"
+            className="text-xs font-mono font-bold text-amber-400 hover:text-white border border-amber-500/30 hover:border-amber-400 rounded-full px-3 py-1 transition-colors"
             aria-label="Safe word / Passer"
           >
-            🛑
+            {language === 'fr' ? 'Safe word' : 'Safe word'}
           </button>
           <button
             onClick={() => setShowUnlockPanel(true)}
@@ -499,6 +499,20 @@ export default function PlayerController() {
               icon: 'gamepad',
               title: language === 'fr' ? "Répondez quand c'est votre tour" : "Answer when it's your turn",
               description: language === 'fr' ? 'Suivez les instructions : votez, répondez ou écrivez. Le Captain guide chaque tour.' : 'Follow the instructions: vote, answer, or write. The Captain guides each turn.',
+            },
+            {
+              icon: 'lock',
+              title: language === 'fr' ? '3 cartes gratuites, puis débloquez' : '3 free cards, then unlock',
+              description: language === 'fr'
+                ? "Vous pouvez jouer 3 cartes gratuitement. Après, n'importe quel joueur peut payer pour débloquer la soirée."
+                : 'You can play 3 cards for free. After that, any player can pay to unlock the evening.',
+            },
+            {
+              icon: 'alert',
+              title: language === 'fr' ? 'Safe word / Pause' : 'Safe word / Pause',
+              description: language === 'fr'
+                ? "Si une question vous met mal à l'aise, appuyez sur le bouton Safe word en haut à tout moment."
+                : 'If a question makes you uncomfortable, press the Safe word button at the top at any time.',
             },
           ]}
         />

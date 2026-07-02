@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MONETIZATION_CONFIG } from '@/lib/config/monetization';
 import { api } from '@/lib/api/client';
 import { ShareSheet } from '@/components/ShareSheet';
+import { CoupleCrossSellCard } from '@/components/marketing/CoupleCrossSellCard';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
 import { isNativeApp, shareNative, initializePurchases, purchaseNativeProduct, triggerHaptic } from '@/lib/native/bridge';
 import { getCurrentUser } from '@/lib/supabase-auth';
@@ -605,21 +606,7 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
         </div>
 
         {/* Cross-Sell Card */}
-        <div className="glass-panel p-5 border-rose-500/20 bg-gradient-to-r from-rose-950/20 to-amber-950/20 rounded-2xl text-center space-y-3 shadow-[0_0_30px_rgba(244,63,94,0.05)]">
-          <div className="flex items-center justify-center gap-2 text-rose-400">
-            <span className="text-xl">💖</span>
-            <h3 className="font-bold text-sm uppercase tracking-wider font-mono">Vous jouez à deux ?</h3>
-          </div>
-          <p className="text-xs text-slate-300 leading-relaxed">
-            Prenez soin de votre dynamique de couple au quotidien. Essayez notre rituel de 5 minutes par jour.
-          </p>
-          <button
-            onClick={() => window.location.href = '/couple'}
-            className="w-full py-2.5 rounded-xl font-bold text-xs bg-rose-600 hover:bg-rose-700 text-white transition-colors cursor-pointer border-none"
-          >
-            Découvrir le Rituel Couple
-          </button>
-        </div>
+        <CoupleCrossSellCard />
       </div>
     );
   }
@@ -687,21 +674,7 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
         </div>
 
         {/* Cross-Sell Card */}
-        <div className="glass-panel p-5 border-rose-500/20 bg-gradient-to-r from-rose-950/20 to-amber-950/20 rounded-2xl text-center space-y-3 shadow-[0_0_30px_rgba(244,63,94,0.05)]">
-          <div className="flex items-center justify-center gap-2 text-rose-400">
-            <span className="text-xl">💖</span>
-            <h3 className="font-bold text-sm uppercase tracking-wider font-mono">Vous jouez à deux ?</h3>
-          </div>
-          <p className="text-xs text-slate-300 leading-relaxed">
-            Prenez soin de votre dynamique de couple au quotidien. Essayez notre rituel de 5 minutes par jour.
-          </p>
-          <button
-            onClick={() => window.location.href = '/couple'}
-            className="w-full py-2.5 rounded-xl font-bold text-xs bg-rose-600 hover:bg-rose-700 text-white transition-colors cursor-pointer border-none"
-          >
-            Découvrir le Rituel Couple
-          </button>
-        </div>
+        <CoupleCrossSellCard />
       </div>
     );
   }
@@ -822,21 +795,7 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
       </div>
 
       {/* Cross-Sell Card */}
-      <div className="glass-panel p-5 border-rose-500/20 bg-gradient-to-r from-rose-950/20 to-amber-950/20 rounded-2xl text-center space-y-3 shadow-[0_0_30px_rgba(244,63,94,0.05)]">
-        <div className="flex items-center justify-center gap-2 text-rose-400">
-          <span className="text-xl">💖</span>
-          <h3 className="font-bold text-sm uppercase tracking-wider font-mono">Vous jouez à deux ?</h3>
-        </div>
-        <p className="text-xs text-slate-300 leading-relaxed">
-          Prenez soin de votre dynamique de couple au quotidien. Essayez notre rituel de 5 minutes par jour.
-        </p>
-        <button
-          onClick={() => window.location.href = '/couple'}
-          className="w-full py-2.5 rounded-xl font-bold text-xs bg-rose-600 hover:bg-rose-700 text-white transition-colors cursor-pointer border-none"
-        >
-          Découvrir le Rituel Couple
-        </button>
-      </div>
+      <CoupleCrossSellCard />
     </div>
   );
 }

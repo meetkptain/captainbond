@@ -124,6 +124,9 @@ model Question {
   category       String   @default("GENERAL") // Catégorie sémantique
   difficulty     Int      @default(1) // 1-3
   intensityLevel Int      @default(1) // 1: Chill/Icebreaker, 2: Spicy/Tension, 3: Deep/Trauma
+  theme          String? // Thème du rituel couple (ex: RECONNECTION, COMMUNICATION, INTIMACY, SHARED_PROJECT)
+  suggestedAction String? // Action micro-rituelle suggérée (sans pression)
+  therapistGuide String? // Guide post-révélation rédigé par un thérapeute
   isPremium      Boolean  @default(false) // Payant ou gratuit
   isTimed        Boolean  @default(true) // true pour Icebreaker, false pour Deep Connection
   packId         String? // Si lié à un pack
@@ -249,8 +252,9 @@ model User {
   purchases      Purchase[]
   userPacks      UserPack[]
   userPasses     UserPass[]
-  user1Couples   Couple[]   @relation("User1Couples")
-  user2Couples   Couple[]   @relation("User2Couples")
+  user1Couples   Couple[]      @relation("User1Couples")
+  user2Couples   Couple[]      @relation("User2Couples")
+  timeCapsules   TimeCapsule[]
 
   @@index([stripeCustomerId])
 }
@@ -300,16 +304,32 @@ model Couple {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   timezone  String   @default("Europe/Paris")
-  
+
   trees           Tree[]
   djProfile       DJProfile?
   dailyQuestions  DailyQuestion[]
   portraits       CouplePortrait[]
   timeCapsules    TimeCapsule[]
+  totem           TotemState?
 
   @@unique([user1Id, user2Id])
   @@index([user1Id])
   @@index([user2Id])
+}
+
+model TotemState {
+  id           String    @id @default(cuid())
+  coupleId     String    @unique
+  couple       Couple    @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  stateA       Json      @default("{\"hue\":220,\"saturation\":70,\"lightness\":50,\"energy\":0.5,\"attachmentStyle\":\"secure\",\"particleDensity\":0.5,\"pulseRate\":1.0}")
+  stateB       Json      @default("{\"hue\":280,\"saturation\":70,\"lightness\":50,\"energy\":0.5,\"attachmentStyle\":\"secure\",\"particleDensity\":0.5,\"pulseRate\":1.0}")
+  fusionState  Json      @default("{\"harmonyRate\":0.5,\"tensionLevel\":0.0,\"fusionTexture\":\"silk\",\"faultLineVisible\":false,\"syncScore\":0.0,\"evolutionStage\":1}")
+  lastRitualAt DateTime?
+  streakDays   Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([coupleId])
 }
 
 model Tree {
@@ -362,7 +382,7 @@ model TreeConnection {
   type      String   @default("SIMILARITY") // SIMILARITY, SEQUENCE, CONTRAST
   createdAt DateTime @default(now())
 
-  @@unique([sourceId, targetId])
+  @@unique([treeId, sourceId, targetId])
   @@index([treeId])
   @@index([sourceId])
   @@index([targetId])
@@ -417,16 +437,34 @@ model DailyQuestion {
   isRevealed    Boolean  @default(false)   // Unlocked at 20h local time
   resonanceScore Float?                    // Cosine similarity between embeddings
   analysisJson   Json?                     // AI-generated resonance analysis
-  analysisStatus String   @default("PENDING") // PENDING, COMPUTED, REVEALED, EXPIRED
+  analysisStatus String   @default("PENDING") // PENDING | COMPUTING | COMPUTED | REVEALED | EXPIRED
   protocolOpened Boolean  @default(false)
   user1Mood      Json?
   user2Mood      Json?
   isSkipped      Boolean  @default(false)
   isSafeZoneActive Boolean @default(false)
 
+  // Rituels Couple — thème hebdomadaire, intensité et guides
+  theme          String? // ex: RECONNECTION, COMMUNICATION, INTIMACY, SHARED_PROJECT
+  intensity      Int      @default(1) // 1 = light, 2 = deep, 3 = vulnerable
+  ritualAction   String? // micro-rituel optionnel sans pression
+  therapistGuide String? // guide post-révélation
+
   @@index([coupleId])
   @@index([questionId])
-  @@index([coupleId, releasedAt])
+  @@index([coupleId, analysisStatus, isRevealed])
+  @@unique([coupleId, releasedAt])
+}
+
+model CoupleThemeCycle {
+  id           String   @id @default(cuid())
+  coupleId     String   @unique
+  currentTheme String
+  weekNumber   Int      @default(1) // 1-4
+  startedAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([coupleId])
 }
 
 // Portrait sémantique mensuel du couple
@@ -450,10 +488,12 @@ model TimeCapsule {
   coupleId   String
   couple     Couple   @relation(fields: [coupleId], references: [id], onDelete: Cascade)
   senderId   String
+  sender     User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
   content    String
   createdAt  DateTime @default(now())
   unlocksAt  DateTime
   isUnlocked Boolean  @default(false)
 
   @@index([coupleId])
+  @@index([coupleId, isUnlocked, unlocksAt])
 }

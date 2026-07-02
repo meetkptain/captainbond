@@ -1,5 +1,8 @@
 import { supabaseAdmin } from '@/lib/supabase-admin';
+import { AppError } from '@/lib/errors';
 import { TotemState } from '../types';
+
+export type DetoxAction = 'START' | 'INTERRUPT' | 'COMPLETE';
 
 export async function getTotemByCouple(coupleId: string): Promise<TotemState | null> {
   const { data, error } = await supabaseAdmin
@@ -73,6 +76,39 @@ export async function updateFusionState(
     .single();
   if (error) throw error;
   return data as TotemState;
+}
+
+export async function updateDetoxSession(
+  coupleId: string,
+  action: DetoxAction,
+  durationMinutes?: number
+): Promise<TotemState> {
+  const totem = await getTotemByCouple(coupleId);
+  if (!totem) {
+    throw new AppError('NOT_FOUND', 'TotemState introuvable pour ce couple.');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const fusionState: Record<string, any> = { ...(totem.fusionState ?? {}) };
+
+  if (action === 'START') {
+    fusionState.detoxSession = {
+      startedAt: new Date().toISOString(),
+      durationMinutes: durationMinutes ?? 60,
+      interrupted: false,
+    };
+  } else if (action === 'INTERRUPT') {
+    if (fusionState.detoxSession) {
+      fusionState.detoxSession.interrupted = true;
+    }
+    fusionState.energy = Math.max(0.1, (fusionState.energy ?? 1.0) - 0.15);
+  } else if (action === 'COMPLETE') {
+    delete fusionState.detoxSession;
+    fusionState.energy = Math.min(1.0, (fusionState.energy ?? 1.0) + 0.2);
+    fusionState.totalRitualsCompleted = (fusionState.totalRitualsCompleted ?? 0) + 1;
+  }
+
+  return updateFusionState(coupleId, fusionState as Partial<TotemState['fusionState']>);
 }
 
 export async function updateTotemRitual(

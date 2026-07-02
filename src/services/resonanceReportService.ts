@@ -1,5 +1,7 @@
-import { supabaseAdmin } from '@/lib/supabase-admin';
-import { MonthlyReport, DailyQuestion, CouplePortrait } from '@/lib/db/types';
+import { getPortraitByMonth } from '@/lib/db/repositories/couplePortraitRepository';
+import { listRevealedDailyQuestionsByMonth } from '@/lib/db/repositories/dailyQuestionRepository';
+import { AppError } from '@/lib/errors';
+import { MonthlyReport, DailyQuestion } from '@/lib/db/types';
 
 /**
  * Génère le rapport mensuel de résonance pour un couple.
@@ -10,38 +12,17 @@ export async function generateMonthlyReport(
   coupleId: string,
   month: string
 ): Promise<MonthlyReport> {
-  // Calcul des bornes du mois
-  const [year, monthNum] = month.split('-').map(Number);
-  const start = new Date(Date.UTC(year, monthNum - 1, 1));
-  const end = new Date(Date.UTC(year, monthNum, 1)); // début du mois suivant (exclusif)
-  const startIso = start.toISOString();
-  const endIso = end.toISOString();
-
   // Lecture des DailyQuestions révélées dans la plage du mois
-  const { data: rawQuestions, error: dqError } = await supabaseAdmin
-    .from('DailyQuestion')
-    .select('*')
-    .eq('coupleId', coupleId)
-    .eq('isRevealed', true)
-    .gte('releasedAt', startIso)
-    .lt('releasedAt', endIso)
-    .order('releasedAt', { ascending: true });
-
-  if (dqError) {
-    throw new Error(`Impossible de charger les questions: ${dqError.message}`);
+  let questions: DailyQuestion[];
+  try {
+    questions = await listRevealedDailyQuestionsByMonth(coupleId, month);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new AppError('INTERNAL_ERROR', `Impossible de charger les questions: ${message}`);
   }
 
-  const questions: DailyQuestion[] = (rawQuestions ?? []) as DailyQuestion[];
-
   // Lecture du CouplePortrait du mois (si existant)
-  const { data: rawPortrait } = await supabaseAdmin
-    .from('CouplePortrait')
-    .select('*')
-    .eq('coupleId', coupleId)
-    .eq('month', month)
-    .maybeSingle();
-
-  const portrait: CouplePortrait | null = rawPortrait as CouplePortrait | null;
+  const portrait = await getPortraitByMonth(coupleId, month);
 
   // --- Calcul des métriques ---
   const totalQuestionsRevealed = questions.length;

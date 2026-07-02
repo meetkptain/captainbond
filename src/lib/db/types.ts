@@ -45,6 +45,9 @@ export interface Question {
   tags?: string[];
   metadata?: Record<string, unknown> | null;
   intensityLevel?: number;
+  theme?: string | null;
+  suggestedAction?: string | null;
+  therapistGuide?: string | null;
   packId?: string | null;
   language?: string;
   createdAt?: string;
@@ -200,12 +203,26 @@ export interface DailyQuestion {
   isRevealed: boolean;
   resonanceScore?: number | null;
   analysisJson?: Record<string, unknown> | null;
-  analysisStatus: 'PENDING' | 'COMPUTED' | 'REVEALED' | 'EXPIRED';
+  analysisStatus: 'PENDING' | 'COMPUTING' | 'COMPUTED' | 'REVEALED' | 'EXPIRED';
   protocolOpened?: boolean;
   user1Mood?: Record<string, unknown> | null;
   user2Mood?: Record<string, unknown> | null;
   isSkipped: boolean;
   isSafeZoneActive: boolean;
+  // Rituels Couple
+  theme?: string | null;
+  intensity: number;
+  ritualAction?: string | null;
+  therapistGuide?: string | null;
+}
+
+export interface CoupleThemeCycle {
+  id: string;
+  coupleId: string;
+  currentTheme: string;
+  weekNumber: number;
+  startedAt: string;
+  updatedAt: string;
 }
 
 export interface CouplePortrait {

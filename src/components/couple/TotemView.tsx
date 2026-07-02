@@ -86,7 +86,7 @@ export function TotemView({ coupleId, userId, user1Id }: TotemViewProps) {
     async function load() {
       try {
         const data = await api.get<TotemStateResponse>(
-          `/api/totem/state?coupleId=${coupleId}`
+          `/api/couple/totem/state?coupleId=${coupleId}`
         );
         setMyOrbe(data.myOrbe);
         setFusionState(data.fusionState);
@@ -157,7 +157,7 @@ export function TotemView({ coupleId, userId, user1Id }: TotemViewProps) {
     }
 
     try {
-      const result = await api.post<FuseResponse>('/api/totem/fuse', { coupleId });
+      const result = await api.post<FuseResponse>('/api/couple/totem/fuse', { coupleId });
       setFusionState(result.fusionState);
       setStreakDays(result.streakDays);
       setLastRitualAt(result.lastRitualAt);

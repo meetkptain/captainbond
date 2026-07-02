@@ -4,7 +4,7 @@ import { withApiHandler } from '@/lib/api/withApiHandler';
 import { getQuestionById } from '@/lib/db/repositories';
 import { requireAdminSession } from '@/lib/auth/admin';
 import { getPlayerSessionFromCookie } from '@/lib/auth/player-session';
-import { getAuthenticatedCoupleUser } from '@/lib/auth/couple';
+import { getAuthenticatedUser } from '@/lib/auth/user';
 import { AppError } from '@/lib/errors';
 
 export const runtime = 'edge';
@@ -32,7 +32,7 @@ export const GET = withApiHandler({
         isAuthenticatedVal = true;
       } else {
         try {
-          const coupleUser = await getAuthenticatedCoupleUser(req);
+          const coupleUser = await getAuthenticatedUser(req);
           if (coupleUser) {
             isAuthenticatedVal = true;
           }

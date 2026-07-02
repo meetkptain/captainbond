@@ -11,9 +11,9 @@ export interface AuthenticatedUser {
  * Récupère la session utilisateur Supabase active.
  * Cherche dans les headers (Authorization: Bearer <token>) ou les cookies Supabase.
  */
-export async function getAuthenticatedCoupleUser(req: NextRequest): Promise<AuthenticatedUser> {
+export async function getAuthenticatedUser(req: NextRequest): Promise<AuthenticatedUser> {
   let token: string | null = null;
-  
+
   const authHeader = req.headers.get('Authorization');
   if (authHeader && authHeader.startsWith('Bearer ')) {
     token = authHeader.split(' ')[1];
