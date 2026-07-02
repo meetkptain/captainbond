@@ -1,5 +1,5 @@
 import { AppError } from '@/lib/errors';
-import { DailyQuestion, Couple, Question, CoupleThemeCycle } from '@/lib/db/types';
+import { DailyQuestion, Couple, CoupleThemeCycle } from '@/lib/db/types';
 import {
   createDailyQuestion,
   getCurrentRitual,
@@ -11,7 +11,7 @@ import {
   advanceCoupleThemeCycle,
   getThemeForWeek,
 } from '@/lib/db/repositories/coupleThemeCycleRepository';
-import { supabaseAdmin } from '@/lib/supabase-admin';
+import { pickQuestionForTheme } from '@/lib/db/repositories';
 
 const RITUAL_DAYS = [1, 3, 5]; // Monday, Wednesday, Friday
 
@@ -75,30 +75,6 @@ export async function getOrCreateThemeCycle(
   const existing = await getCoupleThemeCycle(coupleId);
   if (existing) return existing;
   return createCoupleThemeCycle(coupleId);
-}
-
-export async function pickQuestionForTheme(
-  theme: string,
-  intensity: number
-): Promise<Question> {
-  const { data, error } = await supabaseAdmin
-    .from('Question')
-    .select('id, text, intensityLevel, suggestedAction, therapistGuide')
-    .eq('theme', theme)
-    .eq('intensityLevel', intensity)
-    .limit(50);
-
-  if (error) throw error;
-  const questions = (data ?? []) as Question[];
-
-  if (questions.length === 0) {
-    throw new AppError(
-      'NOT_FOUND',
-      `No question found for theme ${theme} intensity ${intensity}`
-    );
-  }
-
-  return questions[Math.floor(Math.random() * questions.length)];
 }
 
 export function pickIntensity(recentRituals: DailyQuestion[]): number {

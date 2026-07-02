@@ -3,13 +3,13 @@ import {
   isRitualDay,
   pickIntensity,
   getTodayNoon,
-  pickQuestionForTheme,
   generateRitualForCouple,
 } from '@/services/ritualService';
 import * as dailyQuestionRepository from '@/lib/db/repositories/dailyQuestionRepository';
 import * as cycleRepository from '@/lib/db/repositories/coupleThemeCycleRepository';
-import { supabaseAdmin } from '@/lib/supabase-admin';
-import type { DailyQuestion, Couple, Question } from '@/lib/db/types';
+import { pickQuestionForTheme } from '@/lib/db/repositories';
+import type { DailyQuestion, Couple } from '@/lib/db/types';
+import type { RitualQuestion } from '@/lib/db/repositories';
 
 vi.mock('@/lib/db/repositories/dailyQuestionRepository', async () => {
   const actual = await vi.importActual<typeof import('@/lib/db/repositories/dailyQuestionRepository')>(
@@ -35,11 +35,13 @@ vi.mock('@/lib/db/repositories/coupleThemeCycleRepository', async () => {
   };
 });
 
-vi.mock('@/lib/supabase-admin', () => ({
-  supabaseAdmin: {
-    from: vi.fn(),
-  },
-}));
+vi.mock('@/lib/db/repositories', async () => {
+  const actual = await vi.importActual<typeof import('@/lib/db/repositories')>('@/lib/db/repositories');
+  return {
+    ...actual,
+    pickQuestionForTheme: vi.fn(),
+  };
+});
 
 describe('ritualService', () => {
   beforeEach(() => {
@@ -86,48 +88,6 @@ describe('ritualService', () => {
       expect(hourInParis).toBe(12);
       expect(result.getMinutes()).toBe(0);
       expect(result.getSeconds()).toBe(0);
-    });
-  });
-
-  describe('pickQuestionForTheme', () => {
-    it('throws when no question matches', async () => {
-      vi.mocked(supabaseAdmin.from).mockReturnValue({
-        select: () => ({
-          eq: () => ({
-            eq: () => ({
-              limit: () => Promise.resolve({ data: [], error: null }),
-            }),
-          }),
-        }),
-      } as never);
-
-      await expect(pickQuestionForTheme('RECONNECTION', 1)).rejects.toThrow('No question found');
-    });
-
-    it('returns a random matching question', async () => {
-      const questions: Question[] = [
-        {
-          id: 'q1',
-          text: 'Question 1',
-          mode: 'DATE_NIGHT',
-          intensityLevel: 1,
-          theme: 'RECONNECTION',
-          suggestedAction: 'Action 1',
-          therapistGuide: 'Guide 1',
-        },
-      ];
-      vi.mocked(supabaseAdmin.from).mockReturnValue({
-        select: () => ({
-          eq: () => ({
-            eq: () => ({
-              limit: () => Promise.resolve({ data: questions, error: null }),
-            }),
-          }),
-        }),
-      } as never);
-
-      const result = await pickQuestionForTheme('RECONNECTION', 1);
-      expect(result.id).toBe('q1');
     });
   });
 
@@ -190,12 +150,10 @@ describe('ritualService', () => {
         intensity: 1,
         theme: 'COMMUNICATION',
       };
-      const question: Question = {
+      const question: RitualQuestion = {
         id: 'q1',
         text: 'Question 1',
-        mode: 'DATE_NIGHT',
         intensityLevel: 1,
-        theme: 'COMMUNICATION',
         suggestedAction: 'Action',
         therapistGuide: 'Guide',
       };
@@ -205,16 +163,7 @@ describe('ritualService', () => {
       vi.mocked(dailyQuestionRepository.listRecentRituals).mockResolvedValue([]);
       vi.mocked(dailyQuestionRepository.createDailyQuestion).mockResolvedValue(created);
       vi.mocked(cycleRepository.advanceCoupleThemeCycle).mockResolvedValue(advancedCycle);
-
-      vi.mocked(supabaseAdmin.from).mockReturnValue({
-        select: () => ({
-          eq: () => ({
-            eq: () => ({
-              limit: () => Promise.resolve({ data: [question], error: null }),
-            }),
-          }),
-        }),
-      } as never);
+      vi.mocked(pickQuestionForTheme).mockResolvedValue(question);
 
       const result = await generateRitualForCouple(couple, new Date('2026-07-06'));
       expect(result.id).toBe('dq2');
@@ -247,12 +196,10 @@ describe('ritualService', () => {
         intensity: 1,
         theme: 'RECONNECTION',
       };
-      const question: Question = {
+      const question: RitualQuestion = {
         id: 'q1',
         text: 'Question 1',
-        mode: 'DATE_NIGHT',
         intensityLevel: 1,
-        theme: 'RECONNECTION',
         suggestedAction: 'Action',
         therapistGuide: 'Guide',
       };
@@ -261,15 +208,7 @@ describe('ritualService', () => {
       vi.mocked(cycleRepository.getCoupleThemeCycle).mockResolvedValue(cycle);
       vi.mocked(dailyQuestionRepository.listRecentRituals).mockResolvedValue([]);
       vi.mocked(dailyQuestionRepository.createDailyQuestion).mockResolvedValue(created);
-      vi.mocked(supabaseAdmin.from).mockReturnValue({
-        select: () => ({
-          eq: () => ({
-            eq: () => ({
-              limit: () => Promise.resolve({ data: [question], error: null }),
-            }),
-          }),
-        }),
-      } as never);
+      vi.mocked(pickQuestionForTheme).mockResolvedValue(question);
 
       const wednesdayResult = await generateRitualForCouple(couple, new Date('2026-07-08'));
       expect(wednesdayResult.id).toBe('dq3');
