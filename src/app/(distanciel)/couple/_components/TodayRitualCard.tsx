@@ -40,8 +40,8 @@ export function TodayRitualCard() {
               setIsCouchMode(false);
               setAnswer('');
             }}
-            partnerAName="Partenaire A"
-            partnerBName="Partenaire B"
+            partnerAName={myName}
+            partnerBName={partnerName}
           />
         ) : (
           <>
@@ -171,6 +171,8 @@ export function TodayRitualCard() {
             dailyQuestionId={selectedQuestion.id}
             analysisData={selectedQuestion.analysisJson as AnalysisData}
             onComplete={() => setShowProtocol(false)}
+            partnerAName={myName}
+            partnerBName={partnerName}
           />
         </div>
       )}

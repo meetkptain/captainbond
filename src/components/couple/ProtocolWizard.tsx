@@ -18,6 +18,8 @@ interface ProtocolWizardProps {
   dailyQuestionId: string;
   analysisData: AnalysisData;
   onComplete: () => void;
+  partnerAName?: string;
+  partnerBName?: string;
 }
 
 interface ProtocolQuestion {
@@ -146,6 +148,8 @@ export function ProtocolWizard({
   dailyQuestionId,
   analysisData,
   onComplete,
+  partnerAName = 'Partenaire A',
+  partnerBName = 'Partenaire B',
 }: ProtocolWizardProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [direction, setDirection] = useState<'right' | 'left'>('right');
@@ -339,7 +343,7 @@ export function ProtocolWizard({
                 <div className="bg-white/[0.03] rounded-2xl p-4 border border-rose-500/10">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-2 h-2 rounded-full bg-rose-400" />
-                    <span className="text-xs font-semibold text-rose-300 uppercase tracking-wider">Partenaire A</span>
+                    <span className="text-xs font-semibold text-rose-300 uppercase tracking-wider">{partnerAName}</span>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {analysisData.partnerAProfile.traits.map((trait) => (
@@ -357,7 +361,7 @@ export function ProtocolWizard({
                 <div className="bg-white/[0.03] rounded-2xl p-4 border border-sky-500/10">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-2 h-2 rounded-full bg-sky-400" />
-                    <span className="text-xs font-semibold text-sky-300 uppercase tracking-wider">Partenaire B</span>
+                    <span className="text-xs font-semibold text-sky-300 uppercase tracking-wider">{partnerBName}</span>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {analysisData.partnerBProfile.traits.map((trait) => (

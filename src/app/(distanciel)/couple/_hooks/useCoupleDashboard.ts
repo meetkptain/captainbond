@@ -51,6 +51,8 @@ export interface CoupleData {
   user1Id: string;
   user2Id: string;
   createdAt?: string;
+  user1Name?: string | null;
+  user2Name?: string | null;
 }
 
 export interface TimeCapsuleData {
@@ -137,11 +139,19 @@ export function useCoupleDashboard() {
     [couple, userId]
   );
 
-  const partnerName = 'Ton partenaire';
+  const partnerName = useMemo(() => {
+    if (!couple) return 'Ton partenaire';
+    return isUser1
+      ? couple.user2Name?.trim() || 'Ton partenaire'
+      : couple.user1Name?.trim() || 'Ton partenaire';
+  }, [couple, isUser1]);
 
   const myName = useMemo(() => {
-    return isUser1 ? 'Partenaire A' : 'Partenaire B';
-  }, [isUser1]);
+    if (!couple) return 'Toi';
+    return isUser1
+      ? couple.user1Name?.trim() || 'Toi'
+      : couple.user2Name?.trim() || 'Toi';
+  }, [couple, isUser1]);
 
   const hasMyAnswer = useMemo(() => {
     if (!todayQuestion) return false;

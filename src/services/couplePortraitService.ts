@@ -16,7 +16,7 @@ export async function listCouplesForPortraitUser(userId: string): Promise<Couple
 }
 
 export interface CouplePortraitData {
-  couple: Couple;
+  couple: Couple & { user1Name?: string | null; user2Name?: string | null };
   dailyQuestions: DailyQuestion[];
   portraits: CouplePortrait[];
   entitlements: Entitlements | null;
@@ -38,6 +38,22 @@ export async function getCouplePortraitData(
   if (couple.user1Id !== userId && couple.user2Id !== userId) {
     throw new AppError('FORBIDDEN', 'Vous ne faites pas partie de ce couple.');
   }
+
+  const { data: users, error: usersError } = await supabaseAdmin
+    .from('User')
+    .select('id, name')
+    .in('id', [couple.user1Id, couple.user2Id]);
+
+  if (usersError) {
+    logger.warn('Failed to load couple user names', { coupleId }, usersError);
+  }
+
+  const nameById = new Map((users || []).map((u) => [u.id, u.name]));
+  const coupleWithNames = {
+    ...couple,
+    user1Name: nameById.get(couple.user1Id) || null,
+    user2Name: nameById.get(couple.user2Id) || null,
+  };
 
   const dailyQuestions = await withRetry(() => listDailyQuestions(coupleId));
   const revealedQuestions = await revealComputedDailyQuestions(
@@ -79,7 +95,7 @@ export async function getCouplePortraitData(
   }
 
   return {
-    couple,
+    couple: coupleWithNames,
     dailyQuestions: updatedQuestions,
     portraits,
     entitlements,
