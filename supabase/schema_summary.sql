@@ -104,6 +104,25 @@ CREATE TABLE DailyQuestion (
   INDEX "DailyQuestion_coupleId_analysisStatus_isRevealed_idx" ("coupleId", "analysisStatus", "isRevealed")
 );
 
+CREATE TABLE Lead (
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::TEXT,
+  source TEXT NOT NULL,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  company TEXT NOT NULL,
+  participants INT,
+  "estimatedPrice" DOUBLE PRECISION,
+  formula TEXT,
+  notes TEXT,
+  status TEXT NOT NULL DEFAULT 'NEW',
+  "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE INDEX "idx_lead_email_source" (email, source),
+  INDEX "idx_lead_source_status" (source, status),
+  INDEX "idx_lead_email" (email),
+  INDEX "idx_lead_created_at" ("createdAt")
+);
+
 CREATE TABLE Pack (
   "sku" TEXT UNIQUE,
   "productType" "ProductType" NOT NULL DEFAULT 'PACK',
@@ -284,7 +303,8 @@ CREATE TABLE UserPass (
   CONSTRAINT "UserPass_pkey" PRIMARY KEY ("id"),
   CONSTRAINT "UserPass_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT "UserPass_packId_fkey" FOREIGN KEY ("packId") REFERENCES "Pack"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  INDEX "UserPass_userId_expiresAt_idx" ("userId", "expiresAt")
+  INDEX "UserPass_userId_expiresAt_idx" ("userId", "expiresAt"),
+  UNIQUE INDEX "unique_userpass_user_source" ("userId", source)
 );
 
 CREATE TABLE UserStats (
