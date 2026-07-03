@@ -26,6 +26,6 @@ export function getOnboardingSteps(completedDays: number[]): OnboardingStep[] {
     { day: 4, title: 'Explorer le Totem', titleEn: 'Explore the Totem', done: completedDays.includes(4) },
     { day: 5, title: 'Sceller une TimeCapsule', titleEn: 'Seal a TimeCapsule', done: completedDays.includes(5) },
     { day: 6, title: 'Tester un pack thématique', titleEn: 'Try a themed pack', done: completedDays.includes(6) },
-    { day: 7, title: "Activer l'abo Premium", titleEn: 'Activate Premium', done: completedDays.includes(7) },
+    { day: 7, title: 'Valider notre premier rituel hebdomadaire', titleEn: 'Lock in our first weekly ritual', done: completedDays.includes(7) },
   ];
 }

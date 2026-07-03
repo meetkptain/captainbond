@@ -6,7 +6,7 @@ describe('getOnboardingSteps', () => {
     const steps = getOnboardingSteps([]);
     expect(steps).toHaveLength(7);
     expect(steps[0]).toEqual({ day: 1, title: 'Appairer nos profils', titleEn: 'Link our profiles', done: false });
-    expect(steps[6]).toEqual({ day: 7, title: "Activer l'abo Premium", titleEn: 'Activate Premium', done: false });
+    expect(steps[6]).toEqual({ day: 7, title: 'Valider notre premier rituel hebdomadaire', titleEn: 'Lock in our first weekly ritual', done: false });
   });
 
   it('marks completed days as done', () => {
