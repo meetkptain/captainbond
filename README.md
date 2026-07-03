@@ -1,54 +1,89 @@
-# Captain Bond 🤝
+# Captain Bond
 
-> **The Human Connection Accelerator.**  
-> Pas juste un jeu. Une expérience de lien authentique.
+> **The Human Connection Accelerator.**
+> Pas juste un jeu. Une experience de lien authentique.
 
-## 🧭 Vision
+## Vision
 
-Captain Bond est conçu pour briser la glace et créer des connexions profondes, que ce soit entre amis, en couple ou en équipe. 
-L'application guide les joueurs à travers différentes intensités émotionnelles : du rire de l'Apéro à la vulnérabilité du face à face. Notre philosophie est de **supprimer la friction technique** (zéro écriture, zéro clavier) pour maximiser le regard et la voix.
+Captain Bond est concu pour briser la glace et creer des connexions profondes, que ce soit entre amis, en couple ou en equipe. L'application guide les joueurs a travers differentes intensites emotionnelles : du rire de l'Apero a la vulnerabilite du face a face. Notre philosophie est de **supprimer la friction technique** (zero ecriture, zero clavier) pour maximiser le regard et la voix.
 
-## 🎮 Les 4 Modes de Jeu
+## Les 4 Modes de Jeu
 
-| Mode | Ambiance | Joueurs | Mécanique Principale |
+| Mode | Ambiance | Joueurs | Mecanique Principale |
 | :--- | :--- | :--- | :--- |
-| **🧊 Icebreaker** | Légère, Absurde | 3-8 | Le **Tribunal Social**. Zéro écriture, on vote sur les prénoms de ses amis avec un podium en fin de round. |
-| **🌶️ Spicy** | Clivante, Tension | 3-8 | Dilemmes moraux absurdes (A/B). Séparer la pièce en deux. |
-| **🕳️ Deep Connection** | Vulnérabilité, Intime | 3-6 | Le **Confessionnal de Poche**. On "Tease" une histoire en 5 mots max. La TV s'éteint pour écouter celui qui a le Spotlight. |
-| **🍷 Date Night** | Flirt, Profond | 2 | Le **Face à Face Asymétrique**. La TV est éteinte. L'Hôte contrôle. Jauge de maintien (Hold to proceed), mode veille (Bougie). |
+| **Icebreaker** | Legere, Absurde | 3-8 | Le **Tribunal Social**. Zero ecriture, on vote sur les prenoms de ses amis avec un podium en fin de round. |
+| **Spicy** | Clivante, Tension | 3-8 | Dilemmes moraux absurdes (A/B). Separer la piece en deux. |
+| **Deep Connection** | Vulnerabilite, Intime | 3-6 | Le **Confessionnal de Poche**. On "Tease" une histoire en 5 mots max. La TV s'eteint pour ecouter celui qui a le Spotlight. |
+| **Date Night** | Flirt, Profond | 2 | Le **Face a Face Asymetrique**. La TV est eteinte. L'Hote controle. Jauge de maintien (Hold to proceed), mode veille (Bougie). |
 
-## 🧠 Le "DJ Émotionnel" (Algorithme)
+## Mode Couple — Rituels Quotidiens
 
-Fini l'aléatoire. Captain Bond possède un algorithme de jeu ("Le DJ") qui compose des montagnes russes émotionnelles. 
-Chaque question est tagguée par son intensité (1 à 3). **La Règle de Refroidissement** garantit que l'application ne posera jamais deux questions trop profondes d'affilée pour ne pas étouffer l'ambiance.
+Le mode couple transforme l'application en experience quotidienne enrichie :
 
-## 🛠️ Stack Technique
+| Feature | Description | Cron |
+|---------|-------------|------|
+| **Rituel 20h** | Question profonde a 11h, reponses revelees simultanement a 20h | Lun/Mer/Ven |
+| **Push Notifications** | Alertes quand le rituel est disponible et quand c'est l'heure de reveler | Lun/Mer/Ven |
+| **Shared Reveal** | Compte a rebours 3-2-1 synchronise pour decouvrir les reponses | En temps reel |
+| **Weekly AI Recap** | Resumé hebdomadaire genere par Gemini (theme, insight, lecon) | Dimanche |
+| **Heatmap Confiance** | 5 axes : vulnerabilite, communication, conflit, desir, projets | Lundi |
+| **Arbre de Resonance** | Progression mensuelle de l'arbre semantique du couple | 1er du mois |
 
-*   **Frontend** : Next.js 14+ (App Router), TailwindCSS
-*   **Base de données** : PostgreSQL + Prisma ORM
-*   **Temps Réel** : Supabase Realtime
+## Stack Technique
 
-## 🚀 Lancement Rapide
+| Composant | Technologie |
+|-----------|-------------|
+| **Frontend** | Next.js (App Router), TailwindCSS |
+| **Base de donnees** | PostgreSQL (Supabase) + Prisma ORM |
+| **Temps reel** | Supabase Realtime |
+| **IA** | Gemini 1.5 Flash (generation questions, recaps, analyse) |
+| **Stockage** | Wasabi S3 (images, audio) |
+| **Hébergement** | Cloudflare Pages (app) + Cloudflare Workers (crons) |
+| **Monetisation** | Stripe (subscriptions, one-shot) |
+
+## Lancement Rapide
 
 ```bash
 # 1. Installation
 npm install
 
-# 2. Configuration (S'assurer d'avoir Postgres qui tourne)
+# 2. Configuration
 cp .env.example .env.local
+# Remplir les variables dans .env.local
 
-# 3. Base de données
+# 3. Base de donnees
 npx prisma db push
-npx tsx prisma/seed.ts
+npx prisma generate
 
 # 4. Lancement
 npm run dev
 ```
 
-## 📚 Documentation Architecture
+## Deploiement
 
-Consultez le dossier `docs/` pour comprendre les choix techniques radicaux du projet :
-*   `MANIFESTO.md` : Pourquoi l'UX doit forcer le joueur à poser son téléphone.
-*   `GAME_DESIGN.md` : Les règles d'ingénierie sociale (Jauge de tension, asymétrie, limites de Dunbar).
-*   `CONTENT_GUIDELINES.md` : Comment écrire pour la base de données (Intensité 1-3 et Tags).
-*   `GAME_MODES.md` : Le détail technique des 4 modes de jeu.
+Voir `docs/DEPLOYMENT.md` pour le guide complet.
+
+```bash
+# Build
+npm run build
+
+# Deploy sur Cloudflare Pages
+npx wrangler pages deploy .next
+
+# Deploy worker crons
+cd workers/cron-trigger
+npx wrangler deploy
+```
+
+## Documentation
+
+| Document | Contenu |
+|----------|---------|
+| `docs/ARCHITECTURE.md` | Vue d'ensemble technique |
+| `docs/COUPLE_FEATURES.md` | Detail des features couple (P1-P4) |
+| `docs/DEPLOYMENT.md` | Guide de deploiement |
+| `docs/MANIFESTO.md` | Philosophie produit |
+| `docs/GAME_DESIGN.md` | Mecaniques de jeu |
+| `docs/CONTENT_GUIDELINES.md` | Guidelines contenu |
+| `docs/GAME_MODES.md` | Detail des modes de jeu |
+| `PLAN_STRATEGIQUE.md` | Plan strategique 12 mois |

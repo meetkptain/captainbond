@@ -1,184 +1,95 @@
-# Déploiement Koze — Checklist
+# Deploiement — Captain Bond
 
-> Cette checklist couvre le déploiement sur **Cloudflare Pages** avec le runtime Edge (`@cloudflare/next-on-pages`).
+Checklist de deploiement sur **Cloudflare Pages** + **Cloudflare Workers** (crons).
 
-## 1. Variables d’environnement
+## 1. Variables d'environnement
 
-Copier `.env.example` vers `.env.local` en local et configurer les variables sur Cloudflare Pages :
+Voir `.env.example` pour la liste complete.
 
-### Obligatoires
+Obligatoires :
+- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
+- `ADMIN_PASSWORD_HASH` (hash bcrypt), `ADMIN_JWT_SECRET`, `PLAYER_JWT_SECRET`, `HOST_TOKEN_SECRET`
+- `COUPLE_INVITE_SECRET`
+- `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`
+- `GEMINI_API_KEY`
 
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
-- `ADMIN_PASSWORD_HASH` (hash bcrypt du mot de passe admin)
-- `ADMIN_JWT_SECRET` (min. 32 caractères)
-- `HOST_TOKEN_SECRET` (min. 32 caractères, **différent** de `ADMIN_SYNC_SECRET` et des autres secrets)
-- `PLAYER_JWT_SECRET` (min. 32 caractères, différent de `ADMIN_JWT_SECRET`)
-- `COUPLE_INVITE_SECRET` (min. 32 caractères, aléatoire ; utilisé pour signer les liens d'invitation couple)
-- `STRIPE_SECRET_KEY`
-- `STRIPE_WEBHOOK_SECRET`
+Fortement recommandes :
+- `WASABI_ACCESS_KEY_ID`, `WASABI_SECRET_ACCESS_KEY`, `WASABI_BUCKET_NAME`, `WASABI_ENDPOINT`
+- `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (rate-limiting)
+- `NEXT_PUBLIC_POSTHOG_KEY`, `NEXT_PUBLIC_POSTHOG_HOST` (analytics)
 
-### Fortement recommandées en production
+Crons (Cloudflare Worker) :
+- `CRON_SECRET` (secret partage entre les crons et l'app)
+- `APP_URL` (URL de l'app, ex: https://captainbond.app)
 
-- `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` (rate-limiting)
-- `NEXT_PUBLIC_POSTHOG_KEY` + `NEXT_PUBLIC_POSTHOG_HOST` (analytics)
-- `WASABI_ACCESS_KEY_ID`, `WASABI_SECRET_ACCESS_KEY`, `WASABI_BUCKET_NAME`, `WASABI_ENDPOINT` (stockage médias)
-- `GOOGLE_SHEETS_CSV_URL` + `ADMIN_SYNC_SECRET` (sync questions)
-- `GEMINI_API_KEY` (génération questions)
+## 2. Base de donnees Supabase
 
-### Tests E2E (optionnelles)
-
-- `E2E_ADMIN_PASSWORD` — mot de passe admin en clair utilisé uniquement par Playwright pour le test de connexion à `/admin/login`. Ne pas utiliser en production ; la production utilise `ADMIN_PASSWORD_HASH`.
-
-### Validation locale
+Appliquer les migrations dans l'ordre numerique via l'editeur SQL Supabase :
 
 ```bash
-npm run validate:env
+supabase/migrations/001_initial_rls.sql
+supabase/migrations/002_initial_rpc.sql
+...
+supabase/migrations/20260618_monetization_v2.sql
+supabase/migrations/20260703074937_advance_room_round.sql
+supabase/migrations/20260703100000_couple_killer_features.sql
 ```
-
-## 2. Base de données Supabase
-
-Déployer les migrations dans l’ordre numérique via l’éditeur SQL Supabase (`supabase/migrations/`) :
-
-1. `001_initial_rls.sql` — active RLS et policies restrictives.
-2. `002_initial_rpc.sql` — fonctions atomiques (`record_vote`, `fulfill_checkout`, …).
-
-Les fichiers racine `supabase_rls.sql` et `supabase_rpc.sql` sont conservés pour compatibilité mais ne sont plus la source de vérité.
-
-Vérifier que les tables suivantes existent et ont RLS activé :
-
-- `Room`, `Player`, `Response`, `Score`, `Question`, `Pack`, `Purchase`, `UserPass`, `UserPack`, `User`, `UserStats`, `WebhookEvent`, `RoomPass`
 
 ## 3. Stripe
 
-1. Créer les produits/prix dans Stripe et reporter les `priceId` dans la table `Pack`.
-2. Configurer le webhook Stripe sur `/api/webhook`.
-3. S’assurer que les métadonnées des Checkout Sessions contiennent bien `userId`.
+1. Creer les produits/prix dans Stripe Dashboard
+2. Reporter les `stripePriceId` dans la table `Pack`
+3. Webhook : `/api/webhook`, evenements `checkout.session.completed`, `invoice.payment_succeeded`, `customer.subscription.deleted`
 
-## 4. Build & déploiement Cloudflare Pages
-
-```bash
-npm run pages:build
-npm run pages:deploy
-```
-
-Ou via CI :
+## 4. Build & deploy Cloudflare Pages
 
 ```bash
 npm ci
-npm run validate:env
 npm run build
-npm run pages:deploy
+npx wrangler pages deploy .next --project-name=captainbond
 ```
 
-## 5. Vérifications post-déploiement
+Ou via GitHub (auto-deploy) : connecter le repo dans Cloudflare Dashboard > Pages > Create > Connect to Git.
 
-- [ ] `GET /api/health` retourne `healthy` avec `upstash: ok`.
-- [ ] Le login admin fonctionne et le cookie `koze_admin_session` est `HttpOnly; Secure; SameSite=Lax`.
-- [ ] Création de room + join + vote fonctionnent.
-- [ ] Un paiement test Stripe déclenche `/api/webhook` et remplit `Purchase` + `UserPack`/`UserPass`.
-- [ ] Le rate-limit bloque les bursts (si Upstash est configuré).
-
-## 6. Sécurité
-
-- Les secrets JWT et HOST_TOKEN doivent être générés aléatoirement (256 bits / 32+ caractères).
-- `ADMIN_PASSWORD` est déprécié ; utiliser `ADMIN_PASSWORD_HASH` (hash bcrypt) à la place.
-- Ne jamais commiter `.env.local` ni `ADMIN_PASSWORD` en clair.
-- Vérifier que `SUPABASE_SERVICE_ROLE_KEY` n’est utilisé que côté serveur.
-
-## 7. Mise à jour
-
-Avant chaque mise en production :
-
-1. Lancer `npm run validate:env`.
-2. Lancer `npm test`.
-3. Lancer `npm run build`.
-4. Vérifier que `supabase/migrations/` n’a pas de nouvelles migrations depuis le dernier déploiement ; si oui, les appliquer dans l’ordre numérique.
-
----
-
-# Déploiement Vercel + Supabase (alternative)
-
-## 1. Prérequis
-
-- Projet Vercel lié au repo Git.
-- Base Supabase avec accès `SUPABASE_SERVICE_ROLE_KEY`.
-- Compte Stripe (clé secrète + webhook secret).
-
-## 2. Variables d’environnement Vercel
-
-Dans **Project Settings → Environment Variables**, ajouter les variables obligatoires (mêmes que Cloudflare, voir §1) :
+## 5. Deploy Cloudflare Worker (crons)
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-ADMIN_PASSWORD_HASH=
-ADMIN_JWT_SECRET=
-HOST_TOKEN_SECRET=
-PLAYER_JWT_SECRET=
-COUPLE_INVITE_SECRET=
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-NEXT_PUBLIC_SITE_URL=https://ton-domaine.vercel.app
+cd workers/cron-trigger
+npx wrangler secret put CRON_SECRET
+npx wrangler secret put APP_URL
+npx wrangler deploy
 ```
 
-Générer `COUPLE_INVITE_SECRET` :
+Ou via GitHub Actions (automatique sur chaque push modifiant `workers/`).
 
-```bash
-openssl rand -base64 32
-```
+### Crons configures
 
-## 3. Migrations Supabase
+| Cron | Schedule | Route |
+|------|----------|-------|
+| rituals | Lun/Mer/Ven 11h30 UTC | `/api/cron/rituals` |
+| push-ritual-available | Lun/Mer/Ven 11h00 UTC | `/api/cron/push-ritual-available` |
+| push-reveal-time | Lun/Mer/Ven 19h00 UTC | `/api/cron/push-reveal-time` |
+| weekly-recap | Dimanche 20h00 UTC | `/api/cron/weekly-recap` |
+| heatmap | Lundi 02h00 UTC | `/api/cron/heatmap` |
+| tree-progress | 1er du mois 02h00 UTC | `/api/cron/tree-progress` |
 
-Appliquer les migrations de cette branche dans l’ordre numérique :
+## 6. Verification post-deploiement
 
-```bash
-# Avec Supabase CLI
-supabase migration up
+- [ ] `GET /api/health` retourne `healthy`
+- [ ] Login admin fonctionne
+- [ ] Creation de room + join + vote fonctionnent
+- [ ] Creation de couple via lien d'invitation fonctionne et declenche l'essai 7 jours
+- [ ] Paiement Stripe test fonctionne (carte `4242 4242 4242 4242`)
+- [ ] Rituel du jour genere (11h30 UTC Lun/Mer/Ven)
+- [ ] Push notification recue (11h et 19h UTC)
+- [ ] Shared Reveal fonctionne (20h UTC)
+- [ ] Weekly recap generne le dimanche 20h UTC
+- [ ] Heatmap mise a jour le lundi 2h UTC
+- [ ] Tree progress calcule le 1er du mois
 
-# Ou manuellement via l’éditeur SQL, dans l’ordre :
-# supabase/migrations/026_add_lead_table.sql
-# supabase/migrations/027_update_prices_and_bar_pack.sql
-# supabase/migrations/028_userpass_unique_source.sql
-```
+## 7. Securite
 
-## 4. Configuration Vercel
-
-- **Framework Preset** : Next.js
-- **Build Command** : `npm run build`
-- **Output Directory** : `.next`
-- **Install Command** : `npm ci`
-- **Node Version** : `20.x` (ou `22.x`)
-
-Pas besoin de `pages:build` / `wrangler` ici ; ceux-ci sont réservés à Cloudflare Pages.
-
-## 5. Stripe
-
-1. Créer les produits/prix pour `SUBSCRIPTION_ANNUAL`, `SUBSCRIPTION_MONTHLY`, `BAR_MONTHLY`, `PASS_24H`, etc.
-2. Reporter `stripePriceId` et `stripeProductId` dans la table `Pack` de Supabase.
-3. Configurer le webhook Stripe :
-   - **Endpoint URL** : `https://ton-domaine.vercel.app/api/webhook`
-   - **Events** : `checkout.session.completed`, `invoice.payment_succeeded`
-   - Copier le **Signing secret** dans `STRIPE_WEBHOOK_SECRET`.
-
-## 6. Déploiement
-
-```bash
-npm ci
-npm run validate:env
-npm run test
-npm run build
-```
-
-Puis pousser la branche ; Vercel déploie automatiquement.
-
-## 7. Vérifications post-déploiement
-
-- [ ] `GET /api/health` retourne `healthy`.
-- [ ] Le login admin fonctionne.
-- [ ] Création de couple via lien d’invitation fonctionne et déclenche l’essai 7 jours.
-- [ ] Un paiement test Stripe redirige correctement et le webhook met à jour `Purchase` / `UserPass`.
-- [ ] Le partenaire reçoit bien le pass après paiement (`source = 'couple_partner'`).
-- [ ] `/blog` et `/fr/blog` sont accessibles et le sitemap est valide.
+- Les secrets JWT doivent etre generes aleatoirement (32+ caracteres)
+- `ADMIN_PASSWORD` est deprecie ; utiliser `ADMIN_PASSWORD_HASH`
+- Ne jamais commiter `.env.local`
+- `SUPABASE_SERVICE_ROLE_KEY` utilise uniquement cote serveur
