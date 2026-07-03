@@ -11,9 +11,15 @@ import { Icon } from '@/components/Icon';
 import { useCoupleData, useDashboardUIState, useDashboardUISetters } from '../_hooks/useCoupleDashboardContext';
 import { formatDate, getScoreClass, getScoreLabel } from '../_lib/helpers';
 
-export function StatsColumn() {
+interface StatsColumnProps {
+  currentDay: number;
+  revealedCount: number;
+}
+
+export function StatsColumn({ currentDay, revealedCount }: StatsColumnProps) {
   const router = useRouter();
   const { couple, userId, totemState, streak, todayQuestion, dailyQuestions, pastQuestions, portraits } = useCoupleData();
+  const showAdvanced = currentDay >= 3 || revealedCount >= 1;
   const { selectedQuestion } = useDashboardUIState();
   const { setSelectedQuestion, setShowProtocol } = useDashboardUISetters();
 
@@ -88,65 +94,73 @@ export function StatsColumn() {
         </div>
       </div>
 
-      {/* Digital Detox Challenge */}
-      {couple?.id && (
-        <div className="couple-card">
-          <DetoxChallenge coupleId={couple.id} />
-        </div>
-      )}
+      {showAdvanced && (
+        <>
+          {/* Digital Detox Challenge */}
+          {couple?.id && (
+            <div className="couple-card">
+              <DetoxChallenge coupleId={couple.id} />
+            </div>
+          )}
 
-      {/* Weekly Recap (ritual theme, no score) */}
-      {todayQuestion?.theme && (
-        <WeeklyRecap
-          theme={todayQuestion.theme}
-          answeredCount={dailyQuestions.filter((q) => q.theme === todayQuestion.theme && q.user1Answered && q.user2Answered).length}
-          totalCount={Math.max(1, dailyQuestions.filter((q) => q.theme === todayQuestion.theme).length)}
-        />
-      )}
+          {/* Weekly Recap (ritual theme, no score) */}
+          {todayQuestion?.theme && (
+            <WeeklyRecap
+              theme={todayQuestion.theme}
+              answeredCount={dailyQuestions.filter((q) => q.theme === todayQuestion.theme && q.user1Answered && q.user2Answered).length}
+              totalCount={Math.max(1, dailyQuestions.filter((q) => q.theme === todayQuestion.theme).length)}
+            />
+          )}
 
-      {/* Monthly Resonance Report */}
-      {couple?.id && (
-        <div className="couple-card">
-          <MonthlyReportCard coupleId={couple.id} />
-        </div>
-      )}
+          {/* Monthly Resonance Report */}
+          {couple?.id && (
+            <div className="couple-card">
+              <MonthlyReportCard coupleId={couple.id} />
+            </div>
+          )}
 
-      {/* Monthly Portrait */}
-      {portraits.length > 0 && (
-        <div className="couple-card">
-          <div className="couple-label">Portrait du Mois</div>
-          <div className="couple-stat">
-            <div>
-              <div className="couple-stat-value" style={{ fontSize: '1.25rem' }}>
-                {portraits[0].month}
-              </div>
-              <div style={{
-                fontSize: '0.75rem',
-                color: 'rgba(148, 163, 184, 0.6)',
-                marginTop: '0.25rem'
-              }}>
-                Tendance : <Icon name={portraits[0].alignmentTrend > 0 ? 'trendingUp' : 'trendingDown'} className="w-3 h-3 inline" />
-                {' '}{Math.round(portraits[0].alignmentTrend * 100)}%
+          {/* Monthly Portrait */}
+          {portraits.length > 0 && (
+            <div className="couple-card">
+              <div className="couple-label">Portrait du Mois</div>
+              <div className="couple-stat">
+                <div>
+                  <div className="couple-stat-value" style={{ fontSize: '1.25rem' }}>
+                    {portraits[0].month}
+                  </div>
+                  <div style={{
+                    fontSize: '0.75rem',
+                    color: 'rgba(148, 163, 184, 0.6)',
+                    marginTop: '0.25rem'
+                  }}>
+                    Tendance : <Icon name={portraits[0].alignmentTrend > 0 ? 'trendingUp' : 'trendingDown'} className="w-3 h-3 inline" />
+                    {' '}{Math.round(portraits[0].alignmentTrend * 100)}%
+                  </div>
+                </div>
+                <div
+                  className="couple-stat-icon"
+                  style={{
+                    background: 'rgba(139, 92, 246, 0.1)',
+                    border: '1px solid rgba(139, 92, 246, 0.2)',
+                  }}
+                >
+                  <Icon name="brain" className="w-5 h-5" />
+                </div>
               </div>
             </div>
-            <div
-              className="couple-stat-icon"
-              style={{
-                background: 'rgba(139, 92, 246, 0.1)',
-                border: '1px solid rgba(139, 92, 246, 0.2)',
-              }}
-            >
-              <Icon name="brain" className="w-5 h-5" />
-            </div>
-          </div>
-        </div>
+          )}
+        </>
       )}
 
       {/* Timeline */}
       <div className="couple-card">
         <div className="couple-label">Historique des Miroirs</div>
 
-        {pastQuestions.length === 0 ? (
+        {!showAdvanced && pastQuestions.length === 0 ? (
+          <p className="text-sm text-slate-400">
+            Votre histoire commence aujourd&apos;hui. Revenez après votre première révélation.
+          </p>
+        ) : pastQuestions.length === 0 ? (
           <div className="couple-empty">
             <span className="couple-empty-icon">
               <Icon name="sprout" className="w-8 h-8" />
@@ -205,34 +219,38 @@ export function StatsColumn() {
         )}
       </div>
 
-      {/* Neural Tree Link */}
-      <div className="couple-card">
-        <div className="couple-label">Arbre Neural</div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-          <Icon name="tree" className="w-8 h-8" />
-          <div>
-            <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'rgba(226, 232, 240, 0.9)' }}>
-              {dailyQuestions.filter(q => q.isRevealed).length} Nœuds révélés
+      {showAdvanced && (
+        <>
+          {/* Neural Tree Link */}
+          <div className="couple-card">
+            <div className="couple-label">Arbre Neural</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+              <Icon name="tree" className="w-8 h-8" />
+              <div>
+                <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'rgba(226, 232, 240, 0.9)' }}>
+                  {dailyQuestions.filter(q => q.isRevealed).length} Nœuds révélés
+                </div>
+                <div style={{ fontSize: '0.75rem', color: 'rgba(148, 163, 184, 0.5)' }}>
+                  Explorez la carte de votre connexion
+                </div>
+              </div>
             </div>
-            <div style={{ fontSize: '0.75rem', color: 'rgba(148, 163, 184, 0.5)' }}>
-              Explorez la carte de votre connexion
-            </div>
+            <button
+              className="couple-action-btn"
+              onClick={() => router.push('/tree')}
+              style={{ background: 'rgba(255, 255, 255, 0.04)', borderColor: 'rgba(255, 255, 255, 0.1)' }}
+            >
+              Explorer l&apos;Arbre Neural <Icon name="arrowRight" className="w-4 h-4" />
+            </button>
           </div>
-        </div>
-        <button
-          className="couple-action-btn"
-          onClick={() => router.push('/tree')}
-          style={{ background: 'rgba(255, 255, 255, 0.04)', borderColor: 'rgba(255, 255, 255, 0.1)' }}
-        >
-          Explorer l&apos;Arbre Neural <Icon name="arrowRight" className="w-4 h-4" />
-        </button>
-      </div>
 
-      {/* Time Capsule */}
-      {couple?.id && userId && (
-        <div className="couple-card">
-          <TimeCapsulePanel coupleId={couple.id} userId={userId} />
-        </div>
+          {/* Time Capsule */}
+          {couple?.id && userId && (
+            <div className="couple-card">
+              <TimeCapsulePanel coupleId={couple.id} userId={userId} />
+            </div>
+          )}
+        </>
       )}
     </div>
   );

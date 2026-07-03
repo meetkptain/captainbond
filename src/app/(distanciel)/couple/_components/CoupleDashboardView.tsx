@@ -40,6 +40,10 @@ export function CoupleDashboardView({ defaultLang = 'en' }: CoupleDashboardViewP
   }, [couple?.id]);
 
   const currentDay = useMemo(() => getOnboardingCurrentDay(couple?.createdAt), [couple?.createdAt]);
+  const revealedCount = useMemo(
+    () => dailyQuestions.filter((q) => q.isRevealed).length + (todayQuestion?.isRevealed ? 1 : 0),
+    [dailyQuestions, todayQuestion]
+  );
 
   const completedDays = useMemo(() => {
     const completed: number[] = [];
@@ -197,7 +201,7 @@ export function CoupleDashboardView({ defaultLang = 'en' }: CoupleDashboardViewP
           <TodayRitualCard />
 
           {/* ═══ Right Column: Stats & Timeline ═══ */}
-          <StatsColumn />
+          <StatsColumn currentDay={currentDay} revealedCount={revealedCount} />
         </div>
 
         {/* Premium paywall — shown when the couple exists but no active pass/subscription */}
