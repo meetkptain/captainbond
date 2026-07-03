@@ -95,3 +95,90 @@ Avant chaque mise en production :
 2. Lancer `npm test`.
 3. Lancer `npm run build`.
 4. Vérifier que `supabase/migrations/` n’a pas de nouvelles migrations depuis le dernier déploiement ; si oui, les appliquer dans l’ordre numérique.
+
+---
+
+# Déploiement Vercel + Supabase (alternative)
+
+## 1. Prérequis
+
+- Projet Vercel lié au repo Git.
+- Base Supabase avec accès `SUPABASE_SERVICE_ROLE_KEY`.
+- Compte Stripe (clé secrète + webhook secret).
+
+## 2. Variables d’environnement Vercel
+
+Dans **Project Settings → Environment Variables**, ajouter les variables obligatoires (mêmes que Cloudflare, voir §1) :
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+ADMIN_PASSWORD_HASH=
+ADMIN_JWT_SECRET=
+HOST_TOKEN_SECRET=
+PLAYER_JWT_SECRET=
+COUPLE_INVITE_SECRET=
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+NEXT_PUBLIC_SITE_URL=https://ton-domaine.vercel.app
+```
+
+Générer `COUPLE_INVITE_SECRET` :
+
+```bash
+openssl rand -base64 32
+```
+
+## 3. Migrations Supabase
+
+Appliquer les migrations de cette branche dans l’ordre numérique :
+
+```bash
+# Avec Supabase CLI
+supabase migration up
+
+# Ou manuellement via l’éditeur SQL, dans l’ordre :
+# supabase/migrations/026_add_lead_table.sql
+# supabase/migrations/027_update_prices_and_bar_pack.sql
+# supabase/migrations/028_userpass_unique_source.sql
+```
+
+## 4. Configuration Vercel
+
+- **Framework Preset** : Next.js
+- **Build Command** : `npm run build`
+- **Output Directory** : `.next`
+- **Install Command** : `npm ci`
+- **Node Version** : `20.x` (ou `22.x`)
+
+Pas besoin de `pages:build` / `wrangler` ici ; ceux-ci sont réservés à Cloudflare Pages.
+
+## 5. Stripe
+
+1. Créer les produits/prix pour `SUBSCRIPTION_ANNUAL`, `SUBSCRIPTION_MONTHLY`, `BAR_MONTHLY`, `PASS_24H`, etc.
+2. Reporter `stripePriceId` et `stripeProductId` dans la table `Pack` de Supabase.
+3. Configurer le webhook Stripe :
+   - **Endpoint URL** : `https://ton-domaine.vercel.app/api/webhook`
+   - **Events** : `checkout.session.completed`, `invoice.payment_succeeded`
+   - Copier le **Signing secret** dans `STRIPE_WEBHOOK_SECRET`.
+
+## 6. Déploiement
+
+```bash
+npm ci
+npm run validate:env
+npm run test
+npm run build
+```
+
+Puis pousser la branche ; Vercel déploie automatiquement.
+
+## 7. Vérifications post-déploiement
+
+- [ ] `GET /api/health` retourne `healthy`.
+- [ ] Le login admin fonctionne.
+- [ ] Création de couple via lien d’invitation fonctionne et déclenche l’essai 7 jours.
+- [ ] Un paiement test Stripe redirige correctement et le webhook met à jour `Purchase` / `UserPass`.
+- [ ] Le partenaire reçoit bien le pass après paiement (`source = 'couple_partner'`).
+- [ ] `/blog` et `/fr/blog` sont accessibles et le sitemap est valide.
