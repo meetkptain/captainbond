@@ -16,6 +16,12 @@ type EntitlementsPayload = {
   hasActiveSubscription: boolean;
 };
 
+type ArchivePayload = {
+  questions: ArchiveQuestion[];
+  freeWindowActive?: boolean;
+  premiumActive?: boolean;
+};
+
 function formatReleasedAt(dateStr?: string): string {
   if (!dateStr) return 'Date inconnue';
   return new Date(dateStr).toLocaleDateString('fr-FR', {
@@ -34,13 +40,12 @@ function truncate(text: string | null | undefined, max = 80): string {
 
 function getIsLocked(
   isPremiumActive: boolean,
-  entitlements: EntitlementsPayload | null,
+  freeWindowActive: boolean,
   releasedAt?: string | null
 ): boolean {
   if (isPremiumActive) return false;
-  const expiresAt = entitlements?.passExpiresAt;
-  if (!expiresAt) return true;
-  return new Date(releasedAt || Date.now()).getTime() < new Date(expiresAt).getTime();
+  if (freeWindowActive) return false;
+  return true;
 }
 
 interface ArchiveClientProps {
@@ -51,7 +56,10 @@ export function ArchiveClient({ coupleId }: ArchiveClientProps) {
   const [questions, setQuestions] = useState<ArchiveQuestion[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [errorCode, setErrorCode] = useState<string | null>(null);
   const [entitlements, setEntitlements] = useState<EntitlementsPayload | null>(null);
+  const [freeWindowActive, setFreeWindowActive] = useState(false);
+  const [premiumActive, setPremiumActive] = useState(false);
 
   useEffect(() => {
     if (!coupleId) return;
@@ -59,20 +67,30 @@ export function ArchiveClient({ coupleId }: ArchiveClientProps) {
     let cancelled = false;
     setLoading(true);
     setError(null);
+    setErrorCode(null);
 
     fetch(`/api/couple/archive?coupleId=${encodeURIComponent(coupleId)}`)
       .then(async (res) => {
         if (!res.ok) {
           const payload = await res.json().catch(() => ({}));
-          throw new Error(payload.error || 'Erreur lors du chargement du journal');
+          const err = new Error(payload.error || payload.message || 'Erreur lors du chargement du journal');
+          (err as Error & { code?: string }).code = payload.code;
+          throw err;
         }
         return res.json();
       })
-      .then((payload: { questions: ArchiveQuestion[] }) => {
-        if (!cancelled) setQuestions(payload.questions ?? []);
+      .then((payload: ArchivePayload) => {
+        if (!cancelled) {
+          setQuestions(payload.questions ?? []);
+          setFreeWindowActive(payload.freeWindowActive ?? false);
+          setPremiumActive(payload.premiumActive ?? false);
+        }
       })
       .catch((err) => {
-        if (!cancelled) setError(err instanceof Error ? err.message : 'Erreur inconnue');
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : 'Erreur inconnue');
+          setErrorCode((err as Error & { code?: string }).code ?? null);
+        }
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -103,11 +121,11 @@ export function ArchiveClient({ coupleId }: ArchiveClientProps) {
     };
   }, []);
 
-  const isPremiumActive = entitlements?.hasActivePass || entitlements?.hasActiveSubscription || false;
+  const isPremiumActive = premiumActive || entitlements?.hasActivePass || entitlements?.hasActiveSubscription || false;
 
   const lockedCount = useMemo(
-    () => questions.filter((q) => getIsLocked(isPremiumActive, entitlements, q.releasedAt)).length,
-    [questions, isPremiumActive, entitlements]
+    () => questions.filter((q) => getIsLocked(isPremiumActive, freeWindowActive, q.releasedAt)).length,
+    [questions, isPremiumActive, freeWindowActive]
   );
 
   useEffect(() => {
@@ -159,7 +177,25 @@ export function ArchiveClient({ coupleId }: ArchiveClientProps) {
           </div>
         )}
 
-        {error && !loading && (
+        {error && !loading && errorCode === 'ARCHIVE_LOCKED' && (
+          <div className="bg-white/5 border border-amber-500/20 rounded-2xl p-8 text-center">
+            <Icon name="lock" className="w-10 h-10 text-amber-400 mx-auto mb-4" />
+            <h2 className="text-lg font-semibold mb-2">Archive réservée aux couples premium</h2>
+            <p className="text-slate-400 mb-6">
+              Vos 14 jours d&apos;accès gratuit sont écoulés. Passez Premium pour continuer à relire votre journal.
+            </p>
+            <Link
+              href="/couple"
+              onClick={() => capture(AnalyticsEvents.CHECKOUT_INITIATED, { context: 'archive', coupleId, source: 'archive_locked_cta' })}
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 hover:bg-amber-500/20 transition-colors"
+            >
+              <Icon name="sparkles" className="w-4 h-4" />
+              Découvrir Premium
+            </Link>
+          </div>
+        )}
+
+        {error && !loading && errorCode !== 'ARCHIVE_LOCKED' && (
           <div className="bg-white/5 border border-red-500/20 rounded-2xl p-6 text-center">
             <Icon name="alert" className="w-8 h-8 text-red-400 mx-auto mb-3" />
             <p className="text-slate-200 mb-2">{error}</p>
@@ -188,6 +224,14 @@ export function ArchiveClient({ coupleId }: ArchiveClientProps) {
           </div>
         )}
 
+        {!loading && !error && freeWindowActive && !isPremiumActive && (
+          <div className="mb-6 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center">
+            <p className="text-sm text-emerald-200">
+              Archive ouverte gratuitement pendant vos 14 premiers jours.
+            </p>
+          </div>
+        )}
+
         {!loading && !error && questions.length > 0 && (
           <div className="space-y-4">
             {questions.map((q) => {
@@ -195,7 +239,7 @@ export function ArchiveClient({ coupleId }: ArchiveClientProps) {
               const isRevealed = q.isRevealed;
               const myAnswer = truncate(q.user1Answer);
               const partnerAnswer = truncate(q.user2Answer);
-              const isLocked = getIsLocked(isPremiumActive, entitlements, q.releasedAt);
+              const isLocked = getIsLocked(isPremiumActive, freeWindowActive, q.releasedAt);
 
               return (
                 <article
@@ -256,7 +300,7 @@ export function ArchiveClient({ coupleId }: ArchiveClientProps) {
           </div>
         )}
 
-        {!loading && !error && !isPremiumActive && (
+        {!loading && !error && !isPremiumActive && !freeWindowActive && (
           <div className="mt-8 p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
             <p className="text-sm text-slate-400">
               Activez Premium pour débloquer l&apos;historique complet et explorer tous vos miroirs.

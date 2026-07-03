@@ -27,6 +27,7 @@ export type ErrorCode =
   | 'GENERATION_FAILED'
   | 'ANALYSIS_FAILED'
   | 'COUPLE_NOT_FOUND'
+  | 'ARCHIVE_LOCKED'
   // Infrastructure
   | 'INTERNAL_ERROR'
   | 'CONFIG_MISSING'
