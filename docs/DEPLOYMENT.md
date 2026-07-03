@@ -15,6 +15,7 @@ Copier `.env.example` vers `.env.local` en local et configurer les variables sur
 - `ADMIN_JWT_SECRET` (min. 32 caractères)
 - `HOST_TOKEN_SECRET` (min. 32 caractères, **différent** de `ADMIN_SYNC_SECRET` et des autres secrets)
 - `PLAYER_JWT_SECRET` (min. 32 caractères, différent de `ADMIN_JWT_SECRET`)
+- `COUPLE_INVITE_SECRET` (min. 32 caractères, aléatoire ; utilisé pour signer les liens d'invitation couple)
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 
