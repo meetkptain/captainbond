@@ -6,6 +6,7 @@ import {
   updatePurchase,
   getPurchaseByStripeInvoiceId,
 } from '@/lib/db/repositories';
+import { getCoupleById } from '@/lib/db/repositories/coupleRepository';
 import { getPackById, getPackBySku } from '@/lib/monetization/catalog';
 import { invalidateUserEntitlements } from '@/lib/monetization/entitlements';
 import { captureServer, AnalyticsEvents } from '@/lib/analytics';
@@ -15,6 +16,7 @@ import { dbRetry, withRetry } from '@/lib/db/withRetry';
 import { withTimeout } from '@/lib/fetch';
 import { logger } from '@/lib/logger';
 import { requireEnv } from '@/lib/env';
+import type { Pack } from '@/lib/monetization/catalog';
 
 const stripeSecretKey = requireEnv('STRIPE_SECRET_KEY');
 const stripe = new Stripe(stripeSecretKey, {
@@ -113,7 +115,9 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
   }
 
   const durationHours = pack.productType === 'PASS_WEEKEND' ? 72 : 24;
-  const subscriptionId = pack.isSubscription && session.subscription ? (session.subscription as string) : null;
+  const subscriptionId = pack.isSubscription
+    ? (typeof session.subscription === 'string' ? session.subscription : session.subscription?.id ?? null)
+    : null;
 
   const { error: fulfillError } = await dbRetry<null>(async () => supabaseAdmin.rpc('fulfill_checkout_v2', {
     p_event_id: event.id,
@@ -143,6 +147,10 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
     throw new AppError('INTERNAL_ERROR', `Fulfillment failed: ${(fulfillError as Error).message || String(fulfillError)}`);
   }
 
+  if (pack.isSubscription && metadata.coupleId) {
+    await mirrorSubscriptionToPartner(metadata.coupleId, activeUserId, pack, session.subscription as string | null);
+  }
+
   await captureServer(AnalyticsEvents.PURCHASE_COMPLETED, {
     sku: pack.sku,
     productType: pack.productType,
@@ -156,9 +164,64 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
   logger.info('Purchase completed', { sku: pack.sku, userId: activeUserId, stripeSessionId: session.id });
 }
 
+async function mirrorSubscriptionToPartner(
+  coupleId: string,
+  activeUserId: string,
+  pack: Pack,
+  subscriptionId: string | null,
+) {
+  if (!subscriptionId) {
+    logger.warn('No subscription id for partner mirroring', { coupleId, activeUserId });
+    return;
+  }
+
+  if (!coupleId) {
+    return;
+  }
+
+  const couple = await getCoupleById(coupleId);
+  if (!couple) {
+    logger.error('Couple not found for partner mirroring', { coupleId });
+    return;
+  }
+
+  const partnerId = couple.user1Id === activeUserId ? couple.user2Id : couple.user1Id;
+
+  const subscription = await withTimeout(stripe.subscriptions.retrieve(subscriptionId), 10000);
+  const currentPeriodEnd = (subscription as unknown as { current_period_end: number }).current_period_end;
+  const expiresAt = new Date(currentPeriodEnd * 1000).toISOString();
+
+  await dbRetry<null>(async () =>
+    supabaseAdmin.from('UserPass').upsert(
+      {
+        id: crypto.randomUUID(),
+        userId: partnerId,
+        packId: pack.id,
+        expiresAt,
+        source: 'couple_partner',
+      },
+      { onConflict: 'userId,source', ignoreDuplicates: false },
+    ),
+  );
+
+  const { data: partner } = await dbRetry<{ activePassExpiresAt: string | null }>(async () =>
+    supabaseAdmin.from('User').select('activePassExpiresAt').eq('id', partnerId).maybeSingle(),
+  );
+
+  const currentExpires = partner?.activePassExpiresAt ? new Date(partner.activePassExpiresAt).getTime() : 0;
+  if (!partner?.activePassExpiresAt || new Date(expiresAt).getTime() > currentExpires) {
+    await updateUser(partnerId, { activePassExpiresAt: expiresAt });
+  }
+
+  await invalidateUserEntitlements(partnerId);
+
+  logger.info('Subscription mirrored to partner', { coupleId, partnerId, subscriptionId, expiresAt });
+}
+
 async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
-  const subscriptionId = ((invoice as unknown as { subscription?: string }).subscription);
-  const customerId = invoice.customer as string;
+  const invoiceSubscription = (invoice as unknown as { subscription?: string | { id?: string } }).subscription;
+  const subscriptionId = typeof invoiceSubscription === 'string' ? invoiceSubscription : invoiceSubscription?.id;
+  const customerId = typeof invoice.customer === 'string' ? invoice.customer : invoice.customer?.id;
 
   if (!subscriptionId || !customerId) return;
 
@@ -170,6 +233,9 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
 
   await updateUser(user.id, { subscriptionStatus: 'ACTIVE' });
   await invalidateUserEntitlements(user.id);
+
+  const subscription = await withTimeout(stripe.subscriptions.retrieve(subscriptionId), 10000);
+  const coupleId = subscription.metadata?.coupleId;
 
   const existing = await getPurchaseByStripeInvoiceId(invoice.id);
   if (!existing) {
@@ -195,6 +261,25 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
         stripePaymentId: ((invoice as unknown as { payment_intent?: string }).payment_intent),
         metadata: { source: 'subscription_renewal', subscriptionId },
       }));
+
+      if (coupleId) {
+        const fullPack = await getPackById(pack.id);
+        if (fullPack) {
+          await mirrorSubscriptionToPartner(coupleId, user.id, fullPack, subscriptionId);
+        }
+      }
+    }
+  } else if (coupleId) {
+    const firstLine = invoice.lines.data[0] as unknown as { price?: string | { id?: string } };
+    const priceId = typeof firstLine?.price === 'string' ? firstLine.price : firstLine?.price?.id;
+    const { data: pack } = await dbRetry<{ id: string }>(async () =>
+      supabaseAdmin.from('Pack').select('id').eq('stripePriceId', priceId).maybeSingle(),
+    );
+    if (pack) {
+      const fullPack = await getPackById(pack.id);
+      if (fullPack) {
+        await mirrorSubscriptionToPartner(coupleId, user.id, fullPack, subscriptionId);
+      }
     }
   }
 

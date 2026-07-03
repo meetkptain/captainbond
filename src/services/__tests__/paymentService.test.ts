@@ -9,6 +9,22 @@ import {
   updatePurchase,
 } from '@/lib/db/repositories';
 
+const subscriptionsRetrieve = vi.fn().mockResolvedValue({
+  id: 'sub_1',
+  metadata: {},
+  current_period_end: Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60,
+});
+const sessionsRetrieve = vi.fn().mockResolvedValue({ status: 'complete' });
+
+vi.mock('stripe', () => ({
+  default: class MockStripe {
+    static createFetchHttpClient = vi.fn();
+    subscriptions = { retrieve: subscriptionsRetrieve };
+    checkout = { sessions: { retrieve: sessionsRetrieve } };
+    webhooks = { constructEventAsync: vi.fn() };
+  },
+}));
+
 vi.mock('@/lib/db/repositories', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@/lib/db/repositories')>();
   return {

@@ -263,3 +263,16 @@ export async function listRevealedDailyQuestionsByMonth(
   return (data ?? []) as DailyQuestion[];
 }
 
+export async function listAnsweredQuestionsForCouple(coupleId: string): Promise<DailyQuestion[]> {
+  return withRetry(async () => {
+    const { data, error } = await supabaseAdmin
+      .from('DailyQuestion')
+      .select('*')
+      .eq('coupleId', coupleId)
+      .or('user1Answered.eq.true,user2Answered.eq.true')
+      .order('releasedAt', { ascending: false });
+    if (error) throw error;
+    return (data ?? []) as DailyQuestion[];
+  });
+}
+

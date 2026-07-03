@@ -42,6 +42,7 @@ import {
   Volume2,
   Key,
   Medal,
+  BookOpen,
   type LucideProps,
 } from 'lucide-react';
 
@@ -90,6 +91,7 @@ const ICONS = {
   volume: Volume2,
   key: Key,
   medal: Medal,
+  bookOpen: BookOpen,
 };
 
 export type IconName = keyof typeof ICONS;

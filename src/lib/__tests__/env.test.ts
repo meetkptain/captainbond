@@ -11,6 +11,7 @@ function buildValidEnv(): NodeJS.ProcessEnv {
     PLAYER_JWT_SECRET: 'e'.repeat(32),
     HOST_TOKEN_SECRET: 'f'.repeat(32),
     HMAC_IMPOSTEUR_SECRET: 'g'.repeat(32),
+    COUPLE_INVITE_SECRET: 'j'.repeat(32),
     STRIPE_SECRET_KEY: 'h'.repeat(32),
     STRIPE_WEBHOOK_SECRET: 'i'.repeat(32),
   } as unknown as NodeJS.ProcessEnv;

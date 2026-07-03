@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { api, ApiClientError } from '@/lib/api/client';
 import { getCurrentUser } from '@/lib/supabase-auth';
+import { Entitlements } from '@/lib/monetization/entitlements';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 export interface DailyQuestionData {
@@ -49,12 +50,25 @@ export interface CoupleData {
   id: string;
   user1Id: string;
   user2Id: string;
+  createdAt?: string;
+}
+
+export interface TimeCapsuleData {
+  id: string;
+  coupleId: string;
+  senderId: string;
+  content: string;
+  createdAt?: string;
+  unlocksAt: string;
+  isUnlocked: boolean;
 }
 
 interface PortraitResponse {
   couple: CoupleData;
   dailyQuestions: DailyQuestionData[];
   portraits: CouplePortraitData[];
+  entitlements: Entitlements | null;
+  timeCapsules: TimeCapsuleData[];
   totemState?: PageTotemState | null;
 }
 
@@ -103,10 +117,16 @@ export function useCoupleDashboard() {
   const [isCouchMode, setIsCouchMode] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [totemState, setTotemState] = useState<PageTotemState | null>(null);
+  const [entitlements, setEntitlements] = useState<Entitlements | null>(null);
+  const [timeCapsules, setTimeCapsules] = useState<TimeCapsuleData[]>([]);
   const [moodEnergy, setMoodEnergy] = useState(3);
   const [moodStress, setMoodStress] = useState(1);
   const [moodFeeling, setMoodFeeling] = useState('');
   const [submittingMood, setSubmittingMood] = useState(false);
+
+  // Refs for one-shot auto-join
+  const isJoiningRef = useRef(false);
+  const hasJoinedRef = useRef(false);
 
   // Derived
   const todayQuestion = useMemo(() => dailyQuestions[0] ?? null, [dailyQuestions]);
@@ -147,11 +167,13 @@ export function useCoupleDashboard() {
     try {
       const tz = typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : '';
       const data = await api.get<PortraitResponse>(
-        `/api/couple/portrait?coupleId=${coupleId}&timezone=${encodeURIComponent(tz)}`
+        `/api/couple/portrait?coupleId=${encodeURIComponent(coupleId)}&timezone=${encodeURIComponent(tz)}`
       );
       setCouple(data.couple);
       setDailyQuestions(data.dailyQuestions);
       setPortraits(data.portraits);
+      setEntitlements(data.entitlements ?? null);
+      setTimeCapsules(data.timeCapsules ?? []);
       if (data.totemState) {
         setTotemState(data.totemState);
       }
@@ -185,31 +207,68 @@ export function useCoupleDashboard() {
           setUserId(user.id);
           // Find the user's couple
           const couples = await api.get<CoupleData[]>(
-            `/api/couple/portrait?userId=${user.id}&list=true`
+            `/api/couple/portrait?userId=${encodeURIComponent(user.id)}&list=true`
           );
 
           if (couples.length > 0) {
             await fetchData(couples[0].id);
           } else {
-            // Check if we have an invite parameter to auto-couple
+            // Check if we have a signed invite token or a raw invite id to auto-couple
             const params = new URLSearchParams(window.location.search);
+            const inviteToken = params.get('inviteToken');
             const inviteId = params.get('invite');
-            if (inviteId && inviteId !== user.id) {
+
+            if (inviteToken) {
+              if (isJoiningRef.current || hasJoinedRef.current) return;
+              isJoiningRef.current = true;
+              try {
+                const joinRes = await api.post<{ success: boolean; couple: CoupleData }>(
+                  '/api/couple/join',
+                  { inviteToken }
+                );
+                if (joinRes.success && joinRes.couple) {
+                  hasJoinedRef.current = true;
+                  window.history.replaceState({}, document.title, window.location.pathname);
+                  await fetchData(joinRes.couple.id);
+                  return;
+                }
+              } catch (joinErr) {
+                console.error('Failed to auto-accept invite token', joinErr);
+                if (joinErr instanceof ApiClientError) {
+                  setError(`Le lien d'invitation n'a pas pu être utilisé : ${joinErr.message}`);
+                } else {
+                  setError("Le lien d'invitation n'a pas pu être utilisé. Vérifiez le lien ou demandez-en un nouveau.");
+                }
+              } finally {
+                isJoiningRef.current = false;
+              }
+            } else if (inviteId && inviteId !== user.id) {
+              if (isJoiningRef.current || hasJoinedRef.current) return;
+              isJoiningRef.current = true;
               try {
                 const joinRes = await api.post<{ success: boolean; couple: CoupleData }>(
                   '/api/couple/join',
                   { partnerId: inviteId }
                 );
                 if (joinRes.success && joinRes.couple) {
+                  hasJoinedRef.current = true;
                   window.history.replaceState({}, document.title, window.location.pathname);
                   await fetchData(joinRes.couple.id);
                   return;
                 }
               } catch (joinErr) {
                 console.error('Failed to auto-couple', joinErr);
+                if (joinErr instanceof ApiClientError) {
+                  setError(`L'invitation n'a pas pu être acceptée : ${joinErr.message}`);
+                } else {
+                  setError("L'invitation n'a pas pu être acceptée. Vérifiez le lien ou demandez-en un nouveau.");
+                }
+              } finally {
+                isJoiningRef.current = false;
               }
+            } else {
+              setError('Aucun espace couple trouvé. Invitez votre partenaire pour commencer.');
             }
-            setError('Aucun espace couple trouvé. Invitez votre partenaire pour commencer.');
           }
         }
       } catch {
@@ -395,6 +454,8 @@ export function useCoupleDashboard() {
     showAuthModal,
     setShowAuthModal,
     totemState,
+    entitlements,
+    timeCapsules,
     moodEnergy,
     setMoodEnergy,
     moodStress,

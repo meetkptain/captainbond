@@ -1,4 +1,4 @@
-import { Couple, CouplePortrait, DailyQuestion, TotemState } from '@/lib/db/types';
+import { Couple, CouplePortrait, DailyQuestion, TimeCapsule, TotemState } from '@/lib/db/types';
 import { AppError } from '@/lib/errors';
 import { createLogger, Logger } from '@/lib/logger';
 import { supabaseAdmin } from '@/lib/supabase-admin';
@@ -9,6 +9,7 @@ import { getTotem } from '@/services/totemService';
 import { getCoupleById, listCouplesForUser } from '@/lib/db/repositories/coupleRepository';
 import { listDailyQuestions } from '@/lib/db/repositories/dailyQuestionRepository';
 import { listPortraits } from '@/lib/db/repositories/couplePortraitRepository';
+import { listTimeCapsules } from '@/lib/db/repositories/timeCapsuleRepository';
 
 export async function listCouplesForPortraitUser(userId: string): Promise<Couple[]> {
   return withRetry(() => listCouplesForUser(userId));
@@ -20,6 +21,7 @@ export interface CouplePortraitData {
   portraits: CouplePortrait[];
   entitlements: Entitlements | null;
   totemState: TotemState | null;
+  timeCapsules: TimeCapsule[];
 }
 
 export async function getCouplePortraitData(
@@ -69,12 +71,20 @@ export async function getCouplePortraitData(
     logger.warn('Failed to load TotemState', { coupleId }, e);
   }
 
+  let timeCapsules: TimeCapsule[] = [];
+  try {
+    timeCapsules = await withRetry(() => listTimeCapsules(coupleId));
+  } catch (e) {
+    logger.warn('Failed to load TimeCapsules', { coupleId }, e);
+  }
+
   return {
     couple,
     dailyQuestions: updatedQuestions,
     portraits,
     entitlements,
     totemState,
+    timeCapsules,
   };
 }
 

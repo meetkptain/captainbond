@@ -14,6 +14,7 @@ export const envSchema = z.object({
   PLAYER_JWT_SECRET: z.string().min(1),
   HOST_TOKEN_SECRET: z.string().min(1),
   HMAC_IMPOSTEUR_SECRET: z.string().min(1),
+  COUPLE_INVITE_SECRET: z.string().min(1),
   STRIPE_SECRET_KEY: z.string().min(1),
   STRIPE_WEBHOOK_SECRET: z.string().min(1),
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: optionalString,

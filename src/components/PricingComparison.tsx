@@ -9,6 +9,7 @@ interface PricingComparisonProps {
   packs: Pack[];
   onSelect: (pack: Pack) => void;
   loadingSku?: string | null;
+  context?: 'group' | 'couple';
 }
 
 const FEATURES = {
@@ -16,29 +17,35 @@ const FEATURES = {
   PROFILE: ['Votre profil détaillé', 'Archétype + axes comportementaux', 'Gardez-le / partagez-le', 'Souvenir de la soirée'],
   PROFILE_COUPLE: ['Rapport de compatibilité', 'Deux profils croisés', 'Idéal pour une date', 'Gardez-le à vie'],
   SUBSCRIPTION_MONTHLY: ['Tous les modes', 'Tous les dossiers', 'Tous les packs', 'Sans engagement'],
+  SUBSCRIPTION_ANNUAL: ['Tous les modes', 'Tous les dossiers', 'Tous les packs', 'Paiement annuel économique'],
 };
 
 function findPack(packs: Pack[], predicate: (p: Pack) => boolean): Pack | undefined {
   return packs.find(predicate);
 }
 
-export function PricingComparison({ packs, onSelect, loadingSku }: PricingComparisonProps) {
+export function PricingComparison({ packs, onSelect, loadingSku, context = 'group' }: PricingComparisonProps) {
   const pass24h = findPack(packs, (p) => p.productType === 'PASS_24H');
-  const passWeekend = findPack(packs, (p) => p.productType === 'PASS_WEEKEND');
-  const profile = findPack(packs, (p) => p.productType === 'PROFILE');
-  const profileCouple = findPack(packs, (p) => p.productType === 'PROFILE_COUPLE');
-  const subscription = findPack(packs, (p) => p.productType === 'SUBSCRIPTION_MONTHLY') || findPack(packs, (p) => p.productType === 'SUBSCRIPTION_ANNUAL');
+  const profile = context === 'couple'
+    ? findPack(packs, (p) => p.productType === 'PROFILE_COUPLE')
+    : findPack(packs, (p) => p.productType === 'PROFILE');
+  const subscription = context === 'couple'
+    ? (findPack(packs, (p) => p.productType === 'SUBSCRIPTION_ANNUAL') || findPack(packs, (p) => p.productType === 'SUBSCRIPTION_MONTHLY'))
+    : (findPack(packs, (p) => p.productType === 'SUBSCRIPTION_MONTHLY') || findPack(packs, (p) => p.productType === 'SUBSCRIPTION_ANNUAL'));
+
+  const isAnnual = subscription?.productType === 'SUBSCRIPTION_ANNUAL';
+  const subscriptionFeatures = isAnnual ? FEATURES.SUBSCRIPTION_ANNUAL : FEATURES.SUBSCRIPTION_MONTHLY;
+  const subscriptionLabel = isAnnual ? 'Abonnement annuel' : 'Abonnement mensuel';
 
   const offers = [
-    { pack: pass24h, features: FEATURES.PASS_24H, recommended: true },
-    { pack: profile, features: FEATURES.PROFILE, recommended: false },
-    { pack: profileCouple, features: FEATURES.PROFILE_COUPLE, recommended: false },
-    { pack: subscription, features: FEATURES.SUBSCRIPTION_MONTHLY, recommended: false },
-  ].filter((o): o is { pack: Pack; features: string[]; recommended: boolean } => Boolean(o.pack));
+    { pack: pass24h, features: FEATURES.PASS_24H, recommended: false, label: context === 'couple' ? 'Pass Soirée Couple' : 'Pass 24h' },
+    { pack: profile, features: context === 'couple' ? FEATURES.PROFILE_COUPLE : FEATURES.PROFILE, recommended: true, label: context === 'couple' ? 'Dossier Couple' : 'Dossier Classifié' },
+    { pack: subscription, features: subscriptionFeatures, recommended: false, label: subscriptionLabel },
+  ].filter((o): o is { pack: Pack; features: string[]; recommended: boolean; label: string } => Boolean(o.pack));
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-      {offers.map(({ pack, features, recommended }) => (
+      {offers.map(({ pack, features, recommended, label }) => (
         <div
           key={pack.sku}
           className={`relative p-4 rounded-2xl border text-left transition-all ${
@@ -54,13 +61,10 @@ export function PricingComparison({ packs, onSelect, loadingSku }: PricingCompar
           )}
           <div className="flex justify-between items-start gap-3 mb-3">
             <div>
-              <p className="font-bold text-white text-sm">{pack.name}</p>
+              <p className="font-bold text-white text-sm">{label}</p>
               <p className="text-xs text-slate-400 mt-0.5">{pack.description}</p>
             </div>
             <div className="text-right">
-              {recommended && passWeekend && (
-                <span className="block text-xs text-slate-500 line-through">{formatPrice(passWeekend.price)}</span>
-              )}
               <span className="font-mono font-bold text-neon-pink whitespace-nowrap">{formatPrice(pack.price)}</span>
             </div>
           </div>

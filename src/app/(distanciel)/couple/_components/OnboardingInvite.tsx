@@ -1,16 +1,44 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { BackgroundOrbs } from '@/components/BackgroundOrbs';
 import { Icon } from '@/components/Icon';
+import { api } from '@/lib/api/client';
 import { useCoupleData } from '../_hooks/useCoupleDashboardContext';
 
 export function OnboardingInvite() {
   const router = useRouter();
   const { userId } = useCoupleData();
-  const inviteLink = userId && typeof window !== 'undefined'
-    ? `${window.location.origin}/couple?invite=${userId}`
-    : '';
+  const [inviteUrl, setInviteUrl] = useState<string>('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const generateToken = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await api.post<{ token: string; url: string }>('/api/couple/invite-token', {});
+      setInviteUrl(data.url);
+    } catch (err) {
+      console.error('Failed to generate invite token', err);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Impossible de générer le lien d\'invitation.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!userId) return;
+    const timer = setTimeout(() => {
+      generateToken();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [userId]);
 
   return (
     <div className="couple-page">
@@ -37,12 +65,18 @@ export function OnboardingInvite() {
               whiteSpace: 'nowrap',
               textAlign: 'left'
             }}>
-              {inviteLink}
+              {loading ? 'Génération du lien…' : inviteUrl}
             </div>
+            {error && (
+              <div style={{ color: '#f87171', fontSize: '0.875rem', textAlign: 'center' }}>
+                {error}
+              </div>
+            )}
             <button
               className="couple-action-btn"
+              disabled={!inviteUrl || loading}
               onClick={() => {
-                navigator.clipboard.writeText(inviteLink);
+                navigator.clipboard.writeText(inviteUrl);
                 if (typeof navigator !== 'undefined' && navigator.vibrate) {
                   navigator.vibrate(50);
                 }
@@ -51,6 +85,15 @@ export function OnboardingInvite() {
             >
               <svg className="w-4 h-4 mr-1 inline" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: '1rem', height: '1rem' }}><path strokeLinecap="round" strokeLinejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg> Copier le lien
             </button>
+            {error && (
+              <button
+                className="couple-action-btn"
+                disabled={loading}
+                onClick={generateToken}
+              >
+                Réessayer
+              </button>
+            )}
             <button
               className="couple-action-btn"
               style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', opacity: 0.8 }}

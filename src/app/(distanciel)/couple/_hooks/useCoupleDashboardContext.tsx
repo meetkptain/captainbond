@@ -16,6 +16,8 @@ interface CoupleDataContextValue {
   pastQuestions: DashboardState['pastQuestions'];
   portraits: DashboardState['portraits'];
   totemState: DashboardState['totemState'];
+  entitlements: DashboardState['entitlements'];
+  timeCapsules: DashboardState['timeCapsules'];
   isUser1: DashboardState['isUser1'];
   partnerName: DashboardState['partnerName'];
   myName: DashboardState['myName'];
@@ -120,6 +122,8 @@ export function CoupleDashboardProvider({ children }: { children: ReactNode }) {
       pastQuestions: dashboard.pastQuestions,
       portraits: dashboard.portraits,
       totemState: dashboard.totemState,
+      entitlements: dashboard.entitlements,
+      timeCapsules: dashboard.timeCapsules,
       isUser1: dashboard.isUser1,
       partnerName: dashboard.partnerName,
       myName: dashboard.myName,
@@ -139,6 +143,8 @@ export function CoupleDashboardProvider({ children }: { children: ReactNode }) {
       dashboard.pastQuestions,
       dashboard.portraits,
       dashboard.totemState,
+      dashboard.entitlements,
+      dashboard.timeCapsules,
       dashboard.isUser1,
       dashboard.partnerName,
       dashboard.myName,

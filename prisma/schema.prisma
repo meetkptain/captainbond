@@ -36,6 +36,7 @@ enum ProductType {
   PASS_WEEKEND
   SUBSCRIPTION_ANNUAL
   SUBSCRIPTION_MONTHLY
+  BAR_MONTHLY
   LIFETIME
   PROFILE
   PROFILE_COUPLE
@@ -198,9 +199,10 @@ model UserPass {
   pack      Pack     @relation(fields: [packId], references: [id])
   startedAt DateTime @default(now())
   expiresAt DateTime
-  source    String   @default("stripe") // stripe, promo, admin
+  source    String   @default("stripe") // stripe, promo, admin, couple_trial
   createdAt DateTime @default(now())
 
+  @@unique([userId, source])
   @@index([userId, expiresAt])
 }
 
@@ -269,6 +271,26 @@ model WebhookEvent {
   createdAt     DateTime @default(now())
 
   @@index([type, processedAt])
+}
+
+// Lead B2B / Bar capturé via les formulaires corporate
+model Lead {
+  id             String    @id @default(cuid())
+  source         String // corporate, onboarding, qvt, bar_kit, b2b_landing
+  name           String
+  email          String
+  company        String
+  participants   Int?
+  estimatedPrice Float?
+  formula        String?   // self-service, facilitator, enterprise, custom, bar_kit_request
+  notes          String?
+  status         String    @default("NEW") // NEW, CONTACTED, WON, LOST
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([source, status])
+  @@index([email])
+  @@index([createdAt])
 }
 
 // Le Dossier Classifié (Effet de Dotation)
