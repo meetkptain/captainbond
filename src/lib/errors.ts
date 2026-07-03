@@ -28,6 +28,7 @@ export type ErrorCode =
   | 'ANALYSIS_FAILED'
   | 'COUPLE_NOT_FOUND'
   | 'ARCHIVE_LOCKED'
+  | 'PRECONDITION_FAILED'
   // Infrastructure
   | 'INTERNAL_ERROR'
   | 'CONFIG_MISSING'

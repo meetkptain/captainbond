@@ -46,6 +46,7 @@ interface DashboardActionsContextValue {
   skipQuestion: DashboardState['skipQuestion'];
   toggleSafeZone: DashboardState['toggleSafeZone'];
   triggerReveal: DashboardState['triggerReveal'];
+  revealNow: DashboardState['revealNow'];
 }
 
 const DashboardActionsContext = createContext<DashboardActionsContextValue | null>(null);
@@ -164,6 +165,7 @@ export function CoupleDashboardProvider({ children }: { children: ReactNode }) {
       skipQuestion: dashboard.skipQuestion,
       toggleSafeZone: dashboard.toggleSafeZone,
       triggerReveal: dashboard.triggerReveal,
+      revealNow: dashboard.revealNow,
     }),
     [
       dashboard.submitAnswer,
@@ -172,6 +174,7 @@ export function CoupleDashboardProvider({ children }: { children: ReactNode }) {
       dashboard.skipQuestion,
       dashboard.toggleSafeZone,
       dashboard.triggerReveal,
+      dashboard.revealNow,
     ]
   );
 

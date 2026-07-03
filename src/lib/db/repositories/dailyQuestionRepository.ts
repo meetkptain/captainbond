@@ -106,6 +106,25 @@ export async function recordAnswer(
 }
 
 /**
+ * Atomically reveals a daily question once both partners have answered and
+ * the analysis is computed. Returns null if the question was not in COMPUTED state.
+ */
+export async function revealDailyQuestion(id: string): Promise<DailyQuestion | null> {
+  const nowIso = new Date().toISOString();
+  const { data, error } = await supabaseAdmin
+    .from('DailyQuestion')
+    .update({ isRevealed: true, analysisStatus: 'REVEALED', revealedAt: nowIso })
+    .eq('id', id)
+    .eq('analysisStatus', 'COMPUTED')
+    .eq('isRevealed', false)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return (data ?? null) as DailyQuestion | null;
+}
+
+/**
  * Atomically claims the right to compute the analysis.
  * Returns true only if the row was in PENDING status.
  */

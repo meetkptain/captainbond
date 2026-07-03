@@ -4,6 +4,7 @@ import {
   getDailyQuestionById,
   skipDailyQuestion as repositorySkipDailyQuestion,
   markSafeZone,
+  revealDailyQuestion as repositoryRevealDailyQuestion,
 } from '@/lib/db/repositories/dailyQuestionRepository';
 import type { DailyQuestion } from '@/lib/db/types';
 
@@ -41,4 +42,23 @@ export async function toggleSafeZone(
 ): Promise<DailyQuestion> {
   await verifyOwnership(coupleId, dailyQuestionId, userId);
   return markSafeZone(dailyQuestionId, active);
+}
+
+export async function revealDailyQuestion(
+  coupleId: string,
+  dailyQuestionId: string,
+  userId: string
+): Promise<DailyQuestion> {
+  const dailyQuestion = await verifyOwnership(coupleId, dailyQuestionId, userId);
+  if (!dailyQuestion.user1Answered || !dailyQuestion.user2Answered) {
+    throw new AppError('FORBIDDEN', 'Les deux partenaires doivent avoir répondu pour révéler.');
+  }
+  if (dailyQuestion.analysisStatus !== 'COMPUTED') {
+    throw new AppError('PRECONDITION_FAILED', 'L\'analyse n\'est pas encore prête. Réessayez dans quelques instants.');
+  }
+  const revealed = await repositoryRevealDailyQuestion(dailyQuestionId);
+  if (!revealed) {
+    throw new AppError('CONFLICT', 'La révélation est déjà en cours ou a déjà eu lieu.');
+  }
+  return revealed;
 }

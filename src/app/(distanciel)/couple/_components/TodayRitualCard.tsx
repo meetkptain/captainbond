@@ -23,7 +23,7 @@ export function TodayRitualCard() {
     revealAnimation,
   } = useDashboardUIState();
   const { setAnswer, setIsCouchMode, setShowProtocol, setSelectedQuestion } = useDashboardUISetters();
-  const { submitAnswer, submitCouchAnswers, skipQuestion, triggerReveal } = useDashboardActions();
+  const { submitAnswer, submitCouchAnswers, skipQuestion, triggerReveal, revealNow } = useDashboardActions();
 
   const questionText = todayQuestion?.question?.text ?? todayQuestion?.customText ?? 'Aucune question aujourd\'hui';
 
@@ -87,12 +87,33 @@ export function TodayRitualCard() {
 
             {/* Both answered but sealed */}
             {bothAnswered && !todayQuestion?.isRevealed && (
-              <SyncDropCountdown
-                targetHour={20}
-                isReady={true}
-                partnerName={partnerName}
-                onRevealTime={triggerReveal}
-              />
+              <div className="flex flex-col items-center gap-4 py-6 text-center">
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-sm font-medium">
+                  <Icon name="lock" className="w-4 h-4" />
+                  Vos réponses sont scellées
+                </div>
+                <p className="text-sm text-slate-400">
+                  Vous avez tous les deux répondu. Révélez votre résonance quand vous le souhaitez.
+                </p>
+                <button
+                  className="couple-action-btn"
+                  onClick={revealNow}
+                  disabled={submitting}
+                  style={{
+                    background: 'linear-gradient(135deg, #f59e0b 0%, #fb7185 100%)',
+                    borderColor: 'transparent',
+                  }}
+                >
+                  {submitting ? (
+                    <span className="couple-spinner" style={{ margin: '0 auto' }} />
+                  ) : (
+                    <>
+                      <Icon name="sparkles" className="w-4 h-4" />
+                      Révéler maintenant
+                    </>
+                  )}
+                </button>
+              </div>
             )}
 
             {/* Revealed: Show ritual reveal card (themed, score hidden) */}

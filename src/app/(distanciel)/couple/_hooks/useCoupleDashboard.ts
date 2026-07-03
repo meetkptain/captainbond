@@ -442,6 +442,27 @@ export function useCoupleDashboard() {
     }
   }, [couple, fetchData]);
 
+  const revealNow = useCallback(async () => {
+    if (!todayQuestion || !couple || !userId) return;
+    setSubmitting(true);
+    try {
+      await api.post('/api/couple/reveal', {
+        coupleId: couple.id,
+        dailyQuestionId: todayQuestion.id,
+      });
+      setRevealAnimation(true);
+      await fetchData(couple.id);
+    } catch (err) {
+      if (err instanceof ApiClientError) {
+        setError(err.message);
+      } else {
+        setError('Impossible de révéler la réponse maintenant.');
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  }, [todayQuestion, couple, userId, fetchData]);
+
   return {
     loading,
     userId,
@@ -491,5 +512,6 @@ export function useCoupleDashboard() {
     skipQuestion,
     toggleSafeZone,
     triggerReveal,
+    revealNow,
   };
 }
