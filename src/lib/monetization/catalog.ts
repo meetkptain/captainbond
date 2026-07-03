@@ -6,6 +6,7 @@ export type ProductType =
   | 'PASS_WEEKEND'
   | 'SUBSCRIPTION_ANNUAL'
   | 'SUBSCRIPTION_MONTHLY'
+  | 'BAR_MONTHLY'
   | 'LIFETIME'
   | 'PROFILE'
   | 'PROFILE_COUPLE'
@@ -77,7 +78,7 @@ export const CATALOG_FALLBACK: Pack[] = [
     sku: 'PROFILE_COUPLE',
     name: 'Dossier Couple',
     description: 'Le rapport de compatibilité de votre soirée en tête-à-tête.',
-    price: 9.99,
+    price: 4.99,
     stripePriceId: null,
     stripeProductId: null,
     productType: 'PROFILE_COUPLE',
@@ -129,12 +130,25 @@ export const CATALOG_FALLBACK: Pack[] = [
     sku: 'B2B_EVENT',
     name: 'Captain Bond Pro — Événement',
     description: 'Une session team-building personnalisée, questions filtrées et dashboard facilitateur.',
-    price: 399.00,
+    price: 299.00,
     stripePriceId: null,
     stripeProductId: null,
     productType: 'PACK',
     scope: { modes: ['*'], features: ['profiles', 'b2b_dashboard'] },
     isSubscription: false,
+    isPro: true,
+  },
+  {
+    id: 'pack-bar-monthly',
+    sku: 'BAR_MONTHLY',
+    name: 'Captain Bond Pro — Bar (99€/mois)',
+    description: 'Abonnement mensuel pour bars, pubs et restaurants : jeu sur écran géant, kit de com et DJ vocal IA inclus.',
+    price: 99.00,
+    stripePriceId: null,
+    stripeProductId: null,
+    productType: 'BAR_MONTHLY',
+    scope: { features: ['b2b_dashboard', 'tv_mode', 'bar_kit'] },
+    isSubscription: true,
     isPro: true,
   },
 ];

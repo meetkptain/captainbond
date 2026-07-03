@@ -258,3 +258,42 @@ function buildLineItem(pack: Pack): Stripe.Checkout.SessionCreateParams.LineItem
     quantity: 1,
   };
 }
+
+export async function getOrCreateStripePrice(pack: Pack): Promise<string> {
+  if (pack.stripePriceId) {
+    return pack.stripePriceId;
+  }
+
+  const interval = pack.productType === 'SUBSCRIPTION_ANNUAL' ? 'year' : 'month';
+
+  const product = await withTimeout(
+    getStripe().products.create({
+      name: pack.name,
+      description: pack.description,
+    }),
+    10000,
+  );
+
+  const price = await withTimeout(
+    getStripe().prices.create({
+      product: product.id,
+      unit_amount: toCents(pack.price),
+      currency: 'eur',
+      recurring: { interval },
+    }),
+    10000,
+  );
+
+  const { error } = await dbRetry<null>(async () =>
+    supabaseAdmin
+      .from('Pack')
+      .update({ stripePriceId: price.id, stripeProductId: product.id })
+      .eq('id', pack.id),
+  );
+
+  if (error) {
+    logger.error('Failed to save Stripe price id', { packId: pack.id }, error);
+  }
+
+  return price.id;
+}
