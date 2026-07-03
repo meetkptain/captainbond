@@ -97,6 +97,14 @@ export function OnboardingInvite() {
             <button
               className="couple-action-btn"
               style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', opacity: 0.8 }}
+              onClick={() => router.push('/vault')}
+            >
+              <Icon name="sparkles" className="w-4 h-4" />
+              Essayer un rituel solo
+            </button>
+            <button
+              className="couple-action-btn"
+              style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', opacity: 0.8 }}
               onClick={() => router.push('/')}
             >
               Retour à l&apos;accueil
