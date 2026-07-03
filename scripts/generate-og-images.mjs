@@ -13,6 +13,8 @@ const images = [
   { file: 'corporate.png', title: 'Captain Bond — Team Building', subtitle: 'Interactive giant-screen icebreaker', bg: '#1e1b4b', accent: '#f59e0b' },
   { file: 'bars-cafes.png', title: 'Captain Bond — Bars & Cafés', subtitle: 'Fill your bar on weeknights', bg: '#1e1b4b', accent: '#6366f1' },
   { file: 'b2b.png', title: 'Captain Bond Pro', subtitle: 'Turn spaces into real connections', bg: '#020617', accent: '#ec4899' },
+  { file: 'blog-questions-couple-en.png', title: '150 Questions for Couples', subtitle: 'From fun to deep — Captain Bond', bg: '#0f172a', accent: '#ec4899' },
+  { file: 'blog-questions-couple-fr.png', title: '150 questions pour couple', subtitle: 'Du fun au profond — Captain Bond', bg: '#0f172a', accent: '#ec4899' },
 ];
 
 function escapeXml(str) {
