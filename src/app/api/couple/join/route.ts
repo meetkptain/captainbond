@@ -46,8 +46,10 @@ export const POST = withApiHandler({
     // Create the couple!
     const couple = await createCouple(authUser.id, partnerId);
 
-    // Grant 7-day trial to both partners
-    await Promise.all([grantCoupleTrial(authUser.id), grantCoupleTrial(partnerId)]);
+    // Grant 7-day trial to both partners sequentially so a failure in the
+    // first grant surfaces before we write the second row.
+    await grantCoupleTrial(authUser.id);
+    await grantCoupleTrial(partnerId);
 
     return NextResponse.json({ success: true, couple });
   },

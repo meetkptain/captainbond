@@ -151,6 +151,8 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
     await mirrorSubscriptionToPartner(metadata.coupleId, activeUserId, pack, session.subscription as string | null);
   }
 
+  await invalidateUserEntitlements(activeUserId);
+
   await captureServer(AnalyticsEvents.PURCHASE_COMPLETED, {
     sku: pack.sku,
     productType: pack.productType,
@@ -305,6 +307,8 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
     subscriptionStatus: mappedStatus,
     stripeSubscriptionId: subscription.id,
   });
+
+  await invalidateUserEntitlements(user.id);
 
   logger.info('Subscription status updated', { subscriptionId: subscription.id, status: mappedStatus, customerId });
 }

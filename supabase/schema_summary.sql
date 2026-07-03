@@ -303,8 +303,7 @@ CREATE TABLE UserPass (
   CONSTRAINT "UserPass_pkey" PRIMARY KEY ("id"),
   CONSTRAINT "UserPass_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT "UserPass_packId_fkey" FOREIGN KEY ("packId") REFERENCES "Pack"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  INDEX "UserPass_userId_expiresAt_idx" ("userId", "expiresAt"),
-  UNIQUE INDEX "unique_userpass_user_source" ("userId", source)
+  INDEX "UserPass_userId_expiresAt_idx" ("userId", "expiresAt")
 );
 
 CREATE TABLE UserStats (

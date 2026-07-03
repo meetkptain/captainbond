@@ -39,8 +39,8 @@ export function PricingComparison({ packs, onSelect, loadingSku, context = 'grou
 
   const offers = [
     { pack: pass24h, features: FEATURES.PASS_24H, recommended: false, label: context === 'couple' ? 'Pass Soirée Couple' : 'Pass 24h' },
-    { pack: profile, features: context === 'couple' ? FEATURES.PROFILE_COUPLE : FEATURES.PROFILE, recommended: true, label: context === 'couple' ? 'Dossier Couple' : 'Dossier Classifié' },
-    { pack: subscription, features: subscriptionFeatures, recommended: false, label: subscriptionLabel },
+    { pack: profile, features: context === 'couple' ? FEATURES.PROFILE_COUPLE : FEATURES.PROFILE, recommended: context !== 'couple', label: context === 'couple' ? 'Dossier Couple' : 'Dossier Classifié' },
+    { pack: subscription, features: subscriptionFeatures, recommended: context === 'couple', label: subscriptionLabel },
   ].filter((o): o is { pack: Pack; features: string[]; recommended: boolean; label: string } => Boolean(o.pack));
 
   return (

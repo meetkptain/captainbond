@@ -202,7 +202,8 @@ model UserPass {
   source    String   @default("stripe") // stripe, promo, admin, couple_trial
   createdAt DateTime @default(now())
 
-  @@unique([userId, source])
+  // Partial unique index on (userId, source) WHERE source = 'couple_trial' is
+  // managed in supabase/migrations/028_userpass_unique_source.sql.
   @@index([userId, expiresAt])
 }
 

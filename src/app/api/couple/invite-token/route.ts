@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
 import { getAuthenticatedUser } from '@/lib/auth/user';
 import { createInviteToken } from '@/lib/couple/invite';
+import { AppError } from '@/lib/errors';
 
 export const runtime = 'edge';
 
@@ -15,7 +16,7 @@ export const POST = withApiHandler({
     const token = await createInviteToken(authUser.id);
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
     if (!siteUrl) {
-      throw new Error('NEXT_PUBLIC_SITE_URL is not configured');
+      throw new AppError('INTERNAL_ERROR', 'NEXT_PUBLIC_SITE_URL is not configured');
     }
     const url = `${siteUrl}/couple?inviteToken=${encodeURIComponent(token)}`;
 
