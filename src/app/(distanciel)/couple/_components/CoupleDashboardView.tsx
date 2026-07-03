@@ -44,6 +44,7 @@ export function CoupleDashboardView({ defaultLang = 'en' }: CoupleDashboardViewP
     () => dailyQuestions.filter((q) => q.isRevealed).length + (todayQuestion?.isRevealed ? 1 : 0),
     [dailyQuestions, todayQuestion]
   );
+  const showPaywall = revealedCount >= 3 || currentDay >= 7;
 
   const completedDays = useMemo(() => {
     const completed: number[] = [];
@@ -204,8 +205,8 @@ export function CoupleDashboardView({ defaultLang = 'en' }: CoupleDashboardViewP
           <StatsColumn currentDay={currentDay} revealedCount={revealedCount} />
         </div>
 
-        {/* Premium paywall — shown when the couple exists but no active pass/subscription */}
-        {couple && !entitlements?.hasActivePass && !entitlements?.hasActiveSubscription && (
+        {/* Premium paywall — shown only after 3 reveals or after day 7 */}
+        {couple && showPaywall && !entitlements?.hasActivePass && !entitlements?.hasActiveSubscription && (
           <section className="mt-8">
             <CouplePaywall
               coupleId={couple.id}
