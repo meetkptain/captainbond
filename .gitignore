@@ -55,4 +55,8 @@ docs/audits/
 # codegraph
 .codegraph/
 
+# cloudflare workers
+workers/*/node_modules/
+.wrangler/
+
 
