@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
 import { getStripe } from '@/lib/monetization/checkout';
-import { getPackBySku } from '@/lib/monetization/catalog';
+import { getPackBySku, toCents } from '@/lib/monetization/catalog';
 import { checkoutLimiter } from '@/lib/rate-limit';
 
 export const runtime = 'edge';
@@ -25,7 +25,7 @@ export const POST = withApiHandler({
       return NextResponse.json({ error: 'Pack B2B introuvable', code: 'NOT_FOUND' }, { status: 404 });
     }
 
-    // Create Stripe Checkout Session for B2B EVENT
+    // Create Stripe Checkout Session for B2B EVENT using the catalog price
     const session = await getStripe().checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
@@ -37,7 +37,7 @@ export const POST = withApiHandler({
               name: pack.name,
               description: pack.description,
             },
-            unit_amount: 29900, // 299.00 EUR HT
+            unit_amount: toCents(pack.price),
           },
           quantity: 1,
         },

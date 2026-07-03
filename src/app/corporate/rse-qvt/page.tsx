@@ -5,6 +5,7 @@ import { LandingLayout } from '@/components/landing/LandingLayout';
 import { LandingButton } from '@/components/landing/LandingButton';
 import { Section } from '@/components/landing/Section';
 import { FeatureShowcase } from '@/components/landing/FeatureShowcase';
+import { CalendlyBookingButton } from '@/components/CalendlyBookingButton';
 import { Icon } from '@/components/Icon';
 import { api } from '@/lib/api/client';
 
@@ -112,6 +113,7 @@ export default function QvtLandingPage({ defaultLang = 'en' }: { defaultLang?: '
         participants: 50,
         estimatedPrice: 399,
         formula: 'QVT_PACK',
+        source: 'qvt',
       });
       setSubmitted(true);
     } catch (err) {
@@ -135,7 +137,7 @@ export default function QvtLandingPage({ defaultLang = 'en' }: { defaultLang?: '
           <p className="text-lg md:text-xl text-white/70 max-w-xl mx-auto leading-relaxed">
             {t.heroDesc}
           </p>
-          <div className="pt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <button
               onClick={handleDownloadReport}
               disabled={generatingReport}
@@ -143,6 +145,7 @@ export default function QvtLandingPage({ defaultLang = 'en' }: { defaultLang?: '
             >
               {generatingReport ? t.generatingPdfBtn : t.generatePdfBtn}
             </button>
+            <CalendlyBookingButton label={lang === 'fr' ? 'Réserver une démo 15 min' : 'Book a 15-min demo'} variant="secondary" />
           </div>
         </div>
       </Section>
@@ -279,6 +282,7 @@ export default function QvtLandingPage({ defaultLang = 'en' }: { defaultLang?: '
               <LandingButton type="submit" disabled={submitting} className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700">
                 {submitting ? t.formSubmitting : t.formSubmitBtn}
               </LandingButton>
+              <CalendlyBookingButton label={lang === 'fr' ? 'Réserver une démo 15 min' : 'Book a 15-min demo'} variant="secondary" className="w-full" />
             </form>
           )}
         </div>

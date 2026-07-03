@@ -7,6 +7,7 @@ import { Section } from '@/components/landing/Section';
 import { FeatureShowcase } from '@/components/landing/FeatureShowcase';
 import { CorporateVisualMockup } from '@/components/landing/CorporateVisualMockup';
 import { CorporatePricingCalculator } from '@/components/landing/CorporatePricingCalculator';
+import { CalendlyBookingButton } from '@/components/CalendlyBookingButton';
 import { Icon } from '@/components/Icon';
 import { api, ApiClientError } from '@/lib/api/client';
 import { getB2BQuote, estimateB2BPrice } from '@/lib/pricing/b2b';
@@ -144,6 +145,7 @@ export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLa
         participants,
         estimatedPrice,
         formula: quote.formula,
+        source: 'corporate',
       });
       setSubmitted(true);
     } catch (err) {
@@ -173,15 +175,19 @@ export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLa
             {t.heroDesc}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <LandingButton onClick={handleBookInstant} disabled={isBooking} className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black">
-              {isBooking ? t.formSubmitting : t.bookInstantBtn}
-            </LandingButton>
             <LandingButton
-              variant="secondary"
               onClick={() => contactRef.current?.scrollIntoView({ behavior: 'smooth' })}
             >
               {t.quoteBtn}
             </LandingButton>
+            <LandingButton
+              variant="secondary"
+              onClick={handleBookInstant}
+              disabled={isBooking}
+            >
+              {isBooking ? t.formSubmitting : t.bookInstantBtn}
+            </LandingButton>
+            <CalendlyBookingButton label={lang === 'fr' ? 'Réserver une démo 15 min' : 'Book a 15-min demo'} variant="secondary" />
           </div>
 
           {/* Cocon sémantique B2B - Interlinking */}

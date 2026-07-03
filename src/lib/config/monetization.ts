@@ -9,7 +9,7 @@
 export const MONETIZATION_CONFIG = {
   // --- Prix ---
   PROFILE_PRICE_CENTS: 499,                  // 4.99€ — Dossier Classifié individuel
-  COUPLE_PROFILE_PRICE_CENTS: 999,           // 9.99€ — Dossier de Compatibilité ludique (Date Night)
+  COUPLE_PROFILE_PRICE_CENTS: 499,           // 4.99€ — Dossier de Compatibilité ludique (Date Night)
   PASS_24H_PRICE_CENTS: 299,                 // 2.99€ — Pass 24h (tous modes + profils)
   PASS_WEEKEND_PRICE_CENTS: 499,             // 4.99€ — Pass Week-end
   SUBSCRIPTION_MONTHLY_PRICE_CENTS: 799,     // 7.99€/mois — Abonnement couple mensuel

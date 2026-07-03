@@ -5,6 +5,7 @@ import { LandingLayout } from '@/components/landing/LandingLayout';
 import { LandingButton } from '@/components/landing/LandingButton';
 import { Section } from '@/components/landing/Section';
 import { FeatureShowcase } from '@/components/landing/FeatureShowcase';
+import { CalendlyBookingButton } from '@/components/CalendlyBookingButton';
 import { Icon } from '@/components/Icon';
 import { api } from '@/lib/api/client';
 
@@ -114,6 +115,7 @@ export default function OnboardingLandingPage({ defaultLang = 'en' }: { defaultL
         participants: 20,
         estimatedPrice: 299,
         formula: 'ONBOARDING_PACK',
+        source: 'onboarding',
       });
       setSubmitted(true);
     } catch (err) {
@@ -137,10 +139,11 @@ export default function OnboardingLandingPage({ defaultLang = 'en' }: { defaultL
           <p className="text-lg md:text-xl text-white/70 max-w-xl mx-auto leading-relaxed">
             {t.heroDesc}
           </p>
-          <div className="pt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <a href="#demo-ia" className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 rounded-xl font-bold text-sm tracking-wide shadow-lg shadow-pink-500/20 text-center text-white border-none decoration-none inline-block">
               {t.testBtn}
             </a>
+            <CalendlyBookingButton label={lang === 'fr' ? 'Réserver une démo 15 min' : 'Book a 15-min demo'} />
           </div>
         </div>
       </Section>
@@ -280,6 +283,7 @@ export default function OnboardingLandingPage({ defaultLang = 'en' }: { defaultL
               <LandingButton type="submit" disabled={submitting} className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700">
                 {submitting ? t.formSubmitting : t.formSubmitBtn}
               </LandingButton>
+              <CalendlyBookingButton label={lang === 'fr' ? 'Réserver une démo 15 min' : 'Book a 15-min demo'} variant="secondary" className="w-full" />
             </form>
           )}
         </div>

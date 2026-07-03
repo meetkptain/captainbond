@@ -569,6 +569,9 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
           </button>
         )}
         <p className="text-slate-500 text-xs mt-3 font-mono">Déverrouillage instantané pour les 2 écrans</p>
+        <p className="text-slate-500 text-[10px] mt-2 max-w-xs mx-auto">
+          Le Pass 24h débloque la soirée. Ce Dossier Couple reste à vous pour la partager ou le garder.
+        </p>
       </div>
     );
   }
@@ -791,6 +794,9 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
         </div>
 
         <p className="text-slate-500 text-xs mt-3 font-mono">Apple Pay • Google Pay • CB</p>
+        <p className="text-slate-500 text-[10px] mt-2 max-w-xs mx-auto">
+          Le Pass 24h débloque la soirée. Ce Dossier reste à vous pour la partager ou la garder.
+        </p>
       </div>
 
       {/* Cross-Sell Card */}

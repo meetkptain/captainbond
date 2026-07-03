@@ -9,6 +9,7 @@ export * from './roomRpcRepository';
 export * from './scoreRepository';
 export * from './purchaseRepository';
 export * from './webhookEventRepository';
+export * from './leadRepository';
 export * from './userRepository';
 export * from './coupleRepository';
 export * from './treeRepository';

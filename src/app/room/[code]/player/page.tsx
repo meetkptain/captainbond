@@ -496,6 +496,7 @@ export default function PlayerController() {
                 freeQuestionsUsed={freeQuestions?.used}
                 freeQuestionsLimit={freeQuestions?.limit}
                 onCheckoutError={(message) => setError(message)}
+                context={activeMode === 'DATE_NIGHT' ? 'couple' : 'group'}
               />
             )}
           </div>

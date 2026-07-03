@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { api } from '@/lib/api/client';
+import { CalendlyBookingButton } from '@/components/CalendlyBookingButton';
+import { api, ApiClientError } from '@/lib/api/client';
 
 export default function B2BLandingClient() {
   const router = useRouter();
@@ -22,18 +23,49 @@ export default function B2BLandingClient() {
     setLoading(true);
     setError(null);
     try {
-      await api.post('/api/corporate/contact', formData);
+      await api.post('/api/corporate/contact', {
+        ...formData,
+        source: formData.type === 'BAR' ? 'b2b_landing' : 'b2b_landing',
+      });
       setSubmitted(true);
     } catch (err) {
-      setError('Impossible d\'envoyer votre demande pour le moment. Veuillez réessayer.');
+      setError(err instanceof ApiClientError ? err.message : 'Impossible d\'envoyer votre demande pour le moment. Veuillez réessayer.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSubStripe = () => {
-    // Rediriger vers Stripe pour abonnement Bar à 99€/mois
-    window.location.href = '/api/checkout?plan=bar_monthly';
+  const handleSubStripe = async () => {
+    setError(null);
+    if (formData.type !== 'BAR') {
+      setError('L\'abonnement 99€/mois est réservé aux bars et établissements.');
+      return;
+    }
+    if (!formData.name || !formData.email || !formData.company) {
+      setError('Merci de renseigner votre nom, email et établissement avant de souscrire.');
+      const element = document.getElementById('contact');
+      element?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    setLoading(true);
+    try {
+      const origin = window.location.origin;
+      const response = await api.post<{ sessionUrl?: string }>('/api/checkout/subscription', {
+        plan: 'bar_monthly',
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        successUrl: `${origin}/b2b?subscribed=1`,
+        cancelUrl: `${origin}/b2b`,
+      });
+      if (response.sessionUrl) {
+        window.location.href = response.sessionUrl;
+      }
+    } catch (err) {
+      setError(err instanceof ApiClientError ? err.message : 'Une erreur est survenue lors du paiement.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -58,12 +90,13 @@ export default function B2BLandingClient() {
           <a href="#contact" className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 rounded-xl font-bold text-sm tracking-wide shadow-lg shadow-pink-500/20 text-center text-white border-none decoration-none">
             Demander un Kit Démo Gratuit
           </a>
-          <button 
+          <button
             onClick={handleSubStripe}
             className="px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl font-bold text-sm text-white tracking-wide transition-all"
           >
-            S&apos;abonner (Offre Bar - 99€/mois)
+            S&apos;abonner (99€/mois)
           </button>
+          <CalendlyBookingButton label="Réserver une démo 15 min" />
         </div>
       </div>
 

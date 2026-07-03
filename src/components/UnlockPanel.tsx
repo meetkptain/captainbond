@@ -19,9 +19,10 @@ interface UnlockPanelProps {
   onCheckoutError?: (message: string) => void;
   successUrl?: string;
   cancelUrl?: string;
+  context?: 'group' | 'couple';
 }
 
-export function UnlockPanel({ roomCode, playerId, packs, freeQuestionsUsed, freeQuestionsLimit, onCheckoutStart, onCheckoutError, successUrl, cancelUrl }: UnlockPanelProps) {
+export function UnlockPanel({ roomCode, playerId, packs, freeQuestionsUsed, freeQuestionsLimit, onCheckoutStart, onCheckoutError, successUrl, cancelUrl, context = 'group' }: UnlockPanelProps) {
   const { t } = useTranslation();
   const [loadingSku, setLoadingSku] = useState<string | null>(null);
 
@@ -120,7 +121,7 @@ export function UnlockPanel({ roomCode, playerId, packs, freeQuestionsUsed, free
           />
         </div>
       </div>
-      <PricingComparison packs={packs} onSelect={handleCheckout} loadingSku={loadingSku} />
+      <PricingComparison packs={packs} onSelect={handleCheckout} loadingSku={loadingSku} context={context} />
       <p className="text-xs text-slate-500 text-center flex items-center justify-center gap-1">
         <Icon name="check" className="w-3 h-3" /> {t('secure_payment_guarantee')}
       </p>

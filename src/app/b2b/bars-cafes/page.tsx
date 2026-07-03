@@ -5,16 +5,20 @@ import { LandingLayout } from '@/components/landing/LandingLayout';
 import { LandingButton } from '@/components/landing/LandingButton';
 import { Section } from '@/components/landing/Section';
 import { FeatureShowcase } from '@/components/landing/FeatureShowcase';
+import { CalendlyBookingButton } from '@/components/CalendlyBookingButton';
 import { Icon } from '@/components/Icon';
-import { api } from '@/lib/api/client';
+import { api, ApiClientError } from '@/lib/api/client';
 
 const content = {
   fr: {
     category: "Pubs, Bars & Restos",
     heroTitle: "Remplissez votre bar les soirs de semaine",
     heroDesc: "Attirez des groupes de clients les mardis et mercredis soirs grâce à un jeu interactif 100% autonome diffusé sur vos écrans géants de télévision.",
-    subscribe: "S'abonner (Offre Bar - 99€/mois)",
+    subscribe: "S'abonner (99€/mois)",
+    subscribeNow: "Payer mon abonnement 99€/mois",
+    subscribeHero: "S'abonner maintenant",
     demoKit: "Demander mon kit de démo",
+    bookDemo: "Réserver une démo 15 min",
     feat1Title: "Augmentation du panier moyen de boissons",
     feat1Desc: "Le jeu engage les tables qui consomment davantage tout en s'affrontant en direct. Augmentation moyenne constatée de 22% sur les commandes.",
     feat2Title: "100% autonome et sans effort",
@@ -33,8 +37,11 @@ const content = {
     category: "Pubs, Bars & Restaurants",
     heroTitle: "Fill your bar on weeknights",
     heroDesc: "Attract groups of customers on Tuesday and Wednesday nights with a 100% autonomous interactive game played on your giant TV screens.",
-    subscribe: "Subscribe (Bar Plan - 99€/month)",
+    subscribe: "Subscribe (99€/month)",
+    subscribeNow: "Pay my 99€/month subscription",
+    subscribeHero: "Subscribe now",
     demoKit: "Request my demo kit",
+    bookDemo: "Book a 15-min demo",
     feat1Title: "Increase average beverage ticket",
     feat1Desc: "The game engages tables to drink more while competing live. Observed average drink order increase of 22%.",
     feat2Title: "100% autonomous & effortless",
@@ -61,6 +68,7 @@ export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLa
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -71,23 +79,53 @@ export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLa
 
   const t = content[lang];
 
-  const handleSubStripe = () => {
-    window.location.href = '/api/checkout?plan=bar_monthly';
+  const scrollToForm = () => {
+    const element = document.getElementById('contact-kit');
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleSubscribe = async () => {
+    if (!formData.name || !formData.email || !formData.company) {
+      scrollToForm();
+      return;
+    }
+    setSubmitting(true);
+    setError(null);
+    try {
+      const origin = window.location.origin;
+      const response = await api.post<{ sessionUrl?: string }>('/api/checkout/subscription', {
+        plan: 'bar_monthly',
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        successUrl: `${origin}/b2b/bars-cafes?subscribed=1`,
+        cancelUrl: `${origin}/b2b/bars-cafes`,
+      });
+      if (response.sessionUrl) {
+        window.location.href = response.sessionUrl;
+      }
+    } catch (err) {
+      setError(err instanceof ApiClientError ? err.message : 'Une erreur est survenue');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
+    setError(null);
     try {
       await api.post('/api/corporate/contact', {
         ...formData,
         participants: 10,
         estimatedPrice: 99,
         formula: 'BAR_KIT_REQUEST',
+        source: 'bar_kit',
       });
       setSubmitted(true);
     } catch (err) {
-      console.error(err);
+      setError(err instanceof ApiClientError ? err.message : 'Une erreur est survenue');
     } finally {
       setSubmitting(false);
     }
@@ -108,18 +146,13 @@ export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLa
             {t.heroDesc}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <LandingButton onClick={handleSubStripe}>
-              {t.subscribe}
+            <LandingButton onClick={scrollToForm}>
+              {t.subscribeHero}
             </LandingButton>
-            <LandingButton
-              variant="secondary"
-              onClick={() => {
-                const element = document.getElementById('contact-kit');
-                element?.scrollIntoView({ behavior: 'smooth' });
-              }}
-            >
+            <LandingButton variant="secondary" onClick={scrollToForm}>
               {t.demoKit}
             </LandingButton>
+            <CalendlyBookingButton label={t.bookDemo} variant="secondary" />
           </div>
         </div>
       </Section>
@@ -175,6 +208,12 @@ export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLa
                 </p>
               </div>
 
+              {error && (
+                <div className="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl p-3">
+                  {error}
+                </div>
+              )}
+
               <div className="space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-xs font-mono uppercase text-white/50 mb-2">{t.formLabelName}</label>
@@ -211,9 +250,21 @@ export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLa
                 </div>
               </div>
 
-              <LandingButton type="submit" disabled={submitting} className="w-full bg-indigo-600 hover:bg-indigo-700">
-                {submitting ? t.formSubmitting : t.formSubmitBtn}
-              </LandingButton>
+              <div className="flex flex-col gap-3">
+                <LandingButton type="submit" disabled={submitting} className="w-full bg-indigo-600 hover:bg-indigo-700">
+                  {submitting ? t.formSubmitting : t.formSubmitBtn}
+                </LandingButton>
+                <LandingButton
+                  type="button"
+                  variant="secondary"
+                  disabled={submitting}
+                  onClick={handleSubscribe}
+                  className="w-full"
+                >
+                  {t.subscribeNow}
+                </LandingButton>
+                <CalendlyBookingButton label={t.bookDemo} variant="secondary" className="w-full" />
+              </div>
             </form>
           )}
         </div>
