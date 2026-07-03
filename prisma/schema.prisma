@@ -259,6 +259,8 @@ model User {
   user2Couples   Couple[]      @relation("User2Couples")
   timeCapsules   TimeCapsule[]
   sentCoupleInvites CoupleInvite[]
+  pushSubscriptions PushSubscription[]
+  audioRecordings   AudioRecording[]
 
   @@index([stripeCustomerId])
 }
@@ -336,6 +338,10 @@ model Couple {
   portraits       CouplePortrait[]
   timeCapsules    TimeCapsule[]
   totem           TotemState?
+  weeklyRecaps    WeeklyRecapData[]
+  heatmapEntries  CoupleHeatmap[]
+  treeProgress    TreeProgress[]
+  audioRecordings AudioRecording[]
 
   @@unique([user1Id, user2Id])
   @@index([user1Id])
@@ -482,6 +488,13 @@ model DailyQuestion {
   isSkipped      Boolean  @default(false)
   isSafeZoneActive Boolean @default(false)
 
+  // Audio Sync — réponses vocales synchronisées
+  user1AudioUrl   String?
+  user2AudioUrl   String?
+  user1AudioMs    Int?
+  user2AudioMs    Int?
+  audioRevealed   Boolean  @default(false)
+
   // Rituels Couple — thème hebdomadaire, intensité et guides
   theme          String? // ex: RECONNECTION, COMMUNICATION, INTIMACY, SHARED_PROJECT
   intensity      Int      @default(1) // 1 = light, 2 = deep, 3 = vulnerable
@@ -534,4 +547,92 @@ model TimeCapsule {
 
   @@index([coupleId])
   @@index([coupleId, isUnlocked, unlocksAt])
+}
+
+// Push Notifications — abonnements aux notifications push
+model PushSubscription {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint  String
+  keys      Json     // { p256dh, auth }
+  timezone  String   @default("Europe/Paris")
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@unique([endpoint])
+  @@index([userId])
+}
+
+// Audio Recording — enregistrements vocaux synchronisés
+model AudioRecording {
+  id              String   @id @default(uuid())
+  coupleId        String
+  couple          Couple   @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  dailyQuestionId String
+  dailyQuestion   DailyQuestion @relation(fields: [dailyQuestionId], references: [id], onDelete: Cascade)
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  storagePath     String
+  durationMs      Int
+  transcription   String?  @db.Text
+  transcriptionStatus String @default("PENDING") // PENDING | COMPUTING | COMPUTED | FAILED
+  createdAt       DateTime @default(now())
+
+  @@index([coupleId])
+  @@index([dailyQuestionId])
+}
+
+// Weekly AI Recap — résumé hebdomadaire généré par IA
+model WeeklyRecapData {
+  id          String   @id @default(uuid())
+  coupleId    String
+  couple      Couple   @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  weekStart   DateTime
+  theme       String
+  summary     String   @db.Text
+  insight     String   @db.Text
+  lesson      String   @db.Text
+  generatedAt DateTime @default(now())
+
+  @@unique([coupleId, weekStart])
+  @@index([coupleId])
+}
+
+// Heatmap Couple — grille des axes relationnels
+model CoupleHeatmap {
+  id            String   @id @default(uuid())
+  coupleId      String
+  couple        Couple   @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  axis          String
+  score         Float    @default(0.5)
+  trend         String   @default("stable") // up | down | stable
+  lastAnsweredAt DateTime?
+  updatedAt     DateTime @updatedAt
+
+  @@unique([coupleId, axis])
+  @@index([coupleId])
+}
+
+// Mapping thème → axe heatmap
+model ThemeAxisMapping {
+  theme String @id
+  axis  String
+}
+
+// Tree Progress — progression mensuelle de l'arbre de résonance
+model TreeProgress {
+  id              String   @id @default(uuid())
+  coupleId        String
+  couple          Couple   @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  nodeCount       Int
+  connectionCount Int
+  avgSimilarity   Float
+  dominantTheme   String
+  strongestLink   Json?
+  month           String
+  createdAt       DateTime @default(now())
+
+  @@unique([coupleId, month])
+  @@index([coupleId])
 }

@@ -7,6 +7,9 @@ import { TimeCapsulePanel } from '@/components/couple/TimeCapsulePanel';
 import { MonthlyReportCard } from '@/components/couple/MonthlyReportCard';
 import { DetoxChallenge } from '@/components/couple/DetoxChallenge';
 import { WeeklyRecap } from '@/components/couple/WeeklyRecap';
+import { WeeklyRecapAI } from '@/components/couple/WeeklyRecapAI';
+import { CoupleHeatmap } from '@/components/couple/CoupleHeatmap';
+import { TreeEvolution } from '@/components/couple/TreeEvolution';
 import { Icon } from '@/components/Icon';
 import { useCoupleData, useDashboardUIState, useDashboardUISetters } from '../_hooks/useCoupleDashboardContext';
 import { formatDate, getScoreClass, getScoreLabel } from '../_lib/helpers';
@@ -110,6 +113,20 @@ export function StatsColumn({ currentDay, revealedCount }: StatsColumnProps) {
               answeredCount={dailyQuestions.filter((q) => q.theme === todayQuestion.theme && q.user1Answered && q.user2Answered).length}
               totalCount={Math.max(1, dailyQuestions.filter((q) => q.theme === todayQuestion.theme).length)}
             />
+          )}
+
+          {/* Weekly AI Recap */}
+          {couple?.id && (
+            <div className="couple-card">
+              <WeeklyRecapAI coupleId={couple.id} />
+            </div>
+          )}
+
+          {/* Couple Heatmap */}
+          {couple?.id && (
+            <div className="couple-card">
+              <CoupleHeatmap coupleId={couple.id} />
+            </div>
           )}
 
           {/* Monthly Resonance Report */}
@@ -221,6 +238,13 @@ export function StatsColumn({ currentDay, revealedCount }: StatsColumnProps) {
 
       {showAdvanced && (
         <>
+          {/* Tree Evolution */}
+          {couple?.id && (
+            <div className="couple-card">
+              <TreeEvolution coupleId={couple.id} />
+            </div>
+          )}
+
           {/* Neural Tree Link */}
           <div className="couple-card">
             <div className="couple-label">Arbre Neural</div>

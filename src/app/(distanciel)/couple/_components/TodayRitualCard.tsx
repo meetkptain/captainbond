@@ -6,6 +6,7 @@ import { RitualCard } from '@/components/couple/RitualCard';
 import { RevealCard } from '@/components/couple/RevealCard';
 import { ResonanceCircle } from '@/components/couple/ResonanceCircle';
 import { ProtocolWizard } from '@/components/couple/ProtocolWizard';
+import { PartnerIndicator } from '@/components/couple/PartnerIndicator';
 import { Icon } from '@/components/Icon';
 import { AnalysisData } from '../_hooks/useCoupleDashboard';
 import { useCoupleData, useDashboardActions, useDashboardUIState, useDashboardUISetters } from '../_hooks/useCoupleDashboardContext';
@@ -13,7 +14,7 @@ import { MoodForm } from './MoodForm';
 import { AnswerForm } from './AnswerForm';
 
 export function TodayRitualCard() {
-  const { couple, todayQuestion, isUser1, partnerName, myName, hasMyAnswer, hasPartnerAnswer, bothAnswered, hasMyMood } = useCoupleData();
+  const { couple, todayQuestion, isUser1, partnerName, myName, hasMyAnswer, hasPartnerAnswer, bothAnswered, hasMyMood, userId } = useCoupleData();
   const {
     submitting,
     submitted,
@@ -77,12 +78,21 @@ export function TodayRitualCard() {
 
             {/* Submitted: Waiting for partner */}
             {(hasMyAnswer || submitted) && !bothAnswered && (
-              <SyncDropCountdown
-                targetHour={20}
-                isReady={false}
-                partnerName={partnerName}
-                onRevealTime={triggerReveal}
-              />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem' }}>
+                {couple && userId && (
+                  <PartnerIndicator
+                    coupleId={couple.id}
+                    userId={userId}
+                    partnerName={partnerName}
+                  />
+                )}
+                <SyncDropCountdown
+                  targetHour={20}
+                  isReady={false}
+                  partnerName={partnerName}
+                  onRevealTime={triggerReveal}
+                />
+              </div>
             )}
 
             {/* Both answered but sealed */}
@@ -123,7 +133,7 @@ export function TodayRitualCard() {
                 questionText={questionText}
                 myAnswer={isUser1 ? todayQuestion.user1Answer ?? '' : todayQuestion.user2Answer ?? ''}
                 partnerAnswer={isUser1 ? todayQuestion.user2Answer ?? '' : todayQuestion.user1Answer ?? ''}
-                myName="Vous"
+                myName={myName}
                 partnerName={partnerName}
                 therapistGuide={todayQuestion.therapistGuide}
                 ritualAction={todayQuestion.ritualAction}

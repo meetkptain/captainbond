@@ -3,6 +3,26 @@
     {
       "path": "/api/cron/rituals",
       "schedule": "30 11 * * 1,3,5"
+    },
+    {
+      "path": "/api/cron/push-ritual-available",
+      "schedule": "0 11 * * 1,3,5"
+    },
+    {
+      "path": "/api/cron/push-reveal-time",
+      "schedule": "0 19 * * 1,3,5"
+    },
+    {
+      "path": "/api/cron/weekly-recap",
+      "schedule": "0 20 * * 0"
+    },
+    {
+      "path": "/api/cron/heatmap",
+      "schedule": "0 2 * * 1"
+    },
+    {
+      "path": "/api/cron/tree-progress",
+      "schedule": "0 2 1 * *"
     }
   ]
 }
