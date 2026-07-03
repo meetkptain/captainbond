@@ -1,5 +1,87 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+
+interface InviteRow {
+  inviterId: string;
+  expiresAt: string;
+  usedAt: string | null;
+}
+
+function getMockState() {
+  return mockState;
+}
+
+function buildCoupleInviteFrom(store: Map<string, InviteRow>) {
+  let currentHash: string | null = null;
+  let currentUsedAtNull = false;
+  let currentExpiresAtGt: string | null = null;
+  let updateData: Partial<{ usedAt: string }> | null = null;
+
+  const builder = {
+    insert: vi.fn((rows: InviteRow | InviteRow[]) => {
+      for (const row of Array.isArray(rows) ? rows : [rows]) {
+        if ('tokenHash' in row && row.tokenHash) {
+          store.set(row.tokenHash as string, {
+            inviterId: row.inviterId as string,
+            expiresAt: row.expiresAt as string,
+            usedAt: null,
+          });
+        }
+      }
+      return Promise.resolve({ data: null, error: null });
+    }),
+    update: vi.fn((data: Partial<{ usedAt: string }>) => {
+      updateData = data;
+      return builder;
+    }),
+    eq: vi.fn((field: string, value: string) => {
+      if (field === 'tokenHash') currentHash = value;
+      return builder;
+    }),
+    is: vi.fn((field: string, value: unknown) => {
+      if (field === 'usedAt' && value === null) currentUsedAtNull = true;
+      return builder;
+    }),
+    gt: vi.fn((field: string, value: string) => {
+      if (field === 'expiresAt') currentExpiresAtGt = value;
+      return builder;
+    }),
+    select: vi.fn(() => builder),
+    maybeSingle: vi.fn(async () => {
+      if (!currentHash || !updateData || !currentUsedAtNull || !currentExpiresAtGt) {
+        return { data: null, error: null };
+      }
+      const invite = store.get(currentHash);
+      if (
+        !invite ||
+        invite.usedAt !== null ||
+        new Date(invite.expiresAt).getTime() <= new Date(currentExpiresAtGt).getTime()
+      ) {
+        return { data: null, error: null };
+      }
+      invite.usedAt = updateData.usedAt || new Date().toISOString();
+      return {
+        data: { inviterId: invite.inviterId, expiresAt: invite.expiresAt },
+        error: null,
+      };
+    }),
+  };
+  return builder;
+}
+
+vi.mock('@/lib/supabase-admin', () => ({
+  supabaseAdmin: {
+    from: (table: string) => {
+      if (table === 'CoupleInvite') {
+        return buildCoupleInviteFrom(getMockState().invites);
+      }
+      return {};
+    },
+  },
+}));
+
 import { createInviteToken, verifyInviteToken } from './invite';
+
+const mockState = { invites: new Map<string, InviteRow>() };
 
 vi.stubEnv('COUPLE_INVITE_SECRET', 'test-secret-32-bytes-long!!');
 
@@ -14,11 +96,27 @@ function splitToken(token: string) {
 }
 
 describe('couple invite tokens', () => {
+  beforeEach(() => {
+    mockState.invites.clear();
+  });
+
   it('creates and verifies a token', async () => {
     const token = await createInviteToken('user-123');
     const result = await verifyInviteToken(token);
     expect(result.partnerId).toBe('user-123');
     expect(result.expiresAt).toBeInstanceOf(Date);
+  });
+
+  it('rejects a reused token', async () => {
+    const token = await createInviteToken('user-123');
+    await verifyInviteToken(token);
+    await expect(verifyInviteToken(token)).rejects.toThrow('Invalid or already used invite token');
+  });
+
+  it('rejects an unknown token hash even if signature is valid', async () => {
+    const token = await createInviteToken('user-123');
+    mockState.invites.clear();
+    await expect(verifyInviteToken(token)).rejects.toThrow('Invalid or already used invite token');
   });
 
   it('rejects a tampered token', async () => {

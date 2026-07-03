@@ -15,6 +15,16 @@ CREATE TABLE Couple (
   INDEX "Couple_user2Id_idx" ("user2Id")
 );
 
+CREATE TABLE CoupleInvite (
+  id        TEXT PRIMARY KEY,
+  "inviterId" TEXT NOT NULL REFERENCES "User"(id) ON DELETE CASCADE,
+  "tokenHash" TEXT NOT NULL UNIQUE,
+  "expiresAt" TIMESTAMPTZ NOT NULL,
+  "usedAt"  TIMESTAMPTZ,
+  "createdAt" TIMESTAMPTZ DEFAULT now(),
+  INDEX "idx_couple_invite_token_hash" ("tokenHash")
+);
+
 CREATE TABLE CouplePortrait (
   "id" TEXT NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
   "coupleId" TEXT NOT NULL,

@@ -191,7 +191,22 @@ async function mirrorSubscriptionToPartner(
 
   const subscription = await withTimeout(stripe.subscriptions.retrieve(subscriptionId), 10000);
   const currentPeriodEnd = (subscription as unknown as { current_period_end: number }).current_period_end;
+  if (typeof currentPeriodEnd !== 'number' || currentPeriodEnd <= 0) {
+    logger.error('Stripe subscription missing current_period_end for partner mirroring', {
+      coupleId,
+      subscriptionId,
+    });
+    return;
+  }
   const expiresAt = new Date(currentPeriodEnd * 1000).toISOString();
+  if (new Date(expiresAt) <= new Date()) {
+    logger.error('Stripe subscription current_period_end is in the past, skipping partner mirror', {
+      coupleId,
+      subscriptionId,
+      currentPeriodEnd,
+    });
+    return;
+  }
 
   await dbRetry<null>(async () =>
     supabaseAdmin.from('UserPass').upsert(

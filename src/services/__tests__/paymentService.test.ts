@@ -63,15 +63,38 @@ vi.mock('@/lib/analytics', () => ({
   },
 }));
 
-function buildDefaultFrom() {
-  return {
+function buildDefaultFrom(table?: string) {
+  const base = {
     select: vi.fn().mockReturnThis(),
     eq: vi.fn().mockReturnThis(),
     maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }),
     delete: vi.fn().mockReturnThis(),
     insert: vi.fn().mockResolvedValue({ data: null, error: null }),
     update: vi.fn().mockReturnThis(),
+    upsert: vi.fn().mockResolvedValue({ data: null, error: null }),
   };
+
+  if (table === 'Couple') {
+    return {
+      ...base,
+      maybeSingle: vi.fn().mockResolvedValue({
+        data: { id: 'couple_1', user1Id: 'u1', user2Id: 'u2' },
+        error: null,
+      }),
+    };
+  }
+
+  if (table === 'User') {
+    return {
+      ...base,
+      maybeSingle: vi.fn().mockResolvedValue({
+        data: { activePassExpiresAt: null },
+        error: null,
+      }),
+    };
+  }
+
+  return base;
 }
 
 describe('paymentService', () => {
@@ -85,7 +108,9 @@ describe('paymentService', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (supabaseAdmin.from as ReturnType<typeof vi.fn>).mockImplementation(() => buildDefaultFrom());
+    (supabaseAdmin.from as ReturnType<typeof vi.fn>).mockImplementation((table: string) =>
+      buildDefaultFrom(table)
+    );
   });
 
   afterEach(() => {
@@ -189,6 +214,73 @@ describe('paymentService', () => {
       await expect(paymentService.processStripeEvent(event)).rejects.toThrow('Fulfillment failed');
     });
 
+    it('mirrors subscription to partner on checkout.session.completed with coupleId', async () => {
+      const session = {
+        id: 'cs_couple',
+        metadata: { sku: 'SUBSCRIPTION_ANNUAL', userId: 'u1', coupleId: 'couple_1' },
+        customer_details: null,
+        customer: null,
+        payment_intent: 'pi_couple',
+        invoice: null,
+        subscription: 'sub_123',
+      };
+      const event = {
+        id: 'evt_couple',
+        type: 'checkout.session.completed',
+        data: { object: session },
+      } as unknown as Stripe.Event;
+
+      const userPassMock = buildDefaultFrom('UserPass');
+      (supabaseAdmin.from as ReturnType<typeof vi.fn>).mockImplementation((table: string) => {
+        const base = buildDefaultFrom(table);
+        if (table === 'UserPass') return userPassMock;
+        return base;
+      });
+      (supabaseAdmin.rpc as ReturnType<typeof vi.fn>).mockResolvedValue({ data: null, error: null });
+
+      await paymentService.processStripeEvent(event);
+
+      expect(userPassMock.upsert).toHaveBeenCalledWith(
+        expect.objectContaining({ userId: 'u2', source: 'couple_partner' }),
+        expect.anything(),
+      );
+    });
+
+    it('does not mirror when Stripe subscription lacks current_period_end', async () => {
+      subscriptionsRetrieve.mockResolvedValueOnce({
+        id: 'sub_bad',
+        metadata: {},
+        current_period_end: undefined,
+      });
+
+      const session = {
+        id: 'cs_bad',
+        metadata: { sku: 'SUBSCRIPTION_ANNUAL', userId: 'u1', coupleId: 'couple_1' },
+        customer_details: null,
+        customer: null,
+        payment_intent: 'pi_bad',
+        invoice: null,
+        subscription: 'sub_bad',
+      };
+      const event = {
+        id: 'evt_bad',
+        type: 'checkout.session.completed',
+        data: { object: session },
+      } as unknown as Stripe.Event;
+
+      const userPassMock = buildDefaultFrom('UserPass');
+      (supabaseAdmin.from as ReturnType<typeof vi.fn>).mockImplementation((table: string) => {
+        const base = buildDefaultFrom(table);
+        if (table === 'UserPass') return userPassMock;
+        return base;
+      });
+      (supabaseAdmin.rpc as ReturnType<typeof vi.fn>).mockResolvedValue({ data: null, error: null });
+
+      await paymentService.processStripeEvent(event);
+
+      expect(userPassMock.upsert).not.toHaveBeenCalled();
+    });
+
     describe('invoice.payment_succeeded', () => {
       it('reactivates subscription and creates purchase when none exists', async () => {
         const invoice = {
@@ -205,7 +297,7 @@ describe('paymentService', () => {
         vi.mocked(getPurchaseByStripeInvoiceId).mockResolvedValue(null);
 
         (supabaseAdmin.from as ReturnType<typeof vi.fn>).mockImplementation((table: string) => {
-          const base = buildDefaultFrom();
+          const base = buildDefaultFrom(table);
           if (table === 'Pack') {
             base.eq = vi.fn().mockReturnValue({
               maybeSingle: vi.fn().mockResolvedValue({
@@ -237,6 +329,53 @@ describe('paymentService', () => {
         } as unknown as Stripe.Event);
 
         expect(getUserByStripeCustomerId).not.toHaveBeenCalled();
+      });
+
+      it('mirrors subscription to partner when subscription metadata has coupleId', async () => {
+        subscriptionsRetrieve.mockResolvedValueOnce({
+          id: 'sub_1',
+          metadata: { coupleId: 'couple_1' },
+          current_period_end: Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60,
+        });
+
+        const invoice = {
+          id: 'inv_couple',
+          customer: 'cus_1',
+          subscription: 'sub_1',
+          amount_paid: 5999,
+          currency: 'eur',
+          lines: { data: [{ price: { id: 'price_annual' } }] },
+          payment_intent: 'pi_inv_couple',
+        } as unknown as Stripe.Invoice;
+
+        vi.mocked(getUserByStripeCustomerId).mockResolvedValue({ id: 'u1', email: 'a@b.com' } as unknown as Awaited<ReturnType<typeof getUserByStripeCustomerId>>);
+        vi.mocked(getPurchaseByStripeInvoiceId).mockResolvedValue(null);
+
+        const userPassMock = buildDefaultFrom('UserPass');
+        (supabaseAdmin.from as ReturnType<typeof vi.fn>).mockImplementation((table: string) => {
+          const base = buildDefaultFrom(table);
+          if (table === 'Pack') {
+            base.eq = vi.fn().mockReturnValue({
+              maybeSingle: vi.fn().mockResolvedValue({
+                data: { id: 'pack-sub-annual', price: 59.99 },
+                error: null,
+              }),
+            });
+          }
+          if (table === 'UserPass') return userPassMock;
+          return base;
+        });
+
+        await paymentService.processStripeEvent({
+          id: 'evt_inv_couple',
+          type: 'invoice.payment_succeeded',
+          data: { object: invoice },
+        } as unknown as Stripe.Event);
+
+        expect(userPassMock.upsert).toHaveBeenCalledWith(
+          expect.objectContaining({ userId: 'u2', source: 'couple_partner' }),
+          expect.anything(),
+        );
       });
     });
 
@@ -281,7 +420,7 @@ describe('paymentService', () => {
         } as unknown as Awaited<ReturnType<typeof getPurchaseByStripePaymentId>>);
 
         (supabaseAdmin.from as ReturnType<typeof vi.fn>).mockImplementation((table: string) => {
-          const base = buildDefaultFrom();
+          const base = buildDefaultFrom(table);
           if (table === 'Pack') {
             base.eq = vi.fn().mockReturnValue({
               maybeSingle: vi.fn().mockResolvedValue({

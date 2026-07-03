@@ -258,6 +258,7 @@ model User {
   user1Couples   Couple[]      @relation("User1Couples")
   user2Couples   Couple[]      @relation("User2Couples")
   timeCapsules   TimeCapsule[]
+  sentCoupleInvites CoupleInvite[]
 
   @@index([stripeCustomerId])
 }
@@ -339,6 +340,19 @@ model Couple {
   @@unique([user1Id, user2Id])
   @@index([user1Id])
   @@index([user2Id])
+}
+
+// Invitation single-use pour lier un couple (hash du token signé)
+model CoupleInvite {
+  id        String    @id @default(cuid())
+  inviterId String
+  inviter   User      @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([tokenHash])
 }
 
 model TotemState {
