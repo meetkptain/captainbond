@@ -32,6 +32,7 @@ vi.mock('@/lib/db/repositories', () => ({
   updateRoomStatusWithGuard: vi.fn(),
   recordVoteRpc: vi.fn(),
   upsertRevealScoresRpc: vi.fn(),
+  advanceRoomRoundRpc: vi.fn(),
 }));
 
 vi.mock('@/lib/db/repositories/roomQuestionRepository', () => ({
@@ -46,6 +47,7 @@ import {
   updateRoom,
   recordVoteRpc,
   upsertRevealScoresRpc,
+  advanceRoomRoundRpc,
   getResponsesByRoomAndQuestion,
   getPlayersInRoom,
 } from '@/lib/db/repositories';
@@ -174,18 +176,37 @@ describe('roomGameService', () => {
         { id: 'question-1', text: 'Qui a faim?', mode: 'ICEBREAKER', intensityLevel: 1 }
       ] as Pick<Question, 'id' | 'text' | 'intensityLevel' | 'tags' | 'mode'>[]);
 
-      vi.mocked(updateRoomWithStatusGuard).mockResolvedValue({
+      vi.mocked(advanceRoomRoundRpc).mockResolvedValue({
         id: 'room-1',
         status: 'PLAYING',
-        currentQuestionId: 'question-1',
         round: 1,
-      } as Room);
+      });
 
       const result = await startNextRound('ABCD', 'host-1');
       expect(result.success).toBe(true);
       expect(result.status).toBe('PLAYING');
       expect(result.round).toBe(1);
       expect(result.question.id).toBe('question-1');
+    });
+
+    it('throws CONFLICT when another request already advanced the round', async () => {
+      vi.mocked(getRoomByCode).mockResolvedValue(mockRoom({ currentMode: 'ICEBREAKER', status: 'PLAYING', round: 2 }));
+      vi.mocked(getPlayersInRoom).mockResolvedValue([
+        { id: 'host-1', name: 'Host', isHost: true, roomId: 'room-1' },
+        { id: 'player-1', name: 'A', isHost: false, roomId: 'room-1' },
+        { id: 'player-2', name: 'B', isHost: false, roomId: 'room-1' },
+        { id: 'player-3', name: 'C', isHost: false, roomId: 'room-1' },
+      ] as Player[]);
+      vi.mocked(listQuestionsForDeck).mockResolvedValue([
+        { id: 'question-1', text: 'Qui a faim?', mode: 'ICEBREAKER', intensityLevel: 1 }
+      ] as Pick<Question, 'id' | 'text' | 'intensityLevel' | 'tags' | 'mode'>[]);
+
+      vi.mocked(advanceRoomRoundRpc).mockRejectedValue(
+        Object.assign(new Error('Race condition: room round already advanced'), { code: 'ROOM_ROUND_RACE' })
+      );
+
+      await expect(startNextRound('ABCD', 'host-1'))
+        .rejects.toThrow(new AppError('CONFLICT', 'Une manche est déjà en cours'));
     });
   });
 });

@@ -208,14 +208,73 @@ describe('middleware', () => {
     expect(res.headers.get('x-request-id')).toBe('req-7');
   });
 
+  it('sets x-lang header on all responses', async () => {
+    const req = new NextRequest(
+      new Request('http://localhost/', {
+        headers: {
+          'accept-language': 'en',
+          'x-request-id': 'req-lang-1',
+        },
+      })
+    );
+    const res = await middleware(req);
+    expect(res.headers.get('x-lang')).toBe('en');
+  });
+
+  it('redirects /blog/* to /fr/blog/* for French users', async () => {
+    const req = new NextRequest(
+      new Request('http://localhost/blog/questions-pour-couple', {
+        headers: {
+          'accept-language': 'fr',
+          'x-request-id': 'req-blog-1',
+        },
+      })
+    );
+    const res = await middleware(req);
+    expect(res.status).toBe(301);
+    expect(res.headers.get('location')).toContain('/fr/blog/questions-pour-couple');
+  });
+
+  it('redirects /party to /fr/soiree for French users', async () => {
+    const req = new NextRequest(
+      new Request('http://localhost/party', {
+        headers: {
+          'accept-language': 'fr',
+          'x-request-id': 'req-party-1',
+        },
+      })
+    );
+    const res = await middleware(req);
+    expect(res.status).toBe(301);
+    expect(res.headers.get('location')).toContain('/fr/soiree');
+  });
+
+  it('redirects /pro to /fr/pro for French users', async () => {
+    const req = new NextRequest(
+      new Request('http://localhost/pro', {
+        headers: {
+          'accept-language': 'fr',
+          'x-request-id': 'req-pro-1',
+        },
+      })
+    );
+    const res = await middleware(req);
+    expect(res.status).toBe(301);
+    expect(res.headers.get('location')).toContain('/fr/pro');
+  });
+
   it('exports a matcher for admin and player routes', () => {
     expect(config.matcher).toEqual([
       '/',
+      '/party',
+      '/pro',
       '/corporate',
       '/couple',
       '/vault',
       '/b2b/bars-cafes',
       '/group/:path*',
+      '/blog',
+      '/blog/:path*',
       '/admin/:path*',
       '/api/admin/:path*',
       '/api/room/:path*',

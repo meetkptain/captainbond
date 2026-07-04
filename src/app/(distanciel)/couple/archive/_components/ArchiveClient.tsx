@@ -284,7 +284,7 @@ export function ArchiveClient({ coupleId }: ArchiveClientProps) {
                   {isLocked && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-slate-950/60 p-6 text-center">
                       <Icon name="sparkles" className="w-8 h-8 text-amber-300 mb-2" />
-                      <p className="text-sm text-slate-200 mb-3">Activez Premium pour relire cette entrée</p>
+                      <p className="text-sm text-slate-200 mb-3">Activez Premium pour explorer l'historique complet</p>
                       <Link
                         href="/couple"
                         onClick={() => capture(AnalyticsEvents.CHECKOUT_INITIATED, { context: 'archive', coupleId, source: 'archive_card_overlay' })}

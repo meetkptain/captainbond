@@ -94,23 +94,8 @@ export function CoupleDashboardView({ defaultLang = 'en' }: CoupleDashboardViewP
 
   const showOnboarding = !onboardingDismissed && couple?.createdAt && currentDay <= 7;
 
-  // ─── Render: Loading ──────────────────────────────────────────────────────
-  if (loading) {
-    return (
-      <div className="couple-page">
-        <BackgroundOrbs />
-        <div className="couple-container">
-          <div className="couple-empty">
-            <div className="couple-spinner" />
-            <p className="couple-empty-text">Chargement de votre espace couple…</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // ─── Render: Public Landing Page if not authenticated ───────────────────
-  if (!userId) {
+  // ─── Render: Public Landing Page (always first — SEO) ───────────────────
+  if (!userId || loading) {
     return (
       <>
         <CoupleLanding defaultLang={defaultLang} onStartAuth={() => setShowAuthModal(true)} />

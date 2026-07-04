@@ -26,16 +26,16 @@ describe('OnboardingInvite', () => {
     render(<OnboardingInvite />);
 
     expect(await screen.findByText('Créez votre Espace Couple')).toBeDefined();
-    expect(screen.getByRole('button', { name: /Essayer un rituel solo/i })).toBeDefined();
+    expect(screen.getByRole('button', { name: /Répondre à la première question en solo/i })).toBeDefined();
     expect(screen.getByRole('button', { name: /Retour à l'accueil/i })).toBeDefined();
   });
 
-  it('navigates to /vault when clicking the solo ritual CTA', async () => {
+  it('navigates to /couple when clicking the solo ritual CTA', async () => {
     render(<OnboardingInvite />);
 
-    const soloBtn = await screen.findByRole('button', { name: /Essayer un rituel solo/i });
+    const soloBtn = await screen.findByRole('button', { name: /Répondre à la première question en solo/i });
     fireEvent.click(soloBtn);
 
-    expect(pushMock).toHaveBeenCalledWith('/vault');
+    expect(pushMock).toHaveBeenCalledWith('/couple?draft=true');
   });
 });

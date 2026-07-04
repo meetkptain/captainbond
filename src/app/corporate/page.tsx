@@ -1,6 +1,13 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 import { LandingLayout } from '@/components/landing/LandingLayout';
 import { LandingButton } from '@/components/landing/LandingButton';
 import { Section } from '@/components/landing/Section';
@@ -90,13 +97,6 @@ const content = {
 export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLang?: 'fr' | 'en' }) {
   const [lang, setLang] = useState<'fr' | 'en'>(defaultLang);
   const [participants, setParticipants] = useState(50);
-  const [formData, setFormData] = useState({
-    name: '',
-    company: '',
-    email: '',
-    date: '',
-    notes: '',
-  });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -114,6 +114,32 @@ export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLa
   const t = content[lang];
   const quote = getB2BQuote(participants);
   const estimatedPrice = estimateB2BPrice(participants);
+
+  const contactSchema = useMemo(() => z.object({
+    name: z.string().min(2, 'Name must be at least 2 characters'),
+    company: z.string(),
+    email: z.string().email('Please enter a valid email'),
+    participants: z.coerce.number().min(MIN_PARTICIPANTS, `Minimum ${MIN_PARTICIPANTS} participants`).max(500, 'Maximum 500 participants'),
+    date: z.string(),
+    notes: z.string(),
+  }), []);
+
+  const { register, handleSubmit: rhfHandleSubmit, formState: { errors }, watch, reset } = useForm({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: '',
+      company: '',
+      email: '',
+      participants: 50,
+      date: '',
+      notes: '',
+    },
+  });
+
+  const watchedParticipants = watch('participants');
+  useEffect(() => {
+    setParticipants(Math.max(MIN_PARTICIPANTS, parseInt(String(watchedParticipants), 10) || MIN_PARTICIPANTS));
+  }, [watchedParticipants]);
 
   const handleBookInstant = async () => {
     setIsBooking(true);
@@ -134,15 +160,13 @@ export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLa
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: z.infer<typeof contactSchema>) => {
     setSubmitting(true);
     setError(null);
 
     try {
       await api.post('/api/corporate/contact', {
-        ...formData,
-        participants,
+        ...data,
         estimatedPrice,
         formula: quote.formula,
         source: 'corporate',
@@ -275,14 +299,14 @@ export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLa
                 {t.formSubmittedDesc}
               </p>
               <button
-                onClick={() => setSubmitted(false)}
+                onClick={() => { setSubmitted(false); reset(); }}
                 className="text-sm text-white/50 hover:text-white transition-colors cursor-pointer bg-transparent border-none underline"
               >
                 {t.formAnotherBtn}
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-10">
+            <form onSubmit={rhfHandleSubmit(onSubmit)} className="space-y-6 rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-10">
               <div className="text-center space-y-2">
                 <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
                   {t.formTitle}
@@ -294,30 +318,27 @@ export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLa
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className="block text-xs font-mono uppercase text-white/50 mb-2">
+                  <Label htmlFor="name" className="text-xs font-mono uppercase text-white/50 mb-2">
                     {t.formLabelName}
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     id="name"
                     type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    {...register('name')}
                     placeholder="Jean Dupont"
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-white/20 focus:outline-none focus:border-white/30 transition-colors text-sm"
                     disabled={submitting}
                   />
+                  {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name.message}</p>}
                 </div>
                 <div>
-                  <label htmlFor="company" className="block text-xs font-mono uppercase text-white/50 mb-2">
+                  <Label htmlFor="company" className="text-xs font-mono uppercase text-white/50 mb-2">
                     {t.formLabelCompany}
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     id="company"
                     type="text"
-                    required
-                    value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    {...register('company')}
                     placeholder="Acme Corp"
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-white/20 focus:outline-none focus:border-white/30 transition-colors text-sm"
                     disabled={submitting}
@@ -326,47 +347,42 @@ export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLa
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-xs font-mono uppercase text-white/50 mb-2">
+                <Label htmlFor="email" className="text-xs font-mono uppercase text-white/50 mb-2">
                   {t.formLabelEmail}
-                </label>
-                <input
+                </Label>
+                <Input
                   id="email"
                   type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  {...register('email')}
                   placeholder="jean.dupont@acme.com"
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-white/20 focus:outline-none focus:border-white/30 transition-colors text-sm"
                   disabled={submitting}
                 />
+                {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="participants" className="block text-xs font-mono uppercase text-white/50 mb-2">
+                  <Label htmlFor="participants" className="text-xs font-mono uppercase text-white/50 mb-2">
                     {t.formLabelParticipants} ({participants})
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     id="participants"
                     type="number"
-                    required
-                    min={MIN_PARTICIPANTS}
-                    value={participants}
-                    onChange={(e) => setParticipants(Math.max(MIN_PARTICIPANTS, parseInt(e.target.value, 10) || MIN_PARTICIPANTS))}
+                    {...register('participants')}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-white/20 focus:outline-none focus:border-white/30 transition-colors text-sm"
                     disabled={submitting}
                   />
+                  {errors.participants && <p className="text-red-400 text-xs mt-1">{errors.participants.message}</p>}
                 </div>
                 <div>
-                  <label htmlFor="date" className="block text-xs font-mono uppercase text-white/50 mb-2">
+                  <Label htmlFor="date" className="text-xs font-mono uppercase text-white/50 mb-2">
                     {t.formLabelDate}
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     id="date"
                     type="date"
-                    required
-                    value={formData.date}
-                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    {...register('date')}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-white/20 focus:outline-none focus:border-white/30 transition-colors text-sm"
                     disabled={submitting}
                   />
@@ -386,13 +402,12 @@ export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLa
               </div>
 
               <div>
-                <label htmlFor="notes" className="block text-xs font-mono uppercase text-white/50 mb-2">
+                <Label htmlFor="notes" className="text-xs font-mono uppercase text-white/50 mb-2">
                   {t.formLabelNotes}
-                </label>
-                <textarea
+                </Label>
+                <Textarea
                   id="notes"
-                  value={formData.notes}
-                  onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                  {...register('notes')}
                   placeholder={t.formNotesPlaceholder}
                   rows={4}
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-white/20 focus:outline-none focus:border-white/30 transition-colors text-sm resize-y"
@@ -406,9 +421,9 @@ export default function CorporateLandingPage({ defaultLang = 'en' }: { defaultLa
                 </p>
               )}
 
-              <LandingButton type="submit" disabled={submitting} className="w-full">
+              <Button type="submit" disabled={submitting} className="w-full">
                 {submitting ? t.formSubmitting : t.formSubmitBtn}
-              </LandingButton>
+              </Button>
             </form>
           )}
         </div>

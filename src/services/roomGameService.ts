@@ -14,6 +14,7 @@ import {
   updateRoomStatusWithGuard,
   recordVoteRpc,
   upsertRevealScoresRpc,
+  advanceRoomRoundRpc,
 } from '@/lib/db/repositories';
 import { listQuestionsForDeck } from '@/lib/db/repositories/roomQuestionRepository';
 import { Room, Question } from '@/lib/db/types';
@@ -192,28 +193,33 @@ export async function startNextRound(roomCode: string, hostId: string): Promise<
     };
   }
 
-  let updatedRoom: Room;
+  let newRound: number;
+  let newStatus: string;
   try {
-    updatedRoom = await updateRoomWithStatusGuard(
-      room.id,
-      {
-        status: 'PLAYING',
-        currentQuestionId: selectedQuestion.id,
-        round: room.round + 1,
-        roundConfig,
-      },
-      'WAITING'
-    );
-  } catch {
-    throw new AppError('CONFLICT', 'Une manche est déjà en cours');
+    const result = await advanceRoomRoundRpc({
+      roomCode: room.code,
+      expectedRound: room.round,
+      expectedStatus: room.status,
+      questionId: selectedQuestion.id,
+      roundConfig,
+    });
+    newRound = result.round;
+    newStatus = result.status;
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    const code = (err as unknown as Record<string, unknown>)?.code;
+    if (code === 'ROOM_ROUND_RACE' || msg.includes('Race condition')) {
+      throw new AppError('CONFLICT', 'Une manche est déjà en cours');
+    }
+    throw new AppError('INTERNAL_ERROR', 'Erreur lors du démarrage de la manche');
   }
 
   const roundDuration = serverMode?.manifest?.roundDurationSeconds ?? 30;
 
   return {
     success: true,
-    status: updatedRoom.status,
-    round: updatedRoom.round,
+    status: newStatus,
+    round: newRound,
     roundDuration,
     freeQuestionsUsed,
     freeQuestionsLimit: FREE_QUESTIONS_LIMIT,

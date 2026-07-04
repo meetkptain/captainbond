@@ -62,9 +62,10 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
 
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set('x-request-id', requestId);
+  requestHeaders.set('x-lang', pathname.startsWith('/fr/') ? 'fr' : 'en');
 
   // 1. Détection de langue et redirection bilingue (avec bypass Googlebot et préférences cookies)
-  if (pathname === '/' || pathname === '/corporate' || pathname === '/couple' || pathname === '/vault' || pathname === '/b2b/bars-cafes' || pathname.startsWith('/group/')) {
+  if (pathname === '/' || pathname === '/party' || pathname === '/pro' || pathname === '/corporate' || pathname === '/couple' || pathname === '/vault' || pathname === '/b2b/bars-cafes' || pathname.startsWith('/group/') || pathname.startsWith('/blog/')) {
     const userAgent = req.headers.get('user-agent') || '';
     const isBot = /bot|googlebot|bingbot|yandexbot|baidu|duckduckbot|crawler|spider|robot|crawling/i.test(userAgent);
     const langCookie = req.cookies.get('cb_language')?.value;
@@ -73,13 +74,18 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
       const acceptLang = req.headers.get('accept-language') || '';
       if (acceptLang.toLowerCase().includes('fr')) {
         let dest = '/fr';
+        if (pathname === '/party') dest = '/fr/soiree';
+        if (pathname === '/pro') dest = '/fr/pro';
         if (pathname === '/corporate') dest = '/fr/corporate';
         if (pathname === '/couple') dest = '/fr/couple';
         if (pathname === '/vault') dest = '/fr/vault';
         if (pathname === '/b2b/bars-cafes') dest = '/fr/b2b/bars-cafes';
+        if (pathname === '/privacy') dest = '/fr/privacy';
         if (pathname.startsWith('/group/')) dest = `/fr${pathname}`;
-        const response = NextResponse.redirect(new URL(dest, req.url), 301);
+        if (pathname.startsWith('/blog/')) dest = `/fr${pathname}`;
+        const response = NextResponse.redirect(new URL(dest, req.url), 302);
         response.headers.set('x-request-id', requestId);
+        response.headers.set('x-lang', 'fr');
         return response;
       }
     }
@@ -100,6 +106,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
         logger.warn('Unauthorized admin sync attempt', { requestId, pathname });
         const response = NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
         response.headers.set('x-request-id', requestId);
+        response.headers.set('x-lang', 'en');
         return response;
       }
 
@@ -114,6 +121,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
       if (pathname.startsWith('/api/admin')) {
         const response = NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
         response.headers.set('x-request-id', requestId);
+        response.headers.set('x-lang', 'en');
         return response;
       }
 
@@ -122,6 +130,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
       );
       response.cookies.set(ADMIN_COOKIE_NAME, '', { maxAge: 0, path: '/' });
       response.headers.set('x-request-id', requestId);
+      response.headers.set('x-lang', 'en');
       return response;
     }
 
@@ -137,6 +146,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
         { status: 401 }
       );
       response.headers.set('x-request-id', requestId);
+      response.headers.set('x-lang', 'en');
       return response;
     }
 
@@ -150,6 +160,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
       );
       response.cookies.set(PLAYER_COOKIE_NAME, '', { maxAge: 0, path: '/' });
       response.headers.set('x-request-id', requestId);
+      response.headers.set('x-lang', 'en');
       return response;
     }
 
@@ -160,5 +171,5 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
 }
 
 export const config = {
-  matcher: ['/', '/corporate', '/couple', '/vault', '/b2b/bars-cafes', '/group/:path*', '/admin/:path*', '/api/admin/:path*', '/api/room/:path*', '/api/me/:path*', '/api/checkout/:path*', '/api/player/delete-me'],
+  matcher: ['/', '/party', '/pro', '/corporate', '/couple', '/vault', '/privacy', '/b2b/bars-cafes', '/group/:path*', '/blog', '/blog/:path*', '/admin/:path*', '/api/admin/:path*', '/api/room/:path*', '/api/me/:path*', '/api/checkout/:path*', '/api/player/delete-me'],
 };

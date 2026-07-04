@@ -1,33 +1,57 @@
 // ================================================================
 // CAPTAIN BOND — Configuration Centralisée de Monétisation
 // ================================================================
-// Ce fichier centralise toutes les variables de pricing et de
-// comportement du paywall. Modifiez ces valeurs pour l'A/B testing
-// ou les promotions saisonnières sans toucher au code UI.
-// ================================================================
 
 export const MONETIZATION_CONFIG = {
-  // --- Prix ---
-  PROFILE_PRICE_CENTS: 499,                  // 4.99€ — Dossier Classifié individuel
-  COUPLE_PROFILE_PRICE_CENTS: 499,           // 4.99€ — Dossier de Compatibilité ludique (Date Night)
-  PASS_24H_PRICE_CENTS: 299,                 // 2.99€ — Pass 24h (tous modes + profils)
-  PASS_WEEKEND_PRICE_CENTS: 499,             // 4.99€ — Pass Week-end
-  SUBSCRIPTION_MONTHLY_PRICE_CENTS: 799,     // 7.99€/mois — Abonnement couple mensuel
-  SUBSCRIPTION_ANNUAL_PRICE_CENTS: 3999,     // 39.99€/an — Abonnement couple annuel
+  PROFILE_PRICE_CENTS: 499,
+  COUPLE_PROFILE_PRICE_CENTS: 499,
+  PASS_24H_PRICE_CENTS: 299,
+  PASS_WEEKEND_PRICE_CENTS: 499,
+  SUBSCRIPTION_MONTHLY_PRICE_CENTS: 799,
+  SUBSCRIPTION_ANNUAL_PRICE_CENTS: 3999,
   CURRENCY: 'eur' as const,
 
-  // --- Entonnoir Freemium ---
-  FREE_TEASER_ENABLED: true,          // true = Archétype visible gratuitement, axes floutés
-                                       // false = Tout bloqué derrière le paywall
+  FREE_TEASER_ENABLED: true,
+  MIN_QUESTIONS_RELIABILITY: 10,
+  CONFIDENCE_THRESHOLD_PERCENT: 80,
 
-  // --- Jauge de Fiabilité ---
-  MIN_QUESTIONS_RELIABILITY: 10,       // Nombre minimum de questions pour un profil "fiable"
-  CONFIDENCE_THRESHOLD_PERCENT: 80,    // % minimum de la jauge pour autoriser l'achat
-
-  // --- Stripe ---
   STRIPE_PRODUCT_NAME: 'Dossier Classifié — Captain Bond',
   STRIPE_COUPLE_PRODUCT_NAME: 'Dossier de Compatibilité ludique — Captain Bond',
   STRIPE_PASS_24H_PRODUCT_NAME: 'Pass 24h — Captain Bond',
 } as const;
 
 export type MonetizationConfig = typeof MONETIZATION_CONFIG;
+
+export const REVENUECAT_PRODUCT_MAPPING: Record<
+  string,
+  { packId: string; productType: string; durationHours: number }
+> = {
+  'com.meetkptain.captainbond.pass24h': {
+    packId: 'pack-pass-24h',
+    productType: 'PASS_24H',
+    durationHours: 24,
+  },
+  'com.meetkptain.captainbond.dossierflirt': {
+    packId: 'pack-profile',
+    productType: 'PROFILE',
+    durationHours: 24 * 365,
+  },
+  'com.meetkptain.captainbond.dossiercouple': {
+    packId: 'pack-profile-couple',
+    productType: 'PROFILE_COUPLE',
+    durationHours: 24 * 365,
+  },
+  'com.meetkptain.captainbond.subcouple': {
+    packId: 'pack-sub-monthly',
+    productType: 'SUBSCRIPTION_MONTHLY',
+    durationHours: 24 * 30,
+  },
+} as const;
+
+export const COUPLE_FALLBACK_QUESTIONS = [
+  'Quel est le plus grand point commun inattendu entre vous deux ?',
+  'Quelle petite attention du quotidien chez ton partenaire te touche le plus ?',
+  'Quelle habitude de l\'autre as-tu fini par adopter avec le temps ?',
+  'Si votre couple était un genre de film ou une chanson, lequel serait-ce et pourquoi ?',
+  'Quel voyage ou projet aimeriez-vous réaliser ensemble dans les 12 prochains mois ?',
+] as const;

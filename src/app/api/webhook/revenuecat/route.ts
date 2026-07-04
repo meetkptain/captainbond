@@ -1,57 +1,55 @@
 import { NextResponse } from 'next/server';
+import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
 import { supabaseAdmin } from '@/lib/supabase-admin';
+import { REVENUECAT_PRODUCT_MAPPING } from '@/lib/config/monetization';
+import { insertWebhookEventIfNotExists } from '@/lib/db/repositories/webhookEventRepository';
 import { logger } from '@/lib/logger';
+import { eventBus } from '@/lib/events/bus';
 
 export const runtime = 'edge';
 
-// Simple mapping between Apple/Google Product IDs and internal Pack database IDs
-const PRODUCT_MAPPING: Record<string, { packId: string; productType: string; durationHours: number }> = {
-  'com.meetkptain.captainbond.pass24h': {
-    packId: 'pack-pass-24h',
-    productType: 'PASS_24H',
-    durationHours: 24,
-  },
-  'com.meetkptain.captainbond.dossierflirt': {
-    packId: 'pack-profile',
-    productType: 'PROFILE',
-    durationHours: 24 * 365, // Lifetime profile unlock for that user
-  },
-  'com.meetkptain.captainbond.dossiercouple': {
-    packId: 'pack-profile-couple',
-    productType: 'PROFILE_COUPLE',
-    durationHours: 24 * 365,
-  },
-  'com.meetkptain.captainbond.subcouple': {
-    packId: 'pack-sub-monthly',
-    productType: 'SUBSCRIPTION_MONTHLY',
-    durationHours: 24 * 30,
-  }
-};
+const revenueCatEventSchema = z.object({
+  event: z.object({
+    id: z.string().min(1),
+    type: z.string().min(1),
+    original_app_user_id: z.string().optional(),
+    product_id: z.string().optional(),
+    transaction_id: z.string().optional(),
+    store: z.string().optional(),
+    original_transaction_id: z.string().optional(),
+    purchaser_info: z.record(z.string(), z.unknown()).optional(),
+    attributes: z
+      .object({
+        roomCode: z.object({ value: z.string() }).optional(),
+        playerId: z.object({ value: z.string() }).optional(),
+      })
+      .passthrough()
+      .optional(),
+  }).passthrough(),
+});
+
+type RevenueCatPayload = z.infer<typeof revenueCatEventSchema>;
 
 export const POST = withApiHandler({
-  async handler({ req }) {
+  bodySchema: revenueCatEventSchema,
+  async handler({ req, body }) {
     const authHeader = req.headers.get('Authorization');
     const secret = process.env.REVENUECAT_WEBHOOK_SECRET;
 
-    // Optional auth secret verification
     if (secret && authHeader !== `Bearer ${secret}`) {
       logger.warn('Unauthorized RevenueCat webhook attempt');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const payload = await req.json();
+    const payload = body as RevenueCatPayload;
     const event = payload.event;
-    if (!event) {
-      return NextResponse.json({ error: 'Missing event body' }, { status: 400 });
-    }
 
     logger.info('Received RevenueCat webhook event', { eventId: event.id, type: event.type });
 
-    // Handle initial purchase or renewal event
     if (event.type === 'INITIAL_PURCHASE' || event.type === 'RENEWAL') {
       const eventId = event.id;
-      const userId = event.original_app_user_id; // Passed as appUserID on the client
+      const userId = event.original_app_user_id;
       const productId = event.product_id;
 
       if (!userId) {
@@ -59,14 +57,22 @@ export const POST = withApiHandler({
         return NextResponse.json({ error: 'Missing app user id' }, { status: 400 });
       }
 
-      // Map native App Store SKU to internal database Pack ID
-      const mapping = PRODUCT_MAPPING[productId];
+      const mapping = REVENUECAT_PRODUCT_MAPPING[productId || ''];
       if (!mapping) {
         logger.error('No database mapping found for RevenueCat product ID', { productId });
         return NextResponse.json({ error: 'Unknown product' }, { status: 400 });
       }
 
-      // Call fulfill_checkout RPC directly (reusing Stripe checkout logic)
+      const { inserted } = await insertWebhookEventIfNotExists(
+        eventId,
+        `revenuecat.${event.type}`,
+        payload
+      );
+      if (!inserted) {
+        logger.info('Duplicate RevenueCat webhook event, skipping', { eventId });
+        return NextResponse.json({ received: true, idempotent: true });
+      }
+
       const { error: fulfillError } = await supabaseAdmin.rpc('fulfill_checkout', {
         p_event_id: eventId,
         p_event_type: `revenuecat.${event.type}`,
@@ -91,6 +97,8 @@ export const POST = withApiHandler({
       }
 
       logger.info('RevenueCat purchase fulfilled successfully', { userId, productId });
+
+      eventBus.emit('webhook:processed', { type: 'REVENUECAT', eventId, sku: mapping.packId, userId });
     } else {
       logger.info('Unhandled RevenueCat webhook event type', { type: event.type });
     }

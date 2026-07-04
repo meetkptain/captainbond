@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/b2b.png`,
+        url: `${siteUrl}/og/b2b.webp`,
         width: 1200,
         height: 630,
         alt: 'Captain Bond Pro',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Captain Bond Pro — Bars, Cafés & Team Building',
     description: 'Interactive giant-screen games for bars, cafés, and corporate team building.',
-    images: [`${siteUrl}/og/b2b.png`],
+    images: [`${siteUrl}/og/b2b.webp`],
   },
 };
 

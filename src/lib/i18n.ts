@@ -194,9 +194,9 @@ interface LanguageContextProps {
 
 const LanguageContext = createContext<LanguageContextProps | null>(null);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
+export function LanguageProvider({ children, initialLang }: { children: ReactNode; initialLang?: Language }) {
   const [language, setLanguageState] = useState<Language>(() => {
-    if (typeof window === 'undefined') return 'fr';
+    if (typeof window === 'undefined') return initialLang || 'fr';
     const stored = localStorage.getItem('cb_language') as Language;
     if (stored === 'fr' || stored === 'en') return stored;
     const browserLang = navigator.language.substring(0, 2).toLowerCase();

@@ -10,9 +10,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteUrl}/blog/questions-pour-couple`,
     languages: {
-      'fr-FR': `${siteUrl}/fr/blog/questions-pour-couple`,
-      'en-US': `${siteUrl}/blog/questions-pour-couple`,
+      'x-default': `${siteUrl}/blog/questions-pour-couple`,
+      'en': `${siteUrl}/blog/questions-pour-couple`,
+      'fr': `${siteUrl}/fr/blog/questions-pour-couple`,
     },
+  },
+  other: {
+    'datePublished': '2025-06-01',
+    'dateModified': new Date().toISOString().split('T')[0],
   },
   openGraph: {
     title: '150 Questions for Couples: From Fun to Deep',
@@ -22,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/blog-questions-couple-en.png`,
+        url: `${siteUrl}/og/blog-questions-couple-en.webp`,
         width: 1200,
         height: 630,
         alt: '150 Questions for Couples: From Fun to Deep',
@@ -36,7 +41,7 @@ export const metadata: Metadata = {
     title: '150 Questions for Couples: From Fun to Deep',
     description:
       'A curated list of couple questions covering fun, intimacy, values and future dreams — plus a simple ritual to turn them into real connection.',
-    images: [`${siteUrl}/og/blog-questions-couple-en.png`],
+    images: [`${siteUrl}/og/blog-questions-couple-en.webp`],
   },
 };
 
@@ -205,10 +210,49 @@ const futureQuestions = [
   'What is one promise you want to make to us?',
 ];
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    ...funQuestions.slice(0, 15).map((q) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: '' },
+    })),
+    ...gettingToKnowQuestions.slice(0, 15).map((q) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: '' },
+    })),
+    ...deepQuestions.slice(0, 15).map((q) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: '' },
+    })),
+    ...intimateQuestions.slice(0, 15).map((q) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: '' },
+    })),
+    ...futureQuestions.slice(0, 15).map((q) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: '' },
+    })),
+  ],
+};
+
 export default function QuestionsForCoupleArticlePage() {
+  const publishedDate = 'June 1, 2025';
+
   return (
     <article className="max-w-3xl mx-auto px-4 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <header className="mb-10">
+        <time className="text-sm text-slate-400" dateTime="2025-06-01">{publishedDate}</time>
         <h1 className="text-3xl font-bold mb-4">
           150 Questions for Couples: From Fun to Deep
         </h1>
@@ -219,6 +263,31 @@ export default function QuestionsForCoupleArticlePage() {
           each other.
         </p>
       </header>
+
+      <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+        Most couples do not run out of love; they run out of novelty. The simplest technology for
+        reversing that drift is a single honest question asked with no agenda.
+      </blockquote>
+
+      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
+          CB
+        </div>
+        <div>
+          <p className="font-semibold text-sm">Captain Bond Team</p>
+          <p className="text-xs text-slate-400">
+            Published {publishedDate} &middot; 5 min read
+          </p>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-8 rounded-2xl border border-white/10 text-center mb-10">
+        <p className="text-lg md:text-xl font-semibold text-white mb-2">
+          &ldquo;Couples who ask each other meaningful questions every week report
+          significantly higher relationship satisfaction.&rdquo;
+        </p>
+        <p className="text-sm text-white/60">&mdash; The Gottman Institute</p>
+      </div>
 
       <section className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Why questions matter for couples</h2>
@@ -234,6 +303,19 @@ export default function QuestionsForCoupleArticlePage() {
           to say the thing that normally stays quiet. Over time, these small disclosures become the
           fabric of intimacy: the feeling that someone knows you, not just the version you perform
           for the world.
+        </p>
+        <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
+          <p className="text-slate-200 italic">&ldquo;Love is not about finding the right person, but creating a right relationship through the questions you dare to ask.&rdquo;</p>
+          <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
+        </section>
+        <blockquote className="border-l-4 border-neon-pink pl-6 my-6 italic text-slate-200">
+          A good question does not demand a perfect answer. It invites the thing that normally stays
+          quiet.
+        </blockquote>
+        <p className="text-slate-300 leading-relaxed">
+          This is what makes questions the cheapest, most powerful tool in any relationship. They
+          require no app, no subscription, no special setting — just two people and the willingness
+          to be curious about each other again.
         </p>
       </section>
 
@@ -282,6 +364,11 @@ export default function QuestionsForCoupleArticlePage() {
         </ul>
       </section>
 
+      <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
+        <p className="text-slate-200 italic">&ldquo;Playfulness is the shortest distance between two hearts.&rdquo;</p>
+        <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
+      </section>
+
       <section className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Getting-to-know-you questions</h2>
         <p className="text-slate-300 leading-relaxed mb-4">
@@ -322,6 +409,11 @@ export default function QuestionsForCoupleArticlePage() {
         </ul>
       </section>
 
+      <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
+        <p className="text-slate-200 italic">&ldquo;Desire and direction — when you know where you are going and who you are going with, intimacy finds its way.&rdquo;</p>
+        <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
+      </section>
+
       <section className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Future and values questions</h2>
         <p className="text-slate-300 leading-relaxed mb-4">
@@ -339,7 +431,14 @@ export default function QuestionsForCoupleArticlePage() {
         <h2 className="text-2xl font-semibold mt-10 mb-4">A final thought</h2>
         <p className="text-slate-300 leading-relaxed">
           You do not need the perfect question. You need the courage to ask and the patience to
-          listen. The list above is a starting point. The real magic happens in the follow-up, the
+          listen.
+        </p>
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">
+          You do not need the perfect question. You need the courage to ask and the patience to
+          listen.
+        </blockquote>
+        <p className="text-slate-300 leading-relaxed">
+          The list above is a starting point. The real magic happens in the follow-up, the
           pause, the laugh, the awkward silence you sit through together. Keep a few favorites in
           your back pocket and pull them out when life starts to feel transactional. Your
           relationship will thank you.

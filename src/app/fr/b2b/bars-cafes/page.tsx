@@ -9,8 +9,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteUrl}/fr/b2b/bars-cafes`,
     languages: {
-      'fr-FR': `${siteUrl}/fr/b2b/bars-cafes`,
-      'en-US': `${siteUrl}/b2b/bars-cafes`,
+      'x-default': `${siteUrl}/b2b/bars-cafes`,
+      'en': `${siteUrl}/b2b/bars-cafes`,
+      'fr': `${siteUrl}/fr/b2b/bars-cafes`,
     },
   },
   openGraph: {
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/bars-cafes.png`,
+        url: `${siteUrl}/og/bars-cafes.webp`,
         width: 1200,
         height: 630,
         alt: 'Captain Bond Bars & Cafés',
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Animation de Pubs, Bars & Cafés | Captain Bond",
     description: "Remplissez vos tables les soirs de semaine avec un jeu de quiz interactif autonome sur écran géant.",
-    images: [`${siteUrl}/og/bars-cafes.png`],
+    images: [`${siteUrl}/og/bars-cafes.webp`],
   },
 };
 

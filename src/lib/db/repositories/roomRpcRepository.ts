@@ -61,3 +61,36 @@ export async function upsertRevealScoresRpc(input: UpsertRevealScoresRpcInput): 
   });
   if (error) throw error;
 }
+
+export interface AdvanceRoomRoundInput {
+  roomCode: string;
+  expectedRound: number;
+  expectedStatus: string;
+  questionId: string;
+  roundConfig?: Record<string, unknown> | null;
+}
+
+export interface AdvanceRoomRoundResult {
+  id: string;
+  round: number;
+  status: string;
+}
+
+export async function advanceRoomRoundRpc(input: AdvanceRoomRoundInput): Promise<AdvanceRoomRoundResult> {
+  const { data, error } = await supabaseAdmin.rpc('advance_room_round', {
+    p_room_code: input.roomCode,
+    p_expected_round: input.expectedRound,
+    p_expected_status: input.expectedStatus,
+    p_question_id: input.questionId,
+    p_round_config: input.roundConfig ?? null,
+  });
+  if (error) {
+    if (error.message?.includes('Race condition')) {
+      const raceErr = new Error('Race condition: room round already advanced');
+      (raceErr as unknown as Record<string, unknown>).code = 'ROOM_ROUND_RACE';
+      throw raceErr;
+    }
+    throw error;
+  }
+  return data as AdvanceRoomRoundResult;
+}

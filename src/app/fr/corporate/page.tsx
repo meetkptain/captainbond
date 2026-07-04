@@ -9,8 +9,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteUrl}/fr/corporate`,
     languages: {
-      'fr-FR': `${siteUrl}/fr/corporate`,
-      'en-US': `${siteUrl}/corporate`,
+      'x-default': `${siteUrl}/corporate`,
+      'en': `${siteUrl}/corporate`,
+      'fr': `${siteUrl}/fr/corporate`,
     },
   },
   openGraph: {
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/corporate.png`,
+        url: `${siteUrl}/og/corporate.webp`,
         width: 1200,
         height: 630,
         alt: 'Captain Bond Team Building',
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Team Building Interactif & Séminaires d'Entreprise | Captain Bond",
     description: "Fédérez vos équipes avec un brise-glace interactif moderne.",
-    images: [`${siteUrl}/og/corporate.png`],
+    images: [`${siteUrl}/og/corporate.webp`],
   },
 };
 

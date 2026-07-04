@@ -1,6 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 import { LandingLayout } from '@/components/landing/LandingLayout';
 import { LandingButton } from '@/components/landing/LandingButton';
 import { Section } from '@/components/landing/Section';
@@ -8,6 +15,15 @@ import { FeatureShowcase } from '@/components/landing/FeatureShowcase';
 import { CalendlyBookingButton } from '@/components/CalendlyBookingButton';
 import { Icon } from '@/components/Icon';
 import { api, ApiClientError } from '@/lib/api/client';
+
+const formSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  company: z.string().min(2, 'Establishment name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
+  notes: z.string().optional(),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 const content = {
   fr: {
@@ -60,15 +76,19 @@ const content = {
 
 export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLang?: 'fr' | 'en' }) {
   const [lang, setLang] = useState<'fr' | 'en'>(defaultLang);
-  const [formData, setFormData] = useState({
-    name: '',
-    company: '',
-    email: '',
-    notes: 'Demande de kit de communication physique pour établissement.',
-  });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const { register, handleSubmit, formState: { errors }, trigger, getValues } = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      company: '',
+      email: '',
+      notes: 'Demande de kit de communication physique pour établissement.',
+    },
+  });
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -85,19 +105,21 @@ export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLa
   };
 
   const handleSubscribe = async () => {
-    if (!formData.name || !formData.email || !formData.company) {
+    const valid = await trigger();
+    if (!valid) {
       scrollToForm();
       return;
     }
+    const values = getValues();
     setSubmitting(true);
     setError(null);
     try {
       const origin = window.location.origin;
       const response = await api.post<{ sessionUrl?: string }>('/api/checkout/subscription', {
         plan: 'bar_monthly',
-        name: formData.name,
-        email: formData.email,
-        company: formData.company,
+        name: values.name,
+        email: values.email,
+        company: values.company,
         successUrl: `${origin}/b2b/bars-cafes?subscribed=1`,
         cancelUrl: `${origin}/b2b/bars-cafes`,
       });
@@ -111,13 +133,12 @@ export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLa
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onFormSubmit = async (data: FormValues) => {
     setSubmitting(true);
     setError(null);
     try {
       await api.post('/api/corporate/contact', {
-        ...formData,
+        ...data,
         participants: 10,
         estimatedPrice: 99,
         formula: 'BAR_KIT_REQUEST',
@@ -198,7 +219,7 @@ export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLa
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-10">
+            <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-6 rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-10">
               <div className="text-center space-y-2">
                 <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
                   {t.formTitle}
@@ -216,45 +237,42 @@ export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLa
 
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-xs font-mono uppercase text-white/50 mb-2">{t.formLabelName}</label>
-                  <input
+                  <Label htmlFor="name" className="text-xs font-mono uppercase text-white/50 mb-2">{t.formLabelName}</Label>
+                  <Input
                     id="name"
                     type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    {...register('name')}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-indigo-500/50 text-sm"
                   />
+                  {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name.message}</p>}
                 </div>
                 <div>
-                  <label htmlFor="company" className="block text-xs font-mono uppercase text-white/50 mb-2">{t.formLabelEstablishment}</label>
-                  <input
+                  <Label htmlFor="company" className="text-xs font-mono uppercase text-white/50 mb-2">{t.formLabelEstablishment}</Label>
+                  <Input
                     id="company"
                     type="text"
-                    required
-                    value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    {...register('company')}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-indigo-500/50 text-sm"
                   />
+                  {errors.company && <p className="text-red-400 text-xs mt-1">{errors.company.message}</p>}
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-xs font-mono uppercase text-white/50 mb-2">{t.formLabelEmail}</label>
-                  <input
+                  <Label htmlFor="email" className="text-xs font-mono uppercase text-white/50 mb-2">{t.formLabelEmail}</Label>
+                  <Input
                     id="email"
                     type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    {...register('email')}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-indigo-500/50 text-sm"
                   />
+                  {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}
                 </div>
               </div>
 
               <div className="flex flex-col gap-3">
-                <LandingButton type="submit" disabled={submitting} className="w-full bg-indigo-600 hover:bg-indigo-700">
+                <Button type="submit" disabled={submitting} className="w-full bg-indigo-600 hover:bg-indigo-700">
                   {submitting ? t.formSubmitting : t.formSubmitBtn}
-                </LandingButton>
-                <LandingButton
+                </Button>
+                <Button
                   type="button"
                   variant="secondary"
                   disabled={submitting}
@@ -262,7 +280,7 @@ export default function BarsCafesLandingPage({ defaultLang = 'en' }: { defaultLa
                   className="w-full"
                 >
                   {t.subscribeNow}
-                </LandingButton>
+                </Button>
                 <CalendlyBookingButton label={t.bookDemo} variant="secondary" className="w-full" />
               </div>
             </form>

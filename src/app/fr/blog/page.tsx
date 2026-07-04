@@ -10,8 +10,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteUrl}/fr/blog`,
     languages: {
-      'fr-FR': `${siteUrl}/fr/blog`,
-      'en-US': `${siteUrl}/blog`,
+      'x-default': `${siteUrl}/blog`,
+      'en': `${siteUrl}/blog`,
+      'fr': `${siteUrl}/fr/blog`,
     },
   },
   openGraph: {
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/blog-questions-couple-fr.png`,
+        url: `${siteUrl}/og/blog-questions-couple-fr.webp`,
         width: 1200,
         height: 630,
         alt: 'Blog Captain Bond',
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     title: 'Blog Captain Bond — Questions, Jeux & Rituels de Couple',
     description:
       "Questions de couple, jeux de connexion et rituels hebdomadaires pour approfondir votre relation, relancer les vraies conversations et cultiver l'intimité.",
-    images: [`${siteUrl}/og/blog-questions-couple-fr.png`],
+    images: [`${siteUrl}/og/blog-questions-couple-fr.webp`],
   },
 };
 

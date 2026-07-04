@@ -4,6 +4,7 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseHost = supabaseUrl ? new URL(supabaseUrl).host : '';
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ['@prisma/client', 'prisma'],
   async headers() {
     return [
       {

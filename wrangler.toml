@@ -1,0 +1,54 @@
+name = "captainbond"
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2025-07-03"
+
+pages_build_output_dir = ".vercel/output/static"
+
+[[services]]
+binding = "NEXT_PAGES"
+service = "captainbond"
+
+[env.production]
+vars = { NEXT_PUBLIC_SITE_URL = "https://captainbond.com" }
+
+[env.preview]
+vars = { NEXT_PUBLIC_SITE_URL = "https://preview.captainbond.com" }
+
+[env.production.secrets]
+# Définir dans le dashboard Cloudflare > Workers & Pages > captainbond > Settings > Environment Variables
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL = ""
+NEXT_PUBLIC_SUPABASE_ANON_KEY = ""
+SUPABASE_SERVICE_ROLE_KEY = ""
+DATABASE_URL = ""
+
+# Auth
+ADMIN_PASSWORD_HASH = ""
+ADMIN_JWT_SECRET = ""
+PLAYER_JWT_SECRET = ""
+HOST_TOKEN_SECRET = ""
+HMAC_IMPOSTEUR_SECRET = ""
+
+# Stripe
+STRIPE_SECRET_KEY = ""
+STRIPE_WEBHOOK_SECRET = ""
+
+# Autres
+CRON_SECRET = ""
+COUPLE_INVITE_SECRET = ""
+NEXT_PUBLIC_CALENDLY_URL = "https://calendly.com/captainbond/demo"
+RESEND_API_KEY = ""
+UPSTASH_REDIS_REST_URL = ""
+UPSTASH_REDIS_REST_TOKEN = ""
+NEXT_PUBLIC_POSTHOG_KEY = ""
+NEXT_PUBLIC_POSTHOG_HOST = ""
+NEXT_PUBLIC_GA_ID = ""
+WASABI_ACCESS_KEY_ID = ""
+WASABI_SECRET_ACCESS_KEY = ""
+WASABI_BUCKET_NAME = ""
+WASABI_ENDPOINT = ""
+GOOGLE_SHEETS_CSV_URL = ""
+ADMIN_SYNC_SECRET = ""
+GEMINI_API_KEY = ""
+CRON_SECRET = ""
+APP_URL = "https://captainbond.app"

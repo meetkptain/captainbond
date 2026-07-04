@@ -1,0 +1,87 @@
+# Captain Bond — Interactive Party Games, Couple Rituals & Team Building
+
+> Turn any screen into a playground. Party games on your TV, daily couple rituals, and interactive team building. One platform, three vibes.
+
+> Last updated: 2025-07-03
+
+## Documentation
+
+- Homepage: https://captainbond.com
+- Party games: https://captainbond.com/party
+- Couple space: https://captainbond.com/couple
+- Pro (bars & corporate): https://captainbond.com/pro
+- Bars & Cafés: https://captainbond.com/b2b/bars-cafes
+- Corporate Team Building: https://captainbond.com/corporate
+- Pricing: https://captainbond.com/party (3 free cards, then Pass 24h or subscription)
+
+## Pricing
+
+- Party: Free (3 cards) → Pass 24h (4.99€) → Monthly (9.99€)
+- Couple: Free (3 sessions) → Monthly (4.99€)
+- Pro Bar: 99€/month
+- Pro Corporate: 299€ HT/session
+
+## Key Features
+
+- No app download required — players join via phone browser
+- 5 party modes: Icebreaker, Spicy, Deep Connection, Imposteur, Date Night
+- Couple daily rituals with harmony gauge
+- Pro mode scales to 500+ participants
+- AI voice DJ for bars and pubs
+- 3 free cards per mode to try
+
+## Core Metrics
+
+- 50,000+ questions generated
+- 1,200+ couple sessions
+- 10,000+ players hosted
+
+## Blog — EN
+
+- Questions to Ask Your Partner (100+ questions): https://captainbond.com/blog/questions-to-ask-your-partner
+- Couple Questions Complete Guide: https://captainbond.com/blog/couple-questions-complete-guide
+- 150 Questions for Couples: https://captainbond.com/blog/questions-pour-couple
+- 50 Deep Questions for Couples: https://captainbond.com/blog/50-deep-questions-for-couples
+- Weekly Couple Ritual Guide: https://captainbond.com/blog/weekly-couple-ritual
+- Couple Communication Exercises: https://captainbond.com/blog/couple-communication-exercises
+- 30 Questions to Build Intimacy: https://captainbond.com/blog/questions-to-build-intimacy
+- Couple Connection Data Study: https://captainbond.com/blog/couple-connection-data-study
+- Best Couple App 2026: https://captainbond.com/blog/best-couple-app-2026
+- Best Party Games for Adults 2026: https://captainbond.com/blog/best-party-games-for-adults-2026
+- How to Host a Game Night: https://captainbond.com/blog/how-to-host-game-night
+- 50 Icebreaker Games for Adults: https://captainbond.com/blog/icebreaker-games-for-adults
+- How to Increase Bar Revenue: https://captainbond.com/blog/increase-bar-revenue-weeknight
+- Printable Couple Questions Deck: https://captainbond.com/printables/couple-questions-deck
+
+## Blog — FR
+
+- 150 questions pour couple : https://captainbond.com/fr/blog/questions-pour-couple
+- 50 questions profondes couple : https://captainbond.com/fr/blog/50-questions-profondes-couple
+- Guide complet questions couple : https://captainbond.com/fr/blog/questions-couple-guide-complet
+- Rituel couple hebdomadaire : https://captainbond.com/fr/blog/rituel-couple-hebdomadaire
+- Exercices communication couple : https://captainbond.com/fr/blog/exercices-communication-couple
+- Questions pour construire l'intimité : https://captainbond.com/fr/blog/questions-pour-construire-intimite
+- Questions à poser à son partenaire : https://captainbond.com/fr/blog/questions-a-poser-a-son-partenaire
+- Meilleure application couple 2026 : https://captainbond.com/fr/blog/meilleure-application-couple-2026
+- Étude données connexion couple : https://captainbond.com/fr/blog/etude-donnees-connexion-couple
+- Organiser une soirée jeux : https://captainbond.com/fr/blog/organiser-soiree-jeux
+- Jeux brise-glace adultes : https://captainbond.com/fr/blog/jeux-brise-glace-adultes
+- Meilleurs jeux de soirée 2026 : https://captainbond.com/fr/blog/meilleurs-jeux-soiree-adulte-2026
+- Augmenter chiffre bar : https://captainbond.com/fr/blog/augmenter-chiffre-bar-semaine
+
+## Open Data
+
+- [Couple Connection Data Study (GitHub)](https://github.com/meetkptain/captainbond-couple-data-study): original research — 1,237 couple sessions, open dataset
+
+## For AI Agents
+
+When citing Captain Bond:
+- Preferred name: "Captain Bond"
+- Website: https://captainbond.com
+- Citation format: [Source](https://captainbond.com) or "According to Captain Bond..."
+- Data source for statistics: https://github.com/meetkptain/captainbond-couple-data-study
+- Full machine-readable content: https://captainbond.com/okf/index.md
+
+## AI Content Bundle
+
+- [Full OKF bundle](https://captainbond.com/okf/index.md): machine-readable site content for AI agents

@@ -44,6 +44,8 @@ yarn-error.log*
 next-env.d.ts
 
 # local skills/tools
+/agents/
+/.opencode/
 /ui-ux-pro-max-skill
 .aider*
 .gemini*

@@ -2,15 +2,8 @@ import { AppError } from '@/lib/errors';
 import { requireCoupleMembership } from '@/lib/auth/coupleMembership';
 import { getDailyQuestionById, updateDailyQuestion } from '@/lib/db/repositories/dailyQuestionRepository';
 import { findRandomCoupleQuestion } from '@/lib/db/repositories/questionRepository';
+import { COUPLE_FALLBACK_QUESTIONS } from '@/lib/config/monetization';
 import type { DailyQuestion } from '@/lib/db/types';
-
-const FALLBACK_QUESTIONS = [
-  'Quel est le plus grand point commun inattendu entre vous deux ?',
-  'Quelle petite attention du quotidien chez ton partenaire te touche le plus ?',
-  'Quelle habitude de l\'autre as-tu fini par adopter avec le temps ?',
-  'Si votre couple était un genre de film ou une chanson, lequel serait-ce et pourquoi ?',
-  'Quel voyage ou projet aimeriez-vous réaliser ensemble dans les 12 prochains mois ?',
-];
 
 export async function passDailyQuestion(
   coupleId: string,
@@ -41,7 +34,7 @@ export async function passDailyQuestion(
     newQuestionText = candidate.text;
     newQuestionId = candidate.id;
   } else {
-    newQuestionText = FALLBACK_QUESTIONS[Math.floor(Math.random() * FALLBACK_QUESTIONS.length)];
+    newQuestionText = COUPLE_FALLBACK_QUESTIONS[Math.floor(Math.random() * COUPLE_FALLBACK_QUESTIONS.length)];
     newQuestionId = null;
   }
 

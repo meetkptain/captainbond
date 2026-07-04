@@ -10,8 +10,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteUrl}/fr/blog/questions-pour-couple`,
     languages: {
-      'fr-FR': `${siteUrl}/fr/blog/questions-pour-couple`,
-      'en-US': `${siteUrl}/blog/questions-pour-couple`,
+      'x-default': `${siteUrl}/blog/questions-pour-couple`,
+      'en': `${siteUrl}/blog/questions-pour-couple`,
+      'fr': `${siteUrl}/fr/blog/questions-pour-couple`,
     },
   },
   openGraph: {
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/blog-questions-couple-fr.png`,
+        url: `${siteUrl}/og/blog-questions-couple-fr.webp`,
         width: 1200,
         height: 630,
         alt: '150 questions pour couple : du fun au profond',
@@ -36,7 +37,11 @@ export const metadata: Metadata = {
     title: '150 questions pour couple : du fun au profond',
     description:
       "Une liste de questions pour couple pour rire, se découvrir, aborder l'intimité et construire un futur commun — avec un rituel simple pour les intégrer au quotidien.",
-    images: [`${siteUrl}/og/blog-questions-couple-fr.png`],
+    images: [`${siteUrl}/og/blog-questions-couple-fr.webp`],
+  },
+  other: {
+    'datePublished': '2025-06-01',
+    'dateModified': '2025-07-03',
   },
 };
 
@@ -205,20 +210,53 @@ const futureQuestions = [
   'Quelle promesse veux-tu faire à notre couple ?',
 ];
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    ...funQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: '' } })),
+    ...gettingToKnowQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: '' } })),
+    ...deepQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: '' } })),
+    ...intimateQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: '' } })),
+    ...futureQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: '' } })),
+  ],
+};
+
 export default function FrenchQuestionsForCoupleArticlePage() {
+  const publishedDate = '1 juin 2025';
+
   return (
     <article className="max-w-3xl mx-auto px-4 py-12">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <header className="mb-10">
+        <time className="text-sm text-slate-400" dateTime="2025-06-01">{publishedDate}</time>
         <h1 className="text-3xl font-bold mb-4">
           150 questions pour couple : du fun au profond
         </h1>
         <p className="text-slate-300 leading-relaxed">
-          Les meilleures conversations n’arrivent presque jamais par hasard. Elles commencent par
+          Les meilleures conversations n'arrivent presque jamais par hasard. Elles commencent par
           une question posée avec curiosité, patience et sans arrière-pensée. Que vous soyez au
           début de votre histoire ou que vous partagiez déjà des décennies, la bonne question peut
-          vous sortir de l’automatique et vous rappeler pourquoi vous vous êtes choisis.
+          vous sortir de l'automatique et vous rappeler pourquoi vous vous êtes choisis.
         </p>
       </header>
+
+      <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+        La plupart des couples ne manquent pas d'amour ; ils manquent de nouveauté. La technologie
+        la plus simple pour inverser cette dérive est une question honnête posée sans agenda.
+      </blockquote>
+
+      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
+          CB
+        </div>
+        <div>
+          <p className="font-semibold text-sm">Équipe Captain Bond</p>
+          <p className="text-xs text-slate-400">
+            Publié le {publishedDate} &middot; 5 min de lecture
+          </p>
+        </div>
+      </div>
 
       <section className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Pourquoi les questions comptent dans un couple</h2>
@@ -236,6 +274,10 @@ export default function FrenchQuestionsForCoupleArticlePage() {
           petites révélations deviennent le tissu de l’intimité : ce sentiment d’être connu, pas
           seulement la version que l’on montre au monde.
         </p>
+        <blockquote className="border-l-4 border-neon-pink pl-6 my-6 italic text-slate-200">
+          Une bonne question n’exige pas une réponse parfaite. Elle invite la chose qui reste
+          d’habitude en sourdine.
+        </blockquote>
       </section>
 
       <section className="mb-10">
@@ -342,8 +384,15 @@ export default function FrenchQuestionsForCoupleArticlePage() {
       <section className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Une dernière pensée</h2>
         <p className="text-slate-300 leading-relaxed">
-          Vous n’avez pas besoin de la question parfaite. Vous avez besoin du courage de demander
-          et de la patience d’écouter. La liste ci-dessus est un point de départ. La vraie magie
+          Vous n'avez pas besoin de la question parfaite. Vous avez besoin du courage de demander
+          et de la patience d'écouter.
+        </p>
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">
+          Vous n'avez pas besoin de la question parfaite. Vous avez besoin du courage de demander
+          et de la patience d'écouter.
+        </blockquote>
+        <p className="text-slate-300 leading-relaxed">
+          La liste ci-dessus est un point de départ. La vraie magie
           opère dans la suite, la pause, le rire, le silence un peu gênant que vous traversez
           ensemble. Gardez quelques favorites dans un coin et sortez-les quand la vie devient trop
           transactionnelle. Votre couple vous remerciera.

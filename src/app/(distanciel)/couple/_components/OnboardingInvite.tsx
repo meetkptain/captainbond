@@ -97,11 +97,14 @@ export function OnboardingInvite() {
             <button
               className="couple-action-btn"
               style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', opacity: 0.8 }}
-              onClick={() => router.push('/vault')}
+              onClick={() => router.push('/couple?draft=true')}
             >
               <Icon name="sparkles" className="w-4 h-4" />
-              Essayer un rituel solo
+              Répondre à la première question en solo
             </button>
+            <p className="text-xs text-slate-500 text-center">
+              Votre réponse restera privée jusqu'à ce que votre partenaire rejoigne l'espace.
+            </p>
             <button
               className="couple-action-btn"
               style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', opacity: 0.8 }}
