@@ -14,6 +14,12 @@ function getRequestId(req: NextRequest): string {
   return req.headers.get('x-request-id') || crypto.randomUUID();
 }
 
+function setCommonHeaders(response: NextResponse, requestId: string, lang: string): NextResponse {
+  response.headers.set('x-request-id', requestId);
+  response.headers.set('x-lang', lang);
+  return response;
+}
+
 async function verifyAdminCookie(req: NextRequest): Promise<boolean> {
   const token = req.cookies.get(ADMIN_COOKIE_NAME)?.value;
   if (!token) return false;
@@ -56,118 +62,128 @@ function isPlayerRoute(pathname: string): boolean {
   return PLAYER_ROUTE_EXACT.has(pathname);
 }
 
-export async function middleware(req: NextRequest): Promise<NextResponse> {
-  const requestId = getRequestId(req);
+const LANG_ROUTED_PATHS = new Set(['/', '/party', '/pro', '/corporate', '/couple', '/vault', '/privacy', '/b2b/bars-cafes']);
+const FR_PATH_MAP: Record<string, string> = {
+  '/party': '/fr/soiree',
+  '/pro': '/fr/pro',
+  '/corporate': '/fr/corporate',
+  '/couple': '/fr/couple',
+  '/vault': '/fr/vault',
+  '/b2b/bars-cafes': '/fr/b2b/bars-cafes',
+  '/privacy': '/fr/privacy',
+};
+
+function buildFrRedirect(pathname: string): string | null {
+  if (pathname.startsWith('/group/')) return `/fr${pathname}`;
+  if (pathname.startsWith('/blog/')) return `/fr${pathname}`;
+  return FR_PATH_MAP[pathname] ?? null;
+}
+
+function detectAndRedirectLang(req: NextRequest, requestId: string): NextResponse | null {
   const { pathname } = req.nextUrl;
 
-  const requestHeaders = new Headers(req.headers);
-  requestHeaders.set('x-request-id', requestId);
-  requestHeaders.set('x-lang', pathname.startsWith('/fr/') ? 'fr' : 'en');
+  if (!LANG_ROUTED_PATHS.has(pathname) && !pathname.startsWith('/group/') && !pathname.startsWith('/blog/')) return null;
 
-  // 1. Détection de langue et redirection bilingue (avec bypass Googlebot et préférences cookies)
-  if (pathname === '/' || pathname === '/party' || pathname === '/pro' || pathname === '/corporate' || pathname === '/couple' || pathname === '/vault' || pathname === '/b2b/bars-cafes' || pathname.startsWith('/group/') || pathname.startsWith('/blog/')) {
-    const userAgent = req.headers.get('user-agent') || '';
-    const isBot = /bot|googlebot|bingbot|yandexbot|baidu|duckduckbot|crawler|spider|robot|crawling/i.test(userAgent);
-    const langCookie = req.cookies.get('cb_language')?.value;
+  const userAgent = req.headers.get('user-agent') || '';
+  const isBot = /bot|googlebot|bingbot|yandexbot|baidu|duckduckbot|crawler|spider|robot|crawling/i.test(userAgent);
+  const langCookie = req.cookies.get('cb_language')?.value;
 
-    if (!isBot && langCookie !== 'en') {
-      const acceptLang = req.headers.get('accept-language') || '';
-      if (acceptLang.toLowerCase().includes('fr')) {
-        let dest = '/fr';
-        if (pathname === '/party') dest = '/fr/soiree';
-        if (pathname === '/pro') dest = '/fr/pro';
-        if (pathname === '/corporate') dest = '/fr/corporate';
-        if (pathname === '/couple') dest = '/fr/couple';
-        if (pathname === '/vault') dest = '/fr/vault';
-        if (pathname === '/b2b/bars-cafes') dest = '/fr/b2b/bars-cafes';
-        if (pathname === '/privacy') dest = '/fr/privacy';
-        if (pathname.startsWith('/group/')) dest = `/fr${pathname}`;
-        if (pathname.startsWith('/blog/')) dest = `/fr${pathname}`;
-        const response = NextResponse.redirect(new URL(dest, req.url), 302);
-        response.headers.set('x-request-id', requestId);
-        response.headers.set('x-lang', 'fr');
-        return response;
-      }
-    }
-  }
+  if (isBot || langCookie === 'en') return null;
 
-  if (PUBLIC_ADMIN_PATHS.has(pathname)) {
-    return NextResponse.next({ request: { headers: requestHeaders } });
-  }
+  const acceptLang = req.headers.get('accept-language') || '';
+  if (!acceptLang.toLowerCase().includes('fr')) return null;
 
-  if (isAdminRoute(pathname)) {
-    if (pathname === '/api/admin/sync') {
-      const isAdmin = await verifyAdminCookie(req);
-      const syncSecret = process.env.ADMIN_SYNC_SECRET;
-      const authHeader = req.headers.get('Authorization');
-      const isSync = !!syncSecret && authHeader === `Bearer ${syncSecret}`;
+  const dest = buildFrRedirect(pathname);
+  if (!dest) return null;
 
-      if (!isAdmin && !isSync) {
-        logger.warn('Unauthorized admin sync attempt', { requestId, pathname });
-        const response = NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
-        response.headers.set('x-request-id', requestId);
-        response.headers.set('x-lang', 'en');
-        return response;
-      }
+  const response = NextResponse.redirect(new URL(dest, req.url), 302);
+  return setCommonHeaders(response, requestId, 'fr');
+}
 
-      return NextResponse.next({ request: { headers: requestHeaders } });
-    }
+async function handleAdminAuth(req: NextRequest, requestId: string, lang: string): Promise<NextResponse | null> {
+  const { pathname } = req.nextUrl;
 
+  if (!isAdminRoute(pathname)) return null;
+  if (PUBLIC_ADMIN_PATHS.has(pathname)) return NextResponse.next({ request: { headers: new Headers(req.headers) } });
+
+  if (pathname === '/api/admin/sync') {
     const isAdmin = await verifyAdminCookie(req);
+    const syncSecret = process.env.ADMIN_SYNC_SECRET;
+    const authHeader = req.headers.get('Authorization');
+    const isSync = !!syncSecret && authHeader === `Bearer ${syncSecret}`;
 
-    if (!isAdmin) {
-      logger.warn('Unauthorized admin access attempt', { requestId, pathname });
-
-      if (pathname.startsWith('/api/admin')) {
-        const response = NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
-        response.headers.set('x-request-id', requestId);
-        response.headers.set('x-lang', 'en');
-        return response;
-      }
-
-      const response = NextResponse.redirect(
-        new URL('/admin/login?error=invalid', req.url)
-      );
-      response.cookies.set(ADMIN_COOKIE_NAME, '', { maxAge: 0, path: '/' });
-      response.headers.set('x-request-id', requestId);
-      response.headers.set('x-lang', 'en');
-      return response;
+    if (!isAdmin && !isSync) {
+      logger.warn('Unauthorized admin sync attempt', { requestId, pathname });
+      return setCommonHeaders(NextResponse.json({ error: 'Non autorisé' }, { status: 401 }), requestId, lang);
     }
 
-    return NextResponse.next({ request: { headers: requestHeaders } });
+    const headers = new Headers(req.headers);
+    headers.set('x-request-id', requestId);
+    headers.set('x-lang', lang);
+    return NextResponse.next({ request: { headers } });
   }
 
-  if (isPlayerRoute(pathname)) {
-    const token = req.cookies.get(PLAYER_COOKIE_NAME)?.value;
-    if (!token) {
-      logger.warn('Missing player session', { requestId, pathname });
-      const response = NextResponse.json(
-        { error: 'Unauthorized', code: 'UNAUTHORIZED' },
-        { status: 401 }
-      );
-      response.headers.set('x-request-id', requestId);
-      response.headers.set('x-lang', 'en');
-      return response;
+  const isAdmin = await verifyAdminCookie(req);
+  if (!isAdmin) {
+    logger.warn('Unauthorized admin access attempt', { requestId, pathname });
+    if (pathname.startsWith('/api/admin')) {
+      return setCommonHeaders(NextResponse.json({ error: 'Non autorisé' }, { status: 401 }), requestId, lang);
     }
-
-    try {
-      await verifyPlayerSession(token);
-    } catch {
-      logger.warn('Invalid player session', { requestId, pathname });
-      const response = NextResponse.json(
-        { error: 'Session joueur invalide', code: 'UNAUTHORIZED' },
-        { status: 401 }
-      );
-      response.cookies.set(PLAYER_COOKIE_NAME, '', { maxAge: 0, path: '/' });
-      response.headers.set('x-request-id', requestId);
-      response.headers.set('x-lang', 'en');
-      return response;
-    }
-
-    return NextResponse.next({ request: { headers: requestHeaders } });
+    const response = NextResponse.redirect(new URL('/admin/login?error=invalid', req.url));
+    response.cookies.set(ADMIN_COOKIE_NAME, '', { maxAge: 0, path: '/' });
+    return setCommonHeaders(response, requestId, lang);
   }
 
-  return NextResponse.next({ request: { headers: requestHeaders } });
+  const headers = new Headers(req.headers);
+  headers.set('x-request-id', requestId);
+  headers.set('x-lang', lang);
+  return NextResponse.next({ request: { headers } });
+}
+
+async function handlePlayerAuth(req: NextRequest, requestId: string, lang: string): Promise<NextResponse | null> {
+  const { pathname } = req.nextUrl;
+
+  if (!isPlayerRoute(pathname)) return null;
+
+  const token = req.cookies.get(PLAYER_COOKIE_NAME)?.value;
+  if (!token) {
+    logger.warn('Missing player session', { requestId, pathname });
+    return setCommonHeaders(NextResponse.json({ error: 'Unauthorized', code: 'UNAUTHORIZED' }, { status: 401 }), requestId, lang);
+  }
+
+  try {
+    await verifyPlayerSession(token);
+  } catch {
+    logger.warn('Invalid player session', { requestId, pathname });
+    const response = NextResponse.json({ error: 'Session joueur invalide', code: 'UNAUTHORIZED' }, { status: 401 });
+    response.cookies.set(PLAYER_COOKIE_NAME, '', { maxAge: 0, path: '/' });
+    return setCommonHeaders(response, requestId, lang);
+  }
+
+  const headers = new Headers(req.headers);
+  headers.set('x-request-id', requestId);
+  headers.set('x-lang', lang);
+  return NextResponse.next({ request: { headers } });
+}
+
+export async function middleware(req: NextRequest): Promise<NextResponse> {
+  const requestId = getRequestId(req);
+  const lang = req.nextUrl.pathname.startsWith('/fr/') ? 'fr' : 'en';
+
+  const headers = new Headers(req.headers);
+  headers.set('x-request-id', requestId);
+  headers.set('x-lang', lang);
+
+  const langRedirect = detectAndRedirectLang(req, requestId);
+  if (langRedirect) return langRedirect;
+
+  const adminResult = await handleAdminAuth(req, requestId, lang);
+  if (adminResult) return adminResult;
+
+  const playerResult = await handlePlayerAuth(req, requestId, lang);
+  if (playerResult) return playerResult;
+
+  return NextResponse.next({ request: { headers } });
 }
 
 export const config = {

@@ -141,6 +141,16 @@ export async function claimAnalysisComputation(id: string): Promise<boolean> {
   return data !== null;
 }
 
+export async function resetAnalysisStatus(id: string): Promise<void> {
+  const { error } = await supabaseAdmin
+    .from('DailyQuestion')
+    .update({ analysisStatus: 'PENDING' })
+    .eq('id', id)
+    .eq('analysisStatus', 'COMPUTING');
+
+  if (error) throw error;
+}
+
 export async function revealDueQuestions(
   coupleId: string,
   timezone = 'Europe/Paris',

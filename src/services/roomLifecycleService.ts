@@ -21,8 +21,10 @@ import { computeRevealResult, findImpostorPlayerId, RawResponse } from '@/lib/ga
 import { safeJsonParseRecord } from '@/lib/json';
 import { recordGamePlayed, GameSummary } from './statsService';
 import { buildProfilesForRoom } from './profileService';
+import { createLogger } from '@/lib/logger';
 
 const FREE_QUESTIONS_LIMIT = 3;
+const DEFAULT_MODE = 'ICEBREAKER';
 
 function injectCorporateQuestions(
   room: Room,
@@ -85,8 +87,8 @@ export async function startNextRound(roomCode: string, hostId: string): Promise<
   if (!room) throw new AppError('NOT_FOUND', 'Salle introuvable');
   checkHost(room, hostId);
 
-  const currentMode = room.currentMode || 'ICEBREAKER';
-  const serverMode = getServerGameMode(currentMode) || getServerGameMode('ICEBREAKER');
+  const currentMode = room.currentMode || DEFAULT_MODE;
+  const serverMode = getServerGameMode(currentMode) || getServerGameMode(DEFAULT_MODE);
   const players = await getPlayersInRoom(room.id);
   const nonHostCount = players.filter((p) => !p.isHost).length;
   const modeMinPlayers = serverMode?.manifest.minPlayers ?? 1;
@@ -178,7 +180,7 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
   try { await updateRoomStatusWithGuard(room.id, 'REVEALING', 'PLAYING'); }
   catch { throw new AppError('CONFLICT', 'La révélation est déjà en cours ou la room n\'est plus en jeu'); }
 
-  const currentMode = room.currentMode || 'ICEBREAKER';
+  const currentMode = room.currentMode || DEFAULT_MODE;
   const question = await getQuestionById(room.currentQuestionId);
   if (!question) throw new AppError('NOT_FOUND', 'Question not found');
 
@@ -190,7 +192,7 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
   try { responses = await getResponsesByRoomAndQuestion(room.id, question.id); }
   catch (responsesError) { throw new AppError('INTERNAL_ERROR', 'Failed to fetch player responses', { cause: responsesError }); }
 
-  const gameMode = getServerGameMode(currentMode) || getServerGameMode('ICEBREAKER');
+  const gameMode = getServerGameMode(currentMode) || getServerGameMode(DEFAULT_MODE);
   if (!gameMode) throw new AppError('INTERNAL_ERROR', 'No default game mode registered');
 
   const roundConfigContext = typeof room.roundConfig === 'string' ? safeJsonParseRecord(room.roundConfig) : (room.roundConfig ?? null);
@@ -220,7 +222,7 @@ export async function endRoomAndBuildProfiles(roomCode: string, hostId: string):
   const players = await getPlayersByRoomWithUserId(room.id);
   const userIds = new Set(players.map((p) => p.userId).filter(Boolean) as string[]);
 
-  await Promise.allSettled(
+  const results = await Promise.allSettled(
     Array.from(userIds).map((userId) => {
       const player = players?.find((p) => p.userId === userId);
       const profileEntry = profiles.find((entry) => entry.playerId === player?.id);
@@ -231,6 +233,13 @@ export async function endRoomAndBuildProfiles(roomCode: string, hostId: string):
       } as GameSummary);
     })
   );
+
+  const logger = createLogger({ route: 'endRoomAndBuildProfiles' });
+  for (const result of results) {
+    if (result.status === 'rejected') {
+      logger.error('Failed to record game played for user', {}, result.reason);
+    }
+  }
 
   return { status: 'ENDED', profiles };
 }
@@ -243,8 +252,8 @@ export async function skipQuestion(roomCode: string, playerId: string): Promise<
   const p = players.find(player => player.id === playerId || (player.isHost && playerId === 'host'));
   if (!p) throw new AppError('FORBIDDEN', 'Action non autorisée');
 
-  const currentMode = room.currentMode || 'ICEBREAKER';
-  const serverMode = getServerGameMode(currentMode) || getServerGameMode('ICEBREAKER');
+  const currentMode = room.currentMode || DEFAULT_MODE;
+  const serverMode = getServerGameMode(currentMode) || getServerGameMode(DEFAULT_MODE);
 
   let previousIntensity = 1;
   if (room.currentQuestionId) {

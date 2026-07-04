@@ -63,56 +63,64 @@ export async function processStripeEvent(event: Stripe.Event): Promise<void> {
   }
 }
 
-async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, event: Stripe.Event) {
-  const metadata = session.metadata || {};
-  const { sku, packId, playerId, roomCode, userId } = metadata;
-
-  let activeUserId = userId;
+async function resolveOrCreateUser(session: Stripe.Checkout.Session, metadata: Record<string, string>): Promise<{ activeUserId: string; userEmail: string; userName: string }> {
+  let activeUserId = metadata.userId || '';
   let userEmail = '';
   let userName = '';
 
-  if (!activeUserId) {
-    if (session.customer_details?.email) {
-      const email = session.customer_details.email;
-      userEmail = email;
-      userName = session.customer_details?.name || 'Collaborateur Pro';
-      const { data: existingUser } = await dbRetry<{ id: string }>(async () =>
-        supabaseAdmin.from('User').select('id').eq('email', email).maybeSingle()
-      );
+  if (activeUserId) return { activeUserId, userEmail, userName };
 
-      if (existingUser) {
-        activeUserId = existingUser.id;
+  if (!session.customer_details?.email) {
+    logger.error('Missing userId in checkout session metadata', { sessionId: session.id });
+    throw new AppError('BAD_REQUEST', 'No user identifier in checkout session');
+  }
+
+  const email = session.customer_details.email;
+  userEmail = email;
+  userName = session.customer_details?.name || 'Collaborateur Pro';
+
+  const { data: existingUser } = await dbRetry<{ id: string }>(async () =>
+    supabaseAdmin.from('User').select('id').eq('email', email).maybeSingle()
+  );
+
+  if (existingUser) {
+    activeUserId = existingUser.id;
+  } else {
+    activeUserId = globalThis.crypto.randomUUID();
+    const { error: authError } = await supabaseAdmin.auth.admin.createUser({
+      id: activeUserId, email, email_confirm: true, user_metadata: { name: userName },
+    });
+
+    if (authError) {
+      logger.warn('Supabase Auth corporate user creation check', {}, authError);
+      const { data: { users } } = await supabaseAdmin.auth.admin.listUsers();
+      const authUser = users?.find((u) => u.email === email);
+      if (authUser) {
+        activeUserId = authUser.id;
       } else {
-        activeUserId = globalThis.crypto.randomUUID();
-        const { error: authError } = await supabaseAdmin.auth.admin.createUser({
-          id: activeUserId,
-          email,
-          email_confirm: true,
-          user_metadata: { name: userName },
-        });
-
-        if (authError) {
-          logger.warn('Supabase Auth corporate user creation check', {}, authError);
-          const { data: { users } } = await supabaseAdmin.auth.admin.listUsers();
-          const authUser = users?.find((u) => u.email === email);
-          if (authUser) {
-            activeUserId = authUser.id;
-          } else {
-            throw new AppError('INTERNAL_ERROR', 'Erreur de création utilisateur corporate', { cause: authError });
-          }
-        }
+        throw new AppError('INTERNAL_ERROR', 'Erreur de création utilisateur corporate', { cause: authError });
       }
-    } else {
-      logger.error('Missing userId in checkout session metadata', { sessionId: session.id });
-      return;
     }
   }
 
+  return { activeUserId, userEmail, userName };
+}
+
+async function resolvePack(metadata: Record<string, string>, sessionId: string): Promise<Pack> {
+  const { packId, sku } = metadata;
   const pack = packId ? await getPackById(packId) : sku ? await getPackBySku(sku) : null;
   if (!pack) {
-    logger.error('Pack not found for checkout session', { sessionId: session.id, sku, packId });
-    return;
+    logger.error('Pack not found for checkout session', { sessionId, sku, packId });
+    throw new AppError('NOT_FOUND', 'Pack not found');
   }
+  return pack;
+}
+
+async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, event: Stripe.Event) {
+  const metadata = session.metadata || {};
+
+  const { activeUserId, userEmail, userName } = await resolveOrCreateUser(session, metadata);
+  const pack = await resolvePack(metadata, session.id);
 
   const durationHours = pack.productType === 'PASS_WEEKEND' ? 72 : 24;
   const subscriptionId = pack.isSubscription
@@ -128,8 +136,8 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
     p_email: userEmail,
     p_name: userName,
     p_pack_id: pack.id,
-    p_room_code: roomCode || '',
-    p_player_id: playerId || '',
+    p_room_code: metadata.roomCode || '',
+    p_player_id: metadata.playerId || '',
     p_product_type: pack.productType,
     p_duration_hours: durationHours,
     p_metadata: {
@@ -154,13 +162,9 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
   await invalidateUserEntitlements(activeUserId);
 
   await captureServer(AnalyticsEvents.PURCHASE_COMPLETED, {
-    sku: pack.sku,
-    productType: pack.productType,
-    price: pack.price,
-    playerId,
-    roomCode,
-    userId: activeUserId,
-    stripeSessionId: session.id,
+    sku: pack.sku, productType: pack.productType, price: pack.price,
+    playerId: metadata.playerId, roomCode: metadata.roomCode,
+    userId: activeUserId, stripeSessionId: session.id,
   });
 
   logger.info('Purchase completed', { sku: pack.sku, userId: activeUserId, stripeSessionId: session.id });

@@ -35,54 +35,69 @@ export async function updateOrbeA(
   coupleId: string,
   stateA: Partial<TotemState['stateA']>
 ): Promise<TotemState> {
-  const current = await getOrCreateTotem(coupleId);
-  const merged = { ...current.stateA, ...stateA };
-  const { data, error } = await dbRetry(async () =>
-    supabaseAdmin
-      .from('TotemState')
-      .update({ stateA: merged, updatedAt: new Date().toISOString() })
-      .eq('coupleId', coupleId)
-      .select()
-      .single()
-  );
-  if (error) throw error;
-  return data as TotemState;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const current = await getOrCreateTotem(coupleId);
+    const merged = { ...current.stateA, ...stateA };
+    const now = new Date().toISOString();
+    const { data, error } = await dbRetry(async () =>
+      supabaseAdmin
+        .from('TotemState')
+        .update({ stateA: merged, updatedAt: now })
+        .eq('coupleId', coupleId)
+        .eq('updatedAt', current.updatedAt)
+        .select()
+        .single()
+    );
+    if (error && !(error as { message?: string }).message?.includes('0 rows')) throw error;
+    if (data) return data as TotemState;
+  }
+  throw new AppError('CONFLICT', 'Totem state updated by another request, retry exhausted');
 }
 
 export async function updateOrbeB(
   coupleId: string,
   stateB: Partial<TotemState['stateB']>
 ): Promise<TotemState> {
-  const current = await getOrCreateTotem(coupleId);
-  const merged = { ...current.stateB, ...stateB };
-  const { data, error } = await dbRetry(async () =>
-    supabaseAdmin
-      .from('TotemState')
-      .update({ stateB: merged, updatedAt: new Date().toISOString() })
-      .eq('coupleId', coupleId)
-      .select()
-      .single()
-  );
-  if (error) throw error;
-  return data as TotemState;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const current = await getOrCreateTotem(coupleId);
+    const merged = { ...current.stateB, ...stateB };
+    const now = new Date().toISOString();
+    const { data, error } = await dbRetry(async () =>
+      supabaseAdmin
+        .from('TotemState')
+        .update({ stateB: merged, updatedAt: now })
+        .eq('coupleId', coupleId)
+        .eq('updatedAt', current.updatedAt)
+        .select()
+        .single()
+    );
+    if (error && !(error as { message?: string }).message?.includes('0 rows')) throw error;
+    if (data) return data as TotemState;
+  }
+  throw new AppError('CONFLICT', 'Totem state updated by another request, retry exhausted');
 }
 
 export async function updateFusionState(
   coupleId: string,
   fusionState: Partial<TotemState['fusionState']>
 ): Promise<TotemState> {
-  const current = await getOrCreateTotem(coupleId);
-  const merged = { ...current.fusionState, ...fusionState };
-  const { data, error } = await dbRetry(async () =>
-    supabaseAdmin
-      .from('TotemState')
-      .update({ fusionState: merged, updatedAt: new Date().toISOString() })
-      .eq('coupleId', coupleId)
-      .select()
-      .single()
-  );
-  if (error) throw error;
-  return data as TotemState;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const current = await getOrCreateTotem(coupleId);
+    const merged = { ...current.fusionState, ...fusionState };
+    const now = new Date().toISOString();
+    const { data, error } = await dbRetry(async () =>
+      supabaseAdmin
+        .from('TotemState')
+        .update({ fusionState: merged, updatedAt: now })
+        .eq('coupleId', coupleId)
+        .eq('updatedAt', current.updatedAt)
+        .select()
+        .single()
+    );
+    if (error && !(error as { message?: string }).message?.includes('0 rows')) throw error;
+    if (data) return data as TotemState;
+  }
+  throw new AppError('CONFLICT', 'Totem state updated by another request, retry exhausted');
 }
 
 export async function updateDetoxSession(

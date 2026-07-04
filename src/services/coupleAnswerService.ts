@@ -7,6 +7,7 @@ import {
   getDailyQuestionById,
   recordAnswer,
   claimAnalysisComputation,
+  resetAnalysisStatus,
   updateDailyQuestion,
 } from '@/lib/db/repositories/dailyQuestionRepository';
 import {
@@ -200,7 +201,12 @@ export async function submitAnswer(
     return { status: latest?.analysisStatus === 'COMPUTED' ? 'COMPUTED' : 'WAITING', dailyQuestion: latest ?? updated };
   }
 
-  await runAnalysisPipeline(dailyQuestion, couple, userId, answer, embedding, newNode);
+  try {
+    await runAnalysisPipeline(dailyQuestion, couple, userId, answer, embedding, newNode);
+  } catch (err) {
+    await resetAnalysisStatus(dailyQuestionId);
+    throw err;
+  }
 
   const final = await getDailyQuestionById(dailyQuestionId);
   return { status: 'COMPUTED', dailyQuestion: final ?? updated };
