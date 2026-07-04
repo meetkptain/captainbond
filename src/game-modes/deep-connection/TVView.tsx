@@ -15,11 +15,11 @@ export default function TVView({ question, responses, gameState }: GameModeTVVie
   const [typingPlayers, setTypingPlayers] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    // Escalate pledge removal after 10s or when entering REVEALING/DISCUSSION state
     if (gameState === 'REVEALING' || gameState === 'DISCUSSION') {
       requestAnimationFrame(() => {
         setShowPledge(false);
       });
+      return;
     } else {
       const t = setTimeout(() => setShowPledge(false), 8000);
       return () => clearTimeout(t);

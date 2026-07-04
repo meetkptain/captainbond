@@ -5,8 +5,6 @@ import {
   spring,
   useCurrentFrame,
   useVideoConfig,
-  Audio,
-  staticFile,
 } from 'remotion';
 import type { ClashProps } from './Root';
 

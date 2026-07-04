@@ -95,7 +95,9 @@ export function ResonanceCircle({
       setTimeout(() => {
         setShowScore(true);
       }, 0);
+      return;
     }
+    return;
   }, [isRevealed, isAnimating, hasAnimated]);
 
   // Reset on un-reveal
