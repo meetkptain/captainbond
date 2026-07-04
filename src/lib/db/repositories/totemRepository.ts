@@ -1,6 +1,7 @@
 import { supabaseAdmin } from '@/lib/supabase-admin';
 import { AppError } from '@/lib/errors';
 import { TotemState } from '../types';
+import { dbRetry } from '@/lib/db/withRetry';
 
 export type DetoxAction = 'START' | 'INTERRUPT' | 'COMPLETE';
 
@@ -36,12 +37,14 @@ export async function updateOrbeA(
 ): Promise<TotemState> {
   const current = await getOrCreateTotem(coupleId);
   const merged = { ...current.stateA, ...stateA };
-  const { data, error } = await supabaseAdmin
-    .from('TotemState')
-    .update({ stateA: merged, updatedAt: new Date().toISOString() })
-    .eq('coupleId', coupleId)
-    .select()
-    .single();
+  const { data, error } = await dbRetry(async () =>
+    supabaseAdmin
+      .from('TotemState')
+      .update({ stateA: merged, updatedAt: new Date().toISOString() })
+      .eq('coupleId', coupleId)
+      .select()
+      .single()
+  );
   if (error) throw error;
   return data as TotemState;
 }
@@ -52,12 +55,14 @@ export async function updateOrbeB(
 ): Promise<TotemState> {
   const current = await getOrCreateTotem(coupleId);
   const merged = { ...current.stateB, ...stateB };
-  const { data, error } = await supabaseAdmin
-    .from('TotemState')
-    .update({ stateB: merged, updatedAt: new Date().toISOString() })
-    .eq('coupleId', coupleId)
-    .select()
-    .single();
+  const { data, error } = await dbRetry(async () =>
+    supabaseAdmin
+      .from('TotemState')
+      .update({ stateB: merged, updatedAt: new Date().toISOString() })
+      .eq('coupleId', coupleId)
+      .select()
+      .single()
+  );
   if (error) throw error;
   return data as TotemState;
 }
@@ -68,12 +73,14 @@ export async function updateFusionState(
 ): Promise<TotemState> {
   const current = await getOrCreateTotem(coupleId);
   const merged = { ...current.fusionState, ...fusionState };
-  const { data, error } = await supabaseAdmin
-    .from('TotemState')
-    .update({ fusionState: merged, updatedAt: new Date().toISOString() })
-    .eq('coupleId', coupleId)
-    .select()
-    .single();
+  const { data, error } = await dbRetry(async () =>
+    supabaseAdmin
+      .from('TotemState')
+      .update({ fusionState: merged, updatedAt: new Date().toISOString() })
+      .eq('coupleId', coupleId)
+      .select()
+      .single()
+  );
   if (error) throw error;
   return data as TotemState;
 }

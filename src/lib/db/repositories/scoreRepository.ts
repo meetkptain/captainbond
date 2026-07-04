@@ -14,7 +14,7 @@ export async function getScoresByPlayer(playerId: string): Promise<Score[]> {
 }
 
 export async function upsertScore(input: Partial<Score>): Promise<void> {
-  const { error } = await supabaseAdmin.from('Score').upsert(input);
+  const { error } = await supabaseAdmin.from('Score').upsert(input, { onConflict: 'roomId,playerId' });
   if (error) throw error;
 }
 

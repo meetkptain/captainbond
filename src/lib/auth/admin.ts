@@ -22,7 +22,7 @@ export async function signAdminSession(): Promise<string> {
   return new SignJWT({ role: 'admin' })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
-    .setExpirationTime('1d')
+    .setExpirationTime('7d')
     .sign(secret);
 }
 
@@ -93,6 +93,6 @@ export function getAdminCookieOptions() {
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict' as const,
     path: '/',
-    maxAge: 60 * 60 * 24, // 1 day
+    maxAge: 60 * 60 * 24 * 7, // 7 days
   };
 }

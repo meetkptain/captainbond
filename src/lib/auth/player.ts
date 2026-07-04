@@ -21,7 +21,7 @@ export async function signPlayerSession(payload: PlayerSessionPayload): Promise<
   return new SignJWT({ playerId: payload.playerId, roomId: payload.roomId })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
-    .setExpirationTime('7d')
+    .setExpirationTime('30d')
     .sign(secret);
 }
 
@@ -46,6 +46,6 @@ export function getPlayerCookieOptions() {
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax' as const,
     path: '/',
-    maxAge: 60 * 60 * 24 * 7, // 7 days
+    maxAge: 60 * 60 * 24 * 30, // 30 days
   };
 }
