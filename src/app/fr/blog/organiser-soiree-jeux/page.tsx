@@ -119,9 +119,9 @@ export default function SoireeJeuxArticlePage() {
           </p>
         </header>
 
-        <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 mb-10">
+        <div className="article-card-takeaways">
           <h2 className="text-lg font-semibold mb-3">Points clés à retenir</h2>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+          <ul >
             <li>Invitez 4 à 8 personnes pour une dynamique de groupe optimale.</li>
             <li>Choisissez 2 à 3 jeux adaptés à la taille du groupe, à l'ambiance et au temps disponible.</li>
             <li>Préparez l'espace, les snacks et l'ambiance sonore à l'avance pour profiter de la soirée.</li>
@@ -131,7 +131,7 @@ export default function SoireeJeuxArticlePage() {
         </div>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">1. Liste d'invités et planification</h2>
+          <h2 >1. Liste d'invités et planification</h2>
           <p>
             La liste d'invités est le socle de toute bonne soirée jeux. Trop peu de monde et
             l'énergie retombe. Trop de monde et la soirée vire au chaos. Le nombre idéal se situe
@@ -160,7 +160,7 @@ export default function SoireeJeuxArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">2. Choix des jeux par taille de groupe</h2>
+          <h2 >2. Choix des jeux par taille de groupe</h2>
           <p>
             Bien choisir ses jeux, c'est déjà gagner la moitié de la bataille. Vous voulez une
             sélection adaptée à la taille du groupe, au temps disponible et à l'ambiance visée.
@@ -218,12 +218,12 @@ export default function SoireeJeuxArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">3. Préparer le terrain</h2>
+          <h2 >3. Préparer le terrain</h2>
           <p>
             Votre espace donne le ton. Un bon agencement rend les jeux plus faciles et les
             conversations plus naturelles. Voici comment vous préparer :
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li>
               <strong>Éclairage.</strong> Assez lumineux pour lire les cartes, assez chaleureux
               pour être cosy. Évitez les reflets sur les plateaux brillants.
@@ -250,7 +250,7 @@ export default function SoireeJeuxArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">4. Animer en professionnel</h2>
+          <h2 >4. Animer en professionnel</h2>
           <p>
             Les meilleurs hôtes ne jouent pas — ils facilitent. Ou plutôt, ils jouent tout en
             gardant un œil sur la pièce. Votre mission : veiller à ce que tout le monde se sente
@@ -260,7 +260,7 @@ export default function SoireeJeuxArticlePage() {
             Un bon hôte ne gagne pas toutes les parties. Il fait en sorte que tout le monde ait
             envie de rester pour la suivante.
           </blockquote>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li>
               <strong>Apprenez les règles à l'avance.</strong> Lisez le livret et, si possible,
               faites un tour d'essai. Rien ne tue l'ambiance comme des pages qu'on feuillette en
@@ -283,7 +283,7 @@ export default function SoireeJeuxArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">5. Rangement et prochaine session</h2>
+          <h2 >5. Rangement et prochaine session</h2>
           <p>
             Une bonne soirée jeux se termine aussi bien qu'elle commence. Quand vous annoncez la
             dernière partie, laissez quelques minutes à chacun pour finir son tour, prenez une photo
@@ -306,12 +306,12 @@ export default function SoireeJeuxArticlePage() {
           </p>
         </section>
 
-        <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="flex items-center gap-4 mb-10">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
             CB
           </div>
           <div>
-            <p className="font-semibold text-sm">Captain Bond Team</p>
+            <p className="font-semibold text-white">Captain Bond</p>
             <p className="text-xs text-slate-400">
               Publié le {publishedDate} &middot; 6 min de lecture
             </p>
@@ -323,8 +323,8 @@ export default function SoireeJeuxArticlePage() {
         </p>
 
         <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-          <h3 className="text-xl font-semibold mb-2">Prêt pour la soirée jeux ?</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">
+          <h3 >Prêt pour la soirée jeux ?</h3>
+          <p className="text-slate-200 mb-4">
             Captain Bond vous simplifie la vie : invitez vos amis, partagez vos jeux préférés et
             gardez le fil de l'organisation. Finis les tableurs et les fils de messages sans fin —
             une organisation de soirée qui marche vraiment.

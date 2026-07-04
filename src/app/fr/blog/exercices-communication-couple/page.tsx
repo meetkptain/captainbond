@@ -301,11 +301,11 @@ export default function ExercicesCommunicationCouplePage() {
         La plupart des couples ne manquent pas d\'amour — ils manquent d\'une boîte à outils
         de communication partagée. Les compétences comptent plus que les sentiments.
       </blockquote>
-      <p className="text-slate-300 leading-relaxed mb-8">
+      <p className="text-slate-300 mb-8">
         Les recherches du Gottman Institute confirment que les techniques de communication structurées sont l\'un des plus forts prédicteurs de satisfaction relationnelle à long terme.
       </p>
 
-      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="flex items-center gap-4 mb-10">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
           CB
         </div>
@@ -318,7 +318,7 @@ export default function ExercicesCommunicationCouplePage() {
       </div>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Que sont les exercices de communication pour couple ?</h2>
+        <h2 >Que sont les exercices de communication pour couple ?</h2>
         <p>
           Les exercices de communication pour couple sont des activités structurées conçues pour
           améliorer la façon dont les partenaires écoutent, s\'expriment et résolvent les conflits.
@@ -337,8 +337,8 @@ export default function ExercicesCommunicationCouplePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Points clés à retenir</h2>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <h2 >Points clés à retenir</h2>
+        <ul >
           <li>Les exercices de communication construisent l\'habitude de la connexion intentionnelle avant que les conflits n\'apparaissent.</li>
           <li>La plupart des exercices prennent 5 à 20 minutes et ne nécessitent aucun matériel — juste de la présence et de la bonne volonté.</li>
           <li>Le ratio 5:1 d\'interactions positives pour négatives est un indicateur fiable de la santé relationnelle.</li>
@@ -348,7 +348,7 @@ export default function ExercicesCommunicationCouplePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Tableau comparatif</h2>
+        <h2 >Tableau comparatif</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-slate-300 border-collapse">
             <thead>
@@ -396,7 +396,7 @@ export default function ExercicesCommunicationCouplePage() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Commencez par un exercice dès ce soir</h2>
+        <h2 >Commencez par un exercice dès ce soir</h2>
         <p>
           Vous n\'avez pas besoin de maîtriser les dix à la fois. Choisissez celui qui semble le plus
           pertinent pour votre relation en ce moment et essayez-le ce soir. L\'exercice de mirroring
@@ -417,8 +417,8 @@ export default function ExercicesCommunicationCouplePage() {
       </section>
 
       <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-        <h3 className="text-xl font-semibold mb-2">Faites de la communication une habitude avec Captain Bond</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+        <h3 >Faites de la communication une habitude avec Captain Bond</h3>
+        <p className="text-slate-200 mb-4">
           Le mode couple de Captain Bond vous offre des jeux de questions frais, des amorces de
           conversation et des exercices de connexion à chaque session. Sans préparation, sans
           pression — juste de meilleures conversations.

@@ -178,17 +178,16 @@ export default function HalloweenPartyGamesPage() {
           The spooky theme provides permission to be silly in a way everyday parties do not.
         </blockquote>
 
-        <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-          <p className="text-slate-200 italic">&ldquo;Halloween is the one night a year when adults get permission to play pretend — and games turn that permission into connection.&rdquo;</p>
-          <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-        </section>
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;Halloween is the one night a year when adults get permission to play pretend — and games turn that permission into connection.&rdquo;</p>
+        </blockquote>
 
-        <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="flex items-center gap-4 mb-10">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
             CB
           </div>
           <div>
-            <p className="font-semibold text-sm">Captain Bond Team</p>
+            <p className="font-semibold text-white">Captain Bond</p>
             <p className="text-xs text-slate-400">
               Published {publishedDate} &middot; 10 min read
             </p>
@@ -196,7 +195,7 @@ export default function HalloweenPartyGamesPage() {
         </div>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Why Halloween Party Games Work for Adults</h2>
+          <h2 >Why Halloween Party Games Work for Adults</h2>
           <p>
             Adult Halloween party games are structured group activities that use spooky, macabre, or
             Halloween-themed prompts to drive social interaction among grown guests. Unlike everyday
@@ -227,13 +226,13 @@ export default function HalloweenPartyGamesPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">10+ Halloween Party Games for Adults</h2>
+          <h2 >10+ Halloween Party Games for Adults</h2>
           <p>
             Here are the best Halloween party games for adults in 2026 — ranked for group size,
             equipment needs, and spooky factor. Each game is tested and proven to work with
             real adult party crowds.
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed">
+          <ul >
             {halloweenGames.map((g, i) => (
               <li key={i}>
                 <strong>{g.name}:</strong> {g.desc}
@@ -249,37 +248,36 @@ export default function HalloweenPartyGamesPage() {
         </blockquote>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">How to Set Up a Halloween Game Night</h2>
+          <h2 >How to Set Up a Halloween Game Night</h2>
           <p>
             A successful Halloween game night balances structure with spontaneity. Here is a tested
             sequence that works for groups of 8 to 50+ adults:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+          <ul >
             <li><strong>Start with costume arrival + icebreaker (30 min):</strong> Monster Mash Name Game or Halloween Would You Rather gets people talking while late arrivals trickle in</li>
             <li><strong>Run a group-wide game (20-30 min):</strong> Captain Bond Party Halloween mode or Halloween Bingo brings the whole room together on one activity</li>
             <li><strong>Host the costume contest (15 min):</strong> Multiple categories keep everyone invested. Let guests vote throughout the night</li>
             <li><strong>Split into smaller game clusters (45+ min):</strong> Murder mystery for one group, drinking games for another, board games for a third</li>
             <li><strong>Close with an all-in game (20 min):</strong> Ghost Story Round Robin or a final round of Captain Bond Party brings everyone back together</li>
           </ul>
-          <p className="text-slate-300 leading-relaxed mt-4">
+          <p className="text-slate-300 mt-4">
             Set up a central screen or TV for digital-physical hybrid games. Ensure the space has
             enough lighting to play games but dim enough to maintain atmosphere. Background music
             (spooky instrumental playlists) sets the tone without competing with game instructions.
           </p>
         </section>
 
-        <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-          <p className="text-slate-200 italic">&ldquo;A Halloween game night does not need a complicated setup. It needs a few good games, a room full of costumes, and the willingness to be ridiculous.&rdquo;</p>
-          <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-        </section>
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;A Halloween game night does not need a complicated setup. It needs a few good games, a room full of costumes, and the willingness to be ridiculous.&rdquo;</p>
+        </blockquote>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Tips for a Memorable Halloween Party</h2>
+          <h2 >Tips for a Memorable Halloween Party</h2>
           <p>
             Beyond the games themselves, the best Halloween parties for adults share common
             principles. These tips separate an average party from a legendary one:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+          <ul >
             <li><strong>Theme your games, not just your decor:</strong> Match game prompts, dares, and categories to your party theme. A 1920s séance party needs different questions than a slasher horror night</li>
             <li><strong>Prize quality matters:</strong> Adults compete harder for good prizes. A $50 gift card or a premium bottle generates more costume contest effort than a plastic trophy</li>
             <li><strong>Create photo moments:</strong> Set up a photo booth area with Halloween props. Games that generate photo-worthy moments (Mummy Wrap, costume contest) get shared on social media</li>
@@ -294,7 +292,7 @@ export default function HalloweenPartyGamesPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">A Note on Adult Content Sensitivity</h2>
+          <h2 >A Note on Adult Content Sensitivity</h2>
           <p>
             Halloween party games for adults can push boundaries — and that is part of the appeal.
             However, it is important to know your group. Some games involve drinking, dark humor,
@@ -310,8 +308,8 @@ export default function HalloweenPartyGamesPage() {
         </p>
 
         <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10 my-8 text-center">
-          <h3 className="text-xl font-semibold mb-2">Turn your Halloween party up to 11</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">
+          <h3 >Turn your Halloween party up to 11</h3>
+          <p className="text-slate-200 mb-4">
             Captain Bond Party comes with a Halloween question deck — spooky trivia, horror dares,
             and challenges tailored for adult Halloween parties. Up to 100 players join from their
             phones while the action displays on your TV. No boards, no cards, no setup.
@@ -325,8 +323,8 @@ export default function HalloweenPartyGamesPage() {
         </aside>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Related Articles</h2>
-          <ul className="space-y-2 text-slate-300 leading-relaxed">
+          <h2 >Related Articles</h2>
+          <ul className="space-y-2 text-slate-300">
             <li>
               <Link href="/blog/best-party-games-for-adults-2026" className="text-neon-purple hover:underline">
                 Best Party Games for Adults 2026

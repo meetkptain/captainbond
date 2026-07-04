@@ -180,7 +180,7 @@ export default function BarTriviaNightGuidePage() {
           <p className="text-sm uppercase tracking-widest text-neon-purple font-semibold mb-2">
             Quick Answer
           </p>
-          <p className="text-slate-200 leading-relaxed">
+          <p className="text-slate-200">
             Hosting a successful bar trivia night comes down to six steps: choose your format
             (digital or traditional), prepare diverse question rounds, set up your space for
             visibility and audio, promote 2-3 weeks in advance, host with high energy, and
@@ -194,7 +194,7 @@ export default function BarTriviaNightGuidePage() {
           <p className="text-sm uppercase tracking-widest text-neon-purple font-semibold mb-3">
             Key Takeaways
           </p>
-          <ul className="space-y-2 text-slate-200 leading-relaxed">
+          <ul className="space-y-2 text-slate-200">
             <li className="flex gap-2">• <span>Trivia nights boost weeknight bar revenue by 20-35% compared to passive evenings.</span></li>
             <li className="flex gap-2">• <span>Digital trivia eliminates the €150-300/night cost of a human quiz master.</span></li>
             <li className="flex gap-2">• <span>A 6-step framework — format, questions, space, promotion, hosting, follow-up — guarantees repeatable success.</span></li>
@@ -204,7 +204,7 @@ export default function BarTriviaNightGuidePage() {
         </div>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Why trivia nights boost bar revenue</h2>
+          <h2 >Why trivia nights boost bar revenue</h2>
           <p>
             The economics of a slow weeknight are brutal. Fixed costs — rent, staff, utilities —
             stay the same whether you have 10 customers or 50. The difference between a profitable
@@ -240,12 +240,12 @@ export default function BarTriviaNightGuidePage() {
           </p>
         </section>
 
-        <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="flex items-center gap-4 mb-10">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
             CB
           </div>
           <div>
-            <p className="font-semibold text-sm">Captain Bond Team</p>
+            <p className="font-semibold text-white">Captain Bond</p>
             <p className="text-xs text-slate-400">
               Published {publishedDate} &middot; 9 min read
             </p>
@@ -253,7 +253,7 @@ export default function BarTriviaNightGuidePage() {
         </div>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">How to plan your trivia night: a step-by-step guide</h2>
+          <h2 >How to plan your trivia night: a step-by-step guide</h2>
           <p>
             A successful trivia night does not happen by accident. Follow these six steps to
             build a repeatable format that your customers will look forward to every week.
@@ -329,7 +329,7 @@ export default function BarTriviaNightGuidePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Digital vs traditional trivia: which is better for bars?</h2>
+          <h2 >Digital vs traditional trivia: which is better for bars?</h2>
           <p>
             The debate between digital and traditional trivia comes down to scale, cost, and
             customer experience. Here is how they compare:
@@ -388,13 +388,13 @@ export default function BarTriviaNightGuidePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Promoting your trivia night</h2>
+          <h2 >Promoting your trivia night</h2>
           <p>
             A great trivia night is worthless if nobody shows up. Promotion is the engine that
             turns your event from a good idea into a packed house. Here is a channel-by-channel
             breakdown:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li>
               <strong>Social media.</strong> Post a countdown series on Instagram Stories
               starting 2 weeks out. Share the prize pool, tease categories, and tag previous
@@ -436,12 +436,12 @@ export default function BarTriviaNightGuidePage() {
         </blockquote>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Measuring success</h2>
+          <h2 >Measuring success</h2>
           <p>
             To know whether your trivia night is working, track these five KPIs consistently
             across every event:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li>
               <strong>Revenue per seat.</strong> Divide total revenue by the number of
               customers. A successful trivia night should hit 1.8-2.5× your normal per-seat
@@ -477,9 +477,9 @@ export default function BarTriviaNightGuidePage() {
           These suggestions work best for bars, pubs, and casual venues looking to boost weeknight trade. For very large venues (200+ capacity) or corporate hospitality settings, consider dedicated event management platforms.
         </p>
 
-        <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10 mb-10">
-          <h3 className="text-xl font-semibold mb-2">Ready to launch your trivia night?</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">
+        <aside className="article-card-takeaways">
+          <h3 >Ready to launch your trivia night?</h3>
+          <p className="text-slate-200 mb-4">
             Captain Bond Pro is built for bars. Auto-generated questions, real-time scoring,
             live leaderboard, and zero host cost — all for €99/month. No prep, no extra staff,
             no stress.

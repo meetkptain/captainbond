@@ -163,7 +163,7 @@ export default function CoupleQuestionsDeckPage() {
                     key={qi}
                     className="print-card rounded-lg p-4 flex flex-col justify-between min-h-[140px] border-2 border-dashed border-slate-600 bg-slate-900 print:bg-white"
                   >
-                    <p className="text-sm leading-relaxed print:text-black text-slate-100">
+                    <p className="text-sm print:text-black text-slate-100">
                       {q}
                     </p>
                     <span className="print-label mt-2 text-xs font-medium text-indigo-400 print:text-gray-600 self-start px-2 py-0.5 rounded bg-indigo-900/30 print:bg-gray-100">

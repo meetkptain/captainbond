@@ -125,11 +125,11 @@ export default function QuestionsPourConstruireIntimitePage() {
         L&rsquo;intimité n&rsquo;est pas une destination — c&rsquo;est une pratique. Elle
         s&rsquo;approfondit chaque fois que vous choisissez la curiosité plutôt que l&rsquo;hypothèse.
       </blockquote>
-      <p className="text-slate-300 leading-relaxed mb-8">
+      <p className="text-slate-300 mb-8">
         Une étude de Harvard a montré que l&rsquo;intimité émotionnelle est le plus fort prédicteur de satisfaction relationnelle à long terme.
       </p>
 
-      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="flex items-center gap-4 mb-10">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
           CB
         </div>
@@ -142,7 +142,7 @@ export default function QuestionsPourConstruireIntimitePage() {
       </div>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Que sont les questions pour construire l&rsquo;intimité ?</h2>
+        <h2 >Que sont les questions pour construire l&rsquo;intimité ?</h2>
         <p>
           Les questions pour construire l&rsquo;intimité sont des amorces conçues pour faire
           passer la conversation au-delà des échanges superficiels vers un territoire émotionnel,
@@ -162,8 +162,8 @@ export default function QuestionsPourConstruireIntimitePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Points clés à retenir</h2>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <h2 >Points clés à retenir</h2>
+        <ul >
           <li>L&rsquo;intimité a trois dimensions : émotionnelle, physique et intellectuelle. Négliger l&rsquo;une d&rsquo;elles crée de la distance.</li>
           <li>Les meilleures questions sont ouvertes et ne peuvent pas être répondues par oui ou non.</li>
           <li>Alternez les rôles. Le seul travail de celui qui écoute est de comprendre, pas de répondre ou de réparer.</li>
@@ -173,14 +173,14 @@ export default function QuestionsPourConstruireIntimitePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Questions d&rsquo;intimité émotionnelle</h2>
+        <h2 >Questions d&rsquo;intimité émotionnelle</h2>
         <p>
           L&rsquo;intimité émotionnelle vit dans l&rsquo;espace entre ce que vous ressentez et ce
           que vous partagez. Ces questions invitent votre partenaire dans votre monde intérieur —
           vos peurs, vos souvenirs, vos espoirs les plus discrets. Allez-y doucement. Ces questions
           demandent une vraie vulnérabilité.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {emotionalQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -188,14 +188,14 @@ export default function QuestionsPourConstruireIntimitePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Questions d&rsquo;intimité physique</h2>
+        <h2 >Questions d&rsquo;intimité physique</h2>
         <p>
           L&rsquo;intimité physique ne concerne pas uniquement le sexe — il s&rsquo;agit du
           toucher, de la présence et du fait d&rsquo;être bien dans son corps à deux. Ces
           questions explorent la dimension sensorielle et physique de votre connexion. Elles
           restent élégantes tout en invitant à l&rsquo;honnêteté sur le désir.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {physicalQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -203,14 +203,14 @@ export default function QuestionsPourConstruireIntimitePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Questions d&rsquo;intimité intellectuelle</h2>
+        <h2 >Questions d&rsquo;intimité intellectuelle</h2>
         <p>
           L&rsquo;intimité intellectuelle est la dimension la plus négligée de la connexion. Elle
           grandit quand vous partagez comment vous pensez, pas seulement ce que vous ressentez.
           Ces questions vous invitent à explorer les idées ensemble — les croyances, les curiosités
           et les questions qui façonnent votre façon de naviguer dans le monde.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {intellectualQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -222,7 +222,7 @@ export default function QuestionsPourConstruireIntimitePage() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Comment utiliser ces questions</h2>
+        <h2 >Comment utiliser ces questions</h2>
         <p>
           Choisissez une catégorie et posez 2 à 3 questions. C&rsquo;est suffisant pour une
           session. Rangez vos téléphones, regardez-vous dans les yeux, et laissez les réponses
@@ -243,8 +243,8 @@ export default function QuestionsPourConstruireIntimitePage() {
       </section>
 
       <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-        <h3 className="text-xl font-semibold mb-2">Des questions fraîches à chaque fois ?</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+        <h3 >Des questions fraîches à chaque fois ?</h3>
+        <p className="text-slate-200 mb-4">
           Le mode couple de Captain Bond génère de nouvelles questions pour construire l&rsquo;intimité
           à chaque session — émotionnelles, physiques, intellectuelles et bien plus. Sans
           préparation, sans répétition, juste de meilleures conversations.

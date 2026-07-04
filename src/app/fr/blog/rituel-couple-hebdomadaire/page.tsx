@@ -149,7 +149,7 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
           présence qu&rsquo;on y met pendant ce temps.
         </blockquote>
 
-        <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="flex items-center gap-4 mb-10">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
             CB
           </div>
@@ -162,8 +162,8 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
         </div>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Points clés à retenir</h2>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <h2 >Points clés à retenir</h2>
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li>
               Un créneau dédié de 20 minutes par semaine empêche la relation de basculer en mode
               transactionnel.
@@ -188,7 +188,7 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Pourquoi un rituel hebdomadaire change tout</h2>
+          <h2 >Pourquoi un rituel hebdomadaire change tout</h2>
           <p>
             Les relations n&rsquo;échouent pas à cause d&rsquo;une seule grosse dispute. Elles
             s&rsquo;érodent progressivement — par des milliers de petits moments où un partenaire
@@ -213,7 +213,7 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 1 : Choisir un créneau et le protéger</h2>
+          <h2 >Étape 1 : Choisir un créneau et le protéger</h2>
           <p>
             Choisissez un jour et une heure que vous pouvez vraiment tenir. Le dimanche soir est
             populaire parce que le week-end se termine et que la semaine n&rsquo;a pas encore
@@ -228,7 +228,7 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 2 : Supprimer toutes les distractions</h2>
+          <h2 >Étape 2 : Supprimer toutes les distractions</h2>
           <p>
             C&rsquo;est l&rsquo;étape qui a le plus d&rsquo;impact. Les téléphones vont dans une
             autre pièce — pas retournés sur la table. La télé reste éteinte. Les notifications sont
@@ -248,12 +248,12 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 3 : Choisir un format de conversation</h2>
+          <h2 >Étape 3 : Choisir un format de conversation</h2>
           <p>
             Avoir une structure évite l&rsquo;impasse du &ldquo;Alors, ta semaine ?&rdquo;. Le
             format le plus simple est un point en trois parties :
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li>
               <strong>Haut et bas :</strong> Chacun partage un moment fort et un défi de la
               semaine.
@@ -276,7 +276,7 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 4 : Alterner la parole et l&rsquo;écoute</h2>
+          <h2 >Étape 4 : Alterner la parole et l&rsquo;écoute</h2>
           <p>
             L&rsquo;erreur la plus courante dans les conversations de couple est d&rsquo;interrompre
             pour résoudre les problèmes. Quand votre partenaire partage quelque chose de difficile,
@@ -294,7 +294,7 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 5 : Terminer par la gratitude</h2>
+          <h2 >Étape 5 : Terminer par la gratitude</h2>
           <p>
             Les deux dernières minutes sont les plus importantes. Chacun partage une chose précise
             qu&rsquo;il a appréciée chez l&rsquo;autre cette semaine. &ldquo;Tu m&rsquo;as fait
@@ -309,7 +309,7 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Une dernière pensée</h2>
+          <h2 >Une dernière pensée</h2>
           <p>
             Vous n&rsquo;avez pas besoin du rituel parfait. Vous avez besoin du courage de
             commencer et de la discipline de le protéger. Vingt minutes, une fois par semaine, sans
@@ -331,8 +331,8 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
         </section>
 
         <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-          <h3 className="text-xl font-semibold mb-2">Rendez-le sans effort avec Captain Bond</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">
+          <h3 >Rendez-le sans effort avec Captain Bond</h3>
+          <p className="text-slate-200 mb-4">
             Le mode couple de Captain Bond vous offre des questions de conversation fraîches chaque
             semaine, un minuteur intégré et un format structuré — pour ne jamais avoir à improviser
             votre rituel. Commencez aujourd&rsquo;hui et construisez l&rsquo;habitude qui protège

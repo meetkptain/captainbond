@@ -215,7 +215,7 @@ export default function EtudeDonneesConnexionCouplePage() {
           </p>
         </header>
 
-        <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="flex items-center gap-4 mb-10">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
             CB
           </div>
@@ -231,7 +231,7 @@ export default function EtudeDonneesConnexionCouplePage() {
           <p className="text-sm font-semibold text-neon-purple mb-1 uppercase tracking-wider">
             Réponse directe
           </p>
-          <p className="text-slate-100 text-lg leading-relaxed">
+          <p className="text-slate-100 text-lg">
             <strong>Que révèlent plus de 1 200 sessions de couple sur les relations modernes ?</strong>{' '}
             La régularité prime sur la durée. Les couples qui réalisent 3+ sessions courtes par
             semaine obtiennent des scores d'harmonie mesurablement plus élevés — et les questions
@@ -240,7 +240,7 @@ export default function EtudeDonneesConnexionCouplePage() {
         </div>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-6">Résultats clés</h2>
+          <h2 >Résultats clés</h2>
           <div className="space-y-4">
             {keyFindings.map((f, i) => (
               <div
@@ -256,7 +256,7 @@ export default function EtudeDonneesConnexionCouplePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Méthodologie</h2>
+          <h2 >Méthodologie</h2>
           <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5 mb-4">
             <p>
               Les données ont été collectées automatiquement depuis{' '}
@@ -276,7 +276,7 @@ export default function EtudeDonneesConnexionCouplePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">1. Fréquence des conversations : la régularité avant tout</h2>
+          <h2 >1. Fréquence des conversations : la régularité avant tout</h2>
           <p>
             Le signal le plus fort de l'ensemble des données : les couples qui réalisent des
             sessions courtes mais fréquentes obtiennent des scores d'harmonie significativement
@@ -343,7 +343,7 @@ export default function EtudeDonneesConnexionCouplePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">2. Types de questions : le fun en tête</h2>
+          <h2 >2. Types de questions : le fun en tête</h2>
           <p>
             Quand les couples choisissent eux-mêmes leurs catégories de questions, les prompts
             légers et amusants arrivent largement en tête — preuve que la playfulness n'est pas un
@@ -380,7 +380,7 @@ export default function EtudeDonneesConnexionCouplePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">3. Meilleurs moments : la fenêtre 20 h – 21 h</h2>
+          <h2 >3. Meilleurs moments : la fenêtre 20 h – 21 h</h2>
           <p>
             L'heure de début de session est fortement corrélée au taux de complétion. Les données
             pointent vers une heure dorée pour les conversations de couple.
@@ -424,7 +424,7 @@ export default function EtudeDonneesConnexionCouplePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">4. Genre : engagement et bénéfices égaux</h2>
+          <h2 >4. Genre : engagement et bénéfices égaux</h2>
           <p>
             L'un des résultats les plus encourageants : aucune différence statistiquement
             significative n'existe dans la façon dont les partenaires s'engagent dans les
@@ -448,7 +448,7 @@ export default function EtudeDonneesConnexionCouplePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">5. Durée de relation : le pic des 2–5 ans</h2>
+          <h2 >5. Durée de relation : le pic des 2–5 ans</h2>
           <p>
             L'engagement varie selon la durée de la relation. Les couples de 2 à 5 ans montrent le
             plus grand nombre de sessions, tandis que les couples ensemble depuis plus d'une
@@ -488,7 +488,7 @@ export default function EtudeDonneesConnexionCouplePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Ce que cela signifie pour votre couple</h2>
+          <h2 >Ce que cela signifie pour votre couple</h2>
           <p>
             Les données racontent une histoire claire : vous n'avez pas besoin d'heures de
             conversations profondes chaque semaine pour construire une connexion solide. Il vous
@@ -518,8 +518,8 @@ export default function EtudeDonneesConnexionCouplePage() {
         </section>
 
         <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-          <h3 className="text-xl font-semibold mb-2">Essayez notre mode couple basé sur la recherche</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">
+          <h3 >Essayez notre mode couple basé sur la recherche</h3>
+          <p className="text-slate-200 mb-4">
             Captain Bond génère des decks de questions adaptés à votre humeur — fun, profond,
             coquin ou un mélange. Chaque session renforce votre connexion. Sans préparation, sans
             pression.

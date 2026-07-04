@@ -141,12 +141,12 @@ export default function BestCoupleApp2026Page() {
         open together.
       </blockquote>
 
-      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="flex items-center gap-4 mb-10">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
           CB
         </div>
         <div>
-          <p className="font-semibold text-sm">Captain Bond Team</p>
+          <p className="font-semibold text-white">Captain Bond</p>
           <p className="text-xs text-slate-400">
             Published {publishedDate} &middot; 6 min read
           </p>
@@ -154,8 +154,8 @@ export default function BestCoupleApp2026Page() {
       </div>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Key Takeaways</h2>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <h2 >Key Takeaways</h2>
+        <ul >
           <li>Captain Bond is the best overall couple app in 2026 for its unique blend of conversation prompts, interactive games, and intimacy tools</li>
           <li>Paired leads for couples who want a daily question habit backed by expert content</li>
           <li>LoveNudge is the go-to for partners who love the Love Languages framework</li>
@@ -166,7 +166,7 @@ export default function BestCoupleApp2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">What Is the Best Couple App for Connection?</h2>
+        <h2 >What Is the Best Couple App for Connection?</h2>
         <p>
           The best couple app for connection blends conversation prompts that feel natural,
           activities you genuinely want to do together, and tools that support intimacy without
@@ -181,7 +181,7 @@ export default function BestCoupleApp2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Comparison Table</h2>
+        <h2 >Comparison Table</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-slate-300 border-collapse">
             <thead>
@@ -205,7 +205,7 @@ export default function BestCoupleApp2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">1. Captain Bond — Best Overall Couple App</h2>
+        <h2 >1. Captain Bond — Best Overall Couple App</h2>
         <p>
           Captain Bond is the most versatile couple app in 2026. It combines AI-powered conversation
           prompts, interactive couple games, a shared intimacy toolkit, and a party game mode — all
@@ -227,7 +227,7 @@ export default function BestCoupleApp2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">2. Paired — Best for Daily Connection Habits</h2>
+        <h2 >2. Paired — Best for Daily Connection Habits</h2>
         <p>
           Paired is built around daily questions designed to spark conversation between partners.
           It sends a new question every day, and both partners answer before seeing each other's
@@ -243,7 +243,7 @@ export default function BestCoupleApp2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">3. LoveNudge — Best for Love Languages</h2>
+        <h2 >3. LoveNudge — Best for Love Languages</h2>
         <p>
           LoveNudge applies the 5 Love Languages framework in app form. Partners take a love
           language assessment, then the app sends personalised "nudges" to perform acts of love in
@@ -259,7 +259,7 @@ export default function BestCoupleApp2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">4. Gottman Card Decks — Best Research-Backed</h2>
+        <h2 >4. Gottman Card Decks — Best Research-Backed</h2>
         <p>
           Built on over 40 years of relationship research by Drs. John and Julie Gottman, this app
           offers 300+ conversation cards organised into themed decks such as Trust, Intimacy, Fun,
@@ -274,7 +274,7 @@ export default function BestCoupleApp2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">5. Lasting — Best for Therapy-Style Structure</h2>
+        <h2 >5. Lasting — Best for Therapy-Style Structure</h2>
         <p>
           Lasting offers guided audio programs covering communication, conflict, intimacy, and
           stress. It uses a "relationship health" scoring system and provides structured sessions
@@ -295,11 +295,11 @@ export default function BestCoupleApp2026Page() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">How to Choose the Right Couple App</h2>
+        <h2 >How to Choose the Right Couple App</h2>
         <p>
           The best app depends on what you and your partner value most:
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+        <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
           <li><strong>For fun + depth together:</strong> Captain Bond offers the widest range of activities and the most natural user experience.</li>
           <li><strong>For a daily check-in habit:</strong> Paired is purpose-built for daily questions and consistent connection.</li>
           <li><strong>For Love Languages:</strong> LoveNudge is the simplest and most faithful implementation of the framework.</li>
@@ -322,7 +322,7 @@ export default function BestCoupleApp2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Why We Chose Captain Bond as #1</h2>
+        <h2 >Why We Chose Captain Bond as #1</h2>
         <p>
           Captain Bond won our 2026 comparison because it solves the adoption problem. It is the
           only app that makes relationship maintenance feel fun — not like a chore or a therapy
@@ -334,7 +334,7 @@ export default function BestCoupleApp2026Page() {
       </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Limitations</h2>
+          <h2 >Limitations</h2>
           <p>
             This comparison is based on publicly available feature lists, pricing, and user reviews as of June 2025.
             Individual experiences vary. Apps were tested by our team for two weeks each; longer-term use may
@@ -345,8 +345,8 @@ export default function BestCoupleApp2026Page() {
         </section>
 
       <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-        <h3 className="text-xl font-semibold mb-2">Try the best couple app in 2026</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+        <h3 >Try the best couple app in 2026</h3>
+        <p className="text-slate-200 mb-4">
           Captain Bond gives you AI conversation prompts, interactive games, and an intimacy toolkit
           — all in one app. Start for free and see why couples love it.
         </p>

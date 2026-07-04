@@ -372,25 +372,24 @@ export default function CoupleCommunicationExercisesPage() {
         </p>
       </header>
 
-      <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-        <p className="text-slate-200 italic">&ldquo;Communication is not about saying the right thing. It is about creating the space where honesty feels safe.&rdquo;</p>
-        <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-      </section>
+      <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;Communication is not about saying the right thing. It is about creating the space where honesty feels safe.&rdquo;</p>
+        </blockquote>
 
       <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
         Most couples do not lack love — they lack a shared communication toolkit. The skills matter more
         than the feelings.
       </blockquote>
-      <p className="text-slate-300 leading-relaxed mb-8">
+      <p className="text-slate-300 mb-8">
         Research from The Gottman Institute confirms that structured communication techniques are one of the strongest predictors of long-term relationship satisfaction.
       </p>
 
-      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="flex items-center gap-4 mb-10">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
           CB
         </div>
         <div>
-          <p className="font-semibold text-sm">Captain Bond Team</p>
+          <p className="font-semibold text-white">Captain Bond</p>
           <p className="text-xs text-slate-400">
             Published {publishedDate} &middot; 8 min read
           </p>
@@ -398,7 +397,7 @@ export default function CoupleCommunicationExercisesPage() {
       </div>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">What are couple communication exercises?</h2>
+        <h2 >What are couple communication exercises?</h2>
         <p>
           Couple communication exercises are structured activities designed to improve how partners
           listen, express themselves, and resolve conflict. Unlike casual conversation, these exercises
@@ -416,8 +415,8 @@ export default function CoupleCommunicationExercisesPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Key Takeaways</h2>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <h2 >Key Takeaways</h2>
+        <ul >
           <li>Communication exercises build the habit of intentional connection before conflict arises.</li>
           <li>Most exercises take 5-20 minutes and require no equipment — just presence and willingness.</li>
           <li>The 5:1 ratio of positive to negative interactions is a reliable benchmark for relationship health.</li>
@@ -427,7 +426,7 @@ export default function CoupleCommunicationExercisesPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Comparison Table</h2>
+        <h2 >Comparison Table</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-slate-300 border-collapse">
             <thead>
@@ -469,10 +468,9 @@ export default function CoupleCommunicationExercisesPage() {
           <p>{ex.benefit}</p>
         </section>
           {i === 4 && (
-            <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-              <p className="text-slate-200 italic">&ldquo;Consistency matters more than perfection. A five-minute check-in beats a two-hour conversation once a month.&rdquo;</p>
-              <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-            </section>
+            <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;Consistency matters more than perfection. A five-minute check-in beats a two-hour conversation once a month.&rdquo;</p>
+        </blockquote>
           )}
         </React.Fragment>
       ))}
@@ -483,7 +481,7 @@ export default function CoupleCommunicationExercisesPage() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Start with one exercise tonight</h2>
+        <h2 >Start with one exercise tonight</h2>
         <p>
           You do not need to master all ten at once. Pick the one that feels most relevant to your
           relationship right now and try it tonight. The Mirroring exercise takes 10 minutes. The
@@ -501,14 +499,13 @@ export default function CoupleCommunicationExercisesPage() {
         </p>
       </section>
 
-      <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-        <p className="text-slate-200 italic">&ldquo;The strongest relationships are not built on grand gestures. They are built on daily habits of connection.&rdquo;</p>
-        <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-      </section>
+      <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;The strongest relationships are not built on grand gestures. They are built on daily habits of connection.&rdquo;</p>
+        </blockquote>
 
       <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-        <h3 className="text-xl font-semibold mb-2">Make communication a habit with Captain Bond</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+        <h3 >Make communication a habit with Captain Bond</h3>
+        <p className="text-slate-200 mb-4">
           Captain Bond\'s couple mode gives you fresh question decks, conversation starters, and
           connection exercises every session. No prep, no pressure — just better conversations.
         </p>

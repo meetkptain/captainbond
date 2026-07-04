@@ -235,12 +235,12 @@ export default function JeuxBriseGlaceAdultesPage() {
         Selon un rapport Statista 2024, le marché mondial des jeux de société devrait atteindre 30 milliards de dollars d&apos;ici 2028.
       </p>
 
-      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="flex items-center gap-4 mb-10">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
           CB
         </div>
         <div>
-          <p className="font-semibold text-sm">Captain Bond Team</p>
+          <p className="font-semibold text-white">Captain Bond</p>
           <p className="text-xs text-slate-400">
             Publié le {publishedDate} &middot; 7 min de lecture
           </p>
@@ -248,8 +248,8 @@ export default function JeuxBriseGlaceAdultesPage() {
       </div>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Points clés à retenir</h2>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <h2 >Points clés à retenir</h2>
+        <ul >
           <li>Les jeux brise-glace pour adultes vont de 30 secondes à 20 minutes d&apos;activités de confiance</li>
           <li>Les meilleurs jeux ne nécessitent aucun matériel et s&apos;adaptent à tous les groupes de 2 à 50+</li>
           <li>Choisissez la catégorie selon votre objectif : rapide (énergie), connaissance (lien), équipe (collaboration), virtuel (distanciel), profond (confiance)</li>
@@ -259,7 +259,7 @@ export default function JeuxBriseGlaceAdultesPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Que sont les jeux brise-glace pour adultes ?</h2>
+        <h2 >Que sont les jeux brise-glace pour adultes ?</h2>
         <p>
           Les jeux brise-glace pour adultes sont des activités courtes et structurées qui aident les
           personnes à se détendre, à se connecter et à démarrer des conversations en groupe. Contrairement
@@ -273,7 +273,7 @@ export default function JeuxBriseGlaceAdultesPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Tableau comparatif par taille de groupe et durée</h2>
+        <h2 >Tableau comparatif par taille de groupe et durée</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-slate-300 border-collapse">
             <thead>
@@ -297,12 +297,12 @@ export default function JeuxBriseGlaceAdultesPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Jeux brise-glace rapides (10 jeux)</h2>
+        <h2 >Jeux brise-glace rapides (10 jeux)</h2>
         <p>
           Ces jeux prennent moins de 5 minutes chacun et ne nécessitent aucune préparation.
           Utilisez-les pour réveiller une salle silencieuse ou passer d&apos;une activité à l&apos;autre.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {jeuxRapides.map((g, i) => (
             <li key={i}>{g}</li>
           ))}
@@ -310,13 +310,13 @@ export default function JeuxBriseGlaceAdultesPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Jeux pour faire connaissance (10 jeux)</h2>
+        <h2 >Jeux pour faire connaissance (10 jeux)</h2>
         <p>
           Ces jeux vont au-delà des noms et des titres. Ils révèlent des histoires, des particularités
           et des points communs. Parfaits pour les rendez-vous, les nouvelles équipes ou toute
           situation où l&apos;on veut vraiment apprendre à se connaître.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {jeuxConnaissance.map((g, i) => (
             <li key={i}>{g}</li>
           ))}
@@ -324,13 +324,13 @@ export default function JeuxBriseGlaceAdultesPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Jeux d&apos;équipe (10 jeux)</h2>
+        <h2 >Jeux d&apos;équipe (10 jeux)</h2>
         <p>
           Les jeux d&apos;équipe développent la collaboration, la communication et une saine compétition.
           Idéaux pour les séminaires, les équipes sportives ou tout groupe qui doit mieux
           fonctionner ensemble.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {jeuxEquipe.map((g, i) => (
             <li key={i}>{g}</li>
           ))}
@@ -338,13 +338,13 @@ export default function JeuxBriseGlaceAdultesPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Jeux virtuels (10 jeux)</h2>
+        <h2 >Jeux virtuels (10 jeux)</h2>
         <p>
           Les groupes à distance font face à un mur plus difficile à traverser. Ces jeux coupent
           la fatigue des écrans et apportent une vraie énergie aux appels vidéo et aux équipes
           réparties.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {jeuxVirtuels.map((g, i) => (
             <li key={i}>{g}</li>
           ))}
@@ -352,13 +352,13 @@ export default function JeuxBriseGlaceAdultesPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Jeux profonds (10 jeux)</h2>
+        <h2 >Jeux profonds (10 jeux)</h2>
         <p>
           Utilisez-les quand le groupe est prêt pour quelque chose de vrai. Les jeux profonds
           construisent la confiance, l&apos;empathie et une connexion authentique. Ils fonctionnent
           mieux en petits groupes avec un peu de temps.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {jeuxProfonds.map((g, i) => (
             <li key={i}>{g}</li>
           ))}
@@ -371,11 +371,11 @@ export default function JeuxBriseGlaceAdultesPage() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Comment choisir le bon jeu</h2>
+        <h2 >Comment choisir le bon jeu</h2>
         <p>
           Trois questions vous guideront vers la bonne catégorie :
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+        <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
           <li><strong>Ces personnes se connaissent-elles ?</strong> Les inconnus ont besoin de jeux rapides et légers. Les amis ou collègues peuvent gérer des formats plus profonds.</li>
           <li><strong>Combien de temps avez-vous ?</strong> Moins de 5 minutes → jeux rapides. 15+ minutes → connaissance ou profond.</li>
           <li><strong>Quel est l&apos;objectif ?</strong> Énergie et rires → rapides. Lien et confiance → profonds. Collaboration → équipe.</li>
@@ -388,7 +388,7 @@ export default function JeuxBriseGlaceAdultesPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Pourquoi jouer à des brise-glace ?</h2>
+        <h2 >Pourquoi jouer à des brise-glace ?</h2>
         <p>
           Les adultes oublient comment jouer. Entre l&apos;enfance et les responsabilités, le plaisir non
           structuré est remplacé par les banalités et l&apos;efficacité. Les jeux brise-glace pour adultes
@@ -403,8 +403,8 @@ export default function JeuxBriseGlaceAdultesPage() {
       </p>
 
       <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-        <h3 className="text-xl font-semibold mb-2">Des jeux frais à chaque fois ?</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+        <h3 >Des jeux frais à chaque fois ?</h3>
+        <p className="text-slate-200 mb-4">
           Captain Bond génère des jeux brise-glace sur mesure pour n&apos;importe quel groupe et
           contexte. Sans préparation, sans répétition — le bon jeu au bon moment.
         </p>

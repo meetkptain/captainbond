@@ -269,12 +269,12 @@ export default function QuestionsForCoupleArticlePage() {
         reversing that drift is a single honest question asked with no agenda.
       </blockquote>
 
-      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="flex items-center gap-4 mb-10">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
           CB
         </div>
         <div>
-          <p className="font-semibold text-sm">Captain Bond Team</p>
+          <p className="font-semibold text-white">Captain Bond</p>
           <p className="text-xs text-slate-400">
             Published {publishedDate} &middot; 5 min read
           </p>
@@ -290,7 +290,7 @@ export default function QuestionsForCoupleArticlePage() {
       </div>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Why questions matter for couples</h2>
+        <h2 >Why questions matter for couples</h2>
         <p>
           Most couples do not run out of love; they run out of novelty. Daily logistics — groceries,
           bills, schedules — crowd out the deeper conversations that once came naturally. Questions
@@ -304,10 +304,9 @@ export default function QuestionsForCoupleArticlePage() {
           fabric of intimacy: the feeling that someone knows you, not just the version you perform
           for the world.
         </p>
-        <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-          <p className="text-slate-200 italic">&ldquo;Love is not about finding the right person, but creating a right relationship through the questions you dare to ask.&rdquo;</p>
-          <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-        </section>
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;Love is not about finding the right person, but creating a right relationship through the questions you dare to ask.&rdquo;</p>
+        </blockquote>
         <blockquote className="border-l-4 border-neon-pink pl-6 my-6 italic text-slate-200">
           A good question does not demand a perfect answer. It invites the thing that normally stays
           quiet.
@@ -320,12 +319,12 @@ export default function QuestionsForCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">How to use this list</h2>
+        <h2 >How to use this list</h2>
         <p>
           Quantity is not the goal. Connection is. Here is a simple ritual that makes the most of
           these prompts:
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+        <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
           <li>
             <strong>Pick a weekly slot.</strong> Twenty minutes is enough. Put phones in another
             room.
@@ -352,30 +351,29 @@ export default function QuestionsForCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Fun and light questions</h2>
+        <h2 >Fun and light questions</h2>
         <p>
           Use these when you want to laugh, remember that you enjoy each other, or break a tense
           mood. Playfulness is underrated glue in long-term relationships.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {funQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
         </ul>
       </section>
 
-      <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-        <p className="text-slate-200 italic">&ldquo;Playfulness is the shortest distance between two hearts.&rdquo;</p>
-        <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-      </section>
+      <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;Playfulness is the shortest distance between two hearts.&rdquo;</p>
+        </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Getting-to-know-you questions</h2>
+        <h2 >Getting-to-know-you questions</h2>
         <p>
           Even partners who have been together for years can discover new rooms in each other. These
           prompts explore history, values and the small details that make a person feel unique.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {gettingToKnowQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -383,12 +381,12 @@ export default function QuestionsForCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Deep and emotional questions</h2>
+        <h2 >Deep and emotional questions</h2>
         <p>
           Go here when the house is quiet, you both have bandwidth, and you want to feel genuinely
           close. These questions ask for vulnerability, so take them slowly and without pressure.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {deepQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -396,31 +394,30 @@ export default function QuestionsForCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Intimate and spicy questions</h2>
+        <h2 >Intimate and spicy questions</h2>
         <p>
           Desire starts in the mind. These prompts stay classy while inviting you to talk about
           attraction, touch and what makes you feel wanted. Use them to build anticipation and
           clarity at the same time.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {intimateQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
         </ul>
       </section>
 
-      <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-        <p className="text-slate-200 italic">&ldquo;Desire and direction — when you know where you are going and who you are going with, intimacy finds its way.&rdquo;</p>
-        <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-      </section>
+      <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;Desire and direction — when you know where you are going and who you are going with, intimacy finds its way.&rdquo;</p>
+        </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Future and values questions</h2>
+        <h2 >Future and values questions</h2>
         <p>
           Shared direction is what turns chemistry into partnership. These questions help you
           calibrate where you are heading and what you each need along the way.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {futureQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -428,7 +425,7 @@ export default function QuestionsForCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">A final thought</h2>
+        <h2 >A final thought</h2>
         <p>
           You do not need the perfect question. You need the courage to ask and the patience to
           listen.
@@ -446,8 +443,8 @@ export default function QuestionsForCoupleArticlePage() {
       </section>
 
       <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-        <h3 className="text-xl font-semibold mb-2">Want more questions without the work?</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+        <h3 >Want more questions without the work?</h3>
+        <p className="text-slate-200 mb-4">
           Captain Bond’s couple mode generates fresh question decks for you — light, deep, spicy
           and everything in between. No prep, no pressure, just better conversations.
         </p>

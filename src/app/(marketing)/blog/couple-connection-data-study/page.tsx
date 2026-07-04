@@ -231,12 +231,12 @@ export default function CoupleConnectionDataStudyPage() {
         </blockquote>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-6">Key Takeaways</h2>
+          <h2 >Key Takeaways</h2>
           <div className="space-y-4">
             {keyFindings.map((f, i) => (
               <div
                 key={i}
-                className="p-4 rounded-xl border border-white/10 bg-white/[0.02]"
+                className="p-4 bg-white/[0.02] rounded-2xl mb-4"
               >
                 <p className="text-neon-pink font-bold text-lg mb-1">{f.metric}</p>
                 <p className="text-sm text-slate-400 mb-2">{f.context}</p>
@@ -247,8 +247,8 @@ export default function CoupleConnectionDataStudyPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Methodology</h2>
-          <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5 mb-4">
+          <h2 >Methodology</h2>
+          <div className="bg-white/[0.02] p-6 mb-4 rounded-2xl">
             <p>
               Data was collected automatically from <strong>{totalSessions.toLocaleString()} Captain Bond couple sessions</strong>{' '}
               between <strong>{dateRange}</strong>. Average session duration:{' '}
@@ -265,7 +265,7 @@ export default function CoupleConnectionDataStudyPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">1. Communication Patterns: Frequency over Duration</h2>
+          <h2 >1. Communication Patterns: Frequency over Duration</h2>
           <p>
             The single strongest signal in the dataset: couples who run shorter sessions more
             frequently report significantly higher harmony scores.
@@ -328,7 +328,7 @@ export default function CoupleConnectionDataStudyPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">2. Question Depth Preference: Fun Leads</h2>
+          <h2 >2. Question Depth Preference: Fun Leads</h2>
           <p>
             When couples self-select question categories, fun and light prompts are the most
             frequently chosen — a reminder that playfulness is not a detour from intimacy; it is a
@@ -365,7 +365,7 @@ export default function CoupleConnectionDataStudyPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">3. Best Times for Connection: The 8 PM – 9 PM Window</h2>
+          <h2 >3. Best Times for Connection: The 8 PM – 9 PM Window</h2>
           <p>
             Session start time correlates strongly with completion rate. The data points to a clear
             golden hour for couple conversations.
@@ -408,7 +408,7 @@ export default function CoupleConnectionDataStudyPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">4. Gender Patterns: Equal Engagement, Equal Benefit</h2>
+          <h2 >4. Gender Patterns: Equal Engagement, Equal Benefit</h2>
           <p>
             One of the most encouraging findings: there is no statistically significant difference
             in how partners engage with or benefit from structured couple conversations.
@@ -419,9 +419,9 @@ export default function CoupleConnectionDataStudyPage() {
             relationship as a unit, not one person driving while the other follows.
           </p>
 
-          <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5 mb-4">
+          <div className="bg-white/[0.02] p-6 mb-4 rounded-2xl">
             <p className="text-slate-200 font-semibold mb-2">Measured Parity Metrics</p>
-            <ul className="space-y-2 text-slate-300">
+            <ul >
               <li>• Session initiation: 51% / 49% split (within margin of error)</li>
               <li>• Avg. harmony score difference between partners: {'<'} 3 points</li>
               <li>• Question skip rate: 4.2% vs. 3.8% (not significant)</li>
@@ -431,7 +431,7 @@ export default function CoupleConnectionDataStudyPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">5. Relationship Length Trends: The 2–5 Year Sweet Spot</h2>
+          <h2 >5. Relationship Length Trends: The 2–5 Year Sweet Spot</h2>
           <p>
             Engagement with structured couple conversations varies by relationship stage. Couples in
             the 2–5 year range show the highest number of sessions, while couples together over a
@@ -470,7 +470,7 @@ export default function CoupleConnectionDataStudyPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">How This Compares to Existing Research</h2>
+          <h2 >How This Compares to Existing Research</h2>
           <p>
             Our findings align with established relationship science. Dr. John Gottman&apos;s research at the
             University of Washington found that couples who engage in regular &quot;emotional bids for connection&quot;
@@ -492,7 +492,7 @@ export default function CoupleConnectionDataStudyPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">What This Means for Your Relationship</h2>
+          <h2 >What This Means for Your Relationship</h2>
           <p>
             The data tells a clear story: you do not need hours of deep conversation every week to
             build a stronger connection. You need consistency — twenty focused minutes, three times
@@ -518,11 +518,11 @@ export default function CoupleConnectionDataStudyPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Limitations of This Study</h2>
+          <h2 >Limitations of This Study</h2>
           <p>
             This data comes from {totalSessions.toLocaleString()} sessions by self-selected Captain Bond users. Key limitations:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li><strong>Self-selection bias:</strong> Users who try a couple connection app may already be more relationship-conscious than the average couple.</li>
             <li><strong>No control group:</strong> We compare high-frequency vs low-frequency users, but cannot claim causation. The correlation between session frequency and harmony may be influenced by relationship health at baseline.</li>
             <li><strong>Short time window:</strong> Data covers January — June 2025. Long-term outcomes (6+ months) are not yet available.</li>
@@ -534,8 +534,8 @@ export default function CoupleConnectionDataStudyPage() {
         </section>
 
         <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-          <h3 className="text-xl font-semibold mb-2">Try our research-backed couple mode</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">
+          <h3 >Try our research-backed couple mode</h3>
+          <p className="text-slate-200 mb-4">
             Captain Bond generates fresh question decks tailored to your mood — fun, deep, spicy,
             or a mix. Every session builds your connection. No prep, no pressure.
           </p>

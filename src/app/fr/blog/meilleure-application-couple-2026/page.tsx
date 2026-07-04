@@ -141,12 +141,12 @@ export default function MeilleureApplicationCouple2026Page() {
         celle que vous ouvrez ensemble.
       </blockquote>
 
-      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="flex items-center gap-4 mb-10">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
           CB
         </div>
         <div>
-          <p className="font-semibold text-sm">Captain Bond Team</p>
+          <p className="font-semibold text-white">Captain Bond</p>
           <p className="text-xs text-slate-400">
             Publié le {publishedDate} &middot; 6 min de lecture
           </p>
@@ -154,8 +154,8 @@ export default function MeilleureApplicationCouple2026Page() {
       </div>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Points clés à retenir</h2>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <h2 >Points clés à retenir</h2>
+        <ul >
           <li>Captain Bond est la meilleure application couple en 2026 pour son mélange unique de questions, jeux interactifs et outils d&apos;intimité</li>
           <li>Paired est idéal pour les couples qui veulent une habitude de question quotidienne</li>
           <li>LoveNudge est le meilleur choix pour les fans des Langages de l&apos;Amour</li>
@@ -166,7 +166,7 @@ export default function MeilleureApplicationCouple2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Quelle est la meilleure application couple pour se connecter ?</h2>
+        <h2 >Quelle est la meilleure application couple pour se connecter ?</h2>
         <p>
           La meilleure application couple pour se connecteur allie des questions naturelles, des
           activités que vous avez envie de partager et des outils d&apos;intimité qui ne ressemblent pas à
@@ -180,7 +180,7 @@ export default function MeilleureApplicationCouple2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Tableau comparatif</h2>
+        <h2 >Tableau comparatif</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-slate-300 border-collapse">
             <thead>
@@ -204,7 +204,7 @@ export default function MeilleureApplicationCouple2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">1. Captain Bond — Meilleure application couple</h2>
+        <h2 >1. Captain Bond — Meilleure application couple</h2>
         <p>
           Captain Bond est l&apos;application couple la plus polyvalente en 2026. Elle combine des
           questions IA, des jeux interactifs, une boîte à outils d&apos;intimité partagée et un mode
@@ -225,7 +225,7 @@ export default function MeilleureApplicationCouple2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">2. Paired — Meilleur pour les rituels quotidiens</h2>
+        <h2 >2. Paired — Meilleur pour les rituels quotidiens</h2>
         <p>
           Paired est construit autour de questions quotidiennes conçues pour stimuler la conversation
           entre partenaires. Chaque jour, une nouvelle question est envoyée et les deux partenaires
@@ -240,7 +240,7 @@ export default function MeilleureApplicationCouple2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">3. LoveNudge — Meilleur pour les Langages de l&apos;Amour</h2>
+        <h2 >3. LoveNudge — Meilleur pour les Langages de l&apos;Amour</h2>
         <p>
           LoveNudge applique le cadre des 5 Langages de l&apos;Amour. Les partenaires passent une
           évaluation, puis l&apos;appli envoie des rappels personnalisés pour exprimer l&apos;amour dans le
@@ -254,7 +254,7 @@ export default function MeilleureApplicationCouple2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">4. Gottman Card Decks — Meilleure base scientifique</h2>
+        <h2 >4. Gottman Card Decks — Meilleure base scientifique</h2>
         <p>
           Fondée sur plus de 40 ans de recherche par les Drs John et Julie Gottman, cette appli
           propose 300+ cartes organisées en jeux thématiques : Confiance, Intimité, Fun, Conflit.
@@ -269,7 +269,7 @@ export default function MeilleureApplicationCouple2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">5. Lasting — Meilleur pour les programmes guidés</h2>
+        <h2 >5. Lasting — Meilleur pour les programmes guidés</h2>
         <p>
           Lasting propose des programmes audio guidés sur la communication, les conflits, l&apos;intimité
           et le stress. Un système de score de « santé relationnelle » et des sessions structurées
@@ -289,11 +289,11 @@ export default function MeilleureApplicationCouple2026Page() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Comment choisir la bonne application couple</h2>
+        <h2 >Comment choisir la bonne application couple</h2>
         <p>
           La meilleure application dépend de ce que vous valorisez :
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+        <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
           <li><strong>Pour le fun + la profondeur :</strong> Captain Bond offre la plus large gamme d&apos;activités.</li>
           <li><strong>Pour un rituel quotidien :</strong> Paired est conçu pour les questions quotidiennes.</li>
           <li><strong>Pour les Langages de l&apos;Amour :</strong> LoveNudge est l&apos;implémentation la plus fidèle.</li>
@@ -311,7 +311,7 @@ export default function MeilleureApplicationCouple2026Page() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Pourquoi Captain Bond est #1</h2>
+        <h2 >Pourquoi Captain Bond est #1</h2>
         <p>
           Captain Bond a gagné notre comparatif 2026 parce qu&apos;il résout le problème de
           l&apos;adoption. C&apos;est la seule application qui rend l&apos;entretien du couple amusant — pas
@@ -330,8 +330,8 @@ export default function MeilleureApplicationCouple2026Page() {
       </section>
 
       <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-        <h3 className="text-xl font-semibold mb-2">Essayez la meilleure appli couple 2026</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+        <h3 >Essayez la meilleure appli couple 2026</h3>
+        <p className="text-slate-200 mb-4">
           Captain Bond vous offre des questions IA, des jeux interactifs et une boîte à outils
           d&apos;intimité — le tout dans une seule application. Commencez gratuitement.
         </p>

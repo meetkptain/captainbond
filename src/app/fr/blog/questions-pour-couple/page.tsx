@@ -246,7 +246,7 @@ export default function FrenchQuestionsForCoupleArticlePage() {
         la plus simple pour inverser cette dérive est une question honnête posée sans agenda.
       </blockquote>
 
-      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="flex items-center gap-4 mb-10">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
           CB
         </div>
@@ -259,7 +259,7 @@ export default function FrenchQuestionsForCoupleArticlePage() {
       </div>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Pourquoi les questions comptent dans un couple</h2>
+        <h2 >Pourquoi les questions comptent dans un couple</h2>
         <p>
           La plupart des couples ne manquent pas d’amour ; ils manquent de nouveauté. Le quotidien
           — courses, factures, emplois du temps — étouffe peu à peu les conversations profondes qui
@@ -281,12 +281,12 @@ export default function FrenchQuestionsForCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Comment utiliser cette liste</h2>
+        <h2 >Comment utiliser cette liste</h2>
         <p>
           La quantité n’est pas l’objectif. La connexion, si. Voici un rituel simple pour tirer le
           meilleur parti de ces questions :
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+        <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
           <li>
             <strong>Choisis un créneau hebdomadaire.</strong> Vingt minutes suffisent. Posez les
             téléphones dans une autre pièce.
@@ -313,13 +313,13 @@ export default function FrenchQuestionsForCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Questions fun et légères</h2>
+        <h2 >Questions fun et légères</h2>
         <p>
           Utilisez-les quand vous voulez rire, vous rappeler que vous vous amusez ensemble, ou
           casser une tension. Le jeu est un des ciments les plus sous-estimés des relations
           durables.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {funQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -327,13 +327,13 @@ export default function FrenchQuestionsForCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Questions pour mieux se connaître</h2>
+        <h2 >Questions pour mieux se connaître</h2>
         <p>
           Même après des années, un couple peut découvrir de nouvelles pièces l’un·e de l’autre.
           Ces questions explorent l’histoire, les valeurs et les petits détails qui rendent une
           personne unique.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {gettingToKnowQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -341,13 +341,13 @@ export default function FrenchQuestionsForCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Questions profondes et émotionnelles</h2>
+        <h2 >Questions profondes et émotionnelles</h2>
         <p>
           Réservez ces questions pour un moment calme, quand vous avez tous les deux de la
           disponibilité et que vous voulez vous sentir réellement proches. Elles demandent de la
           vulnérabilité : avancez doucement et sans pression.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {deepQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -355,13 +355,13 @@ export default function FrenchQuestionsForCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Questions intimes et pimentées</h2>
+        <h2 >Questions intimes et pimentées</h2>
         <p>
           Le désir commence dans la tête. Ces questions restent élégantes tout en invitant à parler
           d’attraction, de toucher et de ce qui vous fait sentir désiré·e. Elles construisent
           l’anticipation et la clarté en même temps.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {intimateQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -369,12 +369,12 @@ export default function FrenchQuestionsForCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Questions sur le futur et les valeurs</h2>
+        <h2 >Questions sur le futur et les valeurs</h2>
         <p>
           Une direction partagée est ce qui transforme la chimie en partenariat. Ces questions
           aident à calibrer où vous allez et dont chacun·e a besoin en chemin.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {futureQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -382,7 +382,7 @@ export default function FrenchQuestionsForCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Une dernière pensée</h2>
+        <h2 >Une dernière pensée</h2>
         <p>
           Vous n'avez pas besoin de la question parfaite. Vous avez besoin du courage de demander
           et de la patience d'écouter.
@@ -400,8 +400,8 @@ export default function FrenchQuestionsForCoupleArticlePage() {
       </section>
 
       <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-        <h3 className="text-xl font-semibold mb-2">Tu veux plus de questions sans préparer quoi que ce soit ?</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+        <h3 >Tu veux plus de questions sans préparer quoi que ce soit ?</h3>
+        <p className="text-slate-200 mb-4">
           Le mode couple de Captain Bond génère des decks de questions fraîches à chaque session :
           légères, profondes, pimentées et tout le reste. Zéro préparation, zéro pression, juste de
           meilleures conversations.

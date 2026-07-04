@@ -210,7 +210,7 @@ export default function QuestionsAPoserASonPartenairePage() {
 
       <div className="article-card-takeaways">
         <h2 >Points clés à retenir</h2>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           <li>Les meilleures questions s adaptent à votre stade de relation — la légèreté pour les débuts, la profondeur pour le long terme.</li>
           <li>Poser une question avec une vraie curiosité compte plus que de trouver la question parfaite.</li>
           <li>Les couples qui se posent des questions profondes régulièrement rapportent 40 % de satisfaction relationnelle en plus. Une étude de 2023 dans le Journal of Social and Personal Relationships a montré que les couples qui se posent des questions originales rapportent des niveaux d&apos;intimité plus élevés.</li>
@@ -223,7 +223,7 @@ export default function QuestionsAPoserASonPartenairePage() {
         vous n avez pas encore posée est peut-être celle qui vous rapprochera à nouveau.
       </blockquote>
 
-      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="flex items-center gap-4 mb-10">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
           CB
         </div>
@@ -237,7 +237,7 @@ export default function QuestionsAPoserASonPartenairePage() {
 
       <div className="article-card-takeaways">
         <h2 >Table des matières</h2>
-        <ul className="space-y-2 text-slate-300 leading-relaxed">
+        <ul className="space-y-2 text-slate-300">
           <li><a href="#nouvelles-relations" className="text-neon-purple hover:underline">1. Nouvelles relations — 20 questions</a></li>
           <li><a href="#couples-confirmes" className="text-neon-purple hover:underline">2. Couples confirmés — 20 questions</a></li>
           <li><a href="#longue-duree" className="text-neon-purple hover:underline">3. Longue durée — 20 questions</a></li>
@@ -247,14 +247,14 @@ export default function QuestionsAPoserASonPartenairePage() {
       </div>
 
       <section id="nouvelles-relations" className="mb-10">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Nouvelles relations : 20 questions pour bien commencer</h2>
+        <h2 >Nouvelles relations : 20 questions pour bien commencer</h2>
         <p>
           Le début d une relation est une belle danse de découverte. Ces questions vous aident à
           dépasser les banalités prévisibles pour entrer dans le territoire qui compte vraiment —
           les valeurs, la personnalité, et la façon dont vos mondes s emboîtent. Restez léger·ère,
           restez curieux·se, et laissez les réponses vous guider naturellement.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {nouvellesRelations.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -262,7 +262,7 @@ export default function QuestionsAPoserASonPartenairePage() {
       </section>
 
       <section id="couples-confirmes" className="mb-10">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Couples confirmés : 20 questions pour approfondir</h2>
+        <h2 >Couples confirmés : 20 questions pour approfondir</h2>
         <p>
           Une fois que l étincelle initiale s est installée dans quelque chose de réel, les
           questions changent. Vous connaissez déjà les bases — maintenant il s agit de comprendre
@@ -270,7 +270,7 @@ export default function QuestionsAPoserASonPartenairePage() {
           l enfance et les espoirs silencieux qui n affleurent pas dans les conversations du
           quotidien.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {couplesConfirmes.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -278,14 +278,14 @@ export default function QuestionsAPoserASonPartenairePage() {
       </section>
 
       <section id="longue-duree" className="mb-10">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Longue durée : 20 questions pour une intimité durable</h2>
+        <h2 >Longue durée : 20 questions pour une intimité durable</h2>
         <p>
           Les années ensemble apportent de la profondeur — mais aussi de la routine. Les questions
           qui vous servaient au début doivent évoluer. Ces questions sont conçues pour les couples
           qui veulent maintenir l intimité, reconnaître comment ils ont grandi, et continuer à se
           choisir même quand la vie fait du bruit.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {longueDuree.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -293,14 +293,14 @@ export default function QuestionsAPoserASonPartenairePage() {
       </section>
 
       <section id="fiances-maries" className="mb-10">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Fiancés &amp; mariés : 20 questions pour construire l avenir</h2>
+        <h2 >Fiancés &amp; mariés : 20 questions pour construire l avenir</h2>
         <p>
           Le mariage ou un engagement à vie demande un alignement sur les grands piliers : l argent,
           la famille, l héritage et la forme de votre avenir commun. Ces questions vous aident à
           construire une feuille de route ensemble pour ne pas simplement vivre côte à côte, mais
           avancer dans la même direction.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {fiancaMarie.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -308,14 +308,14 @@ export default function QuestionsAPoserASonPartenairePage() {
       </section>
 
       <section id="redecouverte" className="mb-10">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Se redécouvrir : 20 questions pour raviver la flamme</h2>
+        <h2 >Se redécouvrir : 20 questions pour raviver la flamme</h2>
         <p>
           Toute relation longue traverse des saisons d éloignement. Se redécouvrir n est pas une
           question de réparer quelque chose de cassé — il s agit de se souvenir de qui vous êtes
           encore. Ces questions sont pour les couples qui veulent se tourner à nouveau l un vers
           l autre avec un regard neuf et le c ur ouvert.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {redecouverte.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -329,7 +329,7 @@ export default function QuestionsAPoserASonPartenairePage() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">À quel stade êtes-vous ? Un tableau comparatif</h2>
+        <h2 >À quel stade êtes-vous ? Un tableau comparatif</h2>
         <p>
           Chaque stade de relation appelle un type de question différent. Voici comment ils se
           comparent :
@@ -403,12 +403,12 @@ export default function QuestionsAPoserASonPartenairePage() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Comment utiliser ces questions efficacement</h2>
+        <h2 >Comment utiliser ces questions efficacement</h2>
         <p>
           Une liste de questions ne vaut que par la façon dont on l utilise. Voici quatre
           principes qui transforment une simple question en une vraie conversation :
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+        <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
           <li>
             <strong>Choisissez un stade à la fois.</strong> N essayez pas de couvrir toutes les
             sections en une seule fois. Laissez votre stade de relation vous guider.
@@ -436,9 +436,9 @@ export default function QuestionsAPoserASonPartenairePage() {
         </p>
       </section>
 
-      <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10 mb-10">
-        <h3 className="text-xl font-semibold mb-2">Recevez des questions fraîches à chaque session</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+      <aside className="article-card-takeaways">
+        <h3 >Recevez des questions fraîches à chaque session</h3>
+        <p className="text-slate-200 mb-4">
           Le mode couple de Captain Bond génère des decks de questions personnalisés pour vous et
           votre partenaire — légères, profondes, pimentées et tout le reste. Zéro préparation, zéro
           pression, juste de meilleures conversations qui s adaptent à votre stade de relation.
@@ -451,22 +451,22 @@ export default function QuestionsAPoserASonPartenairePage() {
         </Link>
       </aside>
 
-      <section className="border-t border-white/10 pt-8 mt-8">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mb-6">Articles similaires</h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Link href="/fr/blog/50-questions-profondes-couple" className="p-4 rounded-xl border border-white/10 hover:border-neon-purple/40 transition-colors">
+          <Link href="/fr/blog/50-questions-profondes-couple" className="group">
             <p className="font-semibold text-white">50 questions profondes pour couple</p>
             <p className="text-sm text-slate-400 mt-1">Explorez la vulnérabilité et la connexion émotionnelle</p>
           </Link>
-          <Link href="/fr/blog/questions-couple-guide-complet" className="p-4 rounded-xl border border-white/10 hover:border-neon-purple/40 transition-colors">
+          <Link href="/fr/blog/questions-couple-guide-complet" className="group">
             <p className="font-semibold text-white">Guide complet des questions pour couple</p>
             <p className="text-sm text-slate-400 mt-1">Un système pas-à-pas pour des conversations qui comptent</p>
           </Link>
-          <Link href="/fr/blog/exercices-communication-couple" className="p-4 rounded-xl border border-white/10 hover:border-neon-purple/40 transition-colors">
+          <Link href="/fr/blog/exercices-communication-couple" className="group">
             <p className="font-semibold text-white">Exercices de communication</p>
             <p className="text-sm text-slate-400 mt-1">10 exercices pratiques pour renforcer votre lien</p>
           </Link>
-            <Link href="/fr/blog/questions-pour-construire-intimite" className="p-4 rounded-xl border border-white/10 hover:border-neon-purple/40 transition-colors">
+            <Link href="/fr/blog/questions-pour-construire-intimite" className="group">
               <p className="font-semibold text-white">Questions pour construire l'intimité</p>
               <p className="text-sm text-slate-400 mt-1">Intimité émotionnelle, physique et intellectuelle</p>
             </Link>

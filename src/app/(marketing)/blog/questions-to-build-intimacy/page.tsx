@@ -124,16 +124,16 @@ export default function QuestionsToBuildIntimacyPage() {
         Intimacy is not a destination — it is a practice. It deepens every time you choose curiosity
         over assumption.
       </blockquote>
-      <p className="text-slate-300 leading-relaxed mb-8">
+      <p className="text-slate-300 mb-8">
         A Harvard study found that emotional intimacy is the strongest predictor of long-term relationship satisfaction.
       </p>
 
-      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="flex items-center gap-4 mb-10">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
           CB
         </div>
         <div>
-          <p className="font-semibold text-sm">Captain Bond Team</p>
+          <p className="font-semibold text-white">Captain Bond</p>
           <p className="text-xs text-slate-400">
             Published {publishedDate} &middot; 6 min read
           </p>
@@ -141,7 +141,7 @@ export default function QuestionsToBuildIntimacyPage() {
       </div>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">What are intimacy-building questions?</h2>
+        <h2 >What are intimacy-building questions?</h2>
         <p>
           Intimacy-building questions are prompts designed to move conversation beyond surface-level
           exchange into deeper emotional, physical, and intellectual territory. Unlike casual
@@ -159,8 +159,8 @@ export default function QuestionsToBuildIntimacyPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Key Takeaways</h2>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <h2 >Key Takeaways</h2>
+        <ul >
           <li>Intimacy has three dimensions: emotional, physical, and intellectual. Neglecting any one creates distance.</li>
           <li>The best questions are open-ended and cannot be answered with yes or no.</li>
           <li>Take turns asking. The listener\'s only job is to understand, not to respond or fix.</li>
@@ -170,13 +170,13 @@ export default function QuestionsToBuildIntimacyPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Emotional intimacy questions</h2>
+        <h2 >Emotional intimacy questions</h2>
         <p>
           Emotional intimacy lives in the space between what you feel and what you share. These
           questions invite your partner into your inner world — your fears, your memories, your
           quietest hopes. Go slowly here. These questions ask for real vulnerability.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {emotionalQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -184,13 +184,13 @@ export default function QuestionsToBuildIntimacyPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Physical intimacy questions</h2>
+        <h2 >Physical intimacy questions</h2>
         <p>
           Physical intimacy is not just about sex — it is about touch, presence, and being at home
           in your body together. These questions explore the sensory and physical dimension of your
           connection. They stay classy while inviting honesty about desire.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {physicalQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -198,14 +198,14 @@ export default function QuestionsToBuildIntimacyPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Intellectual intimacy questions</h2>
+        <h2 >Intellectual intimacy questions</h2>
         <p>
           Intellectual intimacy is the most overlooked dimension of connection. It grows when you
           share how you think, not just how you feel. These questions invite you to explore ideas
           together — the beliefs, curiosities, and questions that shape how each of you navigates
           the world.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {intellectualQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -217,7 +217,7 @@ export default function QuestionsToBuildIntimacyPage() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">How to use these questions</h2>
+        <h2 >How to use these questions</h2>
         <p>
           Pick one category and ask 2-3 questions. That is enough for one session. Put your phones
           away, make eye contact, and let the answers breathe. The follow-up questions — \'tell me
@@ -236,8 +236,8 @@ export default function QuestionsToBuildIntimacyPage() {
       </section>
 
       <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-        <h3 className="text-xl font-semibold mb-2">Want fresh questions every time?</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+        <h3 >Want fresh questions every time?</h3>
+        <p className="text-slate-200 mb-4">
           Captain Bond\'s couple mode generates new intimacy-building questions every session —
           emotional, physical, intellectual, and beyond. No prep, no repetition, just better
           conversations.

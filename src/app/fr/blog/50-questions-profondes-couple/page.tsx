@@ -169,7 +169,7 @@ export default function QuestionsProfondesCoupleArticlePage() {
 
       <div className="bg-white/[0.03] border border-white/10 rounded-xl p-5 mb-10">
         <h2 >À retenir</h2>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           <li>Les questions profondes reconstruisent l&apos;intimité émotionnelle en créant un espace où chaque réponse est accueillie sans jugement. Une étude de 2023 dans le Journal of Social and Personal Relationships a montré que les couples qui se posent des questions originales rapportent des niveaux d&apos;intimité plus élevés.</li>
           <li>Les 50 questions sont réparties en 5 thèmes : vulnérabilité, enfance, valeurs, amour et rêves — chacun cible une couche différente de la relation.</li>
           <li>La vraie reconnexion se joue dans la relance, pas dans la question. Reste curieux, tais-toi et laisse l&apos;autre finir.</li>
@@ -182,7 +182,7 @@ export default function QuestionsProfondesCoupleArticlePage() {
         qu&apos;elles ont cessé de se poser.
       </blockquote>
 
-      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="flex items-center gap-4 mb-10">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
           CB
         </div>
@@ -195,7 +195,7 @@ export default function QuestionsProfondesCoupleArticlePage() {
       </div>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Pourquoi les questions profondes sont essentielles</h2>
+        <h2 >Pourquoi les questions profondes sont essentielles</h2>
         <p>
           La plupart des couples ne s&apos;éloignent pas à cause d&apos;une trahison fracassante. Ils
           s&apos;éloignent parce que le rythme du quotidien — le travail, les courses, les écrans —
@@ -219,12 +219,12 @@ export default function QuestionsProfondesCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Comment utiliser ces questions</h2>
+        <h2 >Comment utiliser ces questions</h2>
         <p>
           Une liste de cinquante questions peut sembler intimidante. Résistez à l&apos;envie d&apos;en
           faire une check-list. Voici une approche simple qui fonctionne :
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+        <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
           <li>
             <strong>Une catégorie par semaine.</strong> Dix questions suffisent pour une soirée.
             Laissez les réponses infuser avant de passer à la suite.
@@ -250,13 +250,13 @@ export default function QuestionsProfondesCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Vulnérabilité et peur</h2>
+        <h2 >Vulnérabilité et peur</h2>
         <p>
           Ces questions explorent ce que nous cachons d&apos;habitude — les peurs qu&apos;on gère seul,
           les insécurités qu&apos;on maquille en confiance, les parties de nous qu&apos;on protège le
           plus farouchement. Abordez-les avec douceur et sans jugement.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {vulnerabiliteQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -264,13 +264,13 @@ export default function QuestionsProfondesCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Enfance et passé</h2>
+        <h2 >Enfance et passé</h2>
         <p>
           Ce que nous sommes aujourd&apos;hui s&apos;est construit bien avant notre rencontre. Ces
           questions remontent le fil des souvenirs, des personnes et des blessures qui ont façonné
           la personne que vous aimez — et révèlent les liens invisibles entre hier et aujourd&apos;hui.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {enfanceQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -278,13 +278,13 @@ export default function QuestionsProfondesCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Valeurs et croyances</h2>
+        <h2 >Valeurs et croyances</h2>
         <p>
           Les valeurs partagées sont le socle d&apos;une relation durable. Ces questions vont au-delà
           des convergences de surface pour explorer d&apos;où viennent vos principes, où ils divergent,
           et ce que chacun tient pour sacré — même quand personne ne regarde.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {valeursQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -292,13 +292,13 @@ export default function QuestionsProfondesCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Amour et relation</h2>
+        <h2 >Amour et relation</h2>
         <p>
           Ces questions se concentrent sur l&apos;espace entre vous — comment vous aimez, comment vous
           vous déconnectez, ce dont vous avez besoin et que vous hésitez à demander. C&apos;est le
           chemin le plus direct vers la compréhension intime de l&apos;autre.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {amourQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -306,13 +306,13 @@ export default function QuestionsProfondesCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Rêves et regrets</h2>
+        <h2 >Rêves et regrets</h2>
         <p>
           Le regret et l&apos;ambition habitent la même chambre du cœur. Ces questions vous invitent à
           partager ce que vous voulez encore, ce que vous avez laissé tomber et ce que vous
           espérez — pour vous-même et pour votre vie à deux.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {revesQuestions.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -320,7 +320,7 @@ export default function QuestionsProfondesCoupleArticlePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Garder la conversation vivante</h2>
+        <h2 >Garder la conversation vivante</h2>
         <p>
           Le vrai travail n&apos;est pas de poser la question. C&apos;est de construire une vie où ces
           conversations deviennent naturelles, pas programmées. Plus vous pratiquez la
@@ -347,8 +347,8 @@ export default function QuestionsProfondesCoupleArticlePage() {
       </section>
 
       <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-        <h3 className="text-xl font-semibold mb-2">Allez plus loin ensemble</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+        <h3 >Allez plus loin ensemble</h3>
+        <p className="text-slate-200 mb-4">
           Le mode couple de Captain Bond génère des decks de conversation originaux à chaque
           session, adaptés à votre humeur, votre histoire et les sujets qui comptent vraiment pour
           vous maintenant. Sans préparation, sans pression, juste une vraie connexion.

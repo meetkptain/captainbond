@@ -67,7 +67,7 @@ export default function BlogIndexPage() {
     <div className="max-w-3xl mx-auto px-4 py-12">
       <header className="mb-12 text-center">
         <h1 >Captain Bond Blog</h1>
-        <p className="text-slate-300 leading-relaxed max-w-xl mx-auto">
+        <p className="text-slate-300 max-w-xl mx-auto">
           Couple questions, connection games and weekly rituals to help you slow down, talk honestly
           and grow closer — one question at a time.
         </p>

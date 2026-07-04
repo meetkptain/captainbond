@@ -129,7 +129,7 @@ export default function AugmenterChiffreBarSemainePage() {
           <p className="text-sm uppercase tracking-widest text-neon-purple font-semibold mb-2">
             Réponse rapide
           </p>
-          <p className="text-slate-200 leading-relaxed">
+          <p className="text-slate-200">
             Le moyen le plus rapide d&apos;augmenter le chiffre d&apos;affaires de votre bar en
             semaine est de remplacer la consommation passive par un divertissement actif. Soirées
             à thème, compétitions, classements de fidélité, animateur IA comme{' '}
@@ -144,7 +144,7 @@ export default function AugmenterChiffreBarSemainePage() {
           <p className="text-sm uppercase tracking-widest text-neon-purple font-semibold mb-3">
             Points clés à retenir
           </p>
-          <ul className="space-y-2 text-slate-200 leading-relaxed">
+          <ul className="space-y-2 text-slate-200">
             <li className="flex gap-2">• <span>Les soirées à thème remplissent les tables vides et créent un rendez-vous hebdomadaire.</span></li>
             <li className="flex gap-2">• <span>Les compétitions multiplient le panier moyen par 2,2 par rapport aux soirées passives.</span></li>
             <li className="flex gap-2">• <span>Un classement live transforme les visiteurs en habitués qui reviennent pour grimper.</span></li>
@@ -162,12 +162,12 @@ export default function AugmenterChiffreBarSemainePage() {
           les consommations. C&apos;est dans la raison de rester pour un verre de plus.
         </blockquote>
 
-        <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="flex items-center gap-4 mb-10">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
             CB
           </div>
           <div>
-            <p className="font-semibold text-sm">Captain Bond Team</p>
+            <p className="font-semibold text-white">Captain Bond</p>
             <p className="text-xs text-slate-400">
               Publié le {publishedDate} &middot; 7 min de lecture
             </p>
@@ -175,7 +175,7 @@ export default function AugmenterChiffreBarSemainePage() {
         </div>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">1. Problème : salles vides &rarr; Solution : soirées à thème</h2>
+          <h2 >1. Problème : salles vides &rarr; Solution : soirées à thème</h2>
           <p>
             Une salle à moitié vide tue l&apos;ambiance avant même le premier verre. Quand les
             clients entrent et voient un espace sans vie, ils finissent une tournée et
@@ -193,7 +193,7 @@ export default function AugmenterChiffreBarSemainePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">2. Problème : faible panier moyen &rarr; Solution : compétitions et défis</h2>
+          <h2 >2. Problème : faible panier moyen &rarr; Solution : compétitions et défis</h2>
           <p>
             Le client moyen d&apos;un soir creux commande un verre et le sirote. Rien ne le
             pousse à commander à nouveau car il ne se passe rien. Les compétitions — rounds de
@@ -210,7 +210,7 @@ export default function AugmenterChiffreBarSemainePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">3. Problème : absence de fidélité &rarr; Solution : classement live</h2>
+          <h2 >3. Problème : absence de fidélité &rarr; Solution : classement live</h2>
           <p>
             Un client qui vient une fois sur un coup de tête revient rarement un mardi. Mais un
             client qui a des points au classement ? Lui, il reviendra. Un classement en direct
@@ -227,7 +227,7 @@ export default function AugmenterChiffreBarSemainePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">4. Problème : coût du personnel &rarr; Solution : animateur IA (Captain Bond Pro)</h2>
+          <h2 >4. Problème : coût du personnel &rarr; Solution : animateur IA (Captain Bond Pro)</h2>
           <p>
             La principale raison pour laquelle les bars renoncent à l&apos;animation en semaine,
             c&apos;est l&apos;effectif. Un maître de quiz en live coûte 150–300 € par soirée,
@@ -248,7 +248,7 @@ export default function AugmenterChiffreBarSemainePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">5. Problème : départs précoces &rarr; Solution : tournois structurés</h2>
+          <h2 >5. Problème : départs précoces &rarr; Solution : tournois structurés</h2>
           <p>
             Le plus grand frein au chiffre d&apos;affaires en semaine n&apos;est pas le nombre
             de clients — c&apos;est leur durée de présence. Un client qui part après un verre
@@ -270,7 +270,7 @@ export default function AugmenterChiffreBarSemainePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Comparatif ROI : solutions de divertissement pour bars</h2>
+          <h2 >Comparatif ROI : solutions de divertissement pour bars</h2>
           <p>
             Voici une comparaison directe de chaque solution et de son retour sur
             investissement attendu. Tous les chiffres sont issus de données réelles de bars
@@ -305,7 +305,7 @@ export default function AugmenterChiffreBarSemainePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Commencez votre transformation</h2>
+          <h2 >Commencez votre transformation</h2>
           <p>
             Vous n&apos;avez pas besoin d&apos;un plus gros budget marketing ni de personnel
             supplémentaire. Vous avez besoin d&apos;une raison pour que les gens restent. Les
@@ -327,8 +327,8 @@ export default function AugmenterChiffreBarSemainePage() {
         </p>
 
         <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-          <h3 className="text-xl font-semibold mb-2">Prêt à remplir ces tables vides ?</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">
+          <h3 >Prêt à remplir ces tables vides ?</h3>
+          <p className="text-slate-200 mb-4">
             Découvrez comment Captain Bond Pro fonctionne pour les bars et cafés. Soirées à
             thème illimitées, quiz master IA, classement live — le tout pour 99 €/mois. Zéro
             personnel supplémentaire.

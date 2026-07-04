@@ -270,12 +270,12 @@ export default function CoupleQuestionsCompleteGuidePage() {
         </p>
       </header>
 
-      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="flex items-center gap-4 mb-10">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
           CB
         </div>
         <div>
-          <p className="font-semibold text-sm">Captain Bond Team</p>
+          <p className="font-semibold text-white">Captain Bond</p>
           <p className="text-xs text-slate-400">
             Published {publishedDate} &middot; 7 min read
           </p>
@@ -288,8 +288,8 @@ export default function CoupleQuestionsCompleteGuidePage() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">What you will get from this guide</h2>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <h2 >What you will get from this guide</h2>
+        <ul >
           <li>A proven 5-step framework for meaningful couple conversations</li>
           <li>150+ curated questions organized by depth and theme</li>
           <li>A comparison table to choose the right connection level for any moment</li>
@@ -299,7 +299,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">The five connection levels at a glance</h2>
+        <h2 >The five connection levels at a glance</h2>
         <p>
           Not every moment calls for the same depth of conversation. This table helps you match the
           right level to the right mood.
@@ -351,7 +351,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Step 1: Prepare the space</h2>
+        <h2 >Step 1: Prepare the space</h2>
         <p>
           The environment shapes the conversation. You do not need candles and rose petals, but a
           few simple adjustments make a significant difference. Put phones in another room. Sit facing
@@ -364,7 +364,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
           If an answer makes you uncomfortable, stay curious instead of defensive. You are not
           interviewing each other; you are exploring together.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {funQuestions.slice(0, 10).map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -372,7 +372,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Step 2: Choose the right depth</h2>
+        <h2 >Step 2: Choose the right depth</h2>
         <p>
           The biggest mistake couples make is going too deep too fast. Depth without trust feels like
           an interrogation. Start at level 1 or 2 unless you already know you both have the bandwidth
@@ -384,7 +384,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
           If you are not sure where to start, try this: ask your partner to pick a number from 1 to
           5 based on how they are feeling right now. Match that level and follow their lead.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {gettingToKnowQuestions.slice(0, 12).map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -397,7 +397,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Step 3: Ask with intention</h2>
+        <h2 >Step 3: Ask with intention</h2>
         <p>
           How you ask matters as much as what you ask. Use an open, warm tone. Start with a
           softener: &ldquo;I have been curious about something&hellip;&rdquo; or &ldquo;Can I ask you
@@ -411,7 +411,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
           what they share with gratitude. When both partners feel heard without being fixed, trust
           compounds quickly.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {deepQuestions.slice(0, 12).map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -419,7 +419,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Step 4: Reflect together</h2>
+        <h2 >Step 4: Reflect together</h2>
         <p>
           The conversation does not end when the question is answered. Reflection is where the real
           connection happens. After each answer, take a moment to sit with what was shared. You can
@@ -432,7 +432,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
           me feel closer to you.&rdquo; Shared reflection turns a Q&amp;A session into a bonding
           experience that both of you will remember long after the conversation ends.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {intimateQuestions.slice(0, 12).map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -440,7 +440,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Step 5: Repeat and build a ritual</h2>
+        <h2 >Step 5: Repeat and build a ritual</h2>
         <p>
           Consistency matters more than intensity. A ten-minute check-in every week will deepen your
           connection more than a single four-hour marathon once a year. A 2023 study in the Journal
@@ -456,7 +456,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
           were to where you are now. The ritual itself becomes the anchor that keeps you connected
           through busy seasons and quiet ones alike.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {futureQuestions.slice(0, 12).map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -469,7 +469,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">A final thought</h2>
+        <h2 >A final thought</h2>
         <p>
           You do not need a perfect question. You need a quiet moment, a willing heart, and the
           courage to start. The questions above are tools, not rules. Adapt them, remix them, and
@@ -488,8 +488,8 @@ export default function CoupleQuestionsCompleteGuidePage() {
       </section>
 
       <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-        <h3 className="text-xl font-semibold mb-2">Ready for deeper conversations?</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+        <h3 >Ready for deeper conversations?</h3>
+        <p className="text-slate-200 mb-4">
           Captain Bond&rsquo;s couple mode generates fresh question decks tailored to your
           relationship. No prep, no awkward silences — just better conversations every time you
           open the app.

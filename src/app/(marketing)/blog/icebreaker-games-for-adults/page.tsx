@@ -234,12 +234,12 @@ export default function IcebreakerGamesForAdultsPage() {
         According to a 2024 Statista report, the global board games market is projected to reach $30 billion by 2028, with party games as the fastest-growing segment.
       </p>
 
-      <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="flex items-center gap-4 mb-10">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
           CB
         </div>
         <div>
-          <p className="font-semibold text-sm">Captain Bond Team</p>
+          <p className="font-semibold text-white">Captain Bond</p>
           <p className="text-xs text-slate-400">
             Published {publishedDate} &middot; 7 min read
           </p>
@@ -247,8 +247,8 @@ export default function IcebreakerGamesForAdultsPage() {
       </div>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Key Takeaways</h2>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <h2 >Key Takeaways</h2>
+        <ul >
           <li>Icebreaker games for adults range from 30-second warm-ups to 20-minute trust-building activities</li>
           <li>The best games require zero equipment and adapt to any group size from 2 to 50+</li>
           <li>Match the category to your goal: quick (energy), get-to-know (connection), team (collaboration), virtual (remote), deep (trust)</li>
@@ -258,7 +258,7 @@ export default function IcebreakerGamesForAdultsPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">What Are Icebreaker Games for Adults?</h2>
+        <h2 >What Are Icebreaker Games for Adults?</h2>
         <p>
           Icebreaker games for adults are short, structured activities that help people relax,
           connect, and start conversations in group settings. Unlike children&apos;s games, they rely on
@@ -271,7 +271,7 @@ export default function IcebreakerGamesForAdultsPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Comparison Table: Best Icebreakers by Group Size and Time</h2>
+        <h2 >Comparison Table: Best Icebreakers by Group Size and Time</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-slate-300 border-collapse">
             <thead>
@@ -295,12 +295,12 @@ export default function IcebreakerGamesForAdultsPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Quick Icebreaker Games (10 Games)</h2>
+        <h2 >Quick Icebreaker Games (10 Games)</h2>
         <p>
           These games take under 5 minutes each and need zero setup. Use them to wake up a quiet
           room, fill a gap while people arrive, or transition between activities.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {quickGames.map((g, i) => (
             <li key={i}>{g}</li>
           ))}
@@ -308,13 +308,13 @@ export default function IcebreakerGamesForAdultsPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Get-to-Know-You Games (10 Games)</h2>
+        <h2 >Get-to-Know-You Games (10 Games)</h2>
         <p>
           These go beyond names and job titles. They uncover stories, quirks, and common ground.
           Perfect for dates, new teams, or any situation where you want people to actually know each
           other.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {getToKnowGames.map((g, i) => (
             <li key={i}>{g}</li>
           ))}
@@ -322,13 +322,13 @@ export default function IcebreakerGamesForAdultsPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Team Icebreaker Games (10 Games)</h2>
+        <h2 >Team Icebreaker Games (10 Games)</h2>
         <p>
           Team games build collaboration, communication, and a bit of friendly competition. They
           work best for work retreats, sports teams, or any group that needs to operate better
           together.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {teamGames.map((g, i) => (
             <li key={i}>{g}</li>
           ))}
@@ -336,12 +336,12 @@ export default function IcebreakerGamesForAdultsPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Virtual Icebreaker Games (10 Games)</h2>
+        <h2 >Virtual Icebreaker Games (10 Games)</h2>
         <p>
           Remote groups face a harder wall. These games cut through the screen fatigue and bring
           real energy to video calls, virtual happy hours, and distributed team meetings.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {virtualGames.map((g, i) => (
             <li key={i}>{g}</li>
           ))}
@@ -349,12 +349,12 @@ export default function IcebreakerGamesForAdultsPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Deep Icebreaker Games (10 Games)</h2>
+        <h2 >Deep Icebreaker Games (10 Games)</h2>
         <p>
           Use these when the group is ready for something real. Deep games build trust, empathy, and
           genuine connection. They work best with smaller groups and a bit of time.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {deepGames.map((g, i) => (
             <li key={i}>{g}</li>
           ))}
@@ -367,11 +367,11 @@ export default function IcebreakerGamesForAdultsPage() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">How to Pick the Right Icebreaker</h2>
+        <h2 >How to Pick the Right Icebreaker</h2>
         <p>
           Three questions will guide you to the right category:
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+        <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
           <li><strong>How well do these people know each other?</strong> Strangers need quick, low-risk games. Friends or colleagues can handle deeper formats.</li>
           <li><strong>How much time do you have?</strong> Under 5 minutes means Quick games. 15+ minutes opens Get-to-Know and Deep categories.</li>
           <li><strong>What is the goal?</strong> Energy and laughter → Quick games. Connection and trust → Deep games. Collaboration → Team games.</li>
@@ -383,7 +383,7 @@ export default function IcebreakerGamesForAdultsPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Why Play Icebreakers at All?</h2>
+        <h2 >Why Play Icebreakers at All?</h2>
         <p>
           Adults forget how to play. Somewhere between childhood and responsibility, unstructured fun
           gets replaced by small talk and efficiency. Icebreaker games for adults give permission to
@@ -398,8 +398,8 @@ export default function IcebreakerGamesForAdultsPage() {
       </p>
 
       <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-        <h3 className="text-xl font-semibold mb-2">Want fresh games every time?</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+        <h3 >Want fresh games every time?</h3>
+        <p className="text-slate-200 mb-4">
           Captain Bond generates custom icebreaker games and conversation starters for any group size
           and setting. No prep, no repetition — just the right game when you need it.
         </p>

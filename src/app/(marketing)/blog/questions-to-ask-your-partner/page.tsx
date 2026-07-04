@@ -206,7 +206,7 @@ export default function QuestionsToAskYourPartnerPage() {
       
       <div className="article-card-takeaways">
         <h2 >Key Takeaways</h2>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           <li>The best questions adapt to your relationship stage — new love needs lightness, long-term love needs depth.</li>
           <li>Asking with genuine curiosity matters more than finding the perfect question.</li>
           <li>Couples who ask each other deep questions regularly report 40% higher relationship satisfaction. A 2023 study in the Journal of Social and Personal Relationships found that couples who ask each other novel questions report higher intimacy levels.</li>
@@ -262,14 +262,14 @@ export default function QuestionsToAskYourPartnerPage() {
       </div>
 
       <section id="new-relationships" className="mb-10">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">New Relationships: 20 Questions for the Beginning</h2>
+        <h2 >New Relationships: 20 Questions for the Beginning</h2>
         <p>
           The early stage of a relationship is a beautiful dance of discovery. These questions help
           you move past the predictable small talk and into the territory that actually matters —
           values, personality, and whether your worlds fit together. Keep it light, stay curious,
           and let the answers guide you naturally.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {newRelationship.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -277,14 +277,14 @@ export default function QuestionsToAskYourPartnerPage() {
       </section>
 
       <section id="established-couples" className="mb-10">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Established Couples: 20 Questions for Deeper Connection</h2>
+        <h2 >Established Couples: 20 Questions for Deeper Connection</h2>
         <p>
           Once the initial spark has settled into something real, the questions shift. You already
           know the basics — now it is about understanding the inner world of your partner. These
           prompts explore values, childhood imprints, and the quiet hopes that do not come up in
           everyday conversation.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {establishedCouples.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -292,14 +292,14 @@ export default function QuestionsToAskYourPartnerPage() {
       </section>
 
       <section id="long-term-partners" className="mb-10">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Long-Term Partners: 20 Questions for Lasting Intimacy</h2>
+        <h2 >Long-Term Partners: 20 Questions for Lasting Intimacy</h2>
         <p>
           Years together bring depth — but also routine. The questions that served you in the
           beginning need to evolve. These prompts are designed for partners who want to maintain
           intimacy, acknowledge how they have grown, and keep choosing each other even when life
           gets noisy.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {longTermPartners.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -307,14 +307,14 @@ export default function QuestionsToAskYourPartnerPage() {
       </section>
 
       <section id="engaged-married" className="mb-10">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Engaged &amp; Married: 20 Questions for Building a Future</h2>
+        <h2 >Engaged &amp; Married: 20 Questions for Building a Future</h2>
         <p>
           Marriage or a lifelong partnership requires alignment on the big building blocks: money,
           family, legacy, and the shape of your shared future. These questions help you build a
           roadmap together so that you are not just living side by side, but moving in the same
           direction.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {engagedMarried.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -322,13 +322,13 @@ export default function QuestionsToAskYourPartnerPage() {
       </section>
 
       <section id="rediscovering" className="mb-10">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Rediscovering Each Other: 20 Questions to Rekindle</h2>
+        <h2 >Rediscovering Each Other: 20 Questions to Rekindle</h2>
         <p>
           Every long relationship goes through seasons of distance. Rediscovery is not about fixing
           something broken — it is about remembering the people you still are. These questions are
           for couples who want to turn towards each other again with fresh eyes and an open heart.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+        <ul >
           {rediscovering.map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -341,7 +341,7 @@ export default function QuestionsToAskYourPartnerPage() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Which Stage Are You In? A Quick Comparison</h2>
+        <h2 >Which Stage Are You In? A Quick Comparison</h2>
         <p>
           Each relationship stage calls for a different kind of question. Here is how they compare:
         </p>
@@ -413,12 +413,12 @@ export default function QuestionsToAskYourPartnerPage() {
       </blockquote>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">How to Use These Questions Effectively</h2>
+        <h2 >How to Use These Questions Effectively</h2>
         <p>
           A list of questions is only as good as the way you use it. Here are four principles that
           turn a prompt into a real conversation:
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+        <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
           <li>
             <strong>Pick one stage at a time.</strong> Do not try to cover all five sections in one
             sitting. Let the stage you are in be your guide.
@@ -439,7 +439,7 @@ export default function QuestionsToAskYourPartnerPage() {
       </section>
 
       <section className="article-block">
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Research Context & Limitations</h2>
+        <h2 >Research Context & Limitations</h2>
         <p>
           These questions are inspired by established relationship science. The Gottman Institute&apos;s
           research on &quot;love maps&quot; and Arthur Aron&apos;s closeness generation protocol (1997) both
@@ -460,9 +460,9 @@ export default function QuestionsToAskYourPartnerPage() {
         </p>
       </section>
 
-      <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10 mb-10">
-        <h3 className="text-xl font-semibold mb-2">Get fresh questions every session</h3>
-        <p className="text-slate-200 leading-relaxed mb-4">
+      <aside className="article-card-takeaways">
+        <h3 >Get fresh questions every session</h3>
+        <p className="text-slate-200 mb-4">
           Captain Bond generates personalised question decks for you and your partner — light,
           deep, spicy, and everything in between. No preparation, no pressure, just better
           conversations that adapt to your relationship stage.
@@ -475,22 +475,22 @@ export default function QuestionsToAskYourPartnerPage() {
         </Link>
       </aside>
 
-      <section className="border-t border-white/10 pt-8 mt-8">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mb-6">Related articles</h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Link href="/blog/50-deep-questions-for-couples" className="p-4 rounded-xl border border-white/10 hover:border-neon-purple/40 transition-colors">
+          <Link href="/blog/50-deep-questions-for-couples" className="group">
             <p className="font-semibold text-white">50 Deep Questions for Couples</p>
             <p className="text-sm text-slate-400 mt-1">Go deeper with vulnerability and emotional connection</p>
           </Link>
-          <Link href="/blog/couple-questions-complete-guide" className="p-4 rounded-xl border border-white/10 hover:border-neon-purple/40 transition-colors">
+          <Link href="/blog/couple-questions-complete-guide" className="group">
             <p className="font-semibold text-white">Couple Questions Complete Guide</p>
             <p className="text-sm text-slate-400 mt-1">A step-by-step system for meaningful conversations</p>
           </Link>
-          <Link href="/blog/couple-communication-exercises" className="p-4 rounded-xl border border-white/10 hover:border-neon-purple/40 transition-colors">
+          <Link href="/blog/couple-communication-exercises" className="group">
             <p className="font-semibold text-white">10 Communication Exercises</p>
             <p className="text-sm text-slate-400 mt-1">Practical exercises to strengthen your bond</p>
           </Link>
-          <Link href="/blog/questions-to-build-intimacy" className="p-4 rounded-xl border border-white/10 hover:border-neon-purple/40 transition-colors">
+          <Link href="/blog/questions-to-build-intimacy" className="group">
             <p className="font-semibold text-white">30 Questions to Build Intimacy</p>
             <p className="text-sm text-slate-400 mt-1">Emotional, physical and intellectual intimacy questions</p>
           </Link>

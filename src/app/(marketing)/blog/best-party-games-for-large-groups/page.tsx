@@ -120,14 +120,13 @@ export default function BestPartyGamesLargeGroupsPage() {
           </p>
         </header>
 
-        <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-          <p className="text-slate-200 italic">&ldquo;The right game for a large group does not ask players to wait for a turn. It asks everyone to participate at the same time.&rdquo;</p>
-          <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-        </section>
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;The right game for a large group does not ask players to wait for a turn. It asks everyone to participate at the same time.&rdquo;</p>
+        </blockquote>
 
-        <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 mb-10">
+        <div className="article-card-takeaways">
           <h2 className="text-lg font-semibold mb-3">Key Takeaways</h2>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+          <ul >
             <li>Traditional board games break at 6+ players — large groups need TV-displayed or conversation-only games.</li>
             <li>Phone-as-controller games like Captain Bond Party let 10-100 players participate simultaneously on a shared screen.</li>
             <li>No-equipment games (Werewolf, Categories, Most Likely To) scale infinitely with zero setup.</li>
@@ -137,7 +136,7 @@ export default function BestPartyGamesLargeGroupsPage() {
         </div>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Why large group games need a different approach</h2>
+          <h2 >Why large group games need a different approach</h2>
           <p>
             Large group party games are social activities designed for 10 or more simultaneous players that rely on TV displays, phone controllers, or conversation mechanics instead of physical boards and pieces. Traditional board games hit a hard ceiling at 6 players — the board is too small, turns take too long, and eliminated players check their phones instead of engaging.
           </p>
@@ -156,11 +155,11 @@ export default function BestPartyGamesLargeGroupsPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">What makes a great large group party game</h2>
+          <h2 >What makes a great large group party game</h2>
           <p>
             Not every game scales. Here are the five characteristics that separate large-group-friendly games from those that fall apart past 8 players:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li>
               <strong>Easy rules.</strong> If explaining the rules takes longer than one round, the game will not work for a large group. The best games can be taught in under 30 seconds.
             </li>
@@ -183,11 +182,11 @@ export default function BestPartyGamesLargeGroupsPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Top 5 party games for 10-50+ players</h2>
+          <h2 >Top 5 party games for 10-50+ players</h2>
           <p>
             Here are the five best formats for large group play, ranked by how well they scale:
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed mb-4">
+          <ul className="list-disc pl-6 space-y-3 text-slate-300 mb-4">
             <li>
               <strong>1. TV-based party games (10-100 players).</strong> Games like Captain Bond Party display the game board on a TV while players answer questions and complete challenges on their phones. Everyone plays simultaneously, rounds last 15-20 minutes, and there are no physical components to manage. This is the best format for large groups because it requires nothing but a screen and the phones people already have in their pockets.
             </li>
@@ -210,11 +209,11 @@ export default function BestPartyGamesLargeGroupsPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Tips for hosting a large group game night</h2>
+          <h2 >Tips for hosting a large group game night</h2>
           <p>
             Hosting a game night for 20 people is different from hosting one for 6. These tips will help you keep the energy high and the logistics smooth:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li>
               <strong>Use a TV as the game board.</strong> A large screen visible from across the room is essential for TV-based games. Position it so everyone has a sight line.
             </li>
@@ -240,7 +239,7 @@ export default function BestPartyGamesLargeGroupsPage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Frequently asked questions</h2>
+          <h2 >Frequently asked questions</h2>
           <div className="space-y-4">
             <div>
               <h3 className="font-semibold text-slate-200 mb-2">What are the best party games for large groups?</h3>
@@ -275,12 +274,12 @@ export default function BestPartyGamesLargeGroupsPage() {
           </div>
         </section>
 
-        <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="flex items-center gap-4 mb-10">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
             CB
           </div>
           <div>
-            <p className="font-semibold text-sm">Captain Bond Team</p>
+            <p className="font-semibold text-white">Captain Bond</p>
             <p className="text-xs text-slate-400">
               Published {publishedDate} &middot; 9 min read
             </p>
@@ -295,14 +294,13 @@ export default function BestPartyGamesLargeGroupsPage() {
           These games work best when the host has a screen to display the game board. Players need their phones for the best experience. For traditional board games with physical components, 10+ players becomes impractical.
         </p>
 
-        <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-          <p className="text-slate-200 italic">&ldquo;The best large group games do not ask players to wait. They ask everyone to play, right now, together.&rdquo;</p>
-          <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-        </section>
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;The best large group games do not ask players to wait. They ask everyone to play, right now, together.&rdquo;</p>
+        </blockquote>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Related articles</h2>
-          <ul className="space-y-2 text-slate-300 leading-relaxed">
+          <h2 >Related articles</h2>
+          <ul className="space-y-2 text-slate-300">
             <li>
               <Link href="/blog/how-to-host-game-night" className="text-neon-purple hover:text-neon-pink transition-colors">
                 How to Host an Unforgettable Game Night: The Ultimate Guide
@@ -322,8 +320,8 @@ export default function BestPartyGamesLargeGroupsPage() {
         </section>
 
         <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-          <h3 className="text-xl font-semibold mb-2">Got 10+ friends and a TV?</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">
+          <h3 >Got 10+ friends and a TV?</h3>
+          <p className="text-slate-200 mb-4">
             Captain Bond Party is the large-group game that turns any living room into a game show.
             Up to 100 players, simultaneous play, hilarious questions and dares — all from your
             phone to the big screen. No boards, no cards, no waiting for your turn.

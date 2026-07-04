@@ -163,14 +163,13 @@ export default function GameNightArticlePage() {
           </p>
         </header>
 
-        <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-          <p className="text-slate-200 italic">&ldquo;A great host does not need a perfect setup. They need a warm welcome and the willingness to adapt.&rdquo;</p>
-          <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-        </section>
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;A great host does not need a perfect setup. They need a warm welcome and the willingness to adapt.&rdquo;</p>
+        </blockquote>
 
-        <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 mb-10">
+        <div className="article-card-takeaways">
           <h2 className="text-lg font-semibold mb-3">Key Takeaways</h2>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+          <ul >
             <li>Invite 4–8 guests for the best group dynamics and game compatibility.</li>
             <li>Select 2–3 games that match your group size, energy level, and time budget.</li>
             <li>Prep the space, snacks, and audio beforehand so you can host instead of scramble.</li>
@@ -180,7 +179,7 @@ export default function GameNightArticlePage() {
         </div>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">1. Guest list and planning</h2>
+          <h2 >1. Guest list and planning</h2>
           <p>
             The guest list is the foundation of every great game night. Too few people and the
             energy falls flat. Too many and the evening turns into chaos. The sweet spot is 4 to 8
@@ -206,7 +205,7 @@ export default function GameNightArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">2. Game selection by group size</h2>
+          <h2 >2. Game selection by group size</h2>
           <p>
             Choosing the right games is half the battle. You want a mix that fits your group size,
             time available, and the energy level you are aiming for. Here is a quick comparison to
@@ -264,12 +263,12 @@ export default function GameNightArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">3. Setting the scene</h2>
+          <h2 >3. Setting the scene</h2>
           <p>
             Your space sets the tone. A good setup makes games easier to play and conversations
             easier to have. Here is how to prepare:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li>
               <strong>Lighting.</strong> Bright enough to read cards, warm enough to feel cozy.
               Avoid glare on glossy boards.
@@ -295,7 +294,7 @@ export default function GameNightArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">4. Hosting like a pro</h2>
+          <h2 >4. Hosting like a pro</h2>
           <p>
             The best hosts do not play — they facilitate. Or rather, they play while keeping one eye
             on the room. Your job is to ensure everyone feels included, understands the rules, and
@@ -305,7 +304,7 @@ export default function GameNightArticlePage() {
             A great host does not win every game. They make sure everyone wants to stay for the next
             one.
           </blockquote>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li>
               <strong>Learn the rules beforehand.</strong> Read the manual and, if possible, play a
               practice round. Nothing kills momentum like flipping through pages mid-game.
@@ -327,7 +326,7 @@ export default function GameNightArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">5. Cleanup and encore</h2>
+          <h2 >5. Cleanup and encore</h2>
           <p>
             A great game night ends as smoothly as it starts. When you call the last game, give
             everyone a few minutes to finish their turn, take a photo of the scoreboard, and help
@@ -349,12 +348,12 @@ export default function GameNightArticlePage() {
           </p>
         </section>
 
-        <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="flex items-center gap-4 mb-10">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
             CB
           </div>
           <div>
-            <p className="font-semibold text-sm">Captain Bond Team</p>
+            <p className="font-semibold text-white">Captain Bond</p>
             <p className="text-xs text-slate-400">
               Published {publishedDate} &middot; 6 min read
             </p>
@@ -365,14 +364,13 @@ export default function GameNightArticlePage() {
           These suggestions work best for adult groups looking for social fun. For very large groups (50+) or corporate settings, consider dedicated team building platforms.
         </p>
 
-        <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-          <p className="text-slate-200 italic">&ldquo;The best game nights end with guests asking when the next one is — before they walk out the door.&rdquo;</p>
-          <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-        </section>
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;The best game nights end with guests asking when the next one is — before they walk out the door.&rdquo;</p>
+        </blockquote>
 
         <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-          <h3 className="text-xl font-semibold mb-2">Ready for game night?</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">
+          <h3 >Ready for game night?</h3>
+          <p className="text-slate-200 mb-4">
             Captain Bond makes it easy to invite friends, share game picks, and keep the good times
             rolling. No spreadsheets, no group chat chaos — just party planning that works.
           </p>

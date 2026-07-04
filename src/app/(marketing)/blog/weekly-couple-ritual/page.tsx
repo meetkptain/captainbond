@@ -210,12 +210,12 @@ export default function WeeklyCoupleRitualArticlePage() {
           by how present you are during the time you have.
         </blockquote>
 
-        <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="flex items-center gap-4 mb-10">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
             CB
           </div>
           <div>
-            <p className="font-semibold text-sm">Captain Bond Team</p>
+            <p className="font-semibold text-white">Captain Bond</p>
             <p className="text-xs text-slate-400">
               Published {publishedDate} &middot; 6 min read
             </p>
@@ -223,8 +223,8 @@ export default function WeeklyCoupleRitualArticlePage() {
         </div>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Key Takeaways</h2>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <h2 >Key Takeaways</h2>
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li>
               A dedicated 20-minute weekly slot prevents relationships from drifting into
               transactional mode.
@@ -249,7 +249,7 @@ export default function WeeklyCoupleRitualArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Why a weekly ritual changes everything</h2>
+          <h2 >Why a weekly ritual changes everything</h2>
           <p>
             Relationships do not fail because of one big fight. They erode gradually — through
             thousands of small moments when one partner reaches for connection and the other is
@@ -272,7 +272,7 @@ export default function WeeklyCoupleRitualArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Step 1: Pick a weekly slot and protect it</h2>
+          <h2 >Step 1: Pick a weekly slot and protect it</h2>
           <p>
             Choose a day and time that you can realistically keep. Sunday evening is popular because
             the weekend is winding down and the work week has not started yet. Tuesday morning might
@@ -286,7 +286,7 @@ export default function WeeklyCoupleRitualArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Step 2: Remove every distraction</h2>
+          <h2 >Step 2: Remove every distraction</h2>
           <p>
             This is the highest-impact step. Phones go in another room — not face down on the table.
             The TV stays off. Notifications are silenced. If you have children, wait until they are
@@ -304,12 +304,12 @@ export default function WeeklyCoupleRitualArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Step 3: Choose a conversation format</h2>
+          <h2 >Step 3: Choose a conversation format</h2>
           <p>
             Having a structure prevents the dreaded &ldquo;So, how was your week?&rdquo; dead end.
             The simplest format is a three-part check-in:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li>
               <strong>High and low:</strong> Each person shares one highlight and one challenge from
               the week.
@@ -330,7 +330,7 @@ export default function WeeklyCoupleRitualArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Step 4: Take turns speaking and listening</h2>
+          <h2 >Step 4: Take turns speaking and listening</h2>
           <p>
             The most common mistake couples make in conversations is interrupting to problem-solve.
             When your partner shares something difficult, your instinct is to fix it. Resist that
@@ -348,7 +348,7 @@ export default function WeeklyCoupleRitualArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Step 5: End with gratitude</h2>
+          <h2 >Step 5: End with gratitude</h2>
           <p>
             The final two minutes are the most important. Each person shares one specific thing they
             appreciated about their partner this week. &ldquo;You made me laugh when I was
@@ -363,7 +363,7 @@ export default function WeeklyCoupleRitualArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">A final thought</h2>
+          <h2 >A final thought</h2>
           <p>
             You do not need the perfect ritual. You need the courage to start and the discipline to
             protect it. Twenty minutes, once a week, no phones, full attention. That is it. That is
@@ -384,8 +384,8 @@ export default function WeeklyCoupleRitualArticlePage() {
         </section>
 
         <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-          <h3 className="text-xl font-semibold mb-2">Make it effortless with Captain Bond</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">
+          <h3 >Make it effortless with Captain Bond</h3>
+          <p className="text-slate-200 mb-4">
             Captain Bond couple mode gives you fresh conversation questions every week, a built-in
             timer, and a structured format — so you never have to improvise your ritual. Start today
             and build the habit that protects your connection.

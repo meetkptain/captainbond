@@ -293,10 +293,9 @@ export default function BestPartyGames2026Page() {
           </p>
         </header>
 
-        <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-          <p className="text-slate-200 italic">&ldquo;The best game is the one that makes everyone forget they are playing.&rdquo;</p>
-          <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-        </section>
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;The best game is the one that makes everyone forget they are playing.&rdquo;</p>
+        </blockquote>
 
         <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
           The best party game is the one that makes everyone forget their phone exists. In 2026,
@@ -307,12 +306,12 @@ export default function BestPartyGames2026Page() {
           According to a 2024 Statista report, the global board games market is projected to reach $30 billion by 2028, with party games as the fastest-growing segment.
         </p>
 
-        <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="flex items-center gap-4 mb-10">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
             CB
           </div>
           <div>
-            <p className="font-semibold text-sm">Captain Bond Team</p>
+            <p className="font-semibold text-white">Captain Bond</p>
             <p className="text-xs text-slate-400">
               Published {publishedDate} &middot; 8 min read
             </p>
@@ -320,8 +319,8 @@ export default function BestPartyGames2026Page() {
         </div>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Key Takeaways</h2>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+          <h2 >Key Takeaways</h2>
+          <ul >
             <li><strong>Captain Bond Party</strong> is the #1 group game for large gatherings, supporting up to 100 players with TV-based play</li>
             <li><strong>Six categories</strong> of party games exist — TV/group, card, board, drinking, icebreaker, and no-equipment — each suited for different vibes and group sizes</li>
             <li><strong>No-equipment games</strong> are the most versatile: Charades, Never Have I Ever, and 2 Truths 1 Lie work anywhere with zero setup</li>
@@ -331,7 +330,7 @@ export default function BestPartyGames2026Page() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Party Game Categories Compared</h2>
+          <h2 >Party Game Categories Compared</h2>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm text-slate-300">
               <thead>
@@ -355,13 +354,13 @@ export default function BestPartyGames2026Page() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">TV and Group Games</h2>
+          <h2 >TV and Group Games</h2>
           <p>
             The biggest trend in 2026 party games is the digital-physical hybrid: games that display
             on a TV while players interact via their phones. These eliminate the need for physical
             boards and let everyone play simultaneously.
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed">
+          <ul >
             {tvGroupGames.map((g, i) => (
               <li key={i}>
                 <strong>{g.name}:</strong> {g.desc}
@@ -376,13 +375,13 @@ export default function BestPartyGames2026Page() {
         </blockquote>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Card Games</h2>
+          <h2 >Card Games</h2>
           <p>
             Card games remain the most portable party game category. A single deck — or a themed
             box — can fuel hours of entertainment. The best card games for adults balance strategy,
             humor, and social interaction.
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed">
+          <ul >
             {cardGames.map((g, i) => (
               <li key={i}>
                 <strong>{g.name}:</strong> {g.desc}
@@ -391,19 +390,18 @@ export default function BestPartyGames2026Page() {
           </ul>
         </section>
 
-        <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-          <p className="text-slate-200 italic">&ldquo;Whether cards or boards, the real game is the laughter you share between turns.&rdquo;</p>
-          <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-        </section>
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;Whether cards or boards, the real game is the laughter you share between turns.&rdquo;</p>
+        </blockquote>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Board Games for Adults</h2>
+          <h2 >Board Games for Adults</h2>
           <p>
             Board games have gone through a renaissance. Modern board games are designed with adults
             in mind — shorter play times, clever mechanics, and social dynamics that reward
             personality as much as strategy.
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed">
+          <ul >
             {boardGames.map((g, i) => (
               <li key={i}>
                 <strong>{g.name}:</strong> {g.desc}
@@ -413,13 +411,13 @@ export default function BestPartyGames2026Page() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Drinking Games</h2>
+          <h2 >Drinking Games</h2>
           <p>
             Drinking games are the energy engine of many house parties. They combine social
             mechanics with light stakes, making every round feel consequential. The best drinking
             games let people participate at their own pace.
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed">
+          <ul >
             {drinkingGames.map((g, i) => (
               <li key={i}>
                 <strong>{g.name}:</strong> {g.desc}
@@ -429,13 +427,13 @@ export default function BestPartyGames2026Page() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Icebreaker Games</h2>
+          <h2 >Icebreaker Games</h2>
           <p>
             Icebreakers are the unsung heroes of any party. They bridge the gap between strangers
             becoming friends in minutes. The best icebreaker games feel natural — they start
             conversations instead of forcing them.
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed">
+          <ul >
             {icebreakerGames.map((g, i) => (
               <li key={i}>
                 <strong>{g.name}:</strong> {g.desc}
@@ -445,13 +443,13 @@ export default function BestPartyGames2026Page() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">No-Equipment Games</h2>
+          <h2 >No-Equipment Games</h2>
           <p>
             The most accessible party games require nothing but people, imagination, and a willingness
             to be silly. No-equipment games are the ultimate fallback — they work any time, anywhere,
             with any group size.
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed">
+          <ul >
             {noEquipmentGames.map((g, i) => (
               <li key={i}>
                 <strong>{g.name}:</strong> {g.desc}
@@ -466,12 +464,12 @@ export default function BestPartyGames2026Page() {
         </blockquote>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">How to Plan the Perfect Game Night</h2>
+          <h2 >How to Plan the Perfect Game Night</h2>
           <p>
             A great game night needs a little structure but a lot of flexibility. Here is a simple
             formula that works for any group:
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+          <ul >
             <li><strong>Start with an icebreaker</strong> (10 min): 2 Truths 1 Lie or Would You Rather gets everyone warmed up</li>
             <li><strong>Play a group game</strong> (20-30 min): Captain Bond Party or Jackbox brings everyone together on the same screen</li>
             <li><strong>Split into smaller games</strong> (30+ min): Let clusters form around board games, card games, or drinking games based on mood</li>
@@ -484,14 +482,13 @@ export default function BestPartyGames2026Page() {
           These suggestions work best for adult groups looking for social fun. For very large groups (50+) or corporate settings, consider dedicated team building platforms.
         </p>
 
-        <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
-          <p className="text-slate-200 italic">&ldquo;A great party is not about the games you play. It is about the people you play them with.&rdquo;</p>
-          <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
-        </section>
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
+          <p>&ldquo;A great party is not about the games you play. It is about the people you play them with.&rdquo;</p>
+        </blockquote>
 
         <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-          <h3 className="text-xl font-semibold mb-2">Ready for the ultimate party game?</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">
+          <h3 >Ready for the ultimate party game?</h3>
+          <p className="text-slate-200 mb-4">
             Captain Bond Party is the TV-based game that turns any gathering into a night to remember.
             Up to 100 players, hilarious questions, dares, and challenges — all from your phone to
             the big screen. No boards, no cards, no cleanup.

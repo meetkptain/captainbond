@@ -64,7 +64,7 @@ export default function GuideSoireeQuiz() {
         <p className="text-slate-400 text-sm mb-8">Publié le 4 juillet 2025</p>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Pourquoi les soirées quiz augmentent le chiffre d&apos;affaires des bars</h2>
+          <h2 >Pourquoi les soirées quiz augmentent le chiffre d&apos;affaires des bars</h2>
           <p>Les soirées quiz dans les bars sont des événements hebdomadaires où des équipes de clients s&apos;affrontent sur des questions de culture générale, musique et images, animées par un hôte sur un écran partagé. Ce format combine divertissement, compétition sociale et consommation.</p>
           <p>Selon Statista, les bars qui organisent des soirées à thème hebdomadaires constatent une augmentation moyenne de 35 % de leur chiffre d&apos;affaires les soirs d&apos;événement. Les soirs traditionnellement calmes (mardi, mercredi) sont les plus transformés, avec des hausses allant jusqu&apos;à 60 %.</p>
           <p>Une étude en hôtellerie publiée dans l&apos;International Journal of Hospitality Management (2024) montre que les établissements avec des événements interactifs hebdomadaires fidélisent 28 % mieux leur clientèle que ceux sans animation régulière.</p>
@@ -72,8 +72,8 @@ export default function GuideSoireeQuiz() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Comment planifier votre soirée quiz : guide étape par étape</h2>
-          <ol className="list-decimal pl-6 space-y-4 text-slate-300 leading-relaxed mb-4">
+          <h2 >Comment planifier votre soirée quiz : guide étape par étape</h2>
+          <ol className="list-decimal pl-6 space-y-4 text-slate-300 mb-4">
             <li><strong>Choisir le format</strong> — Quiz papier classique (traditionnel) ou quiz digital sur écran (interactif, moderne). Le digital permet des scores en temps réel et des statistiques.</li>
             <li><strong>Préparer les questions</strong> — 5-7 rounds, 8-10 questions par round. Alternez : culture générale, musique (extraits audio), images, actualités, et un round joker.</li>
             <li><strong>Installer l&apos;équipement</strong> — Un écran visible de tous (TV 55&rdquo; minimum ou projecteur), un bon système audio, et une connexion internet stable.</li>
@@ -84,7 +84,7 @@ export default function GuideSoireeQuiz() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Quiz digital vs quiz traditionnel</h2>
+          <h2 >Quiz digital vs quiz traditionnel</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="p-4 rounded-xl border border-white/10"><h3 className="text-lg font-semibold text-white mb-2">📝 Quiz papier</h3><ul className="list-disc pl-4 space-y-1 text-sm text-slate-300"><li>Zéro équipement</li><li>Correction manuelle</li><li>Ambiance traditionnelle</li><li>Limitié à 50 personnes</li></ul></div>
             <div className="p-4 rounded-xl border border-white/10"><h3 className="text-lg font-semibold text-white mb-2">📱 Quiz digital</h3><ul className="list-disc pl-4 space-y-1 text-sm text-slate-300"><li>Écran + connexion requis</li><li>Scores en temps réel</li><li>500+ participants possibles</li><li>Statistiques et classement auto</li><li>DJ vocal IA possible</li></ul></div>
@@ -92,8 +92,8 @@ export default function GuideSoireeQuiz() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Promouvoir votre soirée quiz</h2>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <h2 >Promouvoir votre soirée quiz</h2>
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li><strong>Réseaux sociaux</strong> — Posts hebdomadaires avec le thème du quiz, stories Instagram avec extraits de questions</li>
             <li><strong>En intérieur</strong> — Sous-verres personnalisés, affiches aux tables, marque-place avec QR code d&apos;inscription</li>
             <li><strong>Email</strong> — Newsletter hebdomadaire avec le classement et le thème de la semaine prochaine</li>
@@ -102,8 +102,8 @@ export default function GuideSoireeQuiz() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Indicateurs de succès</h2>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
+          <h2 >Indicateurs de succès</h2>
+          <ul className="list-disc pl-6 space-y-2 text-slate-300 mb-4">
             <li><strong>Chiffre d&apos;affaires par couvert</strong> — Objectif : +20 % vs un mardi normal</li>
             <li><strong>Taux de remplissage</strong> — Objectif : 80 % des places remplies</li>
             <li><strong>Taux de retour</strong> — Objectif : 40 % des équipes reviennent la semaine suivante</li>
@@ -112,24 +112,24 @@ export default function GuideSoireeQuiz() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Limitations</h2>
+          <h2 >Limitations</h2>
           <p>Ces conseils supposent que vous avez un espace suffisant et un budget pour un écran. Le quiz digital nécessite une connexion internet stable. Pour les très petits bars (moins de 30 places), le quiz papier peut être plus adapté.</p>
         </section>
 
-        <aside className="bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 p-6 rounded-2xl border border-white/10 mb-12">
-          <h3 className="text-xl font-semibold mb-2">Essayez Captain Bond Pro pour votre bar</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">Questions automatiques, scores en temps réel, DJ vocal IA. Captain Bond Pro transforme votre établissement en salle de jeu interactive. Démo gratuite.</p>
+        <aside className="article-card-takeaways">
+          <h3 >Essayez Captain Bond Pro pour votre bar</h3>
+          <p className="text-slate-200 mb-4">Questions automatiques, scores en temps réel, DJ vocal IA. Captain Bond Pro transforme votre établissement en salle de jeu interactive. Démo gratuite.</p>
           <Link href="/fr/b2b/bars-cafes" className="inline-block bg-white text-slate-950 font-bold py-3 px-6 rounded-xl hover:bg-slate-200 transition-colors">Demander une démo &rarr;</Link>
         </aside>
 
         <section className="border-t border-white/10 pt-8">
           <h2 className="text-2xl font-semibold mb-6">Articles connexes</h2>
           <div className="grid gap-4 sm:grid-cols-2">
-            <Link href="/fr/blog/augmenter-chiffre-bar-semaine" className="p-4 rounded-xl border border-white/10 hover:border-neon-purple/40 transition-colors">
+            <Link href="/fr/blog/augmenter-chiffre-bar-semaine" className="group">
               <p className="font-semibold text-white">Augmenter le chiffre d&apos;affaires de votre bar</p>
               <p className="text-sm text-slate-400 mt-1">Stratégies pour les soirs calmes</p>
             </Link>
-            <Link href="/fr/blog/meilleurs-jeux-soiree-adulte-2026" className="p-4 rounded-xl border border-white/10 hover:border-neon-purple/40 transition-colors">
+            <Link href="/fr/blog/meilleurs-jeux-soiree-adulte-2026" className="group">
               <p className="font-semibold text-white">Meilleurs jeux de soirée 2026</p>
               <p className="text-sm text-slate-400 mt-1">Notre sélection</p>
             </Link>

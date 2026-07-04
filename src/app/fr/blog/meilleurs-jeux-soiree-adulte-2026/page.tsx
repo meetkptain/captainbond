@@ -304,7 +304,7 @@ export default function MeilleursJeuxSoireeAdulte2026Page() {
           Selon un rapport Statista 2024, le marché mondial des jeux de société devrait atteindre 30 milliards de dollars d&apos;ici 2028.
         </p>
 
-        <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="flex items-center gap-4 mb-10">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
             CB
           </div>
@@ -317,8 +317,8 @@ export default function MeilleursJeuxSoireeAdulte2026Page() {
         </div>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Points clés à retenir</h2>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+          <h2 >Points clés à retenir</h2>
+          <ul >
             <li><strong>Captain Bond Party</strong> est le jeu de groupe n°1 pour les grandes réunions, supportant jusqu&apos;à 100 joueurs avec un affichage TV</li>
             <li><strong>Six catégories</strong> de jeux de soirée existent — TV/groupe, cartes, plateau, à boire, brise-glace et sans matériel — chacune adaptée à des ambiances et tailles de groupe différentes</li>
             <li><strong>Les jeux sans matériel</strong> sont les plus polyvalents : le mime, « Je n&apos;ai jamais » et « 2 vérités 1 mensonge » fonctionnent partout sans préparation</li>
@@ -328,7 +328,7 @@ export default function MeilleursJeuxSoireeAdulte2026Page() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Comparatif des catégories de jeux</h2>
+          <h2 >Comparatif des catégories de jeux</h2>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm text-slate-300">
               <thead>
@@ -352,14 +352,14 @@ export default function MeilleursJeuxSoireeAdulte2026Page() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Jeux TV et de groupe</h2>
+          <h2 >Jeux TV et de groupe</h2>
           <p>
             La grande tendance des jeux de soirée en 2026 est l&apos;hybride numérique-physique :
             des jeux qui s&apos;affichent sur un écran TV tandis que les joueurs interagissent via
             leur téléphone. Ces jeux éliminent le besoin de plateaux physiques et permettent à tout
             le monde de jouer simultanément.
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed">
+          <ul >
             {tvGroupGames.map((g, i) => (
               <li key={i}>
                 <strong>{g.name}:</strong> {g.desc}
@@ -375,13 +375,13 @@ export default function MeilleursJeuxSoireeAdulte2026Page() {
         </blockquote>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Jeux de cartes</h2>
+          <h2 >Jeux de cartes</h2>
           <p>
             Les jeux de cartes restent la catégorie la plus portable. Un simple jeu de cartes —
             ou une boîte thématique — peut alimenter des heures de divertissement. Les meilleurs
             jeux de cartes pour adultes équilibrent stratégie, humour et interaction sociale.
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed">
+          <ul >
             {cardGames.map((g, i) => (
               <li key={i}>
                 <strong>{g.name}:</strong> {g.desc}
@@ -391,13 +391,13 @@ export default function MeilleursJeuxSoireeAdulte2026Page() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Jeux de plateau pour adultes</h2>
+          <h2 >Jeux de plateau pour adultes</h2>
           <p>
             Les jeux de plateau ont connu une véritable renaissance. Les jeux modernes sont conçus
             pour les adultes — des parties plus courtes, des mécanismes ingénieux et des dynamiques
             sociales qui récompensent autant la personnalité que la stratégie.
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed">
+          <ul >
             {boardGames.map((g, i) => (
               <li key={i}>
                 <strong>{g.name}:</strong> {g.desc}
@@ -407,13 +407,13 @@ export default function MeilleursJeuxSoireeAdulte2026Page() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Jeux à boire</h2>
+          <h2 >Jeux à boire</h2>
           <p>
             Les jeux à boire sont le moteur énergétique de nombreuses soirées. Ils combinent des
             mécanismes sociaux avec des enjeux légers, rendant chaque tour palpitant. Les meilleurs
             jeux à boire laissent chacun participer à son rythme.
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed">
+          <ul >
             {drinkingGames.map((g, i) => (
               <li key={i}>
                 <strong>{g.name}:</strong> {g.desc}
@@ -423,13 +423,13 @@ export default function MeilleursJeuxSoireeAdulte2026Page() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Jeux brise-glace</h2>
+          <h2 >Jeux brise-glace</h2>
           <p>
             Les brise-glace sont les héros méconnus de toute soirée. Ils transforment des étrangers
             en amis en quelques minutes. Les meilleurs jeux brise-glace semblent naturels — ils
             lancent des conversations au lieu de les forcer.
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed">
+          <ul >
             {icebreakerGames.map((g, i) => (
               <li key={i}>
                 <strong>{g.name}:</strong> {g.desc}
@@ -439,13 +439,13 @@ export default function MeilleursJeuxSoireeAdulte2026Page() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Jeux sans matériel</h2>
+          <h2 >Jeux sans matériel</h2>
           <p>
             Les jeux les plus accessibles ne nécessitent que des personnes, de l&apos;imagination
             et une volonté d&apos;être ridicule. Les jeux sans matériel sont la solution de
             secours ultime — ils fonctionnent toujours, partout, avec n&apos;importe quel groupe.
           </p>
-          <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed">
+          <ul >
             {noEquipmentGames.map((g, i) => (
               <li key={i}>
                 <strong>{g.name}:</strong> {g.desc}
@@ -461,12 +461,12 @@ export default function MeilleursJeuxSoireeAdulte2026Page() {
         </blockquote>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Comment organiser la soirée jeux parfaite</h2>
+          <h2 >Comment organiser la soirée jeux parfaite</h2>
           <p>
             Une bonne soirée jeux a besoin d&apos;un peu de structure mais surtout de
             flexibilité. Voici une formule simple qui fonctionne pour tous les groupes :
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
+          <ul >
             <li><strong>Commencez par un brise-glace</strong> (10 min) : « 2 vérités 1 mensonge » ou « Tu préférerais » pour mettre tout le monde à l&apos;aise</li>
             <li><strong>Jouez à un jeu de groupe</strong> (20-30 min) : Captain Bond Party ou Jackbox rassemble tout le monde sur le même écran</li>
             <li><strong>Divisez en petits groupes</strong> (30+ min) : Laissez des clusters se former autour de jeux de plateau, de cartes ou à boire selon l&apos;ambiance</li>
@@ -480,8 +480,8 @@ export default function MeilleursJeuxSoireeAdulte2026Page() {
         </p>
 
         <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-          <h3 className="text-xl font-semibold mb-2">Prêt pour le jeu de soirée ultime ?</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">
+          <h3 >Prêt pour le jeu de soirée ultime ?</h3>
+          <p className="text-slate-200 mb-4">
             Captain Bond Party est le jeu sur écran TV qui transforme n&apos;importe quelle
             réunion en une soirée mémorable. Jusqu&apos;à 100 joueurs, des questions hilarantes,
             des défis et des gages — le tout depuis votre téléphone vers le grand écran. Pas de

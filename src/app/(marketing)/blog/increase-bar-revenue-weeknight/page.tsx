@@ -129,7 +129,7 @@ export default function IncreaseBarRevenueArticlePage() {
           <p className="text-sm uppercase tracking-widest text-neon-purple font-semibold mb-2">
             Quick Answer
           </p>
-          <p className="text-slate-200 leading-relaxed">
+          <p className="text-slate-200">
             The fastest way to boost weeknight bar revenue is replacing passive drinking with
             active entertainment. Themed game nights, challenge competitions, loyalty leaderboards,
             AI-powered hosts like <strong>Captain Bond Pro (€99/mo)</strong>, and structured
@@ -143,7 +143,7 @@ export default function IncreaseBarRevenueArticlePage() {
           <p className="text-sm uppercase tracking-widest text-neon-purple font-semibold mb-3">
             Key Takeaways
           </p>
-          <ul className="space-y-2 text-slate-200 leading-relaxed">
+          <ul className="space-y-2 text-slate-200">
             <li className="flex gap-2">• <span>Themed game nights fill empty tables and create a predictable weekly crowd.</span></li>
             <li className="flex gap-2">• <span>Challenge competitions drive per-person spend 2.2× higher than passive evenings.</span></li>
             <li className="flex gap-2">• <span>A live leaderboard turns one-off visitors into regulars chasing the top spot.</span></li>
@@ -161,12 +161,12 @@ export default function IncreaseBarRevenueArticlePage() {
           reason to stay for another round.
         </blockquote>
 
-        <div className="flex items-center gap-4 mb-10 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="flex items-center gap-4 mb-10">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-lg">
             CB
           </div>
           <div>
-            <p className="font-semibold text-sm">Captain Bond Team</p>
+            <p className="font-semibold text-white">Captain Bond</p>
             <p className="text-xs text-slate-400">
               Published {publishedDate} &middot; 7 min read
             </p>
@@ -174,7 +174,7 @@ export default function IncreaseBarRevenueArticlePage() {
         </div>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">1. Problem: Empty tables &rarr; Solution: Themed game nights</h2>
+          <h2 >1. Problem: Empty tables &rarr; Solution: Themed game nights</h2>
           <p>
             A half-empty room kills energy before the first drink is poured. When guests walk in
             and see a lifeless space, they finish one round and leave. The fix is a recurring
@@ -190,7 +190,7 @@ export default function IncreaseBarRevenueArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">2. Problem: Low per-person spend &rarr; Solution: Challenge competitions</h2>
+          <h2 >2. Problem: Low per-person spend &rarr; Solution: Challenge competitions</h2>
           <p>
             The average guest on a slow weeknight orders one drink and nurses it. There is no
             urgency to re-order because nothing is happening. Challenge competitions — trivia
@@ -206,7 +206,7 @@ export default function IncreaseBarRevenueArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">3. Problem: No repeat visits &rarr; Solution: Loyalty leaderboard</h2>
+          <h2 >3. Problem: No repeat visits &rarr; Solution: Loyalty leaderboard</h2>
           <p>
             A customer who comes once on a whim rarely comes back on a Tuesday. But a customer
             who has points on the board? They will be back. A live leaderboard turns casual
@@ -222,7 +222,7 @@ export default function IncreaseBarRevenueArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">4. Problem: Staff costs &rarr; Solution: AI host (Captain Bond Pro)</h2>
+          <h2 >4. Problem: Staff costs &rarr; Solution: AI host (Captain Bond Pro)</h2>
           <p>
             The biggest reason bars skip entertainment on weeknights is headcount. A live quiz
             master costs €150–300 per night plus prep time. On a slow night, that math does not
@@ -241,7 +241,7 @@ export default function IncreaseBarRevenueArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">5. Problem: Early departure &rarr; Solution: Structured tournaments</h2>
+          <h2 >5. Problem: Early departure &rarr; Solution: Structured tournaments</h2>
           <p>
             The biggest obstacle to weeknight revenue is not how many people walk in — it is how
             long they stay. A guest who leaves after one drink generates €8–12. A guest who stays
@@ -260,7 +260,7 @@ export default function IncreaseBarRevenueArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">ROI comparison: entertainment solutions for bars</h2>
+          <h2 >ROI comparison: entertainment solutions for bars</h2>
           <p>
             Below is a direct comparison of each solution and its expected return. All figures
             are based on real pilot data from independent bars across Europe.
@@ -294,7 +294,7 @@ export default function IncreaseBarRevenueArticlePage() {
         </section>
 
         <section className="article-block">
-          <h2 className="text-2xl font-semibold mt-10 mb-4">Start your weeknight transformation</h2>
+          <h2 >Start your weeknight transformation</h2>
           <p>
             You do not need a bigger marketing budget or more staff. You need a reason for people
             to stay. The five strategies above work independently and even better together. Pick
@@ -313,8 +313,8 @@ export default function IncreaseBarRevenueArticlePage() {
         </p>
 
         <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
-          <h3 className="text-xl font-semibold mb-2">Ready to fill those empty seats?</h3>
-          <p className="text-slate-200 leading-relaxed mb-4">
+          <h3 >Ready to fill those empty seats?</h3>
+          <p className="text-slate-200 mb-4">
             See how Captain Bond Pro works for bars and cafés. Unlimited themed nights, AI
             quizmaster, live leaderboard — all for €99/month. No extra staff needed.
           </p>
