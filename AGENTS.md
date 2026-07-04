@@ -246,15 +246,67 @@ Le fichier `.agents/anchor.md` contient le résumé de tout le travail de la ses
 Mettre à jour à chaque phase terminée. Utiliser pour le context dans une nouvelle session.
 
 ## Session Start Protocol (CRITICAL)
+- Activate `/caveman ultra` mode immediately. No filler, no prose.
 - Read `.agents/codebase-map.md` → project structure, routes, data flow, key files
 - Read `.agents/anchor.md` → what was done in the current session
 
-## Codebase Map Maintenance
-Keep `.agents/codebase-map.md` up to date when you:
+## Codebase Map Maintenance (Agent Responsibility)
+**YOU** must update `.agents/codebase-map.md` when you:
 - Add/remove/move a route or API endpoint
 - Create/rename a service or component directory
 - Change infrastructure (external service, deploy pipeline, CI/CD)
 - Add or modify a game mode
+
+## Skill Loading by Task Type (Agent Responsibility)
+**YOU** must load these skills based on the type of task.
+
+### Always (every session)
+- `caveman` → `/caveman ultra` immediately on start (see Session Start Protocol)
+- `cavecrew` → ready to delegate edits when context runs low
+
+### Content / Blog
+- Writing an article → `seo-content-writer` + `schema-markup-generator` + `meta-tags-optimizer`
+- GEO / AI citations → `geo-content-optimizer` + `content-quality-auditor`
+- Find topics → `keyword-research` + `content-gap-analysis`
+- Update existing content → `content-refresher`
+- Programmatic pages → `programmatic-seo`
+
+### SEO / Audits
+- Full audit → `content-quality-auditor` + `domain-authority-auditor` + `technical-seo-checker`
+- Single page audit → `on-page-seo-auditor`
+- Competitors → `competitor-analysis`
+- Backlinks → `backlink-analyzer`
+- Rankings → `rank-tracker`
+- SERP features → `serp-analysis`
+- Internal links → `internal-linking-optimizer`
+- Site architecture → `site-architecture`
+
+### Paid Ads (if applicable)
+- Account audit → `ad-account-auditor`
+- Conversion tracking → `conversion-signal-qa`
+- Campaign structure → `campaign-architect`
+- Ad creative → `ad-creative-builder`
+- Attribution → `attribution-reconciler`
+
+### Influence (if applicable)
+- Find creators → `influencer-discovery` + `fit-scorer`
+- Campaign plan → `campaign-planner` + `brief-generator`
+- Performance → `performance-analyzer` + `roi-calculator`
+
+### UI / Design
+- UI component → `ui-ux-pro-max` + `ui-styling`
+- Brand assets → `brand` + `design-system`
+- Banners → `banner-design`
+- Presentation → `slides`
+
+### Development
+- Bug / crash → `systematic-debugging`
+- Code review → `code-reviewer` + `security-reviewer`
+- Clean AI slop → `deslop`
+- Discover patterns before editing → `context-hunter`
+- Plan multi-step task → `brainstorming` + `create-plan`
+- Look up API / framework → `documentation-lookup`
+- Test / TDD → `tdd-guide`
 
 ## Learning Registry
 
