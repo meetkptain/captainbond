@@ -89,7 +89,6 @@ captainbond/
 │   │   ├── roomService.ts            ← Room CRUD
 │   │   ├── questionService.ts        ← Question generation + selection
 │   │   ├── paymentService.ts         ← Stripe payments
-│   │   ├── packService.ts            ← Pack/pass purchasing
 │   │   ├── playerService.ts          ← Player management
 │   │   ├── storageService.ts         ← Wasabi file uploads
 │   │   ├── pushNotificationService.ts← Push notifications
