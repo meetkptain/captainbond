@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import type { GameModePlayerControllerProps } from '../types';
 
 export function SpicyPlayerController({ question, hasSubmitted, onSubmitAnswer }: GameModePlayerControllerProps) {

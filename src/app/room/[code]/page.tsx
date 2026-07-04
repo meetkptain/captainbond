@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { PlayerSetup, Player } from '@/components/presentiel/PlayerSetup';
 import { ModeSelector } from '@/components/presentiel/ModeSelector';
 import { PresentialHostView } from '@/components/presentiel/PresentialHostView';
 import { Onboarding } from '@/components/presentiel/Onboarding';
 import { BackgroundOrbs } from '@/components/BackgroundOrbs';
-import { ApiClientError } from '@/lib/api/client';
 import { useHostSession } from '@/hooks/useHostSession';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
 import { useTranslation, Language } from '@/lib/i18n';

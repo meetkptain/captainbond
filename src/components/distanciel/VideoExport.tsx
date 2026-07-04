@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Player } from '@remotion/player';
 import { CaptainReunionClash } from '../../../remotion/CaptainReunionClash';
 import { Icon } from '../Icon';

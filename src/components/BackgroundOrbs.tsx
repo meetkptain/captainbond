@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function BackgroundOrbs() {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10 bg-[#020617]">

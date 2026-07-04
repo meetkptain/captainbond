@@ -22,7 +22,7 @@ export function PlayerSetup({
   minPlayers = 2,
   maxPlayers = 6
 }: PlayerSetupProps) {
-  const { t, language } = useTranslation();
+  const { language } = useTranslation();
   const [players, setPlayers] = useState<Player[]>([]);
   const [newName, setNewName] = useState('');
   const [couples, setCouples] = useState<string[][]>([]);

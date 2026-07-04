@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 interface MiniTotemOrbeProps {
   score: number;       // Score d'harmonie du jour (0.0 à 1.0)
@@ -16,7 +16,6 @@ interface MiniTotemOrbeProps {
  */
 export function MiniTotemOrbe({ score, hue = 220, size = 44, className = '' }: MiniTotemOrbeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animRef = useRef<number>(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;

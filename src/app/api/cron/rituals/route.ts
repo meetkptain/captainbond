@@ -4,39 +4,22 @@ import { supabaseAdmin } from '@/lib/supabase-admin';
 import { dbRetry } from '@/lib/db/withRetry';
 import { generateRitualForCouple, isRitualDay } from '@/services/ritualService';
 import { Couple } from '@/lib/db/types';
-import { acquireCronLock, releaseCronLock } from '@/lib/cron/lock';
+import { withCronHandler } from '@/lib/api/withCronHandler';
 
 export const runtime = 'edge';
 
-export async function GET(req: Request): Promise<Response> {
-  const authHeader = req.headers.get('Authorization');
-  const expected = `Bearer ${process.env.CRON_SECRET}`;
+export const GET = withCronHandler({
+  lockKey: 'generate-rituals',
+  handler: async () => {
+    const { data: couples, error } = await dbRetry<Couple[]>(async () =>
+      supabaseAdmin.from('Couple').select('*')
+    );
 
-  if (!process.env.CRON_SECRET || authHeader !== expected) {
-    throw new AppError('UNAUTHORIZED', 'Accès réservé au scheduler.');
-  }
+    if (error) {
+      throw new AppError('INTERNAL_ERROR', 'Impossible de charger les couples.');
+    }
 
-  const { data: couples, error } = await dbRetry<Couple[]>(async () =>
-    supabaseAdmin.from('Couple').select('*')
-  );
-
-  if (error) {
-    throw new AppError('INTERNAL_ERROR', 'Impossible de charger les couples.');
-  }
-
-  const coupleList = couples ?? [];
-  const lockAcquired = await acquireCronLock('generate-rituals');
-  if (!lockAcquired) {
-    return NextResponse.json({
-      success: true,
-      reason: 'already_running',
-      generated: 0,
-      skipped: coupleList.length,
-      errors: [],
-    });
-  }
-
-  try {
+    const coupleList = couples ?? [];
     const now = new Date();
     let generated = 0;
     let skipped = 0;
@@ -64,7 +47,5 @@ export async function GET(req: Request): Promise<Response> {
       errors,
       total: coupleList.length,
     });
-  } finally {
-    await releaseCronLock('generate-rituals');
-  }
-}
+  },
+});

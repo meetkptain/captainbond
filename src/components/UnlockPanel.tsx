@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { api, ApiClientError } from '@/lib/api/client';
 import type { Pack } from '@/lib/monetization/catalog';
 import { PricingComparison } from './PricingComparison';

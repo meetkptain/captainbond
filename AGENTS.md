@@ -38,6 +38,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 ## Déploiement Supabase
 
 - Appliquer les migrations dans `supabase/migrations/` par ordre numérique.
+- **Prisma = local dev uniquement.** `supabase/migrations/` est l'unique source de vérité pour le schéma runtime. Si tu modifies `prisma/schema.prisma`, tu DOIS créer une migration Supabase correspondante.
 
 ## 13. Token Optimization (CRITICAL)
 - **Always activate** `/caveman ultra` mode. No filler, no prose.

@@ -1,5 +1,5 @@
 import { GameModeManifest, GameModeEngine } from '../types';
-import { safeJsonParse, safeJsonParseRecord } from '@/lib/json';
+import { safeJsonParse } from '@/lib/json';
 
 function coerceSubmittedAnswer(raw: unknown): ImposteurStatement[] | ImposteurDetection | '__SKIP__' | null {
   if (raw === '__SKIP__') return raw;

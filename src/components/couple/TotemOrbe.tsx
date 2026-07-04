@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useMemo } from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 import type { OrbeState } from '@/lib/db/types';
 
 interface TotemOrbeProps {

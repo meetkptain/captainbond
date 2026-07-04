@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { estimateB2BPrice, getB2BQuote, type B2BFormula } from '@/lib/pricing/b2b';
 
 interface CorporatePricingCalculatorProps {

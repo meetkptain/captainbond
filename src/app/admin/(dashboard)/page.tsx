@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import StatCard from '@/components/admin/StatCard';
 import { api, ApiClientError } from '@/lib/api/client';
 

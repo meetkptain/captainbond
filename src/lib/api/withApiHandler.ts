@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ZodError, ZodSchema } from 'zod';
-import { AppError, isAppError } from '@/lib/errors';
+import { isAppError } from '@/lib/errors';
 import { createLogger } from '@/lib/logger';
 
 export interface ApiContext<TBody = unknown, TQuery = Record<string, string | undefined>> {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { BackgroundOrbs } from '@/components/BackgroundOrbs';
 import { Icon } from '@/components/Icon';

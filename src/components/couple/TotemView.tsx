@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { TotemOrbe } from './TotemOrbe';
 import { TotemFusion } from './TotemFusion';
 import { useTotemRealtime } from '@/hooks/useTotemRealtime';

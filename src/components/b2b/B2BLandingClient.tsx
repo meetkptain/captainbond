@@ -1,12 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { CalendlyBookingButton } from '@/components/CalendlyBookingButton';
 import { api, ApiClientError } from '@/lib/api/client';
 
 export default function B2BLandingClient() {
-  const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
     email: '',

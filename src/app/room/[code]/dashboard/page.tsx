@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useParams, useSearchParams, useRouter } from 'next/navigation';
 import { useTranslation, Language } from '@/lib/i18n';
 import { BackgroundOrbs } from '@/components/BackgroundOrbs';
@@ -17,7 +17,7 @@ function DashboardContent({ defaultLang }: Props) {
   const router = useRouter();
   const roomCode = (params.code as string).toUpperCase();
   const token = searchParams.get('token');
-  const { t, language, setLanguage } = useTranslation();
+  const { language, setLanguage } = useTranslation();
 
   const [stats, setStats] = useState<RoomDashboardStats | null>(null);
   const [loading, setLoading] = useState(true);

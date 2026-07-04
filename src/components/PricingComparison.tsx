@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import type { Pack } from '@/lib/monetization/catalog';
 import { formatPrice } from '@/lib/monetization/catalog';
 import { Icon } from '@/components/Icon';

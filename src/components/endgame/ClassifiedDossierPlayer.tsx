@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MONETIZATION_CONFIG } from '@/lib/config/monetization';
 import { api } from '@/lib/api/client';
 import { ShareSheet } from '@/components/ShareSheet';

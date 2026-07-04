@@ -1,7 +1,5 @@
 'use client';
 
-import React from 'react';
-
 interface CoupleCrossSellCardProps {
   href?: string;
   onClick?: () => void;

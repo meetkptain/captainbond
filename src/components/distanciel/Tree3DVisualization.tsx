@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useState, MouseEvent, TouchEvent, useCallback, useMemo } from 'react';
+import { useRef, useEffect, useState, MouseEvent, TouchEvent, useMemo } from 'react';
 import { TreeNode, TreeConnection } from '@/lib/db/types';
 
 interface Tree3DVisualizationProps {

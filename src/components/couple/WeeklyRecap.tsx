@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { ThemeLabel } from './ThemeLabel';
 
 export interface WeeklyRecapProps {

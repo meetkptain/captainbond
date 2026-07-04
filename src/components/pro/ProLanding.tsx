@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LandingLayout } from '@/components/landing/LandingLayout';
 import { Section } from '@/components/landing/Section';
 import { Icon } from '@/components/Icon';

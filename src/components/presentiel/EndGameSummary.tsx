@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Player } from './TalkingStick';
 import { QRCodeSVG } from 'qrcode.react';
 import { useTranslation } from '@/lib/i18n';

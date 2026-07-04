@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { api, ApiClientError } from '@/lib/api/client';
 import type { Pack } from '@/lib/db/types';
 

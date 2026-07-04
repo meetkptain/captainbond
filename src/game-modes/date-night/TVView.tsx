@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import type { GameModeTVViewProps } from '../types';
 
 export default function DateNightTVView(_props: GameModeTVViewProps) {

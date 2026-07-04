@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import type { GameModeTVViewProps } from '../types';
 import { getDiscussionPrompt } from '../prompts';
 

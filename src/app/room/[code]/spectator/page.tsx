@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { BackgroundOrbs } from '@/components/BackgroundOrbs';
 import { CustomDeck } from '@/lib/custom-decks/types';
 import { getLocalDecks } from '@/lib/custom-decks/storage';
 import { useTranslation, Language } from '@/lib/i18n';
-import { QRCodeSVG } from 'qrcode.react';
 
 interface Player {
   id: string;
@@ -18,7 +17,7 @@ export default function SpectatorCompanion() {
   const params = useParams();
   const router = useRouter();
   const roomCode = (params.code as string).toUpperCase();
-  const { t, language, setLanguage } = useTranslation();
+  const { language, setLanguage } = useTranslation();
 
   // Room state synchronized via WebSockets Broadcast
   const [currentQuestionText, setCurrentQuestionText] = useState<string>('');

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 
 /* ────────────────────────────── Types ────────────────────────────── */
 
@@ -110,27 +110,6 @@ export function ResonanceCircle({
     }
   }, [isRevealed]);
 
-  /* ── Intersection path (overlap area for blend) ── */
-  const overlapD = useMemo(() => {
-    if (separation >= circleR * 2) return ''; // no overlap
-    const d = separation;
-    const r = circleR;
-    if (d <= 0) {
-      // full overlap — draw full circle
-      return `M ${viewBoxSize / 2 - r},${centerY}
-              a ${r},${r} 0 1,0 ${r * 2},0
-              a ${r},${r} 0 1,0 ${-r * 2},0 Z`;
-    }
-    const a = Math.acos(d / (2 * r));
-    const h = r * Math.sin(a);
-    const midX = viewBoxSize / 2;
-    return `
-      M ${midX},${centerY - h}
-      A ${r},${r} 0 0,1 ${midX},${centerY + h}
-      A ${r},${r} 0 0,1 ${midX},${centerY - h}
-      Z
-    `;
-  }, [separation, circleR, viewBoxSize, centerY]);
 
   // Better lens-shaped overlap using proper intersection
   const lensPath = useMemo(() => {

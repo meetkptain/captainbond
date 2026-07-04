@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
-import type { RitualEvent, RitualEventType } from '@/services/coupleRealtimeService';
+import type { RitualEvent } from '@/services/coupleRealtimeService';
 
 interface UseCoupleRitualRealtimeOptions {
   coupleId: string | null;

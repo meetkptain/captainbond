@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import type { GameModePlayerControllerProps } from '../types';
 import { useTranslation } from '@/lib/i18n';
 

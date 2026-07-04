@@ -12,7 +12,7 @@ export interface DiscussionContext {
 }
 
 export function getDiscussionPrompt(mode: string, ctx: DiscussionContext): DiscussionPrompt {
-  const { winnerName = 'quelqu\'un', questionText = 'cette question', modeName = 'ce mode' } = ctx;
+  const { winnerName = 'quelqu\'un', questionText = 'cette question' } = ctx;
 
   switch (mode) {
     case 'ICEBREAKER':

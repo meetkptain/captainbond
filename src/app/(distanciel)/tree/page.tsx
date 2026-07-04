@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { TreeVisualization } from '@/components/distanciel/TreeVisualization';
 import { Tree3DVisualization } from '@/components/distanciel/Tree3DVisualization';

@@ -10,7 +10,7 @@ interface DiscussionPhaseProps {
 }
 
 export function DiscussionPhase({ onResume, topic, scores, players }: DiscussionPhaseProps) {
-  const { t, language } = useTranslation();
+  const { language } = useTranslation();
 
   return (
     <div className="flex flex-col items-center justify-between gap-8 p-8 max-w-md mx-auto min-h-[480px] text-slate-100 bg-slate-900/60 backdrop-blur-md rounded-3xl border border-slate-700/50 shadow-2xl text-center">

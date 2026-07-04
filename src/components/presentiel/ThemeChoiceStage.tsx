@@ -20,7 +20,7 @@ export function ThemeChoiceStage({
   onKeepCurrentQuestion,
   onSelectQuestion,
 }: ThemeChoiceStageProps) {
-  const { t, language } = useTranslation();
+  const { language } = useTranslation();
   const indexA = currentQuestionIndex ?? 0;
   const indexB = indexA + 1;
   const hasChoices = questions && questions.length > indexB;

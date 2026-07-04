@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { CustomDeck, CustomQuestion, DeckVibe, QuestionMode } from '@/lib/custom-decks/types';
 import { getLocalDecks, saveLocalDeck, deleteLocalDeck } from '@/lib/custom-decks/storage';
 import { BackgroundOrbs } from '@/components/BackgroundOrbs';
-import { api, ApiClientError } from '@/lib/api/client';
+import { api } from '@/lib/api/client';
 import './vault.css';
 
 const getVibeMetadata = (lang: 'fr' | 'en'): Record<DeckVibe, { emoji: string; label: string; desc: string; colorClass: string }> => {

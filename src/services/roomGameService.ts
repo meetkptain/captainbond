@@ -10,7 +10,7 @@ import {
   getResponsesForProfileInputs,
   getScoresByRoom,
   updateRoom,
-  updateRoomWithStatusGuard,
+
   updateRoomStatusWithGuard,
   recordVoteRpc,
   upsertRevealScoresRpc,

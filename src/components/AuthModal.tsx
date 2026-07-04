@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Icon } from '@/components/Icon';
 import { signInWithOtp } from '@/lib/supabase-auth';
 import { supabase } from '@/lib/supabase';

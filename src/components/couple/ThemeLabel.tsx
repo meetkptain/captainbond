@@ -1,7 +1,5 @@
 'use client';
 
-import React from 'react';
-
 interface ThemeLabelProps {
   theme: string;
   className?: string;

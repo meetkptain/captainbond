@@ -1,4 +1,4 @@
-import { OrbeState, FusionState, TotemState } from '@/lib/db/types';
+import { OrbeState, TotemState } from '@/lib/db/types';
 import {
   getOrCreateTotem,
   updateOrbeA,
@@ -6,14 +6,12 @@ import {
   updateFusionState,
   updateTotemRitual,
 } from '@/lib/db/repositories/totemRepository';
-import { AppError } from '@/lib/errors';
 
 // --- Constantes de morphing ---
 
 const TENSION_THRESHOLD = 0.6;
 const HARMONY_BOOST_PER_RITUAL = 0.05;
 const TENSION_DECAY_PER_RITUAL = 0.03;
-const MAX_STREAK_BONUS = 0.1;
 const EVOLUTION_THRESHOLDS = [0, 5, 15, 30, 60, 100, 150, 220, 300, 400];
 
 /**

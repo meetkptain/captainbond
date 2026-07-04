@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface CouchModeProps {
   questionText: string;
   submitting: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onSubmit: (answerA: string, answerB: string) => Promise<void>;
   onCancel: () => void;
   partnerAName?: string;
@@ -21,8 +22,7 @@ export function CouchMode({
 }: CouchModeProps) {
   const [step, setStep] = useState<'intro' | 'partnerA' | 'transition' | 'partnerB'>('intro');
   const [answerA, setAnswerA] = useState('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [answerB, setAnswerB] = useState('');
+  const [, setAnswerB] = useState('');
   const [currentAnswer, setCurrentAnswer] = useState('');
 
   const handleNextToTransition = () => {

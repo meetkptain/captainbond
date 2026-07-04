@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { BADGE_DEFINITIONS } from '@/services/statsService';
 
 interface BadgeTrayProps {

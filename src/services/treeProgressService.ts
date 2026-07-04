@@ -6,7 +6,6 @@ import {
   upsertTreeProgress,
   getTreeProgressHistory,
 } from '@/lib/db/repositories/treeProgressRepository';
-import { AppError } from '@/lib/errors';
 
 const logger = createLogger({ route: 'treeProgressService' });
 
@@ -15,11 +14,6 @@ function getCurrentMonth(): string {
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
 }
 
-function getPreviousMonth(month: string): string {
-  const [y, m] = month.split('-').map(Number);
-  const d = new Date(y, m - 2, 1);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-}
 
 export async function computeTreeProgress(coupleId: string): Promise<void> {
   const month = getCurrentMonth();

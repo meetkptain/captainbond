@@ -5,7 +5,6 @@ import {
   getThemeAxisMapping,
   getHeatmapForCouple,
 } from '@/lib/db/repositories/heatmapRepository';
-import { AppError } from '@/lib/errors';
 
 const logger = createLogger({ route: 'heatmapService' });
 
@@ -13,7 +12,6 @@ const logger = createLogger({ route: 'heatmapService' });
 const CONFIDENCE_AXES = ['vulnérabilité', 'communication', 'conflit', 'désir', 'projets'] as const;
 
 // Intensité minimale pour compter comme "vulnérabilité"
-const VULNERABILITY_THRESHOLD = 3;
 
 export async function updateHeatmapForCouple(coupleId: string): Promise<void> {
   const themeMap = await getThemeAxisMapping();

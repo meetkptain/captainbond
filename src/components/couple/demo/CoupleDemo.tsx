@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ResonanceCircle } from '@/components/couple/ResonanceCircle';
 import { useTypewriter } from '@/hooks/useTypewriter';
 import { LandingButton } from '@/components/landing/LandingButton';
