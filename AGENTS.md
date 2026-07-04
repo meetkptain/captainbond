@@ -333,6 +333,7 @@ Chaque fois qu'on découvre un pattern non documenté, l'ajouter dans une sectio
 | Wasabi CONFIG_MISSING | Env vars can be empty (optional feature) | App continues gracefully with 4XX instead of 500. Fixed |
 | CRON_SECRET duplication | Same secret used in Worker + app API must match exactly | Documented in wrangler.toml. Verified |
 | Package name "koze" vs wrangler "captainbond" | Intentional, not a bug | Do NOT "fix" — wrangler requires unique name on CF |
+| No JWT refresh token | Admin (7d) + player (30d) JWT without refresh mechanism | Extended expiries as stopgap. Proper refresh token system needed before scaling |
 
 ## Architecture Decisions (Critical Context)
 
