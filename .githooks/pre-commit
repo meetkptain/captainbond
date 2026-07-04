@@ -1,0 +1,16 @@
+#!/bin/sh
+# Pre-commit hook: warn when codebase-map.md may need updating
+
+CHANGED=$(git diff --cached --name-only)
+
+# Files that should trigger a codebase-map.md review
+TRIGGER_PATTERNS="^src/app/ ^src/services/ ^src/components/ ^src/game-modes/ ^src/lib/ ^workers/ ^.github/workflows/"
+
+echo "$CHANGED" | grep -q -E "(src/app/|src/services/|src/components/|src/game-modes/|src/lib/|workers/|\.github/workflows/)" || exit 0
+
+echo "$CHANGED" | grep -q "\.agents/codebase-map\.md" && exit 0
+
+echo ""
+echo "⚠️  WARNING: You changed project structure files but not .agents/codebase-map.md"
+echo "   Run: codegraph explore to update, then manually review .agents/codebase-map.md"
+echo ""
