@@ -5,12 +5,16 @@ import Link from 'next/link';
 
 export function MobileCta() {
   const [visible, setVisible] = useState(false);
+  const [isBlog, setIsBlog] = useState(true);
 
   useEffect(() => {
+    setIsBlog(window.location.pathname.includes('/blog/') || window.location.pathname === '/blog' || window.location.pathname.includes('/printables/'));
     const onScroll = () => setVisible(window.scrollY > 300);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  if (isBlog) return null;
 
   return (
     <div
