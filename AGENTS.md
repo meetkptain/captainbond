@@ -249,6 +249,7 @@ Mettre à jour à chaque phase terminée. Utiliser pour le context dans une nouv
 - Activate `/caveman ultra` mode immediately. No filler, no prose.
 - Read `.agents/codebase-map.md` → project structure, routes, data flow, key files
 - Read `.agents/anchor.md` → what was done in the current session
+- `.opencode.json` is loaded automatically at start — MCP servers are available
 
 ## Codebase Map Maintenance (Agent Responsibility)
 **YOU** must update `.agents/codebase-map.md` when you:
