@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
 import { uuidSchema } from '@/lib/schemas/api';
-import { getImposteurRole } from '@/services/roomGameService';
+import { getImposteurRole } from '@/services/gamePlayService';
 import { getAuthenticatedPlayer } from '@/lib/auth/player-session';
 
 export const runtime = 'edge';

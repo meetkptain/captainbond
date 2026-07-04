@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { withApiHandler } from '@/lib/api/withApiHandler';
-import { revealRound } from '@/services/roomGameService';
+import { revealRound } from '@/services/roomLifecycleService';
 import { requireHostAuthFromBody } from '@/lib/auth/room-host';
 import { hostActionLimiter } from '@/lib/rate-limit';
 import { hostAuthSchema } from '@/lib/schemas/api';

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { withApiHandler } from '@/lib/api/withApiHandler';
-import { getRoomGameProfiles } from '@/services/roomGameService';
+import { getRoomGameProfiles } from '@/services/profileService';
 import { requireHostAuthQuery } from '@/lib/auth/room-host';
 import { hostAuthQuerySchema } from '@/lib/schemas/api';
 import { hostActionLimiter } from '@/lib/rate-limit';

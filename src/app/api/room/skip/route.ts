@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { withApiHandler } from '@/lib/api/withApiHandler';
-import { skipQuestion } from '@/services/roomGameService';
+import { skipQuestion } from '@/services/roomLifecycleService';
 import { checkoutLimiter } from '@/lib/rate-limit';
 import { getAuthenticatedPlayer } from '@/lib/auth/player-session';
 import { captureServer, AnalyticsEvents } from '@/lib/analytics';

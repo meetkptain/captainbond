@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server';
 import { POST } from './route';
 import { AppError } from '@/lib/errors';
 
-vi.mock('@/services/roomGameService', () => ({
+vi.mock('@/services/roomLifecycleService', () => ({
   revealRound: vi.fn(),
 }));
 
@@ -11,7 +11,7 @@ vi.mock('@/lib/auth/room-host', () => ({
   requireHostAuthFromBody: vi.fn(),
 }));
 
-import { revealRound } from '@/services/roomGameService';
+import { revealRound } from '@/services/roomLifecycleService';
 import { requireHostAuthFromBody } from '@/lib/auth/room-host';
 
 describe('POST /api/room/reveal', () => {

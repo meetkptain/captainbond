@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { recordVote, revealRound, skipQuestion, startNextRound } from '../roomGameService';
+import { revealRound, skipQuestion, startNextRound } from '../roomLifecycleService';
+import { recordVote } from '../gamePlayService';
 import { AppError } from '@/lib/errors';
 import { listQuestionsForDeck } from '@/lib/db/repositories/roomQuestionRepository';
 

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withApiHandler } from '@/lib/api/withApiHandler';
 import { uuidSchema, roomCodeSchema } from '@/lib/schemas/api';
-import { recordVote } from '@/services/roomGameService';
+import { recordVote } from '@/services/gamePlayService';
 import { getAuthenticatedPlayer } from '@/lib/auth/player-session';
 import { playerActionIpLimiter } from '@/lib/rate-limit';
 

@@ -82,7 +82,10 @@ captainbond/
 │   │   └── *.tsx                     ← Singletons (AuthModal, ConsentModal, Countdown...)
 │   │
 │   ├── services/                     ← 30 services métier
-│   │   ├── roomGameService.ts        ← Game engine (modes, rounds, reveals)
+│   │   ├── roomGameService.ts        ← Barrel re-export (3 split services)
+│   │   ├── roomLifecycleService.ts   ← startNextRound, revealRound, skip, endRoom
+│   │   ├── gamePlayService.ts       ← recordVote, getActiveQuestion, getImposteurRole
+│   │   ├── profileService.ts        ← getPlayerGameProfile, getRoomGameProfiles
 │   │   ├── roomService.ts            ← Room CRUD
 │   │   ├── questionService.ts        ← Question generation + selection
 │   │   ├── paymentService.ts         ← Stripe payments

@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server';
 import { POST } from './route';
 import { AppError } from '@/lib/errors';
 
-vi.mock('@/services/roomGameService', () => ({
+vi.mock('@/services/gamePlayService', () => ({
   recordVote: vi.fn(),
 }));
 
@@ -11,7 +11,7 @@ vi.mock('@/lib/auth/player-session', () => ({
   getAuthenticatedPlayer: vi.fn(),
 }));
 
-import { recordVote } from '@/services/roomGameService';
+import { recordVote } from '@/services/gamePlayService';
 import { getAuthenticatedPlayer } from '@/lib/auth/player-session';
 
 describe('POST /api/room/vote', () => {
