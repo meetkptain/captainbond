@@ -102,11 +102,63 @@ Voir `~/.vibe-skills/README.md`.
 Cloné dans `.agents/skills/agent-rules-books/` → `~/.agent-rules-books/` (symlink).
 Règles AGENTS.md distillées de Clean Code, DDD, DDIA, Refactoring...
 
-- Chaque livre en 3 formats: `full` / `mini` / `nano`
-- Pas de SKILL.md — inclure manuellement dans AGENTS.md
-- Utile pour refactoring, architecture, legacy, code quality
+**Toujours actif** (inclus ci-dessous) :
+- `clean-code` — lisibilité, nommage, fonctions pures
+- `working-effectively-with-legacy-code` — refactoring legacy, characterization tests
+
+**On-demand** (charger quand la tâche correspond) :
+- `refactoring` → load `refactoring.mini.md` via skill tool
+- `domain-driven-design` → load `domain-driven-design.mini.md`
+- `designing-data-intensive-applications` → load `ddia.mini.md`
 
 Voir `~/.agent-rules-books/README.md` et `~/.agent-rules-books/docs/USAGE.md`.
+
+<!-- BOOK: Clean Code (always-on) -->
+# OBEY Clean Code by Robert C. Martin
+
+## Primary bias to correct
+Working code is not automatically clean code.
+
+## Decision rules
+- Preserve behavior, write for the next reader, and leave touched code cleaner within scope.
+- Write for local reasoning and use precise names with one term per concept.
+- Split boolean flags, mixed abstraction levels, and hidden side effects out of functions.
+- Separate commands from queries and keep parameters small and meaningful.
+- Keep the happy path readable; make invalid states, errors, and cleanup explicit instead of implicit.
+- Use comments only for rationale or contracts, not to explain confusing code.
+- When touching code, remove the smell most likely to make the next change risky or unclear.
+
+## Trigger rules
+- When a function both mutates and answers, split it.
+- When a comment explains the flow, simplify the code first.
+- When async, concurrency, or framework quirks spread the change, reduce shared mutable state and add the right boundary instead of more branching.
+
+## Final checklist
+- Local reasoning preserved? Clear names? Clear mutation boundaries? One smell removed?
+
+<!-- BOOK: Working Effectively with Legacy Code (always-on) -->
+# OBEY Working Effectively with Legacy Code by Michael Feathers
+
+## Primary bias to correct
+Legacy work starts with control, not cleanup, rewrite, or elegance.
+
+## Decision rules
+- Treat code without trustworthy tests as legacy code: state what changes and what must remain.
+- Characterize uncertain current behavior before changing it, including ugly behavior consumers may rely on.
+- Use the legacy loop: find the change point, find an observation point, create or exploit a seam, break the blocking dependency, test, change, then refactor locally.
+- Prefer fast focused tests; use broader harnesses only as temporary first coverage when no narrow test point exists.
+- Create the narrowest useful seam for sensing or separation, and break only dependencies that block feedback.
+- Use sprout, wrap, parameterize, inject, extract, or override moves when direct edits would be unsafe.
+- Keep behavior changes, structural refactorings, and cleanup separate and small.
+
+## Trigger rules
+- When behavior is unclear, characterize first.
+- When constructors, globals, statics, frameworks, I/O, clocks, randomness, environment, or deep object graphs block testing, break one dependency at the narrowest point.
+- When a large method or class defeats local reasoning, sketch effects and create a seam before semantic edits.
+- When rewrite or broad cleanup feels tempting, choose the next smaller verified move.
+
+## Final checklist
+- Behavior characterized? Feedback fast enough? Dependency isolated? One kind of change? Safer and clearer now?
 
 ## UI/UX Pro Max (7 skills, Design Intelligence)
 
@@ -309,6 +361,8 @@ Mettre à jour à chaque phase terminée. Utiliser pour le context dans une nouv
 - Plan multi-step task → `brainstorming` + `create-plan`
 - Look up API / framework → `documentation-lookup`
 - Test / TDD → `tdd-guide`
+- Refactoring legacy → load `refactoring.mini.md` from agent-rules-books
+- DDD modeling → load `domain-driven-design.mini.md` from agent-rules-books
 
 ## Learning Registry
 
