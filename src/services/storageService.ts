@@ -18,6 +18,10 @@ export async function getPresignedUploadUrl(input: PresignUploadInput): Promise<
     throw new AppError('VALIDATION_ERROR', 'Missing required parameters: filename, fileType, fileSize');
   }
 
+  if (!process.env.WASABI_ACCESS_KEY_ID || !process.env.WASABI_SECRET_ACCESS_KEY || !process.env.WASABI_BUCKET_NAME) {
+    throw new AppError('CONFIG_MISSING', 'Wasabi storage is not configured. Contact support.');
+  }
+
   const maxFileSize = 10 * 1024 * 1024;
   if (input.fileSize > maxFileSize) {
     throw new AppError('VALIDATION_ERROR', 'File size exceeds maximum limit of 10MB');
