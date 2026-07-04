@@ -50,5 +50,18 @@ WASABI_ENDPOINT = ""
 GOOGLE_SHEETS_CSV_URL = ""
 ADMIN_SYNC_SECRET = ""
 GEMINI_API_KEY = ""
-CRON_SECRET = ""
+
+# Stripe publishable (public, needed at runtime)
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = ""
+
+# VAPID push notifications (public)
+NEXT_PUBLIC_VAPID_PUBLIC_KEY = ""
+
+# RevenueCat (public keys for native bridges)
+NEXT_PUBLIC_REVENUECAT_IOS_KEY = ""
+NEXT_PUBLIC_REVENUECAT_ANDROID_KEY = ""
+
+# RevenueCat webhook (server-side)
+REVENUECAT_WEBHOOK_SECRET = ""
+
 APP_URL = "https://captainbond.app"
