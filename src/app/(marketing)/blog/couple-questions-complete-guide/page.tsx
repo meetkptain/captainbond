@@ -253,16 +253,16 @@ export default function CoupleQuestionsCompleteGuidePage() {
       />
       <header className="mb-10">
         <time className="text-sm text-slate-400" dateTime="2025-06-15">{publishedDate}</time>
-        <h1 className="text-3xl font-bold mb-4">
+        <h1 >
           Couple Questions for Deeper Connection: The Complete Guide
         </h1>
-        <p >
+        <p>
           Most couples want to connect more deeply but do not know where to start. The answer is
           simpler than you think: the right question asked at the right time can unlock whole worlds
           between you. This guide gives you a complete framework — 150+ questions across five
           connection levels, a step-by-step ritual, and the science of why it works.
         </p>
-        <p >
+        <p>
           Based on data from 1,200+ Captain Bond couple sessions, couples who use structured
           question decks report measurably stronger connection over time. Research from the Gottman
           Institute shows that couples who engage in structured conversations at least once a week
@@ -300,7 +300,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">The five connection levels at a glance</h2>
-        <p >
+        <p>
           Not every moment calls for the same depth of conversation. This table helps you match the
           right level to the right mood.
         </p>
@@ -352,14 +352,14 @@ export default function CoupleQuestionsCompleteGuidePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Step 1: Prepare the space</h2>
-        <p >
+        <p>
           The environment shapes the conversation. You do not need candles and rose petals, but a
           few simple adjustments make a significant difference. Put phones in another room. Sit facing
           each other or side by side with no screen between you. Choose a time when neither of you is
           hungry, exhausted, or rushed. Even ten minutes of undivided attention beats an hour of
           distracted presence.
         </p>
-        <p >
+        <p>
           Set one ground rule: no fixing, no solving. The goal is understanding, not problem-solving.
           If an answer makes you uncomfortable, stay curious instead of defensive. You are not
           interviewing each other; you are exploring together.
@@ -373,14 +373,14 @@ export default function CoupleQuestionsCompleteGuidePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Step 2: Choose the right depth</h2>
-        <p >
+        <p>
           The biggest mistake couples make is going too deep too fast. Depth without trust feels like
           an interrogation. Start at level 1 or 2 unless you already know you both have the bandwidth
           for more. Pay attention to body language: crossed arms, fidgeting, or avoiding eye contact
           are signals to lighten up. Leaning in, eye contact, and relaxed shoulders mean you can go
           deeper.
         </p>
-        <p >
+        <p>
           If you are not sure where to start, try this: ask your partner to pick a number from 1 to
           5 based on how they are feeling right now. Match that level and follow their lead.
         </p>
@@ -398,7 +398,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Step 3: Ask with intention</h2>
-        <p >
+        <p>
           How you ask matters as much as what you ask. Use an open, warm tone. Start with a
           softener: &ldquo;I have been curious about something&hellip;&rdquo; or &ldquo;Can I ask you
           a question that popped into my head?&rdquo; This signals safety instead of
@@ -406,7 +406,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
           often invites them to go deeper. Reflect back what you heard: &ldquo;It sounds like you
           felt&hellip;&rdquo; or &ldquo;That makes me understand you better.&rdquo;
         </p>
-        <p >
+        <p>
           Avoid judgment, advice, or turning the answer into a debate. Your only job is to receive
           what they share with gratitude. When both partners feel heard without being fixed, trust
           compounds quickly.
@@ -420,14 +420,14 @@ export default function CoupleQuestionsCompleteGuidePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Step 4: Reflect together</h2>
-        <p >
+        <p>
           The conversation does not end when the question is answered. Reflection is where the real
           connection happens. After each answer, take a moment to sit with what was shared. You can
           say: &ldquo;Thank you for telling me that,&rdquo; or &ldquo;I never saw it that way
           before.&rdquo; These small validations are powerful. They tell your partner their honesty
           is safe with you.
         </p>
-        <p >
+        <p>
           If something they share stirs an emotion in you, name it gently. &ldquo;Hearing that makes
           me feel closer to you.&rdquo; Shared reflection turns a Q&amp;A session into a bonding
           experience that both of you will remember long after the conversation ends.
@@ -441,7 +441,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Step 5: Repeat and build a ritual</h2>
-        <p >
+        <p>
           Consistency matters more than intensity. A ten-minute check-in every week will deepen your
           connection more than a single four-hour marathon once a year. A 2023 study in the Journal
           of Social and Personal Relationships found that couples who ask each other novel questions
@@ -450,7 +450,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
           Over time, these conversations become a safe container where both of you know you can bring
           anything.
         </p>
-        <p >
+        <p>
           Keep a running list of questions that sparked the best conversations. Revisit them months
           later and notice how your answers change. Growth becomes visible when you compare where you
           were to where you are now. The ritual itself becomes the anchor that keeps you connected
@@ -470,7 +470,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">A final thought</h2>
-        <p >
+        <p>
           You do not need a perfect question. You need a quiet moment, a willing heart, and the
           courage to start. The questions above are tools, not rules. Adapt them, remix them, and
           let them evolve with your relationship. The goal is not to ask every question on this list.
@@ -480,7 +480,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
       </section>
 
       <section className="article-block">
-        <p >
+        <p>
           These questions work best when both partners are willing and have time for an uninterrupted
           conversation. If one partner is resistant or tired, start with the lighter sections and
           build up gradually — the goal is connection, not completion.

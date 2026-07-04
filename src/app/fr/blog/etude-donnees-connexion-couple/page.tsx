@@ -205,10 +205,10 @@ export default function EtudeDonneesConnexionCouplePage() {
       <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
         <header className="mb-10">
           <time className="text-sm text-slate-400" dateTime="2025-07-01">{publishedDate}</time>
-          <h1 className="text-3xl font-bold mb-4">
+          <h1 >
             Étude données connexion couple : 1 200+ sessions analysées
           </h1>
-          <p >
+          <p>
             Que révèlent {totalSessions.toLocaleString()} sessions de couple réelles sur la façon dont les
             partenaires se connectent, communiquent et grandissent ensemble ? Nous avons analysé les
             chiffres pour vous.
@@ -249,7 +249,7 @@ export default function EtudeDonneesConnexionCouplePage() {
               >
                 <p className="text-neon-pink font-bold text-lg mb-1">{f.metric}</p>
                 <p className="text-sm text-slate-400 mb-2">{f.context}</p>
-                <p >{f.detail}</p>
+                <p>{f.detail}</p>
               </div>
             ))}
           </div>
@@ -258,7 +258,7 @@ export default function EtudeDonneesConnexionCouplePage() {
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Méthodologie</h2>
           <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5 mb-4">
-            <p >
+            <p>
               Les données ont été collectées automatiquement depuis{' '}
               <strong>{totalSessions.toLocaleString()} sessions Captain Bond</strong> entre{' '}
               <strong>{dateRange}</strong>. Durée moyenne de session :{' '}
@@ -266,7 +266,7 @@ export default function EtudeDonneesConnexionCouplePage() {
               <strong>{avgQuestions}</strong>.
             </p>
           </div>
-          <p >
+          <p>
             Tous les indicateurs marqués <strong>"Mesuré"</strong> proviennent des données internes
             de Captain Bond. Les scores d'harmonie sont calculés à partir des auto-évaluations
             post-session des deux partenaires. Les taux de complétion indiquent si une session a
@@ -277,7 +277,7 @@ export default function EtudeDonneesConnexionCouplePage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">1. Fréquence des conversations : la régularité avant tout</h2>
-          <p >
+          <p>
             Le signal le plus fort de l'ensemble des données : les couples qui réalisent des
             sessions courtes mais fréquentes obtiennent des scores d'harmonie significativement
             plus élevés.
@@ -287,10 +287,10 @@ export default function EtudeDonneesConnexionCouplePage() {
             la session, pas la profondeur des questions, juste le fait de se présenter
             régulièrement.
           </blockquote>
-          <p >
+          <p>
             Une étude de 2019 dans le Journal of Marriage and Family a également constaté que les comportements d&apos;entretien de la relation sont un fort prédicteur de la qualité conjugale sur le long terme.
           </p>
-          <p >
+          <p>
             Les couples qui ont réalisé <strong>3+ sessions par semaine</strong> ont rapporté des
             <strong> scores d'harmonie 40 % plus élevés</strong> que les couples avec une seule
             session mensuelle. Cet effet est constant pour toutes les durées de relation et
@@ -344,7 +344,7 @@ export default function EtudeDonneesConnexionCouplePage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">2. Types de questions : le fun en tête</h2>
-          <p >
+          <p>
             Quand les couples choisissent eux-mêmes leurs catégories de questions, les prompts
             légers et amusants arrivent largement en tête — preuve que la playfulness n'est pas un
             détour vers l'intimité, mais une voie directe.
@@ -372,7 +372,7 @@ export default function EtudeDonneesConnexionCouplePage() {
               </tbody>
             </table>
           </div>
-          <p >
+          <p>
             Les questions profondes et émotionnelles obtiennent la meilleure note moyenne (4,5/5),
             ce qui suggère que si le fun ouvre la porte, la vulnérabilité est ce que les couples
             apprécient le plus une fois dans la conversation.
@@ -381,7 +381,7 @@ export default function EtudeDonneesConnexionCouplePage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">3. Meilleurs moments : la fenêtre 20 h – 21 h</h2>
-          <p >
+          <p>
             L'heure de début de session est fortement corrélée au taux de complétion. Les données
             pointent vers une heure dorée pour les conversations de couple.
           </p>
@@ -416,7 +416,7 @@ export default function EtudeDonneesConnexionCouplePage() {
               </tbody>
             </table>
           </div>
-          <p >
+          <p>
             Le créneau 20 h – 21 h cumule à la fois le plus grand volume de sessions (427) et le
             meilleur taux de complétion (87 %). Les sessions commencées après 23 h tombent à 44 %
             de complétion, ce qui suggère que la fatigue est l'ennemi de la connexion.
@@ -425,12 +425,12 @@ export default function EtudeDonneesConnexionCouplePage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">4. Genre : engagement et bénéfices égaux</h2>
-          <p >
+          <p>
             L'un des résultats les plus encourageants : aucune différence statistiquement
             significative n'existe dans la façon dont les partenaires s'engagent dans les
             conversations structurées de couple.
           </p>
-          <p >
+          <p>
             Le lancement des sessions, le choix des questions, la longueur moyenne des réponses
             et les scores d'harmonie post-session montrent tous des variations négligeables entre
             partenaires. L'outil soutient la relation dans son ensemble.
@@ -449,7 +449,7 @@ export default function EtudeDonneesConnexionCouplePage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">5. Durée de relation : le pic des 2–5 ans</h2>
-          <p >
+          <p>
             L'engagement varie selon la durée de la relation. Les couples de 2 à 5 ans montrent le
             plus grand nombre de sessions, tandis que les couples ensemble depuis plus d'une
             décennie obtiennent les scores d'harmonie les plus élevés.
@@ -477,7 +477,7 @@ export default function EtudeDonneesConnexionCouplePage() {
               </tbody>
             </table>
           </div>
-          <p >
+          <p>
             Le groupe 2–5 ans cumule <strong>34 sessions</strong> en moyenne — le niveau
             d'engagement le plus élevé de l'étude. Cela pourrait refléter un point d'inflexion où
             la nouveauté s'est estompée et où les couples cherchent activement des outils pour
@@ -489,13 +489,13 @@ export default function EtudeDonneesConnexionCouplePage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Ce que cela signifie pour votre couple</h2>
-          <p >
+          <p>
             Les données racontent une histoire claire : vous n'avez pas besoin d'heures de
             conversations profondes chaque semaine pour construire une connexion solide. Il vous
             faut de la régularité — vingt minutes ciblées, trois fois par semaine, avec les bonnes
             questions.
           </p>
-          <p >
+          <p>
             Commencez léger, laissez la conversation trouver sa profondeur naturelle. Choisissez un
             créneau qui fonctionne pour vous deux (nos données suggèrent 20 h en semaine). Et
             surtout : continuez à vous présenter.
@@ -504,7 +504,7 @@ export default function EtudeDonneesConnexionCouplePage() {
             Les couples qui ont obtenu les meilleurs scores n'avaient pas plus de temps. Ils
             avaient plus de régularité.
           </blockquote>
-          <p >
+          <p>
             Ces résultats sont un instantané de {totalSessions.toLocaleString()} sessions. À mesure que notre
             ensemble de données grandit, nous partagerons des analyses actualisées. Si vous voulez
             faire partie de la prochaine vague, le mode couple de Captain Bond est gratuit.
@@ -512,7 +512,7 @@ export default function EtudeDonneesConnexionCouplePage() {
         </section>
 
         <section className="article-block">
-          <p >
+          <p>
             Ces données proviennent d&rsquo;utilisateurs Captain Bond auto-sélectionnés — les résultats peuvent varier et ne doivent pas être généralisés sans recherche complémentaire.
           </p>
         </section>

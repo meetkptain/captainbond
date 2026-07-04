@@ -66,7 +66,7 @@ export default function FrenchBlogIndexPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
       <header className="mb-12 text-center">
-        <h1 className="text-3xl font-bold mb-4">Blog Captain Bond</h1>
+        <h1 >Blog Captain Bond</h1>
         <p className="text-slate-300 leading-relaxed max-w-xl mx-auto">
           Questions de couple, jeux de connexion et rituels hebdomadaires pour vous aider à ralentir,
           parler sincèrement et renforcer votre lien — une question à la fois.
@@ -83,7 +83,7 @@ export default function FrenchBlogIndexPage() {
               >
                 {post.title}
               </Link>
-              <p >{post.excerpt}</p>
+              <p>{post.excerpt}</p>
             </article>
           </li>
         ))}

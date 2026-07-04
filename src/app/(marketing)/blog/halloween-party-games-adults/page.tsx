@@ -155,17 +155,17 @@ export default function HalloweenPartyGamesPage() {
       <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
         <header className="mb-10">
           <time className="text-sm text-slate-400" dateTime="2025-07-04">{publishedDate}</time>
-          <h1 className="text-3xl font-bold mb-4">
+          <h1 >
             Halloween Party Games for Adults: 10+ Spooky Games for 2026
           </h1>
-          <p >
+          <p>
             Adult Halloween party games are themed social activities designed for grown-up gatherings
             where the goal is laughter, connection, and a dose of spooky fun — without relying on
             trick-or-treating or child-friendly activities. Unlike kids&apos; Halloween parties, adult
             versions lean into humor, horror references, drinking games, and the kind of playful
             competition that only gets funnier as the night gets darker.
           </p>
-          <p >
+          <p>
             With US consumers projected to spend a record $11.6 billion on Halloween in 2024 according
             to Statista, adults are investing more than ever in the holiday — and the right games are
             what separate a memorable party from a forgettable gathering.
@@ -197,14 +197,14 @@ export default function HalloweenPartyGamesPage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Why Halloween Party Games Work for Adults</h2>
-          <p >
+          <p>
             Adult Halloween party games are structured group activities that use spooky, macabre, or
             Halloween-themed prompts to drive social interaction among grown guests. Unlike everyday
             party games, Halloween versions benefit from the built-in theatricality of the holiday
             — guests are already in costume, already in a playful mindset, and already expecting
             something out of the ordinary.
           </p>
-          <p >
+          <p>
             Research published in the Journal of Consumer Research suggests that wearing costumes
             reduces social anxiety and increases willingness to engage in playful behavior. This
             psychological shift, known as the &ldquo;costume effect,&rdquo; means Halloween parties
@@ -212,7 +212,7 @@ export default function HalloweenPartyGamesPage() {
             When everyone is wearing a mask — literal or metaphorical — the social stakes drop and
             the fun rises.
           </p>
-          <p >
+          <p>
             The global Halloween market reflects this growing adult engagement. According to Statista,
             US consumers spent over $11.6 billion on Halloween in 2024, with adults aged 25-44
             accounting for the largest share of costume and decoration purchases. This demographic
@@ -228,7 +228,7 @@ export default function HalloweenPartyGamesPage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">10+ Halloween Party Games for Adults</h2>
-          <p >
+          <p>
             Here are the best Halloween party games for adults in 2026 — ranked for group size,
             equipment needs, and spooky factor. Each game is tested and proven to work with
             real adult party crowds.
@@ -250,7 +250,7 @@ export default function HalloweenPartyGamesPage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">How to Set Up a Halloween Game Night</h2>
-          <p >
+          <p>
             A successful Halloween game night balances structure with spontaneity. Here is a tested
             sequence that works for groups of 8 to 50+ adults:
           </p>
@@ -275,7 +275,7 @@ export default function HalloweenPartyGamesPage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Tips for a Memorable Halloween Party</h2>
-          <p >
+          <p>
             Beyond the games themselves, the best Halloween parties for adults share common
             principles. These tips separate an average party from a legendary one:
           </p>
@@ -295,7 +295,7 @@ export default function HalloweenPartyGamesPage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">A Note on Adult Content Sensitivity</h2>
-          <p >
+          <p>
             Halloween party games for adults can push boundaries — and that is part of the appeal.
             However, it is important to know your group. Some games involve drinking, dark humor,
             or horror themes that may not suit everyone. Always offer non-alcoholic alternatives
@@ -305,7 +305,7 @@ export default function HalloweenPartyGamesPage() {
           </p>
         </section>
 
-        <p >
+        <p>
           These Halloween party games work best for adult social gatherings. For family-friendly Halloween activities or corporate events with strict content guidelines, adjust the game prompts and drinking mechanics accordingly.
         </p>
 

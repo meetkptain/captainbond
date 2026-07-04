@@ -278,17 +278,17 @@ export default function BestPartyGames2026Page() {
       <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
         <header className="mb-10">
           <time className="text-sm text-slate-400" dateTime="2025-07-01">{publishedDate}</time>
-          <h1 className="text-3xl font-bold mb-4">
+          <h1 >
             Best Party Games for Adults 2026: Top Picks for Game Night
           </h1>
-          <p >
+          <p>
             Party games for adults are structured activities designed for social gatherings where
             the main goal is fun, laughter, and connection rather than serious competition. Unlike
             children&apos;s party games, adult party games often lean into humor, strategy, drinking
             rules, or revealing personal truths — making them perfect for breaking the ice at house
             parties, game nights, and group hangouts.
           </p>
-          <p >
+          <p>
             Based on feedback from 10,000+ Captain Bond players, the most successful game nights combine good company with the right interactive format.
           </p>
         </header>
@@ -303,7 +303,7 @@ export default function BestPartyGames2026Page() {
           that means games that blend digital convenience with real-world connection.
         </blockquote>
 
-        <p >
+        <p>
           According to a 2024 Statista report, the global board games market is projected to reach $30 billion by 2028, with party games as the fastest-growing segment.
         </p>
 
@@ -356,7 +356,7 @@ export default function BestPartyGames2026Page() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">TV and Group Games</h2>
-          <p >
+          <p>
             The biggest trend in 2026 party games is the digital-physical hybrid: games that display
             on a TV while players interact via their phones. These eliminate the need for physical
             boards and let everyone play simultaneously.
@@ -377,7 +377,7 @@ export default function BestPartyGames2026Page() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Card Games</h2>
-          <p >
+          <p>
             Card games remain the most portable party game category. A single deck — or a themed
             box — can fuel hours of entertainment. The best card games for adults balance strategy,
             humor, and social interaction.
@@ -398,7 +398,7 @@ export default function BestPartyGames2026Page() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Board Games for Adults</h2>
-          <p >
+          <p>
             Board games have gone through a renaissance. Modern board games are designed with adults
             in mind — shorter play times, clever mechanics, and social dynamics that reward
             personality as much as strategy.
@@ -414,7 +414,7 @@ export default function BestPartyGames2026Page() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Drinking Games</h2>
-          <p >
+          <p>
             Drinking games are the energy engine of many house parties. They combine social
             mechanics with light stakes, making every round feel consequential. The best drinking
             games let people participate at their own pace.
@@ -430,7 +430,7 @@ export default function BestPartyGames2026Page() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Icebreaker Games</h2>
-          <p >
+          <p>
             Icebreakers are the unsung heroes of any party. They bridge the gap between strangers
             becoming friends in minutes. The best icebreaker games feel natural — they start
             conversations instead of forcing them.
@@ -446,7 +446,7 @@ export default function BestPartyGames2026Page() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">No-Equipment Games</h2>
-          <p >
+          <p>
             The most accessible party games require nothing but people, imagination, and a willingness
             to be silly. No-equipment games are the ultimate fallback — they work any time, anywhere,
             with any group size.
@@ -467,7 +467,7 @@ export default function BestPartyGames2026Page() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">How to Plan the Perfect Game Night</h2>
-          <p >
+          <p>
             A great game night needs a little structure but a lot of flexibility. Here is a simple
             formula that works for any group:
           </p>
@@ -480,7 +480,7 @@ export default function BestPartyGames2026Page() {
           </ul>
         </section>
 
-        <p >
+        <p>
           These suggestions work best for adult groups looking for social fun. For very large groups (50+) or corporate settings, consider dedicated team building platforms.
         </p>
 

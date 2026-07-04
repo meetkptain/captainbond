@@ -65,9 +65,9 @@ export default function GuideSoireeQuiz() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Pourquoi les soirées quiz augmentent le chiffre d&apos;affaires des bars</h2>
-          <p >Les soirées quiz dans les bars sont des événements hebdomadaires où des équipes de clients s&apos;affrontent sur des questions de culture générale, musique et images, animées par un hôte sur un écran partagé. Ce format combine divertissement, compétition sociale et consommation.</p>
-          <p >Selon Statista, les bars qui organisent des soirées à thème hebdomadaires constatent une augmentation moyenne de 35 % de leur chiffre d&apos;affaires les soirs d&apos;événement. Les soirs traditionnellement calmes (mardi, mercredi) sont les plus transformés, avec des hausses allant jusqu&apos;à 60 %.</p>
-          <p >Une étude en hôtellerie publiée dans l&apos;International Journal of Hospitality Management (2024) montre que les établissements avec des événements interactifs hebdomadaires fidélisent 28 % mieux leur clientèle que ceux sans animation régulière.</p>
+          <p>Les soirées quiz dans les bars sont des événements hebdomadaires où des équipes de clients s&apos;affrontent sur des questions de culture générale, musique et images, animées par un hôte sur un écran partagé. Ce format combine divertissement, compétition sociale et consommation.</p>
+          <p>Selon Statista, les bars qui organisent des soirées à thème hebdomadaires constatent une augmentation moyenne de 35 % de leur chiffre d&apos;affaires les soirs d&apos;événement. Les soirs traditionnellement calmes (mardi, mercredi) sont les plus transformés, avec des hausses allant jusqu&apos;à 60 %.</p>
+          <p>Une étude en hôtellerie publiée dans l&apos;International Journal of Hospitality Management (2024) montre que les établissements avec des événements interactifs hebdomadaires fidélisent 28 % mieux leur clientèle que ceux sans animation régulière.</p>
           <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">Une soirée quiz ne coûte presque rien à organiser, mais peut transformer un mardi soir calme en salle comble avec une augmentation de 60 % du chiffre d&apos;affaires.</blockquote>
         </section>
 
@@ -113,7 +113,7 @@ export default function GuideSoireeQuiz() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Limitations</h2>
-          <p >Ces conseils supposent que vous avez un espace suffisant et un budget pour un écran. Le quiz digital nécessite une connexion internet stable. Pour les très petits bars (moins de 30 places), le quiz papier peut être plus adapté.</p>
+          <p>Ces conseils supposent que vous avez un espace suffisant et un budget pour un écran. Le quiz digital nécessite une connexion internet stable. Pour les très petits bars (moins de 30 places), le quiz papier peut être plus adapté.</p>
         </section>
 
         <aside className="bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 p-6 rounded-2xl border border-white/10 mb-12">

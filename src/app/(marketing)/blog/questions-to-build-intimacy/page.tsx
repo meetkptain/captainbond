@@ -107,15 +107,15 @@ export default function QuestionsToBuildIntimacyPage() {
       />
       <header className="mb-10">
         <time className="text-sm text-slate-400" dateTime="2025-06-12">{publishedDate}</time>
-        <h1 className="text-3xl font-bold mb-4">
+        <h1 >
           30 Questions to Build Intimacy: Deepen Your Connection Tonight
         </h1>
-        <p >
+        <p>
           Intimacy is not a destination — it is a practice. It deepens every time you choose
           curiosity over assumption, honesty over comfort, and presence over distraction. These 30
           questions are designed to help you do exactly that, tonight.
         </p>
-        <p >
+        <p>
           Based on data from 1,200+ Captain Bond couple sessions, these questions are designed to spark the conversations that strengthen real relationships.
         </p>
       </header>
@@ -142,18 +142,18 @@ export default function QuestionsToBuildIntimacyPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">What are intimacy-building questions?</h2>
-        <p >
+        <p>
           Intimacy-building questions are prompts designed to move conversation beyond surface-level
           exchange into deeper emotional, physical, and intellectual territory. Unlike casual
           questions about your day, these invite vulnerability, reflection, and genuine curiosity
           about your partner\'s inner world.
         </p>
-        <p >
+        <p>
           They work because they bypass the autopilot of daily life. When you ask a question your
           partner has never considered before, you create a small moment of novelty — and novelty is
           the raw material of desire and connection.
         </p>
-        <p >
+        <p>
           According to research published in the Archives of Sexual Behavior (2022), couples who discuss intimacy preferences report 30% higher sexual satisfaction.
         </p>
       </section>
@@ -171,7 +171,7 @@ export default function QuestionsToBuildIntimacyPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Emotional intimacy questions</h2>
-        <p >
+        <p>
           Emotional intimacy lives in the space between what you feel and what you share. These
           questions invite your partner into your inner world — your fears, your memories, your
           quietest hopes. Go slowly here. These questions ask for real vulnerability.
@@ -185,7 +185,7 @@ export default function QuestionsToBuildIntimacyPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Physical intimacy questions</h2>
-        <p >
+        <p>
           Physical intimacy is not just about sex — it is about touch, presence, and being at home
           in your body together. These questions explore the sensory and physical dimension of your
           connection. They stay classy while inviting honesty about desire.
@@ -199,7 +199,7 @@ export default function QuestionsToBuildIntimacyPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Intellectual intimacy questions</h2>
-        <p >
+        <p>
           Intellectual intimacy is the most overlooked dimension of connection. It grows when you
           share how you think, not just how you feel. These questions invite you to explore ideas
           together — the beliefs, curiosities, and questions that shape how each of you navigates
@@ -218,19 +218,19 @@ export default function QuestionsToBuildIntimacyPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">How to use these questions</h2>
-        <p >
+        <p>
           Pick one category and ask 2-3 questions. That is enough for one session. Put your phones
           away, make eye contact, and let the answers breathe. The follow-up questions — \'tell me
           more about that\' — matter more than the original prompt.
         </p>
-        <p >
+        <p>
           Some questions may not land. That is fine. Others will open doors you did not know existed.
           The goal is not to finish the list. The goal is to stay curious about each other.
         </p>
       </section>
 
       <section className="article-block">
-        <p >
+        <p>
           These suggestions work best for couples who are both willing to engage. If communication is difficult, consider professional support alongside these exercises.
         </p>
       </section>

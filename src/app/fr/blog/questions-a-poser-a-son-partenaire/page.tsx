@@ -190,17 +190,17 @@ export default function QuestionsAPoserASonPartenairePage() {
 
       <header className="mb-10">
         <time className="text-sm text-slate-400" dateTime="2025-07-01">{publishedDate}</time>
-        <h1 className="text-3xl font-bold mb-4">
+        <h1 >
           Questions à poser à son partenaire : 100+ questions profondes, fun &amp; intimes
         </h1>
-        <p >
+        <p>
           Les meilleures questions à poser à son partenaire vont bien au-delà des banalités —
           elles déverrouillent une vraie connexion, des rires partagés et une intimité plus
           profonde à chaque étape de la relation. Que vous soyez à un premier rendez-vous ou
           que vous fêtiez vos dizaines d années ensemble, la bonne question posée avec une
           curiosité sincère peut tout changer.
         </p>
-        <p >
+        <p>
           Basé sur les données de 1 200+ sessions couple Captain Bond, les couples qui utilisent
           des questions structurées rapportent une connexion mesurablement plus forte. Selon une
           étude du Gottman Institute, les couples qui ont des conversations structurées au moins une
@@ -209,7 +209,7 @@ export default function QuestionsAPoserASonPartenairePage() {
       </header>
 
       <div className="article-card-takeaways">
-        <h2 className="text-lg font-semibold mb-3 text-white">Points clés à retenir</h2>
+        <h2 >Points clés à retenir</h2>
         <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
           <li>Les meilleures questions s adaptent à votre stade de relation — la légèreté pour les débuts, la profondeur pour le long terme.</li>
           <li>Poser une question avec une vraie curiosité compte plus que de trouver la question parfaite.</li>
@@ -236,7 +236,7 @@ export default function QuestionsAPoserASonPartenairePage() {
       </div>
 
       <div className="article-card-takeaways">
-        <h2 className="text-lg font-semibold mb-3 text-white">Table des matières</h2>
+        <h2 >Table des matières</h2>
         <ul className="space-y-2 text-slate-300 leading-relaxed">
           <li><a href="#nouvelles-relations" className="text-neon-purple hover:underline">1. Nouvelles relations — 20 questions</a></li>
           <li><a href="#couples-confirmes" className="text-neon-purple hover:underline">2. Couples confirmés — 20 questions</a></li>
@@ -248,7 +248,7 @@ export default function QuestionsAPoserASonPartenairePage() {
 
       <section id="nouvelles-relations" className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Nouvelles relations : 20 questions pour bien commencer</h2>
-        <p >
+        <p>
           Le début d une relation est une belle danse de découverte. Ces questions vous aident à
           dépasser les banalités prévisibles pour entrer dans le territoire qui compte vraiment —
           les valeurs, la personnalité, et la façon dont vos mondes s emboîtent. Restez léger·ère,
@@ -263,7 +263,7 @@ export default function QuestionsAPoserASonPartenairePage() {
 
       <section id="couples-confirmes" className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Couples confirmés : 20 questions pour approfondir</h2>
-        <p >
+        <p>
           Une fois que l étincelle initiale s est installée dans quelque chose de réel, les
           questions changent. Vous connaissez déjà les bases — maintenant il s agit de comprendre
           le monde intérieur de l autre. Ces questions explorent les valeurs, les traces de
@@ -279,7 +279,7 @@ export default function QuestionsAPoserASonPartenairePage() {
 
       <section id="longue-duree" className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Longue durée : 20 questions pour une intimité durable</h2>
-        <p >
+        <p>
           Les années ensemble apportent de la profondeur — mais aussi de la routine. Les questions
           qui vous servaient au début doivent évoluer. Ces questions sont conçues pour les couples
           qui veulent maintenir l intimité, reconnaître comment ils ont grandi, et continuer à se
@@ -294,7 +294,7 @@ export default function QuestionsAPoserASonPartenairePage() {
 
       <section id="fiances-maries" className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Fiancés &amp; mariés : 20 questions pour construire l avenir</h2>
-        <p >
+        <p>
           Le mariage ou un engagement à vie demande un alignement sur les grands piliers : l argent,
           la famille, l héritage et la forme de votre avenir commun. Ces questions vous aident à
           construire une feuille de route ensemble pour ne pas simplement vivre côte à côte, mais
@@ -309,7 +309,7 @@ export default function QuestionsAPoserASonPartenairePage() {
 
       <section id="redecouverte" className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Se redécouvrir : 20 questions pour raviver la flamme</h2>
-        <p >
+        <p>
           Toute relation longue traverse des saisons d éloignement. Se redécouvrir n est pas une
           question de réparer quelque chose de cassé — il s agit de se souvenir de qui vous êtes
           encore. Ces questions sont pour les couples qui veulent se tourner à nouveau l un vers
@@ -330,7 +330,7 @@ export default function QuestionsAPoserASonPartenairePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">À quel stade êtes-vous ? Un tableau comparatif</h2>
-        <p >
+        <p>
           Chaque stade de relation appelle un type de question différent. Voici comment ils se
           comparent :
         </p>
@@ -387,8 +387,8 @@ export default function QuestionsAPoserASonPartenairePage() {
       </section>
 
       <div className="article-card-takeaways">
-        <h2 className="text-lg font-semibold mb-3 text-white">Données originales</h2>
-        <p >
+        <h2 >Données originales</h2>
+        <p>
           Basé sur plus de 1 200 sessions de couple Captain Bond, les trois sujets qui augmentent
           la connexion de 40 % sont les souvenirs partagés, les rêves d avenir et les préférences
           d intimité. Les couples qui consacrent un créneau de 20 minutes par semaine aux
@@ -404,7 +404,7 @@ export default function QuestionsAPoserASonPartenairePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Comment utiliser ces questions efficacement</h2>
-        <p >
+        <p>
           Une liste de questions ne vaut que par la façon dont on l utilise. Voici quatre
           principes qui transforment une simple question en une vraie conversation :
         </p>
@@ -429,7 +429,7 @@ export default function QuestionsAPoserASonPartenairePage() {
       </section>
 
       <section className="article-block">
-        <p >
+        <p>
           Ces questions fonctionnent mieux quand les deux partenaires sont disponibles pour une
           conversation sans interruption. Si l&apos;un des deux est fatigué ou réticent, commencez par
           les sections légères — l&apos;objectif est la connexion, pas l&apos;exhaustivité.

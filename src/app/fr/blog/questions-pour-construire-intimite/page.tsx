@@ -107,16 +107,16 @@ export default function QuestionsPourConstruireIntimitePage() {
       />
       <header className="mb-10">
         <time className="text-sm text-slate-400" dateTime="2025-06-12">{publishedDate}</time>
-        <h1 className="text-3xl font-bold mb-4">
+        <h1 >
           30 questions pour construire l&rsquo;intimité : rapprochez-vous dès ce soir
         </h1>
-        <p >
+        <p>
           L&rsquo;intimité n&rsquo;est pas une destination — c&rsquo;est une pratique. Elle
           s&rsquo;approfondit chaque fois que vous choisissez la curiosité plutôt que
           l&rsquo;hypothèse, l&rsquo;honnêteté plutôt que le confort, et la présence plutôt que
           la distraction. Ces 30 questions sont conçues pour vous y aider, dès ce soir.
         </p>
-        <p >
+        <p>
           Basé sur les données de 1 200+ sessions couple Captain Bond, ces questions sont conçues pour susciter les conversations qui renforcent les relations réelles.
         </p>
       </header>
@@ -143,20 +143,20 @@ export default function QuestionsPourConstruireIntimitePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Que sont les questions pour construire l&rsquo;intimité ?</h2>
-        <p >
+        <p>
           Les questions pour construire l&rsquo;intimité sont des amorces conçues pour faire
           passer la conversation au-delà des échanges superficiels vers un territoire émotionnel,
           physique et intellectuel plus profond. Contrairement aux questions banales sur votre
           journée, elles invitent à la vulnérabilité, à la réflexion et à une curiosité sincère
           pour le monde intérieur de votre partenaire.
         </p>
-        <p >
+        <p>
           Elles fonctionnent parce qu&rsquo;elles contournent le pilote automatique du quotidien.
           Quand vous posez une question que votre partenaire ne s&rsquo;est jamais posée, vous
           créez un petit moment de nouveauté —           et la nouveauté est la matière première du désir
           et de la connexion.
         </p>
-        <p >
+        <p>
           Selon une recherche publiée dans les Archives of Sexual Behavior (2022), les couples qui discutent de leurs préférences intimes rapportent 30% de satisfaction sexuelle en plus.
         </p>
       </section>
@@ -174,7 +174,7 @@ export default function QuestionsPourConstruireIntimitePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Questions d&rsquo;intimité émotionnelle</h2>
-        <p >
+        <p>
           L&rsquo;intimité émotionnelle vit dans l&rsquo;espace entre ce que vous ressentez et ce
           que vous partagez. Ces questions invitent votre partenaire dans votre monde intérieur —
           vos peurs, vos souvenirs, vos espoirs les plus discrets. Allez-y doucement. Ces questions
@@ -189,7 +189,7 @@ export default function QuestionsPourConstruireIntimitePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Questions d&rsquo;intimité physique</h2>
-        <p >
+        <p>
           L&rsquo;intimité physique ne concerne pas uniquement le sexe — il s&rsquo;agit du
           toucher, de la présence et du fait d&rsquo;être bien dans son corps à deux. Ces
           questions explorent la dimension sensorielle et physique de votre connexion. Elles
@@ -204,7 +204,7 @@ export default function QuestionsPourConstruireIntimitePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Questions d&rsquo;intimité intellectuelle</h2>
-        <p >
+        <p>
           L&rsquo;intimité intellectuelle est la dimension la plus négligée de la connexion. Elle
           grandit quand vous partagez comment vous pensez, pas seulement ce que vous ressentez.
           Ces questions vous invitent à explorer les idées ensemble — les croyances, les curiosités
@@ -223,13 +223,13 @@ export default function QuestionsPourConstruireIntimitePage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Comment utiliser ces questions</h2>
-        <p >
+        <p>
           Choisissez une catégorie et posez 2 à 3 questions. C&rsquo;est suffisant pour une
           session. Rangez vos téléphones, regardez-vous dans les yeux, et laissez les réponses
           respirer. Les questions de suivi — &laquo; dis-moi en plus &raquo; — comptent plus que
           la question d&rsquo;origine.
         </p>
-        <p >
+        <p>
           Certaines questions peuvent ne pas fonctionner. C&rsquo;est normal. D&rsquo;autres
           ouvriront des portes que vous ne soupçonniez pas. Le but n&rsquo;est pas de finir la
           liste. Le but est de rester curieux l&rsquo;un de l&rsquo;autre.
@@ -237,7 +237,7 @@ export default function QuestionsPourConstruireIntimitePage() {
       </section>
 
       <section className="article-block">
-        <p >
+        <p>
           Ces suggestions fonctionnent mieux pour les couples prêts à s&rsquo;engager ensemble. Si la communication est difficile, envisagez un accompagnement professionnel en complément.
         </p>
       </section>

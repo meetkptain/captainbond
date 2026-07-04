@@ -112,15 +112,15 @@ export default function AugmenterChiffreBarSemainePage() {
         />
         <header className="mb-10">
           <time className="text-sm text-slate-400" dateTime="2025-07-04">{publishedDate}</time>
-          <h1 className="text-3xl font-bold mb-4">
+          <h1 >
             Augmenter le Chiffre d&apos;Affaires de son Bar en Semaine (Sans Embauche)
           </h1>
-          <p >
+          <p>
             Un mardi soir désert n&apos;est pas une fatalité. C&apos;est une opportunité.
             Découvrez cinq stratégies éprouvées pour transformer vos soirs de semaine en
             créneaux rentables — avec l&apos;équipe que vous avez déjà.
           </p>
-          <p >
+          <p>
             Basé sur un pilote de 3 mois avec 12 bars partenaires, les soirées jeux interactives augmentent les commandes de boissons de 22% en moyenne en semaine.
           </p>
         </header>
@@ -153,7 +153,7 @@ export default function AugmenterChiffreBarSemainePage() {
           </ul>
         </div>
 
-        <p >
+        <p>
           Une étude de l&apos;Association de la Nuit montre que les bars proposant des animations hebdomadaires voient leur fréquentation augmenter de 35% les mardis et mercredis.
         </p>
 
@@ -176,13 +176,13 @@ export default function AugmenterChiffreBarSemainePage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">1. Problème : salles vides &rarr; Solution : soirées à thème</h2>
-          <p >
+          <p>
             Une salle à moitié vide tue l&apos;ambiance avant même le premier verre. Quand les
             clients entrent et voient un espace sans vie, ils finissent une tournée et
             repartent. La solution : une soirée à thème récurrente qui donne une raison de
             venir.
           </p>
-          <p >
+          <p>
             Choisissez un soir — Mardi Tacos Quiz ou Mercredi Blind Test — et faites-en votre
             marque de fabrique. Le thème crée un accroche partageable sur les réseaux sociaux
             et un repère mental pour vos clients. La clé est la répétition : même soir, même
@@ -194,13 +194,13 @@ export default function AugmenterChiffreBarSemainePage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">2. Problème : faible panier moyen &rarr; Solution : compétitions et défis</h2>
-          <p >
+          <p>
             Le client moyen d&apos;un soir creux commande un verre et le sirote. Rien ne le
             pousse à commander à nouveau car il ne se passe rien. Les compétitions — rounds de
             quiz, mini-jeux ou énigmes en direct — créent des déclencheurs naturels de
             re-commande entre les manches.
           </p>
-          <p >
+          <p>
             Un mécanisme simple fonctionne : une bonne réponse donne une petite réduction sur
             le prochain verre. Ou : chaque boisson achetée vous inscrit au jackpot de la
             soirée. Les bars qui utilisent ces mécaniques rapportent un{' '}
@@ -211,12 +211,12 @@ export default function AugmenterChiffreBarSemainePage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">3. Problème : absence de fidélité &rarr; Solution : classement live</h2>
-          <p >
+          <p>
             Un client qui vient une fois sur un coup de tête revient rarement un mardi. Mais un
             client qui a des points au classement ? Lui, il reviendra. Un classement en direct
             transforme une participation ponctuelle en habitude durable.
           </p>
-          <p >
+          <p>
             Chaque victoire, chaque bonne réponse, chaque soirée participative ajoute des points
             au score cumulé. Le classement est remis à zéro chaque mois ou chaque trimestre,
             donnant une chance aux nouveaux tout en récompensant la fidélité. Captain Bond Pro
@@ -228,13 +228,13 @@ export default function AugmenterChiffreBarSemainePage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">4. Problème : coût du personnel &rarr; Solution : animateur IA (Captain Bond Pro)</h2>
-          <p >
+          <p>
             La principale raison pour laquelle les bars renoncent à l&apos;animation en semaine,
             c&apos;est l&apos;effectif. Un maître de quiz en live coûte 150–300 € par soirée,
             sans compter la préparation. Sur un soir calme, ce calcul ne tient pas.
             L&apos;alternative est un animateur IA qui gère tout automatiquement.
           </p>
-          <p >
+          <p>
             <strong>Captain Bond Pro à 99 €/mois</strong> remplace intégralement l&apos;animateur
             humain. Il génère des séries de questions infinies dans toutes les catégories, gère
             l&apos;inscription des joueurs, suit les scores sur plusieurs semaines et affiche
@@ -249,20 +249,20 @@ export default function AugmenterChiffreBarSemainePage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">5. Problème : départs précoces &rarr; Solution : tournois structurés</h2>
-          <p >
+          <p>
             Le plus grand frein au chiffre d&apos;affaires en semaine n&apos;est pas le nombre
             de clients — c&apos;est leur durée de présence. Un client qui part après un verre
             génère 8–12 €. Un client qui reste pour un tournoi de trois manches génère 30–50 €.
             La différence, c&apos;est la structure.
           </p>
-          <p >
+          <p>
             Un tournoi avec tableau ou score cumulé ancre les participants pour la soirée. Ils
             ne peuvent pas partir après la première manche car ils sont investis dans le
             résultat. Organiser un tournoi manuellement est lourd. Avec Captain Bond Pro, c&apos;est
             un clic : l&apos;application gère les tableaux, les égalités, les limites de temps et
             le podium final.
           </p>
-          <p >
+          <p>
             Les données des bars pilotes montrent que les soirées tournoi augmentent le temps
             de présence moyen de 45 minutes à plus de 3 heures, avec un{' '}
             <strong>panier moyen multiplié par 3</strong>.
@@ -271,7 +271,7 @@ export default function AugmenterChiffreBarSemainePage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Comparatif ROI : solutions de divertissement pour bars</h2>
-          <p >
+          <p>
             Voici une comparaison directe de chaque solution et de son retour sur
             investissement attendu. Tous les chiffres sont issus de données réelles de bars
             indépendants en France et en Europe.
@@ -306,7 +306,7 @@ export default function AugmenterChiffreBarSemainePage() {
 
         <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Commencez votre transformation</h2>
-          <p >
+          <p>
             Vous n&apos;avez pas besoin d&apos;un plus gros budget marketing ni de personnel
             supplémentaire. Vous avez besoin d&apos;une raison pour que les gens restent. Les
             cinq stratégies ci-dessus fonctionnent seules et encore mieux ensemble. Choisissez
@@ -314,7 +314,7 @@ export default function AugmenterChiffreBarSemainePage() {
             semaines. Suivez les chiffres. Vous vous demanderez pourquoi vous n&apos;avez pas
             commencé plus tôt.
           </p>
-          <p >
+          <p>
             Captain Bond Pro a été conçu spécifiquement pour ce cas d&apos;usage — un
             divertissement sans installation qui transforme les soirs creux en soirées
             rentables. À 99 €/mois pour des événements illimités, il est rentabilisé dès la
@@ -322,7 +322,7 @@ export default function AugmenterChiffreBarSemainePage() {
           </p>
         </section>
 
-        <p >
+        <p>
           Ces suggestions fonctionnent mieux pour des groupes d&apos;adultes en recherche de fun social. Pour les très grands groupes (50+) ou les contextes professionnels, envisagez des plateformes dédiées de team building.
         </p>
 

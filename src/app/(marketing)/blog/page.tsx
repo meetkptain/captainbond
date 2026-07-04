@@ -66,7 +66,7 @@ export default function BlogIndexPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
       <header className="mb-12 text-center">
-        <h1 className="text-3xl font-bold mb-4">Captain Bond Blog</h1>
+        <h1 >Captain Bond Blog</h1>
         <p className="text-slate-300 leading-relaxed max-w-xl mx-auto">
           Couple questions, connection games and weekly rituals to help you slow down, talk honestly
           and grow closer — one question at a time.
@@ -83,7 +83,7 @@ export default function BlogIndexPage() {
               >
                 {post.title}
               </Link>
-              <p >{post.excerpt}</p>
+              <p>{post.excerpt}</p>
             </article>
           </li>
         ))}

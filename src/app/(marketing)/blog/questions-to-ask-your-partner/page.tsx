@@ -186,16 +186,16 @@ export default function QuestionsToAskYourPartnerPage() {
 
       <header className="mb-10">
         <time className="text-sm text-slate-400" dateTime="2025-07-01">{publishedDate}</time>
-        <h1 className="text-3xl font-bold mb-4">
+        <h1 >
           Questions to Ask Your Partner: 100+ Deep, Fun &amp; Intimate Questions for Every Stage
         </h1>
-        <p >
+        <p>
           The best questions to ask your partner go beyond surface-level small talk — they unlock
           genuine connection, shared laughter, and deeper intimacy at every relationship stage.
           Whether you are on a first date or celebrating decades together, the right question asked
           with real curiosity can change everything.
         </p>
-        <p >
+        <p>
           Based on data from 1,200+ Captain Bond couple sessions, couples who use structured
           question decks report measurably stronger connection over time. Research from the Gottman
           Institute shows that couples who engage in structured conversations at least once a week
@@ -203,10 +203,9 @@ export default function QuestionsToAskYourPartnerPage() {
         </p>
       </header>
 
-      <p className="text-sm text-slate-400 mb-6">15 min read</p>
-
+      
       <div className="article-card-takeaways">
-        <h2 className="text-lg font-semibold mb-3 text-white">Key Takeaways</h2>
+        <h2 >Key Takeaways</h2>
         <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
           <li>The best questions adapt to your relationship stage — new love needs lightness, long-term love needs depth.</li>
           <li>Asking with genuine curiosity matters more than finding the perfect question.</li>
@@ -232,7 +231,7 @@ export default function QuestionsToAskYourPartnerPage() {
       </div>
 
       <div className="article-card-takeaways">
-        <h2 className="text-lg font-semibold mb-4 text-white">Table of Contents</h2>
+        <h2 >Table of Contents</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <a href="#new-relationships" className="p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:border-neon-purple/40 transition-colors block">
             <span className="text-xs font-mono uppercase tracking-wider text-neon-purple">Stage 1</span>
@@ -264,7 +263,7 @@ export default function QuestionsToAskYourPartnerPage() {
 
       <section id="new-relationships" className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">New Relationships: 20 Questions for the Beginning</h2>
-        <p >
+        <p>
           The early stage of a relationship is a beautiful dance of discovery. These questions help
           you move past the predictable small talk and into the territory that actually matters —
           values, personality, and whether your worlds fit together. Keep it light, stay curious,
@@ -279,7 +278,7 @@ export default function QuestionsToAskYourPartnerPage() {
 
       <section id="established-couples" className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Established Couples: 20 Questions for Deeper Connection</h2>
-        <p >
+        <p>
           Once the initial spark has settled into something real, the questions shift. You already
           know the basics — now it is about understanding the inner world of your partner. These
           prompts explore values, childhood imprints, and the quiet hopes that do not come up in
@@ -294,7 +293,7 @@ export default function QuestionsToAskYourPartnerPage() {
 
       <section id="long-term-partners" className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Long-Term Partners: 20 Questions for Lasting Intimacy</h2>
-        <p >
+        <p>
           Years together bring depth — but also routine. The questions that served you in the
           beginning need to evolve. These prompts are designed for partners who want to maintain
           intimacy, acknowledge how they have grown, and keep choosing each other even when life
@@ -309,7 +308,7 @@ export default function QuestionsToAskYourPartnerPage() {
 
       <section id="engaged-married" className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Engaged &amp; Married: 20 Questions for Building a Future</h2>
-        <p >
+        <p>
           Marriage or a lifelong partnership requires alignment on the big building blocks: money,
           family, legacy, and the shape of your shared future. These questions help you build a
           roadmap together so that you are not just living side by side, but moving in the same
@@ -324,7 +323,7 @@ export default function QuestionsToAskYourPartnerPage() {
 
       <section id="rediscovering" className="mb-10">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Rediscovering Each Other: 20 Questions to Rekindle</h2>
-        <p >
+        <p>
           Every long relationship goes through seasons of distance. Rediscovery is not about fixing
           something broken — it is about remembering the people you still are. These questions are
           for couples who want to turn towards each other again with fresh eyes and an open heart.
@@ -343,7 +342,7 @@ export default function QuestionsToAskYourPartnerPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Which Stage Are You In? A Quick Comparison</h2>
-        <p >
+        <p>
           Each relationship stage calls for a different kind of question. Here is how they compare:
         </p>
         <div className="overflow-x-auto">
@@ -399,8 +398,8 @@ export default function QuestionsToAskYourPartnerPage() {
       </section>
 
       <div className="article-card-takeaways">
-        <h2 className="text-lg font-semibold mb-3 text-white">Original Data</h2>
-        <p >
+        <h2 >Original Data</h2>
+        <p>
           Based on 1,200+ Captain Bond couple sessions, the top three topics that increase
           connection by 40% are shared memories, future dreams, and intimacy preferences. Couples
           who dedicate one 20-minute conversation slot per week report significantly higher
@@ -415,7 +414,7 @@ export default function QuestionsToAskYourPartnerPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">How to Use These Questions Effectively</h2>
-        <p >
+        <p>
           A list of questions is only as good as the way you use it. Here are four principles that
           turn a prompt into a real conversation:
         </p>
@@ -441,14 +440,14 @@ export default function QuestionsToAskYourPartnerPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Research Context & Limitations</h2>
-        <p >
+        <p>
           These questions are inspired by established relationship science. The Gottman Institute&apos;s
           research on &quot;love maps&quot; and Arthur Aron&apos;s closeness generation protocol (1997) both
           demonstrate that structured questions deepen intimacy. A Harvard Business Review study (2023)
           on workplace relationships found that asking the right questions improves trust and
           connection across all relationship types.
         </p>
-        <p >
+        <p>
           Limitations: a list of questions is not a substitute for professional help. Couples experiencing
           significant conflict, distrust, or communication breakdowns should seek a licensed therapist.
           These questions work best when both partners are willing and have 20-30 minutes for an

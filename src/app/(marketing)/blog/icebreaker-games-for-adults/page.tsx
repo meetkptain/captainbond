@@ -211,16 +211,16 @@ export default function IcebreakerGamesForAdultsPage() {
 
       <header className="mb-10">
         <time className="text-sm text-slate-400" dateTime="2025-06-15">{publishedDate}</time>
-        <h1 className="text-3xl font-bold mb-4">
+        <h1 >
           50 Icebreaker Games for Adults: Fun, No-Equipment Ideas for Any Group
         </h1>
-        <p >
+        <p>
           Icebreaker games for adults are the secret ingredient between a flat gathering and one
           people talk about for weeks. The best games need zero props, zero prep, and work whether
           you are in a room together or on a video call. We have organised 50 of them into five
           categories so you can find the right one in seconds.
         </p>
-        <p >
+        <p>
           Based on feedback from 10,000+ Captain Bond players, the most successful game nights combine good company with the right interactive format.
         </p>
       </header>
@@ -230,7 +230,7 @@ export default function IcebreakerGamesForAdultsPage() {
         forget there was ever a wall between them.
       </blockquote>
 
-      <p >
+      <p>
         According to a 2024 Statista report, the global board games market is projected to reach $30 billion by 2028, with party games as the fastest-growing segment.
       </p>
 
@@ -259,7 +259,7 @@ export default function IcebreakerGamesForAdultsPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">What Are Icebreaker Games for Adults?</h2>
-        <p >
+        <p>
           Icebreaker games for adults are short, structured activities that help people relax,
           connect, and start conversations in group settings. Unlike children&apos;s games, they rely on
           conversation, imagination, and light interaction rather than physical movement or complex
@@ -296,7 +296,7 @@ export default function IcebreakerGamesForAdultsPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Quick Icebreaker Games (10 Games)</h2>
-        <p >
+        <p>
           These games take under 5 minutes each and need zero setup. Use them to wake up a quiet
           room, fill a gap while people arrive, or transition between activities.
         </p>
@@ -309,7 +309,7 @@ export default function IcebreakerGamesForAdultsPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Get-to-Know-You Games (10 Games)</h2>
-        <p >
+        <p>
           These go beyond names and job titles. They uncover stories, quirks, and common ground.
           Perfect for dates, new teams, or any situation where you want people to actually know each
           other.
@@ -323,7 +323,7 @@ export default function IcebreakerGamesForAdultsPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Team Icebreaker Games (10 Games)</h2>
-        <p >
+        <p>
           Team games build collaboration, communication, and a bit of friendly competition. They
           work best for work retreats, sports teams, or any group that needs to operate better
           together.
@@ -337,7 +337,7 @@ export default function IcebreakerGamesForAdultsPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Virtual Icebreaker Games (10 Games)</h2>
-        <p >
+        <p>
           Remote groups face a harder wall. These games cut through the screen fatigue and bring
           real energy to video calls, virtual happy hours, and distributed team meetings.
         </p>
@@ -350,7 +350,7 @@ export default function IcebreakerGamesForAdultsPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Deep Icebreaker Games (10 Games)</h2>
-        <p >
+        <p>
           Use these when the group is ready for something real. Deep games build trust, empathy, and
           genuine connection. They work best with smaller groups and a bit of time.
         </p>
@@ -368,7 +368,7 @@ export default function IcebreakerGamesForAdultsPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">How to Pick the Right Icebreaker</h2>
-        <p >
+        <p>
           Three questions will guide you to the right category:
         </p>
         <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
@@ -376,7 +376,7 @@ export default function IcebreakerGamesForAdultsPage() {
           <li><strong>How much time do you have?</strong> Under 5 minutes means Quick games. 15+ minutes opens Get-to-Know and Deep categories.</li>
           <li><strong>What is the goal?</strong> Energy and laughter → Quick games. Connection and trust → Deep games. Collaboration → Team games.</li>
         </ul>
-        <p >
+        <p>
           Mix categories within a session. Start with a Quick game to warm up, move to a Get-to-Know
           game to build momentum, and finish with a Team or Deep game for a memorable ending.
         </p>
@@ -384,7 +384,7 @@ export default function IcebreakerGamesForAdultsPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Why Play Icebreakers at All?</h2>
-        <p >
+        <p>
           Adults forget how to play. Somewhere between childhood and responsibility, unstructured fun
           gets replaced by small talk and efficiency. Icebreaker games for adults give permission to
           be silly, curious, and open again. They remind us that connection does not need to be
@@ -393,7 +393,7 @@ export default function IcebreakerGamesForAdultsPage() {
         </p>
       </section>
 
-      <p >
+      <p>
         These suggestions work best for adult groups looking for social fun. For very large groups (50+) or corporate settings, consider dedicated team building platforms.
       </p>
 

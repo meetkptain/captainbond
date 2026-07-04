@@ -358,16 +358,16 @@ export default function CoupleCommunicationExercisesPage() {
       />
       <header className="mb-10">
         <time className="text-sm text-slate-400" dateTime="2025-06-10">{publishedDate}</time>
-        <h1 className="text-3xl font-bold mb-4">
+        <h1 >
           10 Couple Communication Exercises to Deepen Your Connection
         </h1>
-        <p >
+        <p>
           Most couples do not lack love — they lack a shared communication toolkit. When conversations
           become transactional or arguments follow the same destructive pattern, it is not because you
           care less. It is because no one ever taught you how to communicate inside a relationship. These
           10 exercises fill that gap.
         </p>
-        <p >
+        <p>
           Based on data from 1,200+ Captain Bond couple sessions, these exercises are designed to build the communication habits that consistently strengthen real relationships.
         </p>
       </header>
@@ -399,18 +399,18 @@ export default function CoupleCommunicationExercisesPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">What are couple communication exercises?</h2>
-        <p >
+        <p>
           Couple communication exercises are structured activities designed to improve how partners
           listen, express themselves, and resolve conflict. Unlike casual conversation, these exercises
           follow specific formats — mirroring, check-ins, conflict scripts — that interrupt bad habits
           and replace them with intentional connection.
         </p>
-        <p >
+        <p>
           Think of them as strength training for your relationship. You do not wait until you are
           injured to exercise your body.           Similarly, you should not wait until you are in crisis to
           practice communicating well.
         </p>
-        <p >
+        <p>
           A 2023 meta-analysis in the Journal of Marital and Family Therapy found that structured communication exercises improve relationship satisfaction by an average of 18% over 8 weeks.
         </p>
       </section>
@@ -462,11 +462,11 @@ export default function CoupleCommunicationExercisesPage() {
             {ex.time} &middot; {ex.difficulty} &middot; {ex.bestFor}
           </p>
           <h3 className="text-lg font-medium mt-6 mb-2 text-white">What it is</h3>
-          <p >{ex.description}</p>
+          <p>{ex.description}</p>
           <h3 className="text-lg font-medium mt-6 mb-2 text-white">How to do it</h3>
-          <p >{ex.howTo}</p>
+          <p>{ex.howTo}</p>
           <h3 className="text-lg font-medium mt-6 mb-2 text-white">Expected benefit</h3>
-          <p >{ex.benefit}</p>
+          <p>{ex.benefit}</p>
         </section>
           {i === 4 && (
             <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
@@ -484,19 +484,19 @@ export default function CoupleCommunicationExercisesPage() {
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Start with one exercise tonight</h2>
-        <p >
+        <p>
           You do not need to master all ten at once. Pick the one that feels most relevant to your
           relationship right now and try it tonight. The Mirroring exercise takes 10 minutes. The
           Check-In takes 5. Even one small change creates momentum.
         </p>
-        <p >
+        <p>
           The goal is not perfection. It is practice. Every time you choose a structured exercise over
           autopilot, you strengthen the muscle of intentional connection.
         </p>
       </section>
 
       <section className="article-block">
-        <p >
+        <p>
           These suggestions work best for couples who are both willing to engage. If communication is difficult, consider professional support alongside these exercises.
         </p>
       </section>
