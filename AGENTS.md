@@ -253,3 +253,88 @@ Chaque fois qu'on découvre un pattern non documenté, l'ajouter dans une sectio
 - Contournements spécifiques à Cloudflare/Next.js
 - Mappings de slugs (FR ↔ EN)
 - Bugs connus et workarounds
+
+## Known Bugs & Workarounds (CRITICAL)
+
+| Bug | Cause | Workaround / Fix Status |
+|-----|-------|------------------------|
+| `gameEnginesRegistry` crash on 4/5 modes | Only IMPOSTEUR mode registered, others return 500 on reveal/next-round | Use `getServerGameMode()` instead. P0 — not fixed yet |
+| Price triple source conflict | 3 sources: MONETIZATION_CONFIG (1.99/2.99), catalog.ts (9.99/14.99), hardcoded UI (9.99/14.99) | Must unify to 4.99€/9.99€. P0 — not fixed |
+| Weekend Pass exists in catalog but NO UI | `Weekend` variant defined in ProductSchema but no button in any paywall | P1 — not fixed |
+| Subscription upsell missing from paywall | Paywall only shows Pass 24h, no subscription toggle | P0 — not fixed |
+| Stripe webhook mock | `/api/checkout/profile` was a mock creating fake users | Real webhook needed. P0 — not fixed |
+| Single-payer model blocks group payment | Only host can pay for room unlock | Allow any player to pay. P0 |
+| Next.js middleware deprecation | `middleware.ts` deprecated in 16.2, `proxy.ts` doesn't support Edge CF | Stay on middleware.ts with build warnings. Accepted |
+| Wasabi CONFIG_MISSING | Env vars can be empty (optional feature) | App continues gracefully with 4XX instead of 500. Fixed |
+| CRON_SECRET duplication | Same secret used in Worker + app API must match exactly | Documented in wrangler.toml. Verified |
+| Package name "koze" vs wrangler "captainbond" | Intentional, not a bug | Do NOT "fix" — wrangler requires unique name on CF |
+
+## Architecture Decisions (Critical Context)
+
+### Why Cloudflare Pages (not Vercel)
+Edge network, auto-deploy from GitHub, cheaper at scale. Build: `npx @cloudflare/next-on-pages`. Output: `.vercel/output/static`.
+
+### Why NOT Prisma at Runtime
+Prisma incompatible with Edge Workers. Supabase JS client used for all runtime DB access. Prisma schema used only for local dev + seed.
+
+### Hybrid Pivot Strategy
+**Do NOT pivot to pure couple app.** Party viral K-factor > 1 (1 host = 5-8 players) is top-of-funnel. Funnel: Group party → Profile Reveal (Barnum) → Couple upsell → Subscription. CAC ~0€ via viral vs 15-30€ via ads.
+
+### Business Model Evolution
+- **Phase 1 (M1-6)**: Conquer groups — Pass 24h 2.99€, 500→2000 rooms/mo
+- **Phase 2 (M7-12)**: Upsell couples — subscription 7.99€, DJ IA, 2000 active couples
+- **Phase 3 (M13+)**: Open B2B — events 29.99€, team-building 800-1500€
+
+### 7 Game Design Laws (docs/GAME_DESIGN.md)
+1. **Teaser Rule**: Inputs ≤60 chars (~5 words). Force orality
+2. **Spotlight Rule**: One story read aloud per round
+3. **Campfire Mode**: TV BLACK during deep reveals. Eye contact
+4. **Tension Gauge**: Hold-to-proceed (2s) in Date Night
+5. **Social Tribunal**: No keyboard in light modes — names as big buttons
+6. **Emotional DJ**: Never 2 Deep questions in a row
+7. **Dunbar's Law**: Deep mode ≤6 players. Date Night strictly 2
+
+## Security Hardening
+
+### JWT Secrets — ALL Must Be Distinct
+```
+ADMIN_JWT_SECRET        → admin session tokens
+PLAYER_JWT_SECRET       → player auth
+HOST_TOKEN_SECRET       → host tokens (DIFFERENT from ADMIN_SYNC_SECRET)
+HMAC_IMPOSTEUR_SECRET   → imposter game HMAC
+COUPLE_INVITE_SECRET    → couple invite links
+ADMIN_SYNC_SECRET       → sync API Bearer token
+CRON_SECRET             → shared Worker→API auth
+```
+Generate each with: `openssl rand -base64 32`
+
+### Cookie-Based Auth (Not Bearer)
+- Admin session: `koze_admin_session` cookie, JWT-encoded
+- Player auth: `PLAYER_COOKIE_NAME` cookie
+- Language pref: `cb_language` cookie
+- Middleware protects `/admin/*` + `/api/admin/*` routes
+
+### Ethical Guards
+- Rename axes: Conformism → Consensus Tendency, Dupery → Playfulness/Bluff, "Benevolent Manipulator" → Strategic Observer
+- Disclaimer: "This profile is entertainment fiction" before each Dossier
+- Auto-delete Responses within 24h (max 90 days)
+- Never show one player's data on another's device
+- Block/adapt content for under-16
+- Permanent Safe Word / Pause button required
+
+## P0 Fix List (From 5 Audits)
+
+Ordered by impact. These MUST be fixed before scaling:
+
+1. `gameEnginesRegistry` — support all 5 modes (not just IMPOSTEUR)
+2. Unify prices: MONETIZATION_CONFIG, catalog.ts, Stripe, UI → 4.99€/9.99€
+3. Show "Free card X/3" gauge on TV + player controller
+4. Allow ANY player to pay room unlock (not just host)
+5. Add micro-onboarding 3 slides (host + player)
+6. Remove ALL therapeutic vocabulary ("therapy", "diagnosis", "manipulator")
+7. Move RGPD consent before name entry
+8. Add permanent Safe Word / Pause button
+9. Replace `hostId` auth with signed `hostToken`
+10. Stripe webhook: atomic + idempotent
+11. Zod validation on ALL API routes
+12. Server-side player limit enforcement
