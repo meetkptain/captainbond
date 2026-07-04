@@ -208,6 +208,12 @@ export default function CoupleConnectionDataStudyPage() {
           <h1 >
             Couple Connection Data Study: Insights from 1,200+ Real Sessions
           </h1>
+          <img
+            src={`${siteUrl}/og/blog-data-study-en.webp`}
+            alt=""
+            className="w-full rounded-2xl my-6 aspect-[1200/420] object-cover"
+            loading="eager"
+          />
           <p>
             What does {totalSessions.toLocaleString()} real couple sessions reveal about how partners
             connect, communicate, and grow together? We analyzed the numbers so you do not have to
@@ -216,12 +222,12 @@ export default function CoupleConnectionDataStudyPage() {
         </header>
 
         <div className="flex items-center gap-4 mb-10">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-base shrink-0">
-            CB
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-base shrink-0">
+            NV
           </div>
           <div className="text-sm">
-            <p className="font-semibold text-white">Captain Bond Research</p>
-            <p className="text-xs text-slate-400">Original data from {dateRange}</p>
+            <p className="font-semibold text-white">Nicolas Virin</p>
+            <p className="text-xs text-slate-400">Indie Hacker · Captain Bond · La Réunion</p>
           </div>
           <span className="text-xs text-slate-500 ml-auto">{publishedDate} &middot; 8 min read</span>
         </div>

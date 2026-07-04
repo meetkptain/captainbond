@@ -81,7 +81,7 @@
 
 @layer base {
   body {
-    @apply antialiased font-sans selection:bg-neon-purple/30 bg-background text-foreground;
+    @apply antialiased font-sans bg-background text-foreground;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-sans;
@@ -137,9 +137,28 @@
 
 /* ── Article Reading System (Medium-inspired) ── */
 
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: rgba(252, 211, 77, 0.35);
+}
+
 .article-body {
-  font-size: clamp(1rem, 0.5rem + 0.8vw, 1.125rem);
+  font-size: clamp(1.125rem, 0.5rem + 1vw, 1.25rem);
   line-height: 1.75;
+}
+
+.article-body .article-lead {
+  font-size: clamp(1.125rem, 0.5rem + 0.5vw, 1.25rem);
+  color: #e2e8f0;
+}
+
+.article-body blockquote {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 1rem 1.5rem;
+  border-radius: 0 0.75rem 0.75rem 0;
 }
 
 .article-body h1 {
@@ -189,7 +208,8 @@
 }
 
 .article-body li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  hyphens: auto;
 }
 
 .article-block {

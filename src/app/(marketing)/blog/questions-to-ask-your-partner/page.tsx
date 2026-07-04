@@ -189,6 +189,12 @@ export default function QuestionsToAskYourPartnerPage() {
         <h1 >
           Questions to Ask Your Partner: 100+ Deep, Fun &amp; Intimate Questions for Every Stage
         </h1>
+        <img
+          src={`${siteUrl}/og/blog-questions-partner-en.webp`}
+          alt=""
+          className="w-full rounded-2xl my-6 aspect-[1200/420] object-cover"
+          loading="eager"
+        />
         <p>
           The best questions to ask your partner go beyond surface-level small talk — they unlock
           genuine connection, shared laughter, and deeper intimacy at every relationship stage.
@@ -220,12 +226,12 @@ export default function QuestionsToAskYourPartnerPage() {
       </blockquote>
 
       <div className="flex items-center gap-4 mb-10">
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center text-white font-bold text-base shrink-0">
-          CB
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-base shrink-0">
+          NV
         </div>
         <div className="text-sm">
-          <p className="font-semibold text-white">Captain Bond Team</p>
-          <p className="text-xs text-slate-400">Party games, couple rituals &amp; team building</p>
+          <p className="font-semibold text-white">Nicolas Virin</p>
+          <p className="text-xs text-slate-400">Indie Hacker · Captain Bond · La Réunion</p>
         </div>
         <span className="text-xs text-slate-500 ml-auto">{publishedDate} &middot; 15 min read</span>
       </div>
