@@ -246,7 +246,7 @@ export default function QuestionsAPoserASonPartenairePage() {
         </ul>
       </div>
 
-      <section id="nouvelles-relations" className="mb-10">
+      <section id="nouvelles-relations" className="article-block">
         <h2 >Nouvelles relations : 20 questions pour bien commencer</h2>
         <p>
           Le début d une relation est une belle danse de découverte. Ces questions vous aident à
@@ -261,7 +261,7 @@ export default function QuestionsAPoserASonPartenairePage() {
         </ul>
       </section>
 
-      <section id="couples-confirmes" className="mb-10">
+      <section id="couples-confirmes" className="article-block">
         <h2 >Couples confirmés : 20 questions pour approfondir</h2>
         <p>
           Une fois que l étincelle initiale s est installée dans quelque chose de réel, les
@@ -277,7 +277,7 @@ export default function QuestionsAPoserASonPartenairePage() {
         </ul>
       </section>
 
-      <section id="longue-duree" className="mb-10">
+      <section id="longue-duree" className="article-block">
         <h2 >Longue durée : 20 questions pour une intimité durable</h2>
         <p>
           Les années ensemble apportent de la profondeur — mais aussi de la routine. Les questions
@@ -292,7 +292,7 @@ export default function QuestionsAPoserASonPartenairePage() {
         </ul>
       </section>
 
-      <section id="fiances-maries" className="mb-10">
+      <section id="fiances-maries" className="article-block">
         <h2 >Fiancés &amp; mariés : 20 questions pour construire l avenir</h2>
         <p>
           Le mariage ou un engagement à vie demande un alignement sur les grands piliers : l argent,
@@ -307,7 +307,7 @@ export default function QuestionsAPoserASonPartenairePage() {
         </ul>
       </section>
 
-      <section id="redecouverte" className="mb-10">
+      <section id="redecouverte" className="article-block">
         <h2 >Se redécouvrir : 20 questions pour raviver la flamme</h2>
         <p>
           Toute relation longue traverse des saisons d éloignement. Se redécouvrir n est pas une

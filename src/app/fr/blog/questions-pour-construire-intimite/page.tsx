@@ -157,7 +157,7 @@ export default function QuestionsPourConstruireIntimitePage() {
           et de la connexion.
         </p>
         <p>
-          Selon une recherche publiée dans les Archives of Sexual Behavior (2022), les couples qui discutent de leurs préférences intimes rapportent 30% de satisfaction sexuelle en plus.
+          Selon une recherche publiée dans les Archives of Sexual Behavior (2022), les couples qui discutent de leurs préférences intimes rapportent <strong>30%</strong> de satisfaction sexuelle en plus.
         </p>
       </section>
 

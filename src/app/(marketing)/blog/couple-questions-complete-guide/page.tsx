@@ -266,7 +266,7 @@ export default function CoupleQuestionsCompleteGuidePage() {
           Based on data from 1,200+ Captain Bond couple sessions, couples who use structured
           question decks report measurably stronger connection over time. Research from the Gottman
           Institute shows that couples who engage in structured conversations at least once a week
-          report 20% higher relationship satisfaction.
+          report <strong>20%</strong> higher relationship satisfaction.
         </p>
       </header>
 

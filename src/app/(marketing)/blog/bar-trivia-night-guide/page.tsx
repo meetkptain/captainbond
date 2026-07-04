@@ -70,7 +70,7 @@ const faqSchema = {
       name: 'Do trivia nights actually increase bar revenue?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes. Bars that run weekly trivia nights see 20-35% higher attendance on traditionally slow evenings. Per-person spend increases by an average of 22% as guests stay longer and order additional rounds between trivia rounds.',
+        text: 'Yes. Bars that run weekly trivia nights see 20-35% higher attendance on traditionally slow evenings. Per-person spend increases by an average of <strong>22%</strong> as guests stay longer and order additional rounds between trivia rounds.',
       },
     },
     {
@@ -172,7 +172,7 @@ export default function BarTriviaNightGuidePage() {
           </p>
           <p>
             Based on data from 15 partner bars across Europe, weekly trivia nights increase
-            average Tuesday–Thursday beverage revenue by 22% within the first month.
+            average Tuesday–Thursday beverage revenue by <strong>22%</strong> within the first month.
           </p>
         </header>
 
@@ -213,8 +213,8 @@ export default function BarTriviaNightGuidePage() {
           </p>
           <p>
             According to Statista, the global bar and nightclub industry generated approximately
-            $170 billion in revenue in 2024, with weeknight sales accounting for less than 30%
-            of total revenue despite representing 70% of operating hours. This imbalance means
+            $170 billion in revenue in 2024, with weeknight sales accounting for less than <strong>30%</strong>
+            of total revenue despite representing <strong>70%</strong> of operating hours. This imbalance means
             bars that activate their slowest hours capture disproportionate upside. Trivia nights
             — which cost little to run but drive significant dwell time — directly address this
             gap.
@@ -226,8 +226,8 @@ export default function BarTriviaNightGuidePage() {
           </blockquote>
           <p>
             A 2023 study published in the International Journal of Hospitality Management found
-            that gamification in hospitality venues increased average customer dwell time by 47%
-            and per-person expenditure by 31%. The mechanism is simple: structured game play
+            that gamification in hospitality venues increased average customer dwell time by <strong>47%</strong>
+            and per-person expenditure by <strong>31%</strong>. The mechanism is simple: structured game play
             creates natural re-order triggers between rounds. Teams negotiate answers, celebrate
             correct responses, and commiserate over wrong ones — all of which prompt another
             round.
@@ -277,7 +277,7 @@ export default function BarTriviaNightGuidePage() {
             history, sports, music, science, and a local round (questions about your city or
             neighborhood). Include one themed round each week — 90s movies, world capitals, or
             celebrity lookalikes — to give regulars something fresh. Aim for a difficulty split
-            of 40% easy, 40% medium, 20% hard so every team stays competitive.
+            of <strong>40%</strong> easy, 40% medium, 20% hard so every team stays competitive.
           </p>
           <p>
             If you are running traditional trivia, build a question bank of at least 200

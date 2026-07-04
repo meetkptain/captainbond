@@ -121,7 +121,7 @@ export default function IncreaseBarRevenueArticlePage() {
             shifts — with the team you already have.
           </p>
           <p>
-            Based on a 3-month pilot with 12 partner bars, interactive game nights increase average beverage orders by 22% on weeknights.
+            Based on a 3-month pilot with 12 partner bars, interactive game nights increase average beverage orders by <strong>22%</strong> on weeknights.
           </p>
         </header>
 
@@ -153,7 +153,7 @@ export default function IncreaseBarRevenueArticlePage() {
         </div>
 
         <p>
-          A study by the Nightlife Association found that bars offering weekly entertainment see 35% higher Tuesday and Wednesday attendance.
+          A study by the Nightlife Association found that bars offering weekly entertainment see <strong>35%</strong> higher Tuesday and Wednesday attendance.
         </p>
 
         <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">

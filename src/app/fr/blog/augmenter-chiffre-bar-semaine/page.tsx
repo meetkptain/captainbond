@@ -121,7 +121,7 @@ export default function AugmenterChiffreBarSemainePage() {
             créneaux rentables — avec l&apos;équipe que vous avez déjà.
           </p>
           <p>
-            Basé sur un pilote de 3 mois avec 12 bars partenaires, les soirées jeux interactives augmentent les commandes de boissons de 22% en moyenne en semaine.
+            Basé sur un pilote de 3 mois avec 12 bars partenaires, les soirées jeux interactives augmentent les commandes de boissons de <strong>22%</strong> en moyenne en semaine.
           </p>
         </header>
 
@@ -154,7 +154,7 @@ export default function AugmenterChiffreBarSemainePage() {
         </div>
 
         <p>
-          Une étude de l&apos;Association de la Nuit montre que les bars proposant des animations hebdomadaires voient leur fréquentation augmenter de 35% les mardis et mercredis.
+          Une étude de l&apos;Association de la Nuit montre que les bars proposant des animations hebdomadaires voient leur fréquentation augmenter de <strong>35%</strong> les mardis et mercredis.
         </p>
 
         <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">

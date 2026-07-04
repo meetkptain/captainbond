@@ -57,7 +57,7 @@ const exercises = [
     howTo:
       'Take turns sharing a thought or feeling. Before the other person responds, they must first mirror: "What I hear you saying is…" The speaker confirms or corrects until they feel heard. Only then does the responder share their own perspective.',
     benefit:
-      'Reduces misunderstandings by 80% and makes your partner feel genuinely heard rather than debated.',
+      'Reduces misunderstandings by <strong>80%</strong> and makes your partner feel genuinely heard rather than debated.',
   },
   {
     name: 'Active Listening',
@@ -105,7 +105,7 @@ const exercises = [
     howTo:
       'When a conflict arises, both partners agree to use the script: (1) Speaker shares their feelings using "I" statements. (2) Partner mirrors back. (3) Partner shares their perspective. (4) Both restate each other\'s position to confirm understanding. (5) Brainstorm solutions together for 5 minutes. If emotions run too high, take a 20-minute break before starting.',
     benefit:
-      'Breaks the cycle of blame and defensiveness. Couples who use structured conflict resolution report 60% higher relationship satisfaction.',
+      'Breaks the cycle of blame and defensiveness. Couples who use structured conflict resolution report <strong>60%</strong> higher relationship satisfaction.',
   },
   {
     name: 'Weekly Meeting',
@@ -410,7 +410,7 @@ export default function CoupleCommunicationExercisesPage() {
           practice communicating well.
         </p>
         <p>
-          A 2023 meta-analysis in the Journal of Marital and Family Therapy found that structured communication exercises improve relationship satisfaction by an average of 18% over 8 weeks.
+          A 2023 meta-analysis in the Journal of Marital and Family Therapy found that structured communication exercises improve relationship satisfaction by an average of <strong>18%</strong> over 8 weeks.
         </p>
       </section>
 

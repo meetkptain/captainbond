@@ -192,7 +192,7 @@ export default function QuestionsToAskYourPartnerPage() {
         <img
           src={`${siteUrl}/og/blog-questions-partner-en.webp`}
           alt=""
-          className="w-full rounded-2xl my-6 aspect-[1200/420] object-cover"
+          className="article-hero"
           loading="eager"
         />
         <p>
@@ -205,7 +205,7 @@ export default function QuestionsToAskYourPartnerPage() {
           Based on data from 1,200+ Captain Bond couple sessions, couples who use structured
           question decks report measurably stronger connection over time. Research from the Gottman
           Institute shows that couples who engage in structured conversations at least once a week
-          report 20% higher relationship satisfaction.
+          report <strong>20%</strong> higher relationship satisfaction.
         </p>
       </header>
 
@@ -215,7 +215,7 @@ export default function QuestionsToAskYourPartnerPage() {
         <ul >
           <li>The best questions adapt to your relationship stage — new love needs lightness, long-term love needs depth.</li>
           <li>Asking with genuine curiosity matters more than finding the perfect question.</li>
-          <li>Couples who ask each other deep questions regularly report 40% higher relationship satisfaction. A 2023 study in the Journal of Social and Personal Relationships found that couples who ask each other novel questions report higher intimacy levels.</li>
+          <li>Couples who ask each other deep questions regularly report <strong>40%</strong> higher relationship satisfaction. A 2023 study in the Journal of Social and Personal Relationships found that couples who ask each other novel questions report higher intimacy levels.</li>
           <li>Consistency beats intensity: twenty minutes a week transforms connection over time.</li>
         </ul>
       </div>
@@ -239,27 +239,27 @@ export default function QuestionsToAskYourPartnerPage() {
       <div className="article-card-takeaways">
         <h2 >Table of Contents</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <a href="#new-relationships" className="p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:border-neon-purple/40 transition-colors block">
+          <a href="#new-relationships" className="article-toc-link">
             <span className="text-xs font-mono uppercase tracking-wider text-neon-purple">Stage 1</span>
             <p className="text-sm font-semibold text-white mt-1">New Relationships</p>
             <p className="text-xs text-slate-400 mt-0.5">20 Questions</p>
           </a>
-          <a href="#established-couples" className="p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:border-neon-purple/40 transition-colors block">
+          <a href="#established-couples" className="article-toc-link">
             <span className="text-xs font-mono uppercase tracking-wider text-neon-purple">Stage 2</span>
             <p className="text-sm font-semibold text-white mt-1">Established Couples</p>
             <p className="text-xs text-slate-400 mt-0.5">20 Questions</p>
           </a>
-          <a href="#long-term-partners" className="p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:border-neon-purple/40 transition-colors block">
+          <a href="#long-term-partners" className="article-toc-link">
             <span className="text-xs font-mono uppercase tracking-wider text-neon-purple">Stage 3</span>
             <p className="text-sm font-semibold text-white mt-1">Long-Term Partners</p>
             <p className="text-xs text-slate-400 mt-0.5">20 Questions</p>
           </a>
-          <a href="#engaged-married" className="p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:border-neon-purple/40 transition-colors block">
+          <a href="#engaged-married" className="article-toc-link">
             <span className="text-xs font-mono uppercase tracking-wider text-neon-purple">Stage 4</span>
             <p className="text-sm font-semibold text-white mt-1">Engaged &amp; Married</p>
             <p className="text-xs text-slate-400 mt-0.5">20 Questions</p>
           </a>
-          <a href="#rediscovering" className="p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:border-neon-purple/40 transition-colors block sm:col-span-2">
+          <a href="#rediscovering" className="article-toc-link sm:col-span-2">
             <span className="text-xs font-mono uppercase tracking-wider text-neon-purple">Stage 5</span>
             <p className="text-sm font-semibold text-white mt-1">Rediscovering Each Other</p>
             <p className="text-xs text-slate-400 mt-0.5">20 Questions</p>
@@ -267,13 +267,13 @@ export default function QuestionsToAskYourPartnerPage() {
         </div>
       </div>
 
-      <section id="new-relationships" className="mb-10">
+      <section id="new-relationships" className="article-block">
         <h2 >New Relationships: 20 Questions for the Beginning</h2>
         <p>
           The early stage of a relationship is a beautiful dance of discovery. These questions help
           you move past the predictable small talk and into the territory that actually matters —
-          values, personality, and whether your worlds fit together. Keep it light, stay curious,
-          and let the answers guide you naturally.
+          values, personality, and whether your worlds fit together.</p>
+        <p>Keep it light, stay curious, and let the answers guide you naturally.
         </p>
         <ul >
           {newRelationship.map((q, i) => (
@@ -282,7 +282,7 @@ export default function QuestionsToAskYourPartnerPage() {
         </ul>
       </section>
 
-      <section id="established-couples" className="mb-10">
+      <section id="established-couples" className="article-block">
         <h2 >Established Couples: 20 Questions for Deeper Connection</h2>
         <p>
           Once the initial spark has settled into something real, the questions shift. You already
@@ -297,7 +297,7 @@ export default function QuestionsToAskYourPartnerPage() {
         </ul>
       </section>
 
-      <section id="long-term-partners" className="mb-10">
+      <section id="long-term-partners" className="article-block">
         <h2 >Long-Term Partners: 20 Questions for Lasting Intimacy</h2>
         <p>
           Years together bring depth — but also routine. The questions that served you in the
@@ -312,7 +312,7 @@ export default function QuestionsToAskYourPartnerPage() {
         </ul>
       </section>
 
-      <section id="engaged-married" className="mb-10">
+      <section id="engaged-married" className="article-block">
         <h2 >Engaged &amp; Married: 20 Questions for Building a Future</h2>
         <p>
           Marriage or a lifelong partnership requires alignment on the big building blocks: money,
@@ -327,7 +327,7 @@ export default function QuestionsToAskYourPartnerPage() {
         </ul>
       </section>
 
-      <section id="rediscovering" className="mb-10">
+      <section id="rediscovering" className="article-block">
         <h2 >Rediscovering Each Other: 20 Questions to Rekindle</h2>
         <p>
           Every long relationship goes through seasons of distance. Rediscovery is not about fixing
@@ -407,7 +407,7 @@ export default function QuestionsToAskYourPartnerPage() {
         <h2 >Original Data</h2>
         <p>
           Based on 1,200+ Captain Bond couple sessions, the top three topics that increase
-          connection by 40% are shared memories, future dreams, and intimacy preferences. Couples
+          connection by <strong>40%</strong> are shared memories, future dreams, and intimacy preferences. Couples
           who dedicate one 20-minute conversation slot per week report significantly higher
           relationship satisfaction within 60 days.
         </p>
@@ -480,6 +480,8 @@ export default function QuestionsToAskYourPartnerPage() {
           Try Captain Bond couple mode
         </Link>
       </aside>
+
+      <p className="article-ending-question">What question will <em>you</em> ask tonight?</p>
 
       <section className="article-block">
         <h2 className="text-2xl font-semibold mb-6">Related articles</h2>

@@ -154,7 +154,7 @@ export default function QuestionsToBuildIntimacyPage() {
           the raw material of desire and connection.
         </p>
         <p>
-          According to research published in the Archives of Sexual Behavior (2022), couples who discuss intimacy preferences report 30% higher sexual satisfaction.
+          According to research published in the Archives of Sexual Behavior (2022), couples who discuss intimacy preferences report <strong>30%</strong> higher sexual satisfaction.
         </p>
       </section>
 

@@ -56,10 +56,10 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'What does 1,200+ couple sessions reveal about modern relationships?',
+      name: 'What does <strong>1,200+ couple sessions</strong> reveal about modern relationships?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Consistency matters more than session length. Couples who complete 3+ short sessions per week report 40% higher harmony scores than those who do one long session monthly.',
+        text: 'Consistency matters more than session length. Couples who complete 3+ short sessions per week report <strong>40%</strong> higher harmony scores than those who do one long session monthly.',
       },
     },
     {
@@ -75,7 +75,7 @@ const faqSchema = {
       name: 'Which question category do couples prefer most?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Fun and light questions make up 38% of all sessions, followed by deep questions at 31%, intimate questions at 22%, and future/values questions at 9%.',
+        text: 'Fun and light questions make up <strong>38%</strong> of all sessions, followed by deep questions at <strong>31%</strong>, intimate questions at <strong>22%</strong>, and future/values questions at <strong>9%</strong>.',
       },
     },
     {
@@ -83,7 +83,7 @@ const faqSchema = {
       name: 'What time of day is best for couple connection?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Sessions started between 8 PM and 9 PM have a 27% higher completion rate than any other time slot.',
+        text: 'Sessions started between 8 PM and 9 PM have a <strong>27%</strong> higher completion rate than any other time slot.',
       },
     },
     {
@@ -115,7 +115,7 @@ const faqSchema = {
       name: 'How many sessions do most couples complete before stopping?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The median couple completes 12 sessions. Couples who reach session 8 have a 72% probability of reaching session 20.',
+        text: 'The median couple completes 12 sessions. Couples who reach session 8 have a <strong>72%</strong> probability of reaching session 20.',
       },
     },
     {
@@ -131,7 +131,7 @@ const faqSchema = {
       name: 'What was the most engaged demographic segment?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Couples aged 28 to 35 represent 44% of all sessions, making them the most engaged age demographic.',
+        text: 'Couples aged 28 to 35 represent <strong>44%</strong> of all sessions, making them the most engaged age demographic.',
       },
     },
   ],
@@ -211,7 +211,7 @@ export default function CoupleConnectionDataStudyPage() {
           <img
             src={`${siteUrl}/og/blog-data-study-en.webp`}
             alt=""
-            className="w-full rounded-2xl my-6 aspect-[1200/420] object-cover"
+            className="article-hero"
             loading="eager"
           />
           <p>
@@ -408,7 +408,7 @@ export default function CoupleConnectionDataStudyPage() {
           </div>
           <p>
             The 8 PM – 9 PM slot sees both the highest volume of sessions (427) and the highest
-            completion rate (87%). Sessions started after 11 PM drop to 44% completion, suggesting
+            completion rate (87%). Sessions started after 11 PM drop to <strong>44%</strong> completion, suggesting
             that fatigue is the enemy of connection.
           </p>
         </section>
@@ -431,7 +431,7 @@ export default function CoupleConnectionDataStudyPage() {
               <li>• Session initiation: 51% / 49% split (within margin of error)</li>
               <li>• Avg. harmony score difference between partners: {'<'} 3 points</li>
               <li>• Question skip rate: 4.2% vs. 3.8% (not significant)</li>
-              <li>• Both categories: Preference distribution within 2% of each other</li>
+              <li>• Both categories: Preference distribution within <strong>2%</strong> of each other</li>
             </ul>
           </div>
         </section>
@@ -488,7 +488,7 @@ export default function CoupleConnectionDataStudyPage() {
           <p>
             The American Psychological Association (APA) emphasizes that consistency in relationship rituals is
             more predictive of long-term satisfaction than the intensity of individual interactions (APA, 2022).
-            Our data supports this: couples with 3+ sessions per week scored 40% higher on harmony than those
+            Our data supports this: couples with 3+ sessions per week scored <strong>40%</strong> higher on harmony than those
             with weekly sessions only.
           </p>
           <p>
@@ -539,7 +539,7 @@ export default function CoupleConnectionDataStudyPage() {
           </p>
         </section>
 
-        <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10">
+        <aside className="article-card-takeaways">
           <h3 >Try our research-backed couple mode</h3>
           <p className="text-slate-200 mb-4">
             Captain Bond generates fresh question decks tailored to your mood — fun, deep, spicy,
@@ -552,6 +552,8 @@ export default function CoupleConnectionDataStudyPage() {
             Try Captain Bond couple mode &rarr;
           </Link>
         </aside>
+
+        <p className="article-ending-question">What will <em>your</em> data reveal about your relationship?</p>
       </article>
     </>
   );

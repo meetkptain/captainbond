@@ -332,7 +332,7 @@ export default function ExercicesCommunicationCouplePage() {
           communiquer.
         </p>
         <p>
-          Une méta-analyse de 2023 dans le Journal of Marital and Family Therapy a montré que les exercices de communication structurés améliorent la satisfaction relationnelle de 18% en moyenne sur 8 semaines.
+          Une méta-analyse de 2023 dans le Journal of Marital and Family Therapy a montré que les exercices de communication structurés améliorent la satisfaction relationnelle de <strong>18%</strong> en moyenne sur 8 semaines.
         </p>
       </section>
 

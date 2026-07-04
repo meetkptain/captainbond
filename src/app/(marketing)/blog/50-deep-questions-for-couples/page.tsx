@@ -208,7 +208,7 @@ export default function DeepQuestionsForCouplesArticlePage() {
         </p>
         <p>
           Research from the Gottman Institute shows that couples who engage in structured
-          conversations at least once a week report 20% higher relationship satisfaction.
+          conversations at least once a week report <strong>20%</strong> higher relationship satisfaction.
         </p>
         <p>
           Deep questions reverse this by design. They force a pause. They require sitting still,

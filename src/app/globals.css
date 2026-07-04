@@ -156,9 +156,38 @@ html {
 }
 
 .article-body blockquote {
+  font-size: clamp(1.25rem, 0.75rem + 1vw, 1.5rem);
   background: rgba(255, 255, 255, 0.02);
   padding: 1rem 1.5rem;
   border-radius: 0 0.75rem 0.75rem 0;
+}
+
+.article-hero {
+  aspect-ratio: 2 / 1;
+  width: 100%;
+  border-radius: 1rem;
+  object-fit: cover;
+  margin: 1.5rem 0;
+}
+
+.article-toc-link {
+  @apply block p-3 rounded-xl hover:bg-white/[0.03] transition-colors text-sm;
+}
+
+.article-toc-link span {
+  @apply text-xs font-mono uppercase tracking-wider text-neon-purple;
+}
+
+.article-toc-link p:first-of-type {
+  @apply font-semibold text-white mt-0.5;
+}
+
+.article-toc-link p:last-of-type {
+  @apply text-xs text-slate-400 mt-0.5;
+}
+
+.article-ending-question {
+  @apply text-slate-400 italic text-center mt-8 mb-4 text-base;
 }
 
 .article-body h1 {

@@ -256,7 +256,7 @@ export default function WeeklyCoupleRitualArticlePage() {
             distracted. The research is clear: couples who maintain shared rituals report higher
             relationship satisfaction, better communication, and greater emotional intimacy.
             Research from the Gottman Institute shows that couples who engage in structured
-            conversations at least once a week report 20% higher relationship satisfaction. A 2023
+            conversations at least once a week report <strong>20%</strong> higher relationship satisfaction. A 2023
             study in the Journal of Social and Personal Relationships found that couples who ask
             each other novel questions report higher intimacy levels.
           </p>
