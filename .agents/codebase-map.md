@@ -66,7 +66,9 @@ captainbond/
 │   │   ├── globals.css               ← Tailwind v4 + .article-* system
 │   │   ├── sitemap.ts                ← 52 URLs sitemap
 │   │   ├── robots.ts                 ← robots.txt (AI bots allowed)
-│   │   └── middleware.ts             ← Lang detection, admin auth, player auth
+│   │   ├── middleware.ts             ← Lang detection, admin+player auth, x-request-id
+│   │   ├── error.tsx                 ← Global error boundary (client crash recovery)
+│   │   └── (distanciel)/error.tsx    ← Error boundary for couple dashboard
 │   │
 │   ├── components/                   ← React components
 │   │   ├── couple/                   ← 24 composants couple (dashboard P1-P4)
@@ -343,7 +345,7 @@ sequenceDiagram
 | **CI/CD** | `.github/workflows/` | Pages deploy + Worker deploy |
 | **OG images** | `public/og/` + `scripts/generate-og-images.ts` | 48 images, 6 templates |
 | **Sitemap** | `src/app/sitemap.ts` | 52 URLs |
-| **Migration DB** | `supabase/migrations/` + `scripts/update-schema-summary.py` | Ordre numérique, schema summary |
+| **Migration DB** | `supabase/migrations/` + `scripts/update-schema-summary.py` | Ordre numérique, schema summary (31 tables), indexes + RLS sur toutes les tables |
 | **Documentation** | `docs/` | ~30 fichiers (deploy, audit, game design...) |
 | **OKF (AI feed)** | `public/okf/` | 15+ fichiers pour crawlers IA |
 
@@ -370,10 +372,12 @@ sequenceDiagram
     └─────────┘ └─────────┘ └──────────┘
          │           │            │
          v           v            v
-    /admin/*   /api/player/*   /blog/*
-    /api/admin/*  /api/room/*   /pricing
-                 /couple        /party
+     /admin/*   /api/player/*   /blog/*
+     /api/admin/*  /api/room/*   /pricing
+                  /couple        /party
 ```
+
+**JWT expiry**: Admin 7d, Player 30d. No refresh token yet — hard expiry forces re-login.
 
 ---
 
