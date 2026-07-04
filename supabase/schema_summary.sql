@@ -1,5 +1,23 @@
 -- Database Schema Summary (Generated automatically for AI context optimization)
 
+CREATE TABLE AudioRecording (
+  "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
+  "coupleId" TEXT NOT NULL,
+  "dailyQuestionId" TEXT NOT NULL,
+  "userId" TEXT NOT NULL,
+  "storagePath" TEXT NOT NULL,
+  "durationMs" INTEGER NOT NULL,
+  "transcription" TEXT,
+  "transcriptionStatus" TEXT NOT NULL DEFAULT 'PENDING',
+  "createdAt" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  CONSTRAINT "AudioRecording_pkey" PRIMARY KEY ("id"),
+  CONSTRAINT "AudioRecording_coupleId_fkey" FOREIGN KEY ("coupleId") REFERENCES "Couple"("id") ON DELETE CASCADE,
+  CONSTRAINT "AudioRecording_dailyQuestionId_fkey" FOREIGN KEY ("dailyQuestionId") REFERENCES "DailyQuestion"("id") ON DELETE CASCADE,
+  CONSTRAINT "AudioRecording_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE,
+  INDEX "AudioRecording_coupleId_idx" ("coupleId"),
+  INDEX "AudioRecording_dailyQuestionId_idx" ("dailyQuestionId")
+);
+
 CREATE TABLE Couple (
   "id" TEXT NOT NULL,
   "user1Id" TEXT NOT NULL,
@@ -13,6 +31,20 @@ CREATE TABLE Couple (
   UNIQUE INDEX "Couple_user1Id_user2Id_key" ("user1Id", "user2Id"),
   INDEX "Couple_user1Id_idx" ("user1Id"),
   INDEX "Couple_user2Id_idx" ("user2Id")
+);
+
+CREATE TABLE CoupleHeatmap (
+  "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
+  "coupleId" TEXT NOT NULL,
+  "axis" TEXT NOT NULL,
+  "score" DOUBLE PRECISION NOT NULL DEFAULT 0.5,
+  "trend" TEXT NOT NULL DEFAULT 'stable',
+  "lastAnsweredAt" TIMESTAMPTZ,
+  "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  CONSTRAINT "CoupleHeatmap_pkey" PRIMARY KEY ("id"),
+  CONSTRAINT "CoupleHeatmap_coupleId_fkey" FOREIGN KEY ("coupleId") REFERENCES "Couple"("id") ON DELETE CASCADE,
+  UNIQUE INDEX "CoupleHeatmap_coupleId_axis_key" ("coupleId", "axis"),
+  INDEX "CoupleHeatmap_coupleId_idx" ("coupleId")
 );
 
 CREATE TABLE CoupleInvite (
@@ -108,6 +140,11 @@ CREATE TABLE DailyQuestion (
   "intensity" INTEGER DEFAULT 1,
   "ritualAction" TEXT,
   "therapistGuide" TEXT,
+  "user1AudioUrl" TEXT,
+  "user2AudioUrl" TEXT,
+  "user1AudioMs" INTEGER,
+  "user2AudioMs" INTEGER,
+  "audioRevealed" BOOLEAN DEFAULT false,
   INDEX "DailyQuestion_coupleId_idx" ("coupleId"),
   INDEX "DailyQuestion_questionId_idx" ("questionId"),
   UNIQUE INDEX "DailyQuestion_coupleId_releasedAt_key" ("coupleId", "releasedAt"),
@@ -161,6 +198,20 @@ CREATE TABLE Purchase (
   INDEX "Purchase_packId_idx" ("packId")
 );
 
+CREATE TABLE PushSubscription (
+  "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
+  "userId" TEXT NOT NULL,
+  "endpoint" TEXT NOT NULL,
+  "keys" JSONB NOT NULL,
+  "timezone" TEXT NOT NULL DEFAULT 'Europe/Paris',
+  "active" BOOLEAN NOT NULL DEFAULT true,
+  "createdAt" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  CONSTRAINT "PushSubscription_pkey" PRIMARY KEY ("id"),
+  CONSTRAINT "PushSubscription_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE,
+  UNIQUE INDEX "PushSubscription_endpoint_key" ("endpoint"),
+  INDEX "PushSubscription_userId_idx" ("userId")
+);
+
 CREATE TABLE Question (
   "theme" TEXT,
   "suggestedAction" TEXT,
@@ -190,6 +241,12 @@ CREATE TABLE Room (
 
 CREATE TABLE Score (
   CONSTRAINT "Score_roomId_playerId_key" UNIQUE ("roomId", "playerId")
+);
+
+CREATE TABLE ThemeAxisMapping (
+  "theme" TEXT NOT NULL,
+  "axis" TEXT NOT NULL,
+  CONSTRAINT "ThemeAxisMapping_pkey" PRIMARY KEY ("theme")
 );
 
 CREATE TABLE TimeCapsule (
@@ -285,6 +342,22 @@ CREATE TABLE TreeNode (
   INDEX "TreeNode_questionId_idx" ("questionId")
 );
 
+CREATE TABLE TreeProgress (
+  "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
+  "coupleId" TEXT NOT NULL,
+  "nodeCount" INTEGER NOT NULL,
+  "connectionCount" INTEGER NOT NULL,
+  "avgSimilarity" DOUBLE PRECISION NOT NULL,
+  "dominantTheme" TEXT NOT NULL,
+  "strongestLink" JSONB,
+  "month" TEXT NOT NULL,
+  "createdAt" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  CONSTRAINT "TreeProgress_pkey" PRIMARY KEY ("id"),
+  CONSTRAINT "TreeProgress_coupleId_fkey" FOREIGN KEY ("coupleId") REFERENCES "Couple"("id") ON DELETE CASCADE,
+  UNIQUE INDEX "TreeProgress_coupleId_month_key" ("coupleId", "month"),
+  INDEX "TreeProgress_coupleId_idx" ("coupleId")
+);
+
 CREATE TABLE User (
   "subscriptionStatus" "SubscriptionStatus" NOT NULL DEFAULT 'NONE',
   "stripeSubscriptionId" TEXT
@@ -336,5 +409,20 @@ CREATE TABLE WebhookEvent (
   "stripeEventId" TEXT NOT NULL,
   CONSTRAINT webhook_event_stripe_event_id_unique UNIQUE ("stripeEventId"),
   INDEX "WebhookEvent_type_processedAt_idx" ("type", "processedAt")
+);
+
+CREATE TABLE WeeklyRecapData (
+  "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
+  "coupleId" TEXT NOT NULL,
+  "weekStart" TIMESTAMPTZ NOT NULL,
+  "theme" TEXT NOT NULL,
+  "summary" TEXT NOT NULL,
+  "insight" TEXT NOT NULL,
+  "lesson" TEXT NOT NULL,
+  "generatedAt" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  CONSTRAINT "WeeklyRecapData_pkey" PRIMARY KEY ("id"),
+  CONSTRAINT "WeeklyRecapData_coupleId_fkey" FOREIGN KEY ("coupleId") REFERENCES "Couple"("id") ON DELETE CASCADE,
+  UNIQUE INDEX "WeeklyRecapData_coupleId_weekStart_key" ("coupleId", "weekStart"),
+  INDEX "WeeklyRecapData_coupleId_idx" ("coupleId")
 );
 
