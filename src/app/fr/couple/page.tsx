@@ -55,9 +55,9 @@ export default function FrenchCouplePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <section className="max-w-3xl mx-auto px-4 pt-8">
-        <p className="text-slate-200 leading-relaxed text-center text-lg">
-          <strong>Captain Bond Couple</strong> est un espace privé pour les couples avec des questions quotidiennes, une jauge d'harmonie et des jeux de connexion profonde. Renforcez votre lien, une question à la fois.
-        </p>
+        <h1 className="text-slate-200 leading-relaxed text-center text-lg">
+          Captain Bond Couple — Un espace privé pour renforcer votre lien
+        </h1>
       </section>
       <CouplePage defaultLang="fr" />
     </>

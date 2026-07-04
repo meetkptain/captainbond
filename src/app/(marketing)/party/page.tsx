@@ -55,9 +55,9 @@ export default function PartyPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <section className="max-w-3xl mx-auto px-4 pt-8">
-        <p className="text-slate-200 leading-relaxed text-center text-lg">
-          <strong>Captain Bond Party</strong> transforms your TV into a party game board. 5 game modes — Icebreaker, Spicy, Deep Connection, Imposteur, Date Night. 3 free cards to try, then unlock the night. Players join with their phone — no app, no sign-up, just a QR code.
-        </p>
+        <h1 className="text-slate-200 leading-relaxed text-center text-lg">
+          Captain Bond Party — Turn Your TV into a Party Game Board
+        </h1>
       </section>
       <PartyLanding defaultLang="en" />
     </>

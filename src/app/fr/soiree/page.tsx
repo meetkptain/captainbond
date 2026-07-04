@@ -55,9 +55,9 @@ export default function SoireePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <section className="max-w-3xl mx-auto px-4 pt-8">
-        <p className="text-slate-200 leading-relaxed text-center text-lg">
-          <strong>Captain Bond Soirée</strong> transforme votre TV en plateau de jeu. 5 modes — Icebreaker, Spicy, Deep Connection, Imposteur, Date Night. 3 cartes gratuites, puis débloquez la soirée. Les joueurs rejoignent avec leur téléphone — pas d'appli, pas d'inscription.
-        </p>
+        <h1 className="text-slate-200 leading-relaxed text-center text-lg">
+          Captain Bond Soirée — Transformez votre TV en plateau de jeu
+        </h1>
       </section>
       <PartyLanding defaultLang="fr" />
     </>

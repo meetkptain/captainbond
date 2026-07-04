@@ -8,6 +8,7 @@ import { PresentialImposteurView } from './imposteur';
 import { PresentialQuestionView } from './PresentialQuestionView';
 import { PresentialEndGameView } from './PresentialEndGameView';
 import { QRCodeModal } from './QRCodeModal';
+import { SafeWordModal } from '@/components/SafeWordModal';
 import { Player } from './TalkingStick';
 
 interface PresentialHostViewProps {
@@ -32,6 +33,7 @@ export function PresentialHostView({
   const [floatingEmojis, setFloatingEmojis] = useState<{ id: string; emoji: string; x: number }[]>([]);
   const [isMuted, setIsMuted] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [showSafeWord, setShowSafeWord] = useState(false);
 
   const { play: playSynthesizedSound } = useAudioSynthesis();
 
@@ -113,6 +115,16 @@ export function PresentialHostView({
   const hasAccess = !!(entitlements?.accessibleModes?.includes('*') || entitlements?.accessibleModes?.includes(modeId));
   const isPremiumMode = modeId === 'DEEP_CONNECTION' || modeId === 'DATE_NIGHT';
   const shouldBlock = isPremiumMode && !hasAccess && currentQuestionIndex >= 3;
+
+  const handleSafeWordSkip = useCallback(() => {
+    handleSkip();
+    setShowSafeWord(false);
+  }, [handleSkip]);
+
+  const handleSafeWordLeave = useCallback(() => {
+    setShowSafeWord(false);
+    handleExit();
+  }, [handleExit]);
 
   if (shouldBlock) {
     return (
@@ -210,6 +222,21 @@ export function PresentialHostView({
     default:
       return (
         <>
+          <div className="fixed top-4 right-4 z-50">
+            <button
+              onClick={() => setShowSafeWord(true)}
+              className="px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-all cursor-pointer border border-slate-600/50"
+            >
+              ⏸ Pause
+            </button>
+          </div>
+          {showSafeWord && (
+            <SafeWordModal
+              onClose={() => setShowSafeWord(false)}
+              onSkip={handleSafeWordSkip}
+              onLeave={handleSafeWordLeave}
+            />
+          )}
           <PresentialQuestionView
             roomCode={roomCode}
             modeId={modeId}

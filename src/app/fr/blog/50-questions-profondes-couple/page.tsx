@@ -117,27 +117,27 @@ const faqSchema = {
     ...vulnerabiliteQuestions.map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' },
     })),
     ...enfanceQuestions.map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' },
     })),
     ...valeursQuestions.map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' },
     })),
     ...amourQuestions.map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' },
     })),
     ...revesQuestions.map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' },
     })),
   ],
 };

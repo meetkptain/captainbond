@@ -217,27 +217,27 @@ const faqSchema = {
     ...funQuestions.slice(0, 15).map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' },
     })),
     ...gettingToKnowQuestions.slice(0, 15).map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' },
     })),
     ...deepQuestions.slice(0, 15).map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' },
     })),
     ...intimateQuestions.slice(0, 15).map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' },
     })),
     ...futureQuestions.slice(0, 15).map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' },
     })),
   ],
 };

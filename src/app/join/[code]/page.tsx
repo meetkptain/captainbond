@@ -42,7 +42,8 @@ export default function JoinRoomWithCode() {
   const [playerName, setPlayerName] = useState('');
   const [isJoining, setIsJoining] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showConsent, setShowConsent] = useState(false);
+  const [hasConsented, setHasConsented] = useState(false);
+  const [showConsent, setShowConsent] = useState(true);
   const nameInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -66,19 +67,24 @@ export default function JoinRoomWithCode() {
 
   const t = content[lang];
 
-  const handleSubmitName = (e: React.FormEvent) => {
+  const handleConsentAccept = () => {
+    setHasConsented(true);
+    setShowConsent(false);
+  };
+
+  const handleConsentDecline = () => {
+    setHasConsented(false);
+    setShowConsent(false);
+  };
+
+  const handleSubmitName = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!playerName.trim()) {
       setError(t.errorEmptyName);
       return;
     }
     setError(null);
-    setShowConsent(true);
-  };
-
-  const joinWithConsent = async (consent: boolean) => {
     setIsJoining(true);
-    setError(null);
 
     try {
       if (roomCode === 'DEMO12') {
@@ -86,7 +92,7 @@ export default function JoinRoomWithCode() {
           id: 'player-demo-id',
           name: playerName.trim() || 'Reviewer',
         }));
-        sessionStorage.setItem(`cb_consent_${roomCode}`, consent ? 'true' : 'false');
+        sessionStorage.setItem(`cb_consent_${roomCode}`, hasConsented ? 'true' : 'false');
         router.push(`/room/${roomCode}/player`);
         return;
       }
@@ -94,15 +100,15 @@ export default function JoinRoomWithCode() {
       const data = await api.post<{ playerId: string; playerName: string }>('/api/room/join', {
         roomCode: roomCode,
         playerName: playerName.trim(),
-        consent,
+        consent: hasConsented,
       });
 
       sessionStorage.setItem(`player_${roomCode}`, JSON.stringify({
         id: data.playerId,
         name: data.playerName,
       }));
-      sessionStorage.setItem(`cb_consent_${roomCode}`, consent ? 'true' : 'false');
-      capture(AnalyticsEvents.PLAYER_JOINED, { room_code: roomCode, consent });
+      sessionStorage.setItem(`cb_consent_${roomCode}`, hasConsented ? 'true' : 'false');
+      capture(AnalyticsEvents.PLAYER_JOINED, { room_code: roomCode, consent: hasConsented });
 
       router.push(`/room/${roomCode}/player`);
     } catch (err) {
@@ -117,9 +123,8 @@ export default function JoinRoomWithCode() {
       <div className="min-h-screen flex flex-col items-center justify-center p-6 md:p-12 relative overflow-hidden bg-slate-950 text-white">
         <BackgroundOrbs />
         <ConsentModal
-          playerName={playerName.trim()}
-          onAccept={() => joinWithConsent(true)}
-          onDecline={() => joinWithConsent(false)}
+          onAccept={handleConsentAccept}
+          onDecline={handleConsentDecline}
         />
       </div>
     );

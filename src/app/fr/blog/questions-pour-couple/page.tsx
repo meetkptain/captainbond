@@ -214,11 +214,11 @@ const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: [
-    ...funQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: '' } })),
-    ...gettingToKnowQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: '' } })),
-    ...deepQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: '' } })),
-    ...intimateQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: '' } })),
-    ...futureQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: '' } })),
+    ...funQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' } })),
+    ...gettingToKnowQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' } })),
+    ...deepQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' } })),
+    ...intimateQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' } })),
+    ...futureQuestions.slice(0, 15).map((q) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' } })),
   ],
 };
 

@@ -126,8 +126,8 @@ export default async function RootLayout({
               brand: { '@type': 'Brand', name: 'Captain Bond' },
               offers: [
                 { '@type': 'Offer', name: 'Party Free', price: '0', priceCurrency: 'EUR' },
-                { '@type': 'Offer', name: 'Party Pass 24h', price: '4.99', priceCurrency: 'EUR' },
-                { '@type': 'Offer', name: 'Party Monthly', price: '9.99', priceCurrency: 'EUR' },
+                { '@type': 'Offer', name: 'Party Pass 24h', price: '2.99', priceCurrency: 'EUR' },
+                { '@type': 'Offer', name: 'Party Monthly', price: '7.99', priceCurrency: 'EUR' },
                 { '@type': 'Offer', name: 'Couple Monthly', price: '4.99', priceCurrency: 'EUR' },
                 { '@type': 'Offer', name: 'Pro Bar', price: '99', priceCurrency: 'EUR' },
                 { '@type': 'Offer', name: 'Pro Corporate', price: '299', priceCurrency: 'EUR' },

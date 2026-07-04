@@ -6,6 +6,7 @@ import { REVENUECAT_PRODUCT_MAPPING } from '@/lib/config/monetization';
 import { insertWebhookEventIfNotExists } from '@/lib/db/repositories/webhookEventRepository';
 import { logger } from '@/lib/logger';
 import { eventBus } from '@/lib/events/bus';
+import { webhookLimiter } from '@/lib/rate-limit';
 
 export const runtime = 'edge';
 
@@ -33,6 +34,7 @@ type RevenueCatPayload = z.infer<typeof revenueCatEventSchema>;
 
 export const POST = withApiHandler({
   bodySchema: revenueCatEventSchema,
+  rateLimit: webhookLimiter,
   async handler({ req, body }) {
     const authHeader = req.headers.get('Authorization');
     const secret = process.env.REVENUECAT_WEBHOOK_SECRET;

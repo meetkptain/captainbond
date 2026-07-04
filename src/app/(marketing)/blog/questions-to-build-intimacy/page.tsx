@@ -92,7 +92,7 @@ const faqSchema = {
   mainEntity: allQuestions.map((q) => ({
     '@type': 'Question',
     name: q,
-    acceptedAnswer: { '@type': 'Answer', text: '' },
+    acceptedAnswer: { '@type': 'Answer', text: 'Take a moment to reflect and share honestly.' },
   })),
 };
 

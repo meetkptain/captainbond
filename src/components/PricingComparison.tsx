@@ -43,51 +43,68 @@ export function PricingComparison({ packs, onSelect, loadingSku, context = 'grou
   ].filter((o): o is { pack: Pack; features: string[]; recommended: boolean; label: string } => Boolean(o.pack));
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-      {offers.map(({ pack, features, recommended, label }) => (
-        <div
-          key={pack.sku}
-          className={`relative p-4 rounded-2xl border text-left transition-all ${
-            recommended
-              ? 'bg-neon-purple/10 border-neon-purple/50 shadow-[0_0_20px_rgba(139,92,246,0.15)]'
-              : 'bg-white/5 border-white/10 hover:border-white/20'
-          }`}
-        >
-          {recommended && (
-            <span className="absolute -top-3 left-4 px-2 py-0.5 rounded-full bg-neon-purple text-white text-[10px] font-bold uppercase tracking-wider">
-              Recommandé
-            </span>
-          )}
-          <div className="flex justify-between items-start gap-3 mb-3">
-            <div>
-              <p className="font-bold text-white text-sm">{label}</p>
-              <p className="text-xs text-slate-400 mt-0.5">{pack.description}</p>
-            </div>
-            <div className="text-right">
-              <span className="font-mono font-bold text-neon-pink whitespace-nowrap">{formatPrice(pack.price)}</span>
-            </div>
-          </div>
-          <ul className="space-y-1.5 mb-4">
-            {features.map((f) => (
-              <li key={f} className="flex items-start gap-2 text-xs text-slate-300">
-                <Icon name="check" className="w-3.5 h-3.5 text-green-400 mt-0.5 shrink-0" />
-                {f}
-              </li>
-            ))}
-          </ul>
-          <button
-            onClick={() => onSelect(pack)}
-            disabled={loadingSku === pack.sku}
-            className={`w-full py-2.5 rounded-xl text-sm font-bold transition-all disabled:opacity-50 ${
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        {offers.map(({ pack, features, recommended, label }) => (
+          <div
+            key={pack.sku}
+            className={`relative p-4 rounded-2xl border text-left transition-all ${
               recommended
-                ? 'cb-btn-primary'
-                : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
+                ? 'bg-neon-purple/10 border-neon-purple/50 shadow-[0_0_20px_rgba(139,92,246,0.15)]'
+                : 'bg-white/5 border-white/10 hover:border-white/20'
             }`}
           >
-            {loadingSku === pack.sku ? 'Redirection...' : 'Choisir'}
-          </button>
-        </div>
-      ))}
-    </div>
+            {recommended && (
+              <span className="absolute -top-3 left-4 px-2 py-0.5 rounded-full bg-neon-purple text-white text-[10px] font-bold uppercase tracking-wider">
+                Recommandé
+              </span>
+            )}
+            <div className="flex justify-between items-start gap-3 mb-3">
+              <div>
+                <p className="font-bold text-white text-sm">{label}</p>
+                <p className="text-xs text-slate-400 mt-0.5">{pack.description}</p>
+              </div>
+              <div className="text-right">
+                <span className="font-mono font-bold text-neon-pink whitespace-nowrap">{formatPrice(pack.price)}</span>
+              </div>
+            </div>
+            <ul className="space-y-1.5 mb-4">
+              {features.map((f) => (
+                <li key={f} className="flex items-start gap-2 text-xs text-slate-300">
+                  <Icon name="check" className="w-3.5 h-3.5 text-green-400 mt-0.5 shrink-0" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <button
+              onClick={() => onSelect(pack)}
+              disabled={loadingSku === pack.sku}
+              className={`w-full py-2.5 rounded-xl text-sm font-bold transition-all disabled:opacity-50 ${
+                recommended
+                  ? 'cb-btn-primary'
+                  : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
+              }`}
+            >
+              {loadingSku === pack.sku ? 'Redirection...' : 'Choisir'}
+            </button>
+          </div>
+        ))}
+      </div>
+      {context === 'group' && (
+        <aside className="mt-6 p-5 rounded-2xl bg-white/[0.02] border border-neon-purple/20">
+          <p className="text-sm font-semibold text-white">✨ Vous êtes en couple ?</p>
+          <p className="text-xs text-slate-400 mt-1">
+            Débloquez les rituels quotidiens, la jauge d&apos;harmonie et les jeux d&apos;intimité. 
+            4,99€/mois — 7 jours gratuits.
+          </p>
+          <a
+            href="/couple"
+            className="inline-block mt-3 px-4 py-2 rounded-xl bg-neon-purple/20 text-neon-purple text-xs font-bold hover:bg-neon-purple/30 transition-all"
+          >
+            Découvrir l&apos;espace couple →
+          </a>
+        </aside>
+      )}
+    </>
   );
 }

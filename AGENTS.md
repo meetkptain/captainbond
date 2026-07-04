@@ -323,7 +323,7 @@ Chaque fois qu'on découvre un pattern non documenté, l'ajouter dans une sectio
 
 | Bug | Cause | Workaround / Fix Status |
 |-----|-------|------------------------|
-| `gameEnginesRegistry` crash on 4/5 modes | Only IMPOSTEUR mode registered, others return 500 on reveal/next-round | Use `getServerGameMode()` instead. P0 — not fixed yet |
+| `gameEnginesRegistry` — `VRAI_FAUX` default fallback | `revealRound` defaulted to `'VRAI_FAUX'` (invalid mode) instead of `'ICEBREAKER'` | Fixed — default changed to `'ICEBREAKER'`. Commits: `71e7cc9` (safe lookup). |
 | Price triple source conflict | 3 sources: MONETIZATION_CONFIG (1.99/2.99), catalog.ts (9.99/14.99), hardcoded UI (9.99/14.99) | Must unify to 4.99€/9.99€. P0 — not fixed |
 | Weekend Pass exists in catalog but NO UI | `Weekend` variant defined in ProductSchema but no button in any paywall | P1 — not fixed |
 | Subscription upsell missing from paywall | Paywall only shows Pass 24h, no subscription toggle | P0 — not fixed |

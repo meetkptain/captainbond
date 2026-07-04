@@ -174,7 +174,7 @@ const faqSchema = {
   mainEntity: toutesQuestions.map((q) => ({
     '@type': 'Question',
     name: q,
-    acceptedAnswer: { '@type': 'Answer', text: '' },
+    acceptedAnswer: { '@type': 'Answer', text: 'Prenez un moment pour réfléchir et partager honnêtement.' },
   })),
 };
 

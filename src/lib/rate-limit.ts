@@ -59,6 +59,7 @@ export const rateLimiters = {
   coupleAnalyze: createRatelimit(10, '1 m'),
   coupleProtocol: createRatelimit(10, '1 m'),
   coupleAction: createRatelimit(30, '1 m'),
+  webhook: createRatelimit(10, '30 s'),
 };
 
 function getClientIp(req: NextRequest): string {
@@ -135,6 +136,8 @@ export const deleteMeIpLimiter = ipLimiter(rateLimiters.deleteMe);
 export const coupleAnalyzeLimiter = ipLimiter(rateLimiters.coupleAnalyze);
 export const coupleProtocolLimiter = ipLimiter(rateLimiters.coupleProtocol);
 export const coupleActionLimiter = ipLimiter(rateLimiters.coupleAction);
+
+export const webhookLimiter = ipLimiter(rateLimiters.webhook);
 
 export async function pingRedis(): Promise<'ok' | 'skipped' | 'error'> {
   if (!redis) return 'skipped';

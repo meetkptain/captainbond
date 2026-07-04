@@ -265,7 +265,7 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
     throw new AppError('CONFLICT', 'La révélation est déjà en cours ou la room n\'est plus en jeu');
   }
 
-  const currentMode = room.currentMode || 'VRAI_FAUX';
+  const currentMode = room.currentMode || 'ICEBREAKER';
   const question = await getQuestionById(room.currentQuestionId);
   if (!question) throw new AppError('NOT_FOUND', 'Question not found');
 

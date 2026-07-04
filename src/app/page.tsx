@@ -55,9 +55,9 @@ export default function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <section className="max-w-3xl mx-auto px-4 pt-8">
-        <p className="text-slate-200 leading-relaxed text-center text-lg">
-          <strong>Captain Bond</strong> is an interactive party game platform that turns any screen into a playground. Party games on your TV, daily couple rituals, and interactive team building. One platform, three vibes. No app to install — just a link to share.
-        </p>
+        <h1 className="text-slate-200 leading-relaxed text-center text-lg">
+          Captain Bond — Interactive Party Games, Couple Rituals &amp; Team Building
+        </h1>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-8">

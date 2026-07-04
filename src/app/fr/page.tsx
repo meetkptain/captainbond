@@ -55,9 +55,9 @@ export default function FrenchHome() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <section className="max-w-3xl mx-auto px-4 pt-8">
-        <p className="text-slate-200 leading-relaxed text-center text-lg">
-          <strong>Captain Bond</strong> est une plateforme de jeux interactifs qui transforme n'importe quel écran en terrain de jeu : soirées entre amis, rituels de couple et team building interactif. Un jeu, trois ambiances. Pas d'application à installer, juste un lien à partager.
-        </p>
+        <h1 className="text-slate-200 leading-relaxed text-center text-lg">
+          Captain Bond — Jeux de soirée, rituels couple &amp; team building
+        </h1>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-8">

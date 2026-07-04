@@ -217,27 +217,27 @@ const faqSchema = {
     ...funQuestions.slice(0, 15).map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Take a moment to reflect and share honestly.' },
     })),
     ...gettingToKnowQuestions.slice(0, 15).map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Take a moment to reflect and share honestly.' },
     })),
     ...deepQuestions.slice(0, 15).map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Take a moment to reflect and share honestly.' },
     })),
     ...intimateQuestions.slice(0, 15).map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Take a moment to reflect and share honestly.' },
     })),
     ...futureQuestions.slice(0, 15).map((q) => ({
       '@type': 'Question',
       name: q,
-      acceptedAnswer: { '@type': 'Answer', text: '' },
+      acceptedAnswer: { '@type': 'Answer', text: 'Take a moment to reflect and share honestly.' },
     })),
   ],
 };

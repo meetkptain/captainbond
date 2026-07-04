@@ -90,7 +90,7 @@ export async function verifyAdminPassword(password: string): Promise<void> {
 export function getAdminCookieOptions() {
   return {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict' as const,
     path: '/',
     maxAge: 60 * 60 * 24, // 1 day

@@ -48,7 +48,7 @@ export interface EnrichedResponse {
 // --- Les 6 Archétypes Barnum ---
 const ARCHETYPES = [
   {
-    id: 'manipulateur_bienveillant',
+    id: 'observateur_stratege',
     name: 'Observateur Stratège',
     emoji: '🎭',
     condition: (a: ProfileAxis, avail: Record<string, boolean>) =>
@@ -250,7 +250,7 @@ export function calculateProfile(
 
   // Générer le trait le plus drôle
   let funniestTrait = "Agent secret en couverture.";
-  if (archetype.id === 'manipulateur_bienveillant') {
+  if (archetype.id === 'observateur_stratege') {
     funniestTrait = `Sait lire dans les pensées (${axes.perspicacity}% d'Empathie) et s'en sert pour guider le groupe avec bienveillance.`;
   } else if (archetype.id === 'franc_tireur') {
     funniestTrait = `Fait sauter le consensus (${100 - axes.alignment}% de Rébellion). Dit toujours tout haut ce que les autres pensent tout bas.`;

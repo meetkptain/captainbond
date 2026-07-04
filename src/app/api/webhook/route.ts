@@ -2,10 +2,12 @@ import { NextResponse } from 'next/server';
 import { withApiHandler } from '@/lib/api/withApiHandler';
 import { insertWebhookEventIfNotExists } from '@/lib/db/repositories/webhookEventRepository';
 import { verifyStripeWebhook, processStripeEvent } from '@/services/paymentService';
+import { webhookLimiter } from '@/lib/rate-limit';
 
 export const runtime = 'edge';
 
 export const POST = withApiHandler({
+  rateLimit: webhookLimiter,
   async handler({ req }) {
     const body = await req.text();
     const signature = req.headers.get('stripe-signature') || '';

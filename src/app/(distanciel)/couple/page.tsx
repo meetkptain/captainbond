@@ -57,9 +57,9 @@ export default function CoupleDashboard({ defaultLang = 'en' }: { defaultLang?: 
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <section className="max-w-3xl mx-auto px-4 pt-8">
-        <p className="text-slate-200 leading-relaxed text-center text-lg">
-          <strong>Captain Bond Couple</strong> is a private space for couples with daily question decks, a harmony gauge, and deep connection games. Strengthen your bond, one question at a time.
-        </p>
+        <h1 className="text-slate-200 leading-relaxed text-center text-lg">
+          Captain Bond Couple — Deepen Your Connection, One Game at a Time
+        </h1>
       </section>
       <CoupleDashboardProvider>
         <CoupleDashboardView defaultLang={defaultLang} />
