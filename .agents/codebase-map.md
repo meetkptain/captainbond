@@ -331,7 +331,7 @@ sequenceDiagram
 | **Jeux** | `src/game-modes/` | 5 modes + manifests, prompts, types |
 | **Services métier** | `src/services/*.ts` | 30 services, toute la logique |
 | **Accès DB** | `src/lib/db/repositories/` | CRUD Supabase |
-| **API wrapper** | `src/lib/api/` | withApiHandler, getAuthenticatedUser |
+| **API wrapper** | `src/lib/api/` | withApiHandler, withCronHandler, getAuthenticatedUser, rate limiting, Zod, Sentry |
 | **API routes** | `src/app/api/*/route.ts` | 17 groupes de routes REST |
 | **Dashboards** | `src/app/(distanciel)/couple/` | Couple dashboard page + _components/ |
 | **Blog articles** | `src/app/(marketing)/blog/*/page.tsx` | 15 articles EN, template 11 étapes |
