@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/couple-en.webp`,
+        url: `${siteUrl}/og/blog-weekly-ritual-en.webp`,
         width: 1200,
         height: 630,
         alt: 'Weekly Couple Ritual guide',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: 'How to Create a Weekly Couple Ritual (20-Min Guide)',
     description:
       'A simple 20-minute weekly ritual that keeps your relationship connected, intentional, and intimate.',
-    images: [`${siteUrl}/og/couple-en.webp`],
+    images: [`${siteUrl}/og/blog-weekly-ritual-en.webp`],
   },
 };
 

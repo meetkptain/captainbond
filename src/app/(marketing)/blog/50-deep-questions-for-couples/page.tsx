@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/blog-questions-couple-en.webp`,
+        url: `${siteUrl}/og/blog-deep-questions-en.webp`,
         width: 1200,
         height: 630,
         alt: '50 Deep Questions for Couples to Reconnect',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: '50 Deep Questions for Couples to Reconnect',
     description:
       'Strengthen your bond with 50 deep questions for couples organized by theme — vulnerability, past, values, love, and dreams. Reconnect meaningfully starting tonight.',
-    images: [`${siteUrl}/og/blog-questions-couple-en.webp`],
+    images: [`${siteUrl}/og/blog-deep-questions-en.webp`],
   },
 };
 

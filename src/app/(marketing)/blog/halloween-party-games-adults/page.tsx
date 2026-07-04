@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/couple-en.webp`,
+        url: `${siteUrl}/og/blog-halloween-en.webp`,
         width: 1200,
         height: 630,
         alt: 'Halloween Party Games for Adults',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: 'Halloween Party Games for Adults: 10+ Spooky Games for 2026',
     description:
       'The best Halloween party games for adults. Spooky icebreakers, costume contests, and group games for your 2026 Halloween party. No app needed.',
-    images: [`${siteUrl}/og/couple-en.webp`],
+    images: [`${siteUrl}/og/blog-halloween-en.webp`],
   },
 };
 

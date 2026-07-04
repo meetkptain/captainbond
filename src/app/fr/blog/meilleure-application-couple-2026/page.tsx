@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/couple-fr.webp`,
+        url: `${siteUrl}/og/blog-best-couple-app-fr.webp`,
         width: 1200,
         height: 630,
         alt: 'Meilleure application couple 2026 — Comparatif',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: 'Meilleure application couple 2026 : 5 applis testées & comparées',
     description:
       'Nous avons testé 5 applications couple en 2026 — Captain Bond, Paired, LoveNudge, Gottman Card Decks et Lasting. Comparez les fonctionnalités, les prix et trouvez la meilleure appli pour votre relation.',
-    images: [`${siteUrl}/og/couple-fr.webp`],
+    images: [`${siteUrl}/og/blog-best-couple-app-fr.webp`],
   },
 };
 

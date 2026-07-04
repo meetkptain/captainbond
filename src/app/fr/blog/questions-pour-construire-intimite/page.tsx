@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/couple-fr.webp`,
+        url: `${siteUrl}/og/blog-build-intimacy-fr.webp`,
         width: 1200,
         height: 630,
         alt: '30 questions pour construire l\'intimité : rapprochez-vous dès ce soir',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: '30 questions pour construire l\'intimité : rapprochez-vous dès ce soir',
     description:
       '30 questions pour construire l\'intimité émotionnelle, physique et intellectuelle dans votre couple. Renforcez votre connexion avec des conversations qui comptent.',
-    images: [`${siteUrl}/og/couple-fr.webp`],
+    images: [`${siteUrl}/og/blog-build-intimacy-fr.webp`],
   },
 };
 

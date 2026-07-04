@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/couple-en.webp`,
+        url: `${siteUrl}/og/printables-couple-questions.webp`,
         width: 1200,
         height: 630,
         alt: 'Printable Couple Questions Card Deck',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Printable Couple Questions Card Deck | Captain Bond',
     description: 'Free printable card deck with 36 questions for couples. Cut and play.',
-    images: [`${siteUrl}/og/couple-en.webp`],
+    images: [`${siteUrl}/og/printables-couple-questions.webp`],
   },
 };
 

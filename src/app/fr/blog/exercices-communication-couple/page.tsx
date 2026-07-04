@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/couple-fr.webp`,
+        url: `${siteUrl}/og/blog-communication-fr.webp`,
         width: 1200,
         height: 630,
         alt: '10 exercices de communication pour couple : renforcez votre lien',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: '10 exercices de communication pour couple : renforcez votre lien',
     description:
       '10 exercices de communication pratiques pour les couples — du mirroring aux scripts de conflit — validés par la science des relations. Renforcez votre connexion dès aujourd\'hui.',
-    images: [`${siteUrl}/og/couple-fr.webp`],
+    images: [`${siteUrl}/og/blog-communication-fr.webp`],
   },
 };
 

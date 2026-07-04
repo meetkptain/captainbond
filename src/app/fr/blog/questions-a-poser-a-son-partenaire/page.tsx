@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/couple-fr.webp`,
+        url: `${siteUrl}/og/blog-questions-partner-fr.webp`,
         width: 1200,
         height: 630,
         alt: 'Questions à poser à son partenaire — 100+ questions profondes, fun et intimes',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: '100+ questions à poser à son partenaire | Captain Bond',
     description:
       'La liste ultime des 100+ questions profondes, fun et intimes à poser à son partenaire — classées par stade de relation. Du premier rendez-vous à la vie à deux.',
-    images: [`${siteUrl}/og/couple-fr.webp`],
+    images: [`${siteUrl}/og/blog-questions-partner-fr.webp`],
   },
 };
 

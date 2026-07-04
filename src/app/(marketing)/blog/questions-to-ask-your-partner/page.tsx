@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description: 'The ultimate list of 100+ questions organized by relationship stage.',
     url: `${siteUrl}/blog/questions-to-ask-your-partner`,
     siteName: 'Captain Bond',
-    images: [{ url: `${siteUrl}/og/couple-en.webp`, width: 1200, height: 630, alt: 'Questions to Ask Your Partner' }],
+    images: [{ url: `${siteUrl}/og/blog-questions-partner-en.webp`, width: 1200, height: 630, alt: 'Questions to Ask Your Partner' }],
     locale: 'en_US',
     type: 'article',
   },
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Questions to Ask Your Partner: 100+ Deep, Fun & Intimate',
     description: 'The ultimate list of 100+ questions organized by relationship stage.',
-    images: [`${siteUrl}/og/couple-en.webp`],
+    images: [`${siteUrl}/og/blog-questions-partner-en.webp`],
   },
   other: {
     datePublished: '2025-07-01',

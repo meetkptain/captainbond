@@ -19,11 +19,11 @@ export const metadata: Metadata = {
     description: 'Start free. Unlock unlimited. 3 ways to play.',
     url: `${siteUrl}/pricing`,
     siteName: 'Captain Bond',
-    images: [{ url: `${siteUrl}/og/home-en.webp`, width: 1200, height: 630, alt: 'Captain Bond Pricing' }],
+    images: [{ url: `${siteUrl}/og/pricing-en.webp`, width: 1200, height: 630, alt: 'Captain Bond Pricing' }],
     locale: 'en_US',
     type: 'website',
   },
-  twitter: { card: 'summary_large_image', title: 'Captain Bond — Pricing', description: 'Start free. Unlock unlimited. 3 ways to play.', images: [`${siteUrl}/og/home-en.webp`] },
+  twitter: { card: 'summary_large_image', title: 'Captain Bond — Pricing', description: 'Start free. Unlock unlimited. 3 ways to play.', images: [`${siteUrl}/og/pricing-en.webp`] },
 };
 
 const plans = [

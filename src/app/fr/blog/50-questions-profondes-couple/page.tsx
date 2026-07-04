@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/blog-questions-couple-fr.webp`,
+        url: `${siteUrl}/og/blog-deep-questions-fr.webp`,
         width: 1200,
         height: 630,
         alt: '50 questions profondes pour couple',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: '50 questions profondes pour couple : se reconnecter',
     description:
       'Retrouvez une complicité durable avec 50 questions profondes pour couple en français. Vulnérabilité, passé, valeurs, amour et rêves — pour des soirées qui rapprochent.',
-    images: [`${siteUrl}/og/blog-questions-couple-fr.webp`],
+    images: [`${siteUrl}/og/blog-deep-questions-fr.webp`],
   },
 };
 

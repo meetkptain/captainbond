@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/couple-en.webp`,
+        url: `${siteUrl}/og/blog-build-intimacy-en.webp`,
         width: 1200,
         height: 630,
         alt: '30 Questions to Build Intimacy: Deepen Your Connection Tonight',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: '30 Questions to Build Intimacy: Deepen Your Connection Tonight',
     description:
       '30 intimacy-building questions for couples across emotional, physical, and intellectual dimensions. Strengthen your bond with conversations that matter.',
-    images: [`${siteUrl}/og/couple-en.webp`],
+    images: [`${siteUrl}/og/blog-build-intimacy-en.webp`],
   },
 };
 

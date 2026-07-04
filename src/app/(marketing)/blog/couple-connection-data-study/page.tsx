@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/couple-en.webp`,
+        url: `${siteUrl}/og/blog-data-study-en.webp`,
         width: 1200,
         height: 630,
         alt: 'Couple Connection Data Study: Insights from 1,200+ Real Sessions',
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     title: 'Couple Connection Data Study: Insights from 1,200+ Real Sessions',
     description:
       'Original research from 1,237 Captain Bond couple sessions. Discover data on harmony scores, conversation depth preferences, and the science of connection.',
-    images: [`${siteUrl}/og/couple-en.webp`],
+    images: [`${siteUrl}/og/blog-data-study-en.webp`],
   },
 };
 

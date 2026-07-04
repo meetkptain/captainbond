@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/home-fr.webp`,
+        url: `${siteUrl}/og/blog-party-adults-2026-fr.webp`,
         width: 1200,
         height: 630,
         alt: 'Meilleurs jeux de soirée pour adultes 2026',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: 'Meilleurs jeux de soirée pour adultes 2026 : Top sélections',
     description:
       'Découvrez les meilleurs jeux de soirée pour adultes en 2026 : jeux TV, cartes, plateau, à boire, brise-glace et sans matériel. Le guide ultime pour une soirée inoubliable.',
-    images: [`${siteUrl}/og/home-fr.webp`],
+    images: [`${siteUrl}/og/blog-party-adults-2026-fr.webp`],
   },
 };
 

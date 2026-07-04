@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description: 'Commencez gratuitement. Débloquez l\'illimité. 3 façons de jouer.',
     url: `${siteUrl}/fr/tarifs`,
     siteName: 'Captain Bond',
-    images: [{ url: `${siteUrl}/og/home-fr.webp`, width: 1200, height: 630, alt: 'Captain Bond Tarifs' }],
+    images: [{ url: `${siteUrl}/og/tarifs-fr.webp`, width: 1200, height: 630, alt: 'Captain Bond Tarifs' }],
     locale: 'fr_FR',
     type: 'website',
   },

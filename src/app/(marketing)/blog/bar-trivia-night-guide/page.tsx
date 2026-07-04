@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/home-en.webp`,
+        url: `${siteUrl}/og/blog-trivia-en.webp`,
         width: 1200,
         height: 630,
         alt: 'Bar Trivia Night Guide',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: 'Bar Trivia Night Guide: How to Host a Successful Quiz Night',
     description:
       'The complete guide to hosting a trivia night at your bar or pub. Boost weekday revenue, engage customers, and keep them coming back with interactive trivia games.',
-    images: [`${siteUrl}/og/home-en.webp`],
+    images: [`${siteUrl}/og/blog-trivia-en.webp`],
   },
 };
 

@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     description: '10+ jeux d\'Halloween pour adultes.',
     url: `${siteUrl}/fr/blog/jeux-halloween-adultes`,
     siteName: 'Captain Bond',
-    images: [{ url: `${siteUrl}/og/couple-fr.webp`, width: 1200, height: 630, alt: 'Jeux Halloween adultes' }],
+    images: [{ url: `${siteUrl}/og/blog-halloween-fr.webp`, width: 1200, height: 630, alt: 'Jeux Halloween adultes' }],
     locale: 'fr_FR',
     type: 'article',
   },
-  twitter: { card: 'summary_large_image', title: 'Jeux d\'Halloween pour Adultes', description: '10+ jeux d\'Halloween pour adultes.', images: [`${siteUrl}/og/couple-fr.webp`] },
+  twitter: { card: 'summary_large_image', title: 'Jeux d\'Halloween pour Adultes', description: '10+ jeux d\'Halloween pour adultes.', images: [`${siteUrl}/og/blog-halloween-fr.webp`] },
 };
 
 const faqSchema = {

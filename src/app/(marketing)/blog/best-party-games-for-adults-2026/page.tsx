@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/home-en.webp`,
+        url: `${siteUrl}/og/blog-party-adults-2026-en.webp`,
         width: 1200,
         height: 630,
         alt: 'Best Party Games for Adults 2026',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: 'Best Party Games for Adults 2026: Top Picks for Game Night',
     description:
       'The ultimate guide to the best party games for adults in 2026. From card games and board games to drinking games and no-equipment classics — ranked for your next game night.',
-    images: [`${siteUrl}/og/home-en.webp`],
+    images: [`${siteUrl}/og/blog-party-adults-2026-en.webp`],
   },
 };
 

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     description: 'Le guide ultime des jeux de soirée pour grands groupes.',
     url: `${siteUrl}/fr/blog/meilleurs-jeux-de-soiree-grand-groupe`,
     siteName: 'Captain Bond',
-    images: [{ url: `${siteUrl}/og/couple-fr.webp`, width: 1200, height: 630, alt: 'Jeux de soirée grands groupes' }],
+    images: [{ url: `${siteUrl}/og/blog-party-large-groups-fr.webp`, width: 1200, height: 630, alt: 'Jeux de soirée grands groupes' }],
     locale: 'fr_FR',
     type: 'article',
   },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Meilleurs Jeux de Soirée pour Grands Groupes 2026',
     description: 'Le guide ultime des jeux de soirée pour grands groupes.',
-    images: [`${siteUrl}/og/couple-fr.webp`],
+    images: [`${siteUrl}/og/blog-party-large-groups-fr.webp`],
   },
 };
 

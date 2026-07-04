@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/couple-en.webp`,
+        url: `${siteUrl}/og/blog-party-large-groups-en.webp`,
         width: 1200,
         height: 630,
         alt: 'Best Party Games for Large Groups',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: 'Best Party Games for Large Groups in 2026: 10+ People Games',
     description:
       'The ultimate guide to party games for large groups of 10-50+ people. No app needed, phone-controlled, TV-displayed party games that everyone can play.',
-    images: [`${siteUrl}/og/couple-en.webp`],
+    images: [`${siteUrl}/og/blog-party-large-groups-en.webp`],
   },
 };
 

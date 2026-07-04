@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     siteName: 'Captain Bond',
     images: [
       {
-        url: `${siteUrl}/og/couple-fr.webp`,
+        url: `${siteUrl}/og/blog-weekly-ritual-fr.webp`,
         width: 1200,
         height: 630,
         alt: 'Rituel de couple hebdomadaire',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     title: 'Comment créer un rituel de couple hebdomadaire (guide 20 min)',
     description:
       'Un rituel de couple simple de 20 minutes par semaine pour rester connectés, intentionnels et complices.',
-    images: [`${siteUrl}/og/couple-fr.webp`],
+    images: [`${siteUrl}/og/blog-weekly-ritual-fr.webp`],
   },
   other: {
     'datePublished': '2025-07-01',
