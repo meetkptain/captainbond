@@ -186,7 +186,7 @@ export async function revealRound(roomCode: string, hostId: string): Promise<Rev
     ? await findImpostorPlayerId(room.roundConfig, () => getPlayersInRoom(room.id), getPlayerHmac)
     : undefined;
 
-  let responses: ReturnType<typeof getResponsesByRoomAndQuestion> extends Promise<infer R> ? R : never;
+  let responses: any[];
   try { responses = await getResponsesByRoomAndQuestion(room.id, question.id); }
   catch (responsesError) { throw new AppError('INTERNAL_ERROR', 'Failed to fetch player responses', { cause: responsesError }); }
 

@@ -42,7 +42,12 @@ export function withCronHandler(options: WithCronHandlerOptions) {
         { status: 500 }
       );
     } finally {
-      await releaseCronLock(lockKey);
+      try {
+        await releaseCronLock(lockKey);
+      } catch (releaseError) {
+        const logger = createLogger({ route: `cron:${lockKey}` });
+        logger.error('Failed to release cron lock', {}, releaseError);
+      }
     }
   };
 }
