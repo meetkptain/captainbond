@@ -253,7 +253,7 @@ export async function generateQuestions(input: GenerateQuestionsInput): Promise<
 
   if (!res.ok) {
     const errText = await res.text();
-    logger.error('Gemini API error', { status: res.status, statusText: res.statusText, body: errText });
+    logger.error('Gemini API error', { status: res.status, statusText: res.statusText, body: errText?.substring(0, 100) });
     throw new AppError('SERVICE_UNAVAILABLE', `Gemini API error: ${res.statusText}`);
   }
 

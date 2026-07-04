@@ -85,7 +85,7 @@ async function runAnalysisPipeline(
     const rawAnalysis = await generateContent(prompt, 'application/json');
     analysisJson = safeJsonParse<Record<string, unknown> | null>(rawAnalysis, null);
     if (!analysisJson) {
-      logger.warn('Gemini analysis not parseable', { rawAnalysis: rawAnalysis.substring(0, 200) });
+      logger.warn('Gemini analysis not parseable');
       throw new AppError('ANALYSIS_FAILED', "L'analyse n'a pas pu être interprétée.");
     }
   } catch (error) {

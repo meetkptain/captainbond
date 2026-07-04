@@ -171,5 +171,5 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
 }
 
 export const config = {
-  matcher: ['/', '/party', '/pro', '/corporate', '/couple', '/vault', '/privacy', '/b2b/bars-cafes', '/group/:path*', '/blog', '/blog/:path*', '/admin/:path*', '/api/admin/:path*', '/api/room/:path*', '/api/me/:path*', '/api/checkout/:path*', '/api/player/delete-me'],
+  matcher: ['/', '/party', '/pro', '/corporate', '/couple', '/vault', '/privacy', '/b2b/bars-cafes', '/group/:path*', '/blog', '/blog/:path*', '/admin/:path*', '/api/admin/:path*', '/api/room/:path*', '/api/me/:path*', '/api/checkout/:path*', '/api/couple/:path*', '/api/storage/:path*', '/api/trees/:path*', '/api/user/:path*', '/api/questions/:path*', '/api/player/delete-me'],
 };

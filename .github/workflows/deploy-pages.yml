@@ -23,6 +23,12 @@ jobs:
 
       - run: npm ci
 
+      - name: Type check & Lint
+        run: npm run build 2>&1 | head -5
+
+      - name: Test
+        run: npm test
+
       - name: Build
         run: npm run pages:build
         env:
