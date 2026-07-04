@@ -117,3 +117,139 @@ Installé dans `.opencode/skills/ui-ux-pro-max/` (CLI native).
 - **Design System Generator**: pattern + style + colors + typography + anti-patterns
 
 Voir `~/.ui-ux-pro-max-skill/README.md` ou `uipro init --ai opencode`.
+
+<!-- Captain Bond Project Knowledge — accumulated across sessions -->
+
+## Blog Article Template (CRITICAL for new articles)
+
+Every blog post at `src/app/(marketing)/blog/<slug>/page.tsx` (EN) or `src/app/fr/blog/<slug>/page.tsx` (FR) follows this exact structure:
+
+```
+0. Metadata block — title, description, alternates.canonical + languages (x-default/en/fr),
+   other.datePublished/dateModified, openGraph (1200×630), twitter (summary_large_image)
+1. FAQPage schema — const faqSchema = {...} with mainEntity from question array
+2. Author bio — flex gap-4 with gradient avatar (CB or NV initials), name, date + read time
+3. <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
+4. JSON-LD script — <script type="application/ld+json" ...
+5. <header className="mb-10"> — <h1> + lead paragraph(s)
+6. Key Takeaways — <div className="article-card-takeaways">
+7. TOC (long articles) — grid of <a className="article-toc-link" href="#section">
+8. Content sections — <section className="article-block"> with <h2> + <p> + <ul>
+9. CTA aside — <aside className="article-card-takeaways"> + white CTA button
+10. Ending question — <p className="article-ending-question">
+11. Related articles — grid with links (always /blog/... even in FR pages)
+```
+
+**Workflow for blog upgrades**: Phase A (CSS changes in globals.css) → Phase B (batch script via node/grep) → Phase C (manual edits on pillar articles). Build after each phase.
+
+**Conseils**:
+- Utiliser `data.map(...)` pour les listes de questions plutôt que du HTML statique
+- Les slugs FR sont des traductions libres, pas des traductions littérales (ex: `increase-bar-revenue-weeknight` → `augmenter-chiffre-bar-semaine`)
+- Ne pas mettre de `mb-10` sur les sections — utiliser `article-block`
+- Les blockquotes alternent border `border-neon-purple` / `border-neon-pink`
+- Les citations externes (Gottman, Aron, HBR, Statista) sont obligatoires pour les articles couple
+
+## CSS Article Reading System (Medium-like, globals.css)
+
+Classes préfixées `.article-*` dans `src/app/globals.css`:
+
+| Classe | Rôle |
+|--------|------|
+| `.article-body` | Container: clamp(1.125rem, 0.5rem+1vw, 1.25rem), line-height 1.75 |
+| `.article-lead` | Premier paragraphe after H1 —  text-lg, text-slate-200 |
+| `.article-block` | `margin-bottom: 2.5rem` entre sections |
+| `.article-hero` | `aspect-ratio: 2/1`, `object-fit: cover`, `rounded-xl` |
+| `.article-card-takeaways` | Takeaways + CTA: `bg-white/[0.02] p-8 rounded-2xl` |
+| `.article-toc-link` | Navigation: `block p-3 rounded-xl hover:bg-white/[0.03]` |
+| `.article-ending-question` | Question finale: italic, centered, text-base |
+| `.article-body a` | Links inline sous la classe parent |
+
+Autres patterns visuels à retenir :
+- Selection couleur `rgba(252, 211, 77, 0.35)` (amber chaud)
+- `scroll-behavior: smooth` sur html
+- Blockquote XXL: `clamp(1.25rem, 0.75rem+1vw, 1.5rem)` avec fond subtil
+- `safe-area-inset-*` sur les éléments fixes (MobileCta)
+- `user-select: none` global (sauf input/textarea)
+- Toujours `prefers-reduced-motion` guard pour les animations
+
+## OG Images
+
+**Où** : `public/og/` — 48 images, 1200×630.webp
+**Naming** : `blog-<slug>-<lang>.webp` (ex: `blog-deep-questions-en.webp`, `blog-deep-questions-fr.webp`)
+**6 templates** : confetti (party), circles (couple), grid (pro), bubbles (bars), data chart (study), game-dots (game)
+**Police** : Outfit embarquée dans `scripts/Outfit-*.ttf`
+**Générateur** : `scripts/generate-og-images.ts` — usage: `npx tsx scripts/generate-og-images.ts`
+**Référencement** : dans metadata → `openGraph.images[0]` + `twitter.images` + parfois `<img className="article-hero">`
+
+## Multi-Langue FR/EN
+
+**Routes**:
+- EN: `src/app/(marketing)/<path>/page.tsx` → `captainbond.com/<path>`
+- FR: `src/app/fr/<path>/page.tsx` → `captainbond.com/fr/<path>`
+
+**Metadata alternates** (toujours 3 entrées):
+```
+x-default → EN url
+en → EN url
+fr → /fr/<path> url
+```
+
+**Middleware** (`src/middleware.ts:68-92`) : redirige les visiteurs FR vers `/fr/` via accept-language, avec bypass pour les bots (Googlebot, Bingbot, etc. toujours en canonical EN)
+
+**Slug FR** : traductions libres, garder une liste de mapping manuelle quand tu crées un article dans les deux langues.
+
+## Déploiement Cloudflare Pages
+
+**Build** : `npm run pages:build` (wraps `npx @cloudflare/next-on-pages`)
+**Preview** : `npm run pages:preview`
+**CI/CD** : `.github/workflows/deploy-pages.yml` (push sur main → build + deploy CF Pages)
+
+**Secrets** : 28 vars total — 6 dans GitHub Secrets (build-time), 22 dans Cloudflare Dashboard (runtime)
+- GitHub: `NEXT_PUBLIC_POSTHOG_KEY`, `NEXT_PUBLIC_POSTHOG_HOST`, `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `CLOUDFLARE_API_TOKEN`
+- Cloudflare: tout le reste (secrets Stripe, RevenueCat, JWT, etc.)
+
+**Infra note** : Prisma ne marche pas sur Cloudflare Workers → utiliser Supabase JS client directement.
+**Note** : `package.json` name = "koze", mais wrangler.toml name = "captainbond" — c'est normal, ne pas "corriger".
+
+## Structured Data / Schema (JSON-LD)
+
+**Root layout** (`src/app/layout.tsx`) : 5 schemas embarqués
+- `Organization` — brand info, logo, sameAs (GitHub), alternateName par langue
+- `WebSite` — avec SearchAction
+- `Product` — offers array (6 prices: Party Free/24h/Monthly, Couple Monthly, Pro Bar/Corporate)
+- `BreadcrumbList` — Home + Blog
+- `ItemList` — top-level navigation
+
+**Per-article** : 
+- `FAQPage` — questions depuis le data array
+- Bar/cafe guides ajoutent `HowTo` avec step array
+
+**Sitemap** : `/sitemap.xml` (52 URLs), `/robots.txt` (AI bots allowed), `/llms.txt`
+
+## Build Verification
+
+Toujours vérifier après modifications :
+1. `npm run build` — 71/71 static pages
+2. `npm run pages:build` — @cloudflare/next-on-pages (si déploiement)
+3. `git diff --stat` — audit des fichiers modifiés
+
+## .agents/memory.md — Anchored Summary (session memory)
+
+Le fichier `.agents/anchor.md` contient le résumé de tout le travail de la session en cours. Structure :
+- Goal, Constraints & Preferences
+- Progress (Done / In Progress / Blocked)
+- Key Decisions (les « pourquoi » des choix techniques)
+- Next Steps
+- Critical Context
+- Relevant Files (paths avec description)
+
+Mettre à jour à chaque phase terminée. Utiliser pour le context dans une nouvelle session.
+
+## Learning Registry
+
+Chaque fois qu'on découvre un pattern non documenté, l'ajouter dans une section dédiée d'AGENTS.md. Les patterns à capturer incluent :
+- Erreurs récurrentes et leurs solutions
+- Décisions d'architecture avec leur raisonnement
+- Contournements spécifiques à Cloudflare/Next.js
+- Mappings de slugs (FR ↔ EN)
+- Bugs connus et workarounds
