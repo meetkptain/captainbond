@@ -146,7 +146,7 @@ export default function QuestionsProfondesCoupleArticlePage() {
   const publishedDate = '1 juillet 2025';
 
   return (
-    <article className="max-w-3xl mx-auto px-4 py-12">
+    <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -156,12 +156,12 @@ export default function QuestionsProfondesCoupleArticlePage() {
         <h1 className="text-3xl font-bold mb-4">
           50 questions profondes pour couple : se reconnecter
         </h1>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Les questions profondes pour couple sont des invitations intentionnelles à sortir du
           quotidien pour explorer ce qui compte vraiment — les peurs, les souvenirs, les valeurs et
           les désirs cachés qui tissent la vraie intimité.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Basé sur les données de 1 200+ sessions couple Captain Bond, les couples qui utilisent
           des questions structurées rapportent une connexion mesurablement plus forte.
         </p>
@@ -194,20 +194,20 @@ export default function QuestionsProfondesCoupleArticlePage() {
         </div>
       </div>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Pourquoi les questions profondes sont essentielles</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           La plupart des couples ne s&apos;éloignent pas à cause d&apos;une trahison fracassante. Ils
           s&apos;éloignent parce que le rythme du quotidien — le travail, les courses, les écrans —
           remplace peu à peu l&apos;échange authentique par une coordination efficace. On cesse de
           demander comment l&apos;autre se sent pour demander ce qu&apos;il faut acheter au supermarché.
           Avec les mois, cette efficacité creuse un vide.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Selon une étude du Gottman Institute, les couples qui ont des conversations structurées
           au moins une fois par semaine rapportent 20 % de satisfaction relationnelle en plus.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Les questions profondes inversent ce mécanisme. Elles imposent une pause. Elles obligent à
           s&apos;asseoir, à se regarder, à répondre sans filet. Les premières seront peut-être
           gênantes. C&apos;est normal. La gêne est le prix d&apos;entrée d&apos;une conversation qui compte
@@ -218,9 +218,9 @@ export default function QuestionsProfondesCoupleArticlePage() {
         </blockquote>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Comment utiliser ces questions</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Une liste de cinquante questions peut sembler intimidante. Résistez à l&apos;envie d&apos;en
           faire une check-list. Voici une approche simple qui fonctionne :
         </p>
@@ -243,15 +243,15 @@ export default function QuestionsProfondesCoupleArticlePage() {
             suivante attendra.
           </li>
         </ul>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Le but n&apos;est pas de finir la liste. Le but est de se sentir plus proches en la posant
           qu&apos;en la prenant.
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Vulnérabilité et peur</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Ces questions explorent ce que nous cachons d&apos;habitude — les peurs qu&apos;on gère seul,
           les insécurités qu&apos;on maquille en confiance, les parties de nous qu&apos;on protège le
           plus farouchement. Abordez-les avec douceur et sans jugement.
@@ -263,9 +263,9 @@ export default function QuestionsProfondesCoupleArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Enfance et passé</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Ce que nous sommes aujourd&apos;hui s&apos;est construit bien avant notre rencontre. Ces
           questions remontent le fil des souvenirs, des personnes et des blessures qui ont façonné
           la personne que vous aimez — et révèlent les liens invisibles entre hier et aujourd&apos;hui.
@@ -277,9 +277,9 @@ export default function QuestionsProfondesCoupleArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Valeurs et croyances</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Les valeurs partagées sont le socle d&apos;une relation durable. Ces questions vont au-delà
           des convergences de surface pour explorer d&apos;où viennent vos principes, où ils divergent,
           et ce que chacun tient pour sacré — même quand personne ne regarde.
@@ -291,9 +291,9 @@ export default function QuestionsProfondesCoupleArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Amour et relation</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Ces questions se concentrent sur l&apos;espace entre vous — comment vous aimez, comment vous
           vous déconnectez, ce dont vous avez besoin et que vous hésitez à demander. C&apos;est le
           chemin le plus direct vers la compréhension intime de l&apos;autre.
@@ -305,9 +305,9 @@ export default function QuestionsProfondesCoupleArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Rêves et regrets</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Le regret et l&apos;ambition habitent la même chambre du cœur. Ces questions vous invitent à
           partager ce que vous voulez encore, ce que vous avez laissé tomber et ce que vous
           espérez — pour vous-même et pour votre vie à deux.
@@ -319,27 +319,27 @@ export default function QuestionsProfondesCoupleArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Garder la conversation vivante</h2>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Le vrai travail n&apos;est pas de poser la question. C&apos;est de construire une vie où ces
           conversations deviennent naturelles, pas programmées. Plus vous pratiquez la
           vulnérabilité à deux, moins vous aurez besoin d&apos;une liste. Mais en attendant, la liste
           est un bon point de départ.
         </p>
-        <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
           Le vrai travail n&apos;est pas de poser la question. C&apos;est de construire une vie où ces
           conversations deviennent naturelles, pas programmées.
         </blockquote>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Gardez ces questions à portée de main. Sortez-en une pendant un petit-déjeuner tranquille,
           sur la route d&apos;un week-end ou quand vous sentez la distance revenir. Une seule réponse
           honnête peut changer tout le climat d&apos;une relation.
         </p>
       </section>
 
-      <section className="mb-10">
-        <p className="text-slate-300 leading-relaxed">
+      <section className="article-block">
+        <p >
           Ces questions fonctionnent mieux quand les deux partenaires sont disponibles pour une
           conversation sans interruption. Si l&apos;un des deux est fatigué ou réticent, commencez par
           les sections légères — l&apos;objectif est la connexion, pas l&apos;exhaustivité.

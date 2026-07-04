@@ -100,7 +100,7 @@ export default function QuestionsPourConstruireIntimitePage() {
   const publishedDate = '12 juin 2025';
 
   return (
-    <article className="max-w-3xl mx-auto px-4 py-12">
+    <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -110,13 +110,13 @@ export default function QuestionsPourConstruireIntimitePage() {
         <h1 className="text-3xl font-bold mb-4">
           30 questions pour construire l&rsquo;intimité : rapprochez-vous dès ce soir
         </h1>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           L&rsquo;intimité n&rsquo;est pas une destination — c&rsquo;est une pratique. Elle
           s&rsquo;approfondit chaque fois que vous choisissez la curiosité plutôt que
           l&rsquo;hypothèse, l&rsquo;honnêteté plutôt que le confort, et la présence plutôt que
           la distraction. Ces 30 questions sont conçues pour vous y aider, dès ce soir.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Basé sur les données de 1 200+ sessions couple Captain Bond, ces questions sont conçues pour susciter les conversations qui renforcent les relations réelles.
         </p>
       </header>
@@ -141,27 +141,27 @@ export default function QuestionsPourConstruireIntimitePage() {
         </div>
       </div>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Que sont les questions pour construire l&rsquo;intimité ?</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Les questions pour construire l&rsquo;intimité sont des amorces conçues pour faire
           passer la conversation au-delà des échanges superficiels vers un territoire émotionnel,
           physique et intellectuel plus profond. Contrairement aux questions banales sur votre
           journée, elles invitent à la vulnérabilité, à la réflexion et à une curiosité sincère
           pour le monde intérieur de votre partenaire.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Elles fonctionnent parce qu&rsquo;elles contournent le pilote automatique du quotidien.
           Quand vous posez une question que votre partenaire ne s&rsquo;est jamais posée, vous
           créez un petit moment de nouveauté —           et la nouveauté est la matière première du désir
           et de la connexion.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Selon une recherche publiée dans les Archives of Sexual Behavior (2022), les couples qui discutent de leurs préférences intimes rapportent 30% de satisfaction sexuelle en plus.
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Points clés à retenir</h2>
         <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
           <li>L&rsquo;intimité a trois dimensions : émotionnelle, physique et intellectuelle. Négliger l&rsquo;une d&rsquo;elles crée de la distance.</li>
@@ -172,9 +172,9 @@ export default function QuestionsPourConstruireIntimitePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Questions d&rsquo;intimité émotionnelle</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           L&rsquo;intimité émotionnelle vit dans l&rsquo;espace entre ce que vous ressentez et ce
           que vous partagez. Ces questions invitent votre partenaire dans votre monde intérieur —
           vos peurs, vos souvenirs, vos espoirs les plus discrets. Allez-y doucement. Ces questions
@@ -187,9 +187,9 @@ export default function QuestionsPourConstruireIntimitePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Questions d&rsquo;intimité physique</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           L&rsquo;intimité physique ne concerne pas uniquement le sexe — il s&rsquo;agit du
           toucher, de la présence et du fait d&rsquo;être bien dans son corps à deux. Ces
           questions explorent la dimension sensorielle et physique de votre connexion. Elles
@@ -202,9 +202,9 @@ export default function QuestionsPourConstruireIntimitePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Questions d&rsquo;intimité intellectuelle</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           L&rsquo;intimité intellectuelle est la dimension la plus négligée de la connexion. Elle
           grandit quand vous partagez comment vous pensez, pas seulement ce que vous ressentez.
           Ces questions vous invitent à explorer les idées ensemble — les croyances, les curiosités
@@ -221,23 +221,23 @@ export default function QuestionsPourConstruireIntimitePage() {
         Suivez l&rsquo;énergie. Si une réponse ouvre une porte, traversez-la avant de passer à la suivante.
       </blockquote>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Comment utiliser ces questions</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Choisissez une catégorie et posez 2 à 3 questions. C&rsquo;est suffisant pour une
           session. Rangez vos téléphones, regardez-vous dans les yeux, et laissez les réponses
           respirer. Les questions de suivi — &laquo; dis-moi en plus &raquo; — comptent plus que
           la question d&rsquo;origine.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Certaines questions peuvent ne pas fonctionner. C&rsquo;est normal. D&rsquo;autres
           ouvriront des portes que vous ne soupçonniez pas. Le but n&rsquo;est pas de finir la
           liste. Le but est de rester curieux l&rsquo;un de l&rsquo;autre.
         </p>
       </section>
 
-      <section className="mb-10">
-        <p className="text-slate-300 leading-relaxed">
+      <section className="article-block">
+        <p >
           Ces suggestions fonctionnent mieux pour les couples prêts à s&rsquo;engager ensemble. Si la communication est difficile, envisagez un accompagnement professionnel en complément.
         </p>
       </section>

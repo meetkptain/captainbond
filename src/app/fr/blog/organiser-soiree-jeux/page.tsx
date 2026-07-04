@@ -97,7 +97,7 @@ export default function SoireeJeuxArticlePage() {
 
   return (
     <>
-      <article className="max-w-3xl mx-auto px-4 py-12">
+      <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -107,14 +107,14 @@ export default function SoireeJeuxArticlePage() {
           <h1 className="text-3xl font-bold mb-4">
             Organiser une soirée jeux inoubliable : le guide ultime
           </h1>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Une grande soirée jeux ne tient pas du hasard. Elle commence par les bonnes personnes,
             les bons jeux et un hôte qui sait garder l'énergie au beau fixe. Que vous prépariez une
             soirée décontractée entre amis ou un tournoi compétitif, ce guide vous accompagne à
             chaque étape —             de l'invitation au rangement — pour que votre soirée devienne celle où
             tout le monde espère être invité.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Basé sur les retours de 10 000+ joueurs Captain Bond, les soirées les plus réussies combinent une bonne compagnie avec le bon format interactif.
           </p>
         </header>
@@ -130,38 +130,38 @@ export default function SoireeJeuxArticlePage() {
           </ul>
         </div>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">1. Liste d'invités et planification</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             La liste d'invités est le socle de toute bonne soirée jeux. Trop peu de monde et
             l'énergie retombe. Trop de monde et la soirée vire au chaos. Le nombre idéal se situe
             entre 4 et 8 joueurs — assez pour former des équipes, assez peu pour les jeux de
             stratégie.
           </p>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Envoyez les invitations au moins une semaine à l'avance. Indiquez les horaires de début
             et de fin — les soirées qui "durent jusqu'à tard" perdent souvent ceux qui doivent
             partir tôt. Demandez s'il y a des restrictions alimentaires et quel est le rapport à la
             compétition. Certains adorent les parties acharnées de Catan ; d'autres préfèrent les
             jeux coopératifs où personne n'est éliminé.
           </p>
-          <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">
+          <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
             Les meilleures soirées jeux ressemblent à une conversation qui a le bon goût d'être
             ponctuée d'un score. La liste d'invités compte plus que la collection de jeux.
           </blockquote>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Selon un rapport Statista 2024, le marché mondial des jeux de société devrait atteindre 30 milliards de dollars d&apos;ici 2028.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Si vous mélangez des groupes d'amis, assurez-vous qu'au moins deux personnes se
             connaissent déjà. Cela crée un point d'attache chaleureux et aide les invités plus
             réservés à trouver leurs repères.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">2. Choix des jeux par taille de groupe</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Bien choisir ses jeux, c'est déjà gagner la moitié de la bataille. Vous voulez une
             sélection adaptée à la taille du groupe, au temps disponible et à l'ambiance visée.
             Voici un tableau comparatif pour vous aider :
@@ -210,16 +210,16 @@ export default function SoireeJeuxArticlePage() {
               </tbody>
             </table>
           </div>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Prévoyez 2 ou 3 jeux par soirée. Commencez par un échauffement court (15–20 minutes),
             enchaînez avec le jeu principal (45–90 minutes) et terminez par quelque chose de léger.
             Cet arc maintient l'énergie et évite le coup de mou du milieu de soirée.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">3. Préparer le terrain</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Votre espace donne le ton. Un bon agencement rend les jeux plus faciles et les
             conversations plus naturelles. Voici comment vous préparer :
           </p>
@@ -243,15 +243,15 @@ export default function SoireeJeuxArticlePage() {
               sous-verres et des couvercles.
             </li>
           </ul>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             N'oubliez pas une surface dédiée aux snacks, éloignée de la zone de jeu. Une table
             d'appoint ou un îlot de cuisine fait parfaitement l'affaire.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">4. Animer en professionnel</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Les meilleurs hôtes ne jouent pas — ils facilitent. Ou plutôt, ils jouent tout en
             gardant un œil sur la pièce. Votre mission : veiller à ce que tout le monde se sente
             inclus, comprenne les règles et s'amuse.
@@ -282,24 +282,24 @@ export default function SoireeJeuxArticlePage() {
           </ul>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">5. Rangement et prochaine session</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Une bonne soirée jeux se termine aussi bien qu'elle commence. Quand vous annoncez la
             dernière partie, laissez quelques minutes à chacun pour finir son tour, prenez une photo
             du score et aidez à ranger. Un rangement collectif signale que la soirée est terminée
             sans gêne.
           </p>
-          <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">
+          <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
             Le meilleur signe d'une soirée jeux réussie ? Les invités qui demandent "C'est pour
             quand la prochaine ?" avant même d'avoir passé la porte.
           </blockquote>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Après le départ de tout le monde, notez rapidement ce qui a fonctionné et ce qui peut
             être amélioré. Quels jeux ont fait le plus rire ? Le groupe était-il trop grand ou trop
             petit ? Ces notes rendront votre prochaine soirée encore meilleure.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Un message dans le groupe — pour remercier les invités et teasing la prochaine date —
             entretient la dynamique. Vos amis attendront la prochaine invitation avec impatience
             avant même la fin de la semaine.
@@ -318,7 +318,7 @@ export default function SoireeJeuxArticlePage() {
           </div>
         </div>
 
-        <p className="text-slate-300 leading-relaxed mb-6">
+        <p >
           Ces suggestions fonctionnent mieux pour des groupes d&apos;adultes en recherche de fun social. Pour les très grands groupes (50+) ou les contextes professionnels, envisagez des plateformes dédiées de team building.
         </p>
 

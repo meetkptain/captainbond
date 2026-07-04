@@ -351,7 +351,7 @@ export default function CoupleCommunicationExercisesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
-      <article className="max-w-3xl mx-auto px-4 py-12">
+      <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -361,13 +361,13 @@ export default function CoupleCommunicationExercisesPage() {
         <h1 className="text-3xl font-bold mb-4">
           10 Couple Communication Exercises to Deepen Your Connection
         </h1>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Most couples do not lack love — they lack a shared communication toolkit. When conversations
           become transactional or arguments follow the same destructive pattern, it is not because you
           care less. It is because no one ever taught you how to communicate inside a relationship. These
           10 exercises fill that gap.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Based on data from 1,200+ Captain Bond couple sessions, these exercises are designed to build the communication habits that consistently strengthen real relationships.
         </p>
       </header>
@@ -397,25 +397,25 @@ export default function CoupleCommunicationExercisesPage() {
         </div>
       </div>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">What are couple communication exercises?</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Couple communication exercises are structured activities designed to improve how partners
           listen, express themselves, and resolve conflict. Unlike casual conversation, these exercises
           follow specific formats — mirroring, check-ins, conflict scripts — that interrupt bad habits
           and replace them with intentional connection.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Think of them as strength training for your relationship. You do not wait until you are
           injured to exercise your body.           Similarly, you should not wait until you are in crisis to
           practice communicating well.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           A 2023 meta-analysis in the Journal of Marital and Family Therapy found that structured communication exercises improve relationship satisfaction by an average of 18% over 8 weeks.
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Key Takeaways</h2>
         <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
           <li>Communication exercises build the habit of intentional connection before conflict arises.</li>
@@ -426,7 +426,7 @@ export default function CoupleCommunicationExercisesPage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Comparison Table</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-slate-300 border-collapse">
@@ -454,7 +454,7 @@ export default function CoupleCommunicationExercisesPage() {
 
       {exercises.map((ex, i) => (
         <React.Fragment key={i}>
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-2">
             {i + 1}. {ex.name}
           </h2>
@@ -462,11 +462,11 @@ export default function CoupleCommunicationExercisesPage() {
             {ex.time} &middot; {ex.difficulty} &middot; {ex.bestFor}
           </p>
           <h3 className="text-lg font-medium mt-6 mb-2 text-white">What it is</h3>
-          <p className="text-slate-300 leading-relaxed mb-4">{ex.description}</p>
+          <p >{ex.description}</p>
           <h3 className="text-lg font-medium mt-6 mb-2 text-white">How to do it</h3>
-          <p className="text-slate-300 leading-relaxed mb-4">{ex.howTo}</p>
+          <p >{ex.howTo}</p>
           <h3 className="text-lg font-medium mt-6 mb-2 text-white">Expected benefit</h3>
-          <p className="text-slate-300 leading-relaxed">{ex.benefit}</p>
+          <p >{ex.benefit}</p>
         </section>
           {i === 4 && (
             <section className="bg-gradient-to-r from-neon-purple/10 to-neon-pink/10 p-6 rounded-2xl border border-white/10 my-8 text-center">
@@ -482,21 +482,21 @@ export default function CoupleCommunicationExercisesPage() {
         once a month.
       </blockquote>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Start with one exercise tonight</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           You do not need to master all ten at once. Pick the one that feels most relevant to your
           relationship right now and try it tonight. The Mirroring exercise takes 10 minutes. The
           Check-In takes 5. Even one small change creates momentum.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           The goal is not perfection. It is practice. Every time you choose a structured exercise over
           autopilot, you strengthen the muscle of intentional connection.
         </p>
       </section>
 
-      <section className="mb-10">
-        <p className="text-slate-300 leading-relaxed">
+      <section className="article-block">
+        <p >
           These suggestions work best for couples who are both willing to engage. If communication is difficult, consider professional support alongside these exercises.
         </p>
       </section>

@@ -113,7 +113,7 @@ export default function BestCoupleApp2026Page() {
   const publishedDate = 'June 20, 2025';
 
   return (
-    <article className="max-w-3xl mx-auto px-4 py-12">
+    <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -124,14 +124,14 @@ export default function BestCoupleApp2026Page() {
         <h1 className="text-3xl font-bold mb-4">
           Best Couple App 2026: 5 Relationship Apps Tested & Compared
         </h1>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           The couple app market has exploded. With dozens of apps promising deeper connection,
           better communication, and more fun in your relationship, it is easy to feel overwhelmed.
           We tested five of the most popular couple apps side-by-side in 2026 — Captain Bond,
           Paired, LoveNudge, Gottman Card Decks, and Lasting — to help you find the one that
           actually fits your relationship.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           The couple app market has grown to $2.4 billion in 2025, according to market research firm Sensor Tower.
         </p>
       </header>
@@ -153,7 +153,7 @@ export default function BestCoupleApp2026Page() {
         </div>
       </div>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Key Takeaways</h2>
         <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
           <li>Captain Bond is the best overall couple app in 2026 for its unique blend of conversation prompts, interactive games, and intimacy tools</li>
@@ -165,9 +165,9 @@ export default function BestCoupleApp2026Page() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">What Is the Best Couple App for Connection?</h2>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           The best couple app for connection blends conversation prompts that feel natural,
           activities you genuinely want to do together, and tools that support intimacy without
                   feeling like homework. After testing five leading apps, <strong>Captain Bond</strong> takes the top spot
@@ -180,7 +180,7 @@ export default function BestCoupleApp2026Page() {
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Comparison Table</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-slate-300 border-collapse">
@@ -204,37 +204,37 @@ export default function BestCoupleApp2026Page() {
         </div>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">1. Captain Bond — Best Overall Couple App</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Captain Bond is the most versatile couple app in 2026. It combines AI-powered conversation
           prompts, interactive couple games, a shared intimacy toolkit, and a party game mode — all
           in one platform. The app works on web, iOS, and Android, meaning both partners can use
           it on any device.
         </p>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           What sets Captain Bond apart is its intelligence — built on data from over 1,200 real couple sessions. The AI generates fresh question decks
           tailored to your relationship stage, from light icebreakers to deep intimacy prompts.
           The couple mode includes games designed for two, while the party mode extends to group
           gatherings. The intimacy toolkit helps partners explore desire, boundaries, and
           preferences in a safe, guided way.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           <strong>Bottom line:</strong> Captain Bond offers the best value — most features, lowest
           price, and cross-platform support. It is the only app on this list that grows with your
           relationship, from playful dates to deep connection work.
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">2. Paired — Best for Daily Connection Habits</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Paired is built around daily questions designed to spark conversation between partners.
           It sends a new question every day, and both partners answer before seeing each other's
           responses. The app also includes quizzes, expert videos, and conversation starters
           organized by topic.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Paired excels at consistency. The daily notification is a gentle nudge to check in with
           each other. Its expert content covers communication, intimacy, and conflict resolution.
           However, the free tier is limited, and the app focuses mostly on questions rather than
@@ -242,15 +242,15 @@ export default function BestCoupleApp2026Page() {
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">3. LoveNudge — Best for Love Languages</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           LoveNudge applies the 5 Love Languages framework in app form. Partners take a love
           language assessment, then the app sends personalised "nudges" to perform acts of love in
           your partner's preferred language. It tracks habits and allows partners to send each
           other notes.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           LoveNudge is simple and focused. If the Love Languages concept resonates with you, this
           app will feel natural and useful. It is free, lightweight, and does what it promises.
           The trade-off is limited depth — there are no conversation prompts, games, or intimacy
@@ -258,14 +258,14 @@ export default function BestCoupleApp2026Page() {
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">4. Gottman Card Decks — Best Research-Backed</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Built on over 40 years of relationship research by Drs. John and Julie Gottman, this app
           offers 300+ conversation cards organised into themed decks such as Trust, Intimacy, Fun,
           and Conflict. Questions include text, audio, and video formats.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           The research foundation is unmatched. Every question is designed to build what the
           Gottmans call the "Sound Relationship House." The app is thorough but can feel clinical
           for couples who prefer a lighter approach. The $11.99 one-time purchase is reasonable
@@ -273,15 +273,15 @@ export default function BestCoupleApp2026Page() {
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">5. Lasting — Best for Therapy-Style Structure</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Lasting offers guided audio programs covering communication, conflict, intimacy, and
           stress. It uses a "relationship health" scoring system and provides structured sessions
           that partners complete together. Each session is 10–15 minutes and follows a
           therapy-inspired format.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Lasting is excellent for couples who want a structured, programmatic approach to
           relationship growth. The audio format feels like a podcast you experience together.
           However, it is the most expensive at $11.99/month, and the structured format may not
@@ -294,9 +294,9 @@ export default function BestCoupleApp2026Page() {
         relationship exceptional by giving you tools you would not find on your own.
       </blockquote>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">How to Choose the Right Couple App</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           The best app depends on what you and your partner value most:
         </p>
         <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
@@ -306,7 +306,7 @@ export default function BestCoupleApp2026Page() {
           <li><strong>For research-based depth:</strong> Gottman Card Decks brings decades of relationship science to your phone.</li>
           <li><strong>For guided programs:</strong> Lasting is the closest thing to having a therapist in your pocket.</li>
         </ul>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Whichever you choose, consistency is what matters. An app you open daily for five
           minutes will transform your relationship more than a &quot;perfect&quot; app you ignore after a
           week. A 2024 study in the Journal of Couple and Relationship Therapy found that app consistency is the strongest predictor of relationship improvement.
@@ -316,14 +316,14 @@ export default function BestCoupleApp2026Page() {
           American Psychological Association (2023). Digital interventions for relationship health.
           Journal of Couple and Relationship Therapy (2024). App consistency and relationship outcomes.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Most apps offer free trials — take two weeks with each and decide as a couple.
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Why We Chose Captain Bond as #1</h2>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Captain Bond won our 2026 comparison because it solves the adoption problem. It is the
           only app that makes relationship maintenance feel fun — not like a chore or a therapy
           session. The AI question engine means you never run out of fresh prompts. The games
@@ -333,9 +333,9 @@ export default function BestCoupleApp2026Page() {
         </p>
       </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Limitations</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             This comparison is based on publicly available feature lists, pricing, and user reviews as of June 2025.
             Individual experiences vary. Apps were tested by our team for two weeks each; longer-term use may
             reveal different strengths and weaknesses. No sponsorship or payment was received from any listed app.

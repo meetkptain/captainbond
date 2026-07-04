@@ -83,7 +83,7 @@ export default function FrenchBlogIndexPage() {
               >
                 {post.title}
               </Link>
-              <p className="text-slate-300 leading-relaxed">{post.excerpt}</p>
+              <p >{post.excerpt}</p>
             </article>
           </li>
         ))}

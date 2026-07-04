@@ -59,19 +59,19 @@ export default function GuideSoireeQuiz() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
-      <article className="max-w-3xl mx-auto px-4 py-12">
+      <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
         <h1 className="text-4xl font-black text-white mb-4">Organiser une Soirée Quiz dans Votre Bar : Guide Complet</h1>
         <p className="text-slate-400 text-sm mb-8">Publié le 4 juillet 2025</p>
 
-        <section className="mb-12">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Pourquoi les soirées quiz augmentent le chiffre d&apos;affaires des bars</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">Les soirées quiz dans les bars sont des événements hebdomadaires où des équipes de clients s&apos;affrontent sur des questions de culture générale, musique et images, animées par un hôte sur un écran partagé. Ce format combine divertissement, compétition sociale et consommation.</p>
-          <p className="text-slate-300 leading-relaxed mb-4">Selon Statista, les bars qui organisent des soirées à thème hebdomadaires constatent une augmentation moyenne de 35 % de leur chiffre d&apos;affaires les soirs d&apos;événement. Les soirs traditionnellement calmes (mardi, mercredi) sont les plus transformés, avec des hausses allant jusqu&apos;à 60 %.</p>
-          <p className="text-slate-300 leading-relaxed mb-4">Une étude en hôtellerie publiée dans l&apos;International Journal of Hospitality Management (2024) montre que les établissements avec des événements interactifs hebdomadaires fidélisent 28 % mieux leur clientèle que ceux sans animation régulière.</p>
-          <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">Une soirée quiz ne coûte presque rien à organiser, mais peut transformer un mardi soir calme en salle comble avec une augmentation de 60 % du chiffre d&apos;affaires.</blockquote>
+          <p >Les soirées quiz dans les bars sont des événements hebdomadaires où des équipes de clients s&apos;affrontent sur des questions de culture générale, musique et images, animées par un hôte sur un écran partagé. Ce format combine divertissement, compétition sociale et consommation.</p>
+          <p >Selon Statista, les bars qui organisent des soirées à thème hebdomadaires constatent une augmentation moyenne de 35 % de leur chiffre d&apos;affaires les soirs d&apos;événement. Les soirs traditionnellement calmes (mardi, mercredi) sont les plus transformés, avec des hausses allant jusqu&apos;à 60 %.</p>
+          <p >Une étude en hôtellerie publiée dans l&apos;International Journal of Hospitality Management (2024) montre que les établissements avec des événements interactifs hebdomadaires fidélisent 28 % mieux leur clientèle que ceux sans animation régulière.</p>
+          <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">Une soirée quiz ne coûte presque rien à organiser, mais peut transformer un mardi soir calme en salle comble avec une augmentation de 60 % du chiffre d&apos;affaires.</blockquote>
         </section>
 
-        <section className="mb-12">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Comment planifier votre soirée quiz : guide étape par étape</h2>
           <ol className="list-decimal pl-6 space-y-4 text-slate-300 leading-relaxed mb-4">
             <li><strong>Choisir le format</strong> — Quiz papier classique (traditionnel) ou quiz digital sur écran (interactif, moderne). Le digital permet des scores en temps réel et des statistiques.</li>
@@ -83,7 +83,7 @@ export default function GuideSoireeQuiz() {
           </ol>
         </section>
 
-        <section className="mb-12">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Quiz digital vs quiz traditionnel</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="p-4 rounded-xl border border-white/10"><h3 className="text-lg font-semibold text-white mb-2">📝 Quiz papier</h3><ul className="list-disc pl-4 space-y-1 text-sm text-slate-300"><li>Zéro équipement</li><li>Correction manuelle</li><li>Ambiance traditionnelle</li><li>Limitié à 50 personnes</li></ul></div>
@@ -91,7 +91,7 @@ export default function GuideSoireeQuiz() {
           </div>
         </section>
 
-        <section className="mb-12">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Promouvoir votre soirée quiz</h2>
           <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
             <li><strong>Réseaux sociaux</strong> — Posts hebdomadaires avec le thème du quiz, stories Instagram avec extraits de questions</li>
@@ -101,7 +101,7 @@ export default function GuideSoireeQuiz() {
           </ul>
         </section>
 
-        <section className="mb-12">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Indicateurs de succès</h2>
           <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
             <li><strong>Chiffre d&apos;affaires par couvert</strong> — Objectif : +20 % vs un mardi normal</li>
@@ -111,9 +111,9 @@ export default function GuideSoireeQuiz() {
           </ul>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Limitations</h2>
-          <p className="text-slate-300 leading-relaxed">Ces conseils supposent que vous avez un espace suffisant et un budget pour un écran. Le quiz digital nécessite une connexion internet stable. Pour les très petits bars (moins de 30 places), le quiz papier peut être plus adapté.</p>
+          <p >Ces conseils supposent que vous avez un espace suffisant et un budget pour un écran. Le quiz digital nécessite une connexion internet stable. Pour les très petits bars (moins de 30 places), le quiz papier peut être plus adapté.</p>
         </section>
 
         <aside className="bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 p-6 rounded-2xl border border-white/10 mb-12">

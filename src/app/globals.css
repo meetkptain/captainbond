@@ -135,6 +135,58 @@
   @apply bg-transparent border border-white/10 text-white font-semibold py-4 px-6 rounded-2xl hover:bg-white/5 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm;
 }
 
+/* ── Article Reading System (Medium-inspired) ── */
+
+.article-body {
+  font-size: clamp(1rem, 0.5rem + 0.8vw, 1.125rem);
+  line-height: 1.75;
+}
+
+.article-body p,
+.article-body li {
+  margin-bottom: 1.25rem;
+  hyphens: auto;
+}
+
+.article-body h2 {
+  font-size: clamp(1.5rem, 1rem + 1.2vw, 1.875rem);
+  font-weight: 600;
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  color: #f8fafc;
+}
+
+.article-body h3 {
+  font-size: clamp(1.125rem, 0.75rem + 0.8vw, 1.375rem);
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: #f1f5f9;
+}
+
+.article-body ul,
+.article-body ol {
+  margin-bottom: 1.25rem;
+}
+
+.article-block {
+  margin-bottom: 2.5rem;
+}
+
+.article-card {
+  @apply bg-white/[0.02] p-8 mb-10 rounded-2xl;
+}
+
+.article-card-takeaways {
+  @apply bg-white/[0.02] p-8 mb-10 rounded-2xl;
+}
+
+@media (min-width: 1024px) {
+  .article-body {
+    font-size: 1.125rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

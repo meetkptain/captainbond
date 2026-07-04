@@ -246,7 +246,7 @@ export default function QuestionsForCoupleArticlePage() {
   const publishedDate = 'June 1, 2025';
 
   return (
-    <article className="max-w-3xl mx-auto px-4 py-12">
+    <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -256,7 +256,7 @@ export default function QuestionsForCoupleArticlePage() {
         <h1 className="text-3xl font-bold mb-4">
           150 Questions for Couples: From Fun to Deep
         </h1>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           The best conversations rarely happen by accident. They start with a single question asked
           with curiosity, patience and no agenda. Whether you are newly dating or have shared
           decades, the right question can pull you out of autopilot and remind you why you chose
@@ -289,16 +289,16 @@ export default function QuestionsForCoupleArticlePage() {
         <p className="text-sm text-white/60">&mdash; The Gottman Institute</p>
       </div>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Why questions matter for couples</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Most couples do not run out of love; they run out of novelty. Daily logistics — groceries,
           bills, schedules — crowd out the deeper conversations that once came naturally. Questions
           are the simplest technology for reversing that drift. They create a pocket of attention
           where your partner becomes interesting again, not because they changed, but because you
           decided to look closer.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           A good question does not demand a perfect answer. It invites honesty. It gives permission
           to say the thing that normally stays quiet. Over time, these small disclosures become the
           fabric of intimacy: the feeling that someone knows you, not just the version you perform
@@ -312,16 +312,16 @@ export default function QuestionsForCoupleArticlePage() {
           A good question does not demand a perfect answer. It invites the thing that normally stays
           quiet.
         </blockquote>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           This is what makes questions the cheapest, most powerful tool in any relationship. They
           require no app, no subscription, no special setting — just two people and the willingness
           to be curious about each other again.
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">How to use this list</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Quantity is not the goal. Connection is. Here is a simple ritual that makes the most of
           these prompts:
         </p>
@@ -343,7 +343,7 @@ export default function QuestionsForCoupleArticlePage() {
             rushing to the next prompt.
           </li>
         </ul>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           The prompts below are grouped by theme and intensity. You do not need to answer all 150 in
           one night. Dip in, skip around, and come back when the moment feels right. If you want
           hundreds more prompts generated for you, the Captain Bond couple mode builds fresh
@@ -351,9 +351,9 @@ export default function QuestionsForCoupleArticlePage() {
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Fun and light questions</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Use these when you want to laugh, remember that you enjoy each other, or break a tense
           mood. Playfulness is underrated glue in long-term relationships.
         </p>
@@ -369,9 +369,9 @@ export default function QuestionsForCoupleArticlePage() {
         <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Getting-to-know-you questions</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Even partners who have been together for years can discover new rooms in each other. These
           prompts explore history, values and the small details that make a person feel unique.
         </p>
@@ -382,9 +382,9 @@ export default function QuestionsForCoupleArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Deep and emotional questions</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Go here when the house is quiet, you both have bandwidth, and you want to feel genuinely
           close. These questions ask for vulnerability, so take them slowly and without pressure.
         </p>
@@ -395,9 +395,9 @@ export default function QuestionsForCoupleArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Intimate and spicy questions</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Desire starts in the mind. These prompts stay classy while inviting you to talk about
           attraction, touch and what makes you feel wanted. Use them to build anticipation and
           clarity at the same time.
@@ -414,9 +414,9 @@ export default function QuestionsForCoupleArticlePage() {
         <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Future and values questions</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Shared direction is what turns chemistry into partnership. These questions help you
           calibrate where you are heading and what you each need along the way.
         </p>
@@ -427,17 +427,17 @@ export default function QuestionsForCoupleArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">A final thought</h2>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           You do not need the perfect question. You need the courage to ask and the patience to
           listen.
         </p>
-        <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
           You do not need the perfect question. You need the courage to ask and the patience to
           listen.
         </blockquote>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           The list above is a starting point. The real magic happens in the follow-up, the
           pause, the laugh, the awkward silence you sit through together. Keep a few favorites in
           your back pocket and pull them out when life starts to feel transactional. Your

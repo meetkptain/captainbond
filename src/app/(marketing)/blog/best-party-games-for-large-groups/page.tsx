@@ -97,7 +97,7 @@ export default function BestPartyGamesLargeGroupsPage() {
 
   return (
     <>
-      <article className="max-w-3xl mx-auto px-4 py-12">
+      <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -107,7 +107,7 @@ export default function BestPartyGamesLargeGroupsPage() {
           <h1 className="text-3xl font-bold mb-4">
             Best Party Games for Large Groups in 2026: 10+ People Games
           </h1>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Large group party games are structured social activities designed for 10 to 50+
             simultaneous players, relying on minimal physical components and maximal
             participation. Unlike traditional board games that cap at 6 to 8 players, large
@@ -115,7 +115,7 @@ export default function BestPartyGamesLargeGroupsPage() {
             nobody sits out. They are the difference between a gathering where cliques form
             and one where everybody belongs.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Based on feedback from 10,000+ Captain Bond players, the most successful game nights combine good company with the right interactive format.
           </p>
         </header>
@@ -136,28 +136,28 @@ export default function BestPartyGamesLargeGroupsPage() {
           </ul>
         </div>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Why large group games need a different approach</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Large group party games are social activities designed for 10 or more simultaneous players that rely on TV displays, phone controllers, or conversation mechanics instead of physical boards and pieces. Traditional board games hit a hard ceiling at 6 players — the board is too small, turns take too long, and eliminated players check their phones instead of engaging.
           </p>
-          <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">
+          <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
             A party game designed for large groups does not scale up a small game. It reimagines play so that adding more people makes the game better, not slower.
           </blockquote>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             The problem is mechanical. A standard board game assumes sequential turns, a fixed board, and a handful of pieces. With 10 players, a single turn cycle takes 10 times longer. With 20, it becomes unplayable. This is why party game designers have shifted toward <strong>simultaneous-play formats</strong> where every player acts at once and the outcome resolves on a central screen.
           </p>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             According to a 2024 Statista report, the global board games market is projected to reach $30 billion by 2028, with party games as the fastest-growing segment as consumers seek group-friendly alternatives to traditional tabletop formats.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             A 2019 study published in the Journal of Positive Psychology found that shared laughter experiences significantly increase relationship quality and social bonding, which is exactly what well-designed large group games deliver at scale.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">What makes a great large group party game</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Not every game scales. Here are the five characteristics that separate large-group-friendly games from those that fall apart past 8 players:
           </p>
           <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
@@ -182,9 +182,9 @@ export default function BestPartyGamesLargeGroupsPage() {
           </blockquote>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Top 5 party games for 10-50+ players</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Here are the five best formats for large group play, ranked by how well they scale:
           </p>
           <ul className="list-disc pl-6 space-y-3 text-slate-300 leading-relaxed mb-4">
@@ -204,14 +204,14 @@ export default function BestPartyGamesLargeGroupsPage() {
               <strong>5. Trivia with team brackets (10-50+ players).</strong> Divide the room into teams of 3-5 people. Run a bracket-style trivia tournament with 10-question rounds. Teams discuss answers together, which naturally mixes quieter voices with louder ones. The bracket format creates stakes and a clear end point.
             </li>
           </ul>
-          <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">
+          <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
             The most scalable party games share one insight: when every player acts simultaneously and the result resolves on a shared screen, adding more people amplifies the fun instead of diluting it.
           </blockquote>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Tips for hosting a large group game night</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Hosting a game night for 20 people is different from hosting one for 6. These tips will help you keep the energy high and the logistics smooth:
           </p>
           <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
@@ -239,36 +239,36 @@ export default function BestPartyGamesLargeGroupsPage() {
           </blockquote>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Frequently asked questions</h2>
           <div className="space-y-4">
             <div>
               <h3 className="font-semibold text-slate-200 mb-2">What are the best party games for large groups?</h3>
-              <p className="text-slate-300 leading-relaxed">
+              <p >
                 The best party games for large groups combine TV-based display with phone-based controllers so everyone plays simultaneously. Captain Bond Party supports up to 100 players, Jackbox Games works for 8+ players, and no-equipment classics like Never Have I Ever and Werewolf scale to any group size without any physical components.
               </p>
             </div>
             <div>
               <h3 className="font-semibold text-slate-200 mb-2">How do you play party games with 20+ people?</h3>
-              <p className="text-slate-300 leading-relaxed">
+              <p >
                 With 20+ players, traditional board games break down because they cannot accommodate that many people around a single board. The solution is TV-displayed games where players use their phones as controllers, or social deduction games like Werewolf that rely on conversation and voting rather than physical pieces.
               </p>
             </div>
             <div>
               <h3 className="font-semibold text-slate-200 mb-2">Do you need an app to play party games?</h3>
-              <p className="text-slate-300 leading-relaxed">
+              <p >
                 Not always, but apps unlock the best experience for large groups. Phone-controlled games like Captain Bond Party let everyone participate simultaneously on a shared screen. No-equipment games like Charades, 2 Truths 1 Lie, and Categories require no app at all and work with any number of players.
               </p>
             </div>
             <div>
               <h3 className="font-semibold text-slate-200 mb-2">What is a good icebreaker for large groups?</h3>
-              <p className="text-slate-300 leading-relaxed">
+              <p >
                 The best icebreakers for large groups are simultaneous-play games where nobody waits for a turn. Most Likely To, Would You Rather, and Categories let everyone vote or answer at once. For 20+ people, split into smaller circles and run parallel rounds with a final group showdown.
               </p>
             </div>
             <div>
               <h3 className="font-semibold text-slate-200 mb-2">How long should a large group party game last?</h3>
-              <p className="text-slate-300 leading-relaxed">
+              <p >
                 Large group party games work best in 15 to 30 minute rounds. Short rounds keep energy high and allow players to rotate in and out naturally. Plan 3 to 4 rounds per session with a short break between each one for refills and conversation.
               </p>
             </div>
@@ -291,7 +291,7 @@ export default function BestPartyGamesLargeGroupsPage() {
           A large group game succeeds when the shyest person in the room forgets they are part of a crowd and starts laughing with everyone else.
         </blockquote>
 
-        <p className="text-slate-300 leading-relaxed mb-6">
+        <p >
           These games work best when the host has a screen to display the game board. Players need their phones for the best experience. For traditional board games with physical components, 10+ players becomes impractical.
         </p>
 
@@ -300,7 +300,7 @@ export default function BestPartyGamesLargeGroupsPage() {
           <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Related articles</h2>
           <ul className="space-y-2 text-slate-300 leading-relaxed">
             <li>

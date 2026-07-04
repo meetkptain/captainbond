@@ -125,7 +125,7 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <article className="max-w-3xl mx-auto px-4 py-12">
+      <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
         <header className="mb-10">
           <time className="text-sm text-slate-400" dateTime="2025-07-01">
             {publishedDate}
@@ -133,12 +133,12 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
           <h1 className="text-3xl font-bold mb-4">
             Comment créer un rituel de couple hebdomadaire (guide 20 min)
           </h1>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Un rituel de couple hebdomadaire, c&rsquo;est un créneau dédié et récurrent — sans
             téléphone, sans programme, juste vingt minutes d&rsquo;attention mutuelle. C&rsquo;est
             la pratique la plus efficace pour sortir votre relation du pilote automatique.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Basé sur les données de 1 200+ sessions couple Captain Bond, les couples qui utilisent
             des questions structurées rapportent une connexion mesurablement plus forte.
           </p>
@@ -161,7 +161,7 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
           </div>
         </div>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Points clés à retenir</h2>
           <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
             <li>
@@ -187,9 +187,9 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
           </ul>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Pourquoi un rituel hebdomadaire change tout</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Les relations n&rsquo;échouent pas à cause d&rsquo;une seule grosse dispute. Elles
             s&rsquo;érodent progressivement — par des milliers de petits moments où un partenaire
             tend la main et l&rsquo;autre est distrait. Les études sont claires : les couples qui
@@ -200,42 +200,42 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
             dans le Journal of Social and Personal Relationships a montré que les couples qui se
             posent des questions originales rapportent des niveaux d&rsquo;intimité plus élevés.
           </p>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Un rituel hebdomadaire n&rsquo;est pas une tâche de plus sur votre liste. C&rsquo;est
             un contenant qui protège votre connexion de la gravité logistique du quotidien. Il dit :
             cette relation compte assez pour apparaître sur le calendrier.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Le meilleur dans tout ça ? Vous n&rsquo;avez pas besoin de bougies, de musique ou d&rsquo;un
             script. Juste vingt minutes et la volonté de vous tourner l&rsquo;un vers l&rsquo;autre
             au lieu du premier écran venu.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 1 : Choisir un créneau et le protéger</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Choisissez un jour et une heure que vous pouvez vraiment tenir. Le dimanche soir est
             populaire parce que le week-end se termine et que la semaine n&rsquo;a pas encore
             commencé. Le mardi matin peut mieux convenir aux travailleurs postés. Il n&rsquo;y a pas
             de mauvaise réponse — seulement celle que vous défendez.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Mettez-le dans les deux calendriers. Traitez-le aussi sérieusement qu&rsquo;un rendez-vous
             médical. Si un imprévu survient, reprogrammez dans la même semaine plutôt que de sauter
             complètement. Le rituel est l&rsquo;engagement ; le créneau n&rsquo;est que son adresse.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 2 : Supprimer toutes les distractions</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             C&rsquo;est l&rsquo;étape qui a le plus d&rsquo;impact. Les téléphones vont dans une
             autre pièce — pas retournés sur la table. La télé reste éteinte. Les notifications sont
             coupées. Si vous avez des enfants, attendez qu&rsquo;ils dorment ou trouvez une
             garde.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Les recherches montrent que la simple présence d&rsquo;un téléphone — même retourné et
             silencieux — réduit la qualité de la conversation et l&rsquo;empathie. Votre partenaire
             mérite toute votre attention pendant vingt minutes. Rien n&rsquo;est plus important dans
@@ -247,9 +247,9 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
           </blockquote>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 3 : Choisir un format de conversation</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Avoir une structure évite l&rsquo;impasse du &ldquo;Alors, ta semaine ?&rdquo;. Le
             format le plus simple est un point en trois parties :
           </p>
@@ -268,62 +268,62 @@ export default function FrenchRituelCoupleHebdomadaireArticlePage() {
               l&rsquo;autre cette semaine.
             </li>
           </ul>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Le mode couple de Captain Bond génère des questions fraîches à chaque session, pour ne
             jamais manquer de matière. L&rsquo;appli gère la structure ; vous vous concentrez
             l&rsquo;un sur l&rsquo;autre.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 4 : Alterner la parole et l&rsquo;écoute</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             L&rsquo;erreur la plus courante dans les conversations de couple est d&rsquo;interrompre
             pour résoudre les problèmes. Quand votre partenaire partage quelque chose de difficile,
             votre instinct est de réparer. Résistez à cet instinct pendant vingt minutes.
           </p>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Utilisez un système simple : celui qui tient un objet parle, l&rsquo;autre écoute
             seulement. Pas d&rsquo;interruption, pas de conseil, pas de &ldquo;Ça me rappelle
             quand…&rdquo; Changez de rôle après un tour. Cela seul transformera vos conversations.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Écouter sans réparer communique quelque chose de profond : Je te fais confiance pour
             gérer ta vie. Je suis là pour être témoin, pas pour gérer.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 5 : Terminer par la gratitude</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Les deux dernières minutes sont les plus importantes. Chacun partage une chose précise
             qu&rsquo;il a appréciée chez l&rsquo;autre cette semaine. &ldquo;Tu m&rsquo;as fait
             rire quand j&rsquo;étais stressé&rdquo; ou &ldquo;J&rsquo;ai remarqué comment tu as géré
             l&rsquo;appel avec ma mère avec beaucoup de grâce.&rdquo;
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             La gratitude est un muscle. Plus vous l&rsquo;entraînez, plus votre cerveau scanne
             automatiquement ce qui fonctionne au lieu de ce qui manque. Avec le temps, cela
             reprogramme le climat émotionnel de toute votre relation.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Une dernière pensée</h2>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Vous n&rsquo;avez pas besoin du rituel parfait. Vous avez besoin du courage de
             commencer et de la discipline de le protéger. Vingt minutes, une fois par semaine, sans
             téléphone, avec toute votre attention. C&rsquo;est tout. C&rsquo;est assez pour changer
             la trajectoire de votre relation.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Commencez cette semaine. Choisissez un jour. Réglez un minuteur. Tournez-vous l&rsquo;un
             vers l&rsquo;autre. Tout le reste n&rsquo;est que pratique.
           </p>
         </section>
 
-        <section className="mb-10">
-          <p className="text-slate-300 leading-relaxed">
+        <section className="article-block">
+          <p >
             Ces questions fonctionnent mieux quand les deux partenaires sont disponibles pour une
             conversation sans interruption. Si l&apos;un des deux est fatigué ou réticent, commencez
             par les sections légères — l&apos;objectif est la connexion, pas l&apos;exhaustivité.

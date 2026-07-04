@@ -246,7 +246,7 @@ export default function QuestionsCoupleGuideCompletPage() {
   const publishedDate = '15 juin 2025';
 
   return (
-    <article className="max-w-3xl mx-auto px-4 py-12">
+    <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -256,14 +256,14 @@ export default function QuestionsCoupleGuideCompletPage() {
         <h1 className="text-3xl font-bold mb-4">
           Questions pour un Couple : Le Guide Complet pour se Connecter Plus Profondément
         </h1>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           La plupart des couples veulent se connecter plus profondément mais ne savent pas par où
           commencer. La réponse est plus simple que vous ne le pensez : la bonne question posée au
           bon moment peut déverrouiller des mondes entre vous. Ce guide vous offre un cadre complet
           — 150+ questions à travers cinq niveaux de connexion, un rituel étape par étape, et la
           science derrière son efficacité.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Basé sur les données de 1 200+ sessions couple Captain Bond, les couples qui utilisent
           des questions structurées rapportent une connexion mesurablement plus forte. Selon une
           étude du Gottman Institute, les couples qui ont des conversations structurées au moins une
@@ -288,7 +288,7 @@ export default function QuestionsCoupleGuideCompletPage() {
         meilleures conversations commencent par une bonne question posée sans agenda.
       </blockquote>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Ce que vous allez découvrir dans ce guide</h2>
         <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
           <li>Un cadre en 5 étapes pour des conversations de couple qui comptent</li>
@@ -299,9 +299,9 @@ export default function QuestionsCoupleGuideCompletPage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Les cinq niveaux de connexion en un coup d&rsquo;œil</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Chaque moment ne réclame pas la même profondeur de conversation. Ce tableau vous aide à
           choisir le bon niveau pour la bonne humeur.
         </p>
@@ -351,9 +351,9 @@ export default function QuestionsCoupleGuideCompletPage() {
         </div>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 1 : Préparer l&rsquo;espace</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           L&rsquo;environnement façonne la conversation. Pas besoin de bougies et de pétales de
           rose, mais quelques ajustements simples font toute la différence. Mettez les téléphones
           dans une autre pièce. Asseyez-vous face à face ou côte à côte sans écran entre vous.
@@ -361,7 +361,7 @@ export default function QuestionsCoupleGuideCompletPage() {
           ou pressé. Même dix minutes d&rsquo;attention totale valent mieux qu&rsquo;une heure de
           présence distraite.
         </p>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Fixez une règle de base : pas de réparation, pas de solution. Le but est la
           compréhension, pas la résolution de problèmes. Si une réponse vous met mal à l&rsquo;aise,
           restez curieux plutôt que sur la défensive. Vous ne vous interviewez pas, vous explorez
@@ -374,9 +374,9 @@ export default function QuestionsCoupleGuideCompletPage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 2 : Choisir la bonne profondeur</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           La plus grande erreur que font les couples est d&rsquo;aller trop profond trop vite. La
           profondeur sans confiance ressemble à un interrogatoire. Commencez au niveau 1 ou 2 sauf
           si vous savez que vous avez tous les deux l&rsquo;espace nécessaire pour plus. Observez le
@@ -384,7 +384,7 @@ export default function QuestionsCoupleGuideCompletPage() {
           alléger. Se pencher, un regard soutenu et des épaules détendues signifient que vous pouvez
           aller plus loin.
         </p>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Si vous ne savez pas par où commencer, essayez ceci : demandez à votre partenaire de
           choisir un chiffre de 1 à 5 selon son état d&rsquo;esprit du moment. Alignez-vous sur ce
           niveau et suivez son rythme.
@@ -401,9 +401,9 @@ export default function QuestionsCoupleGuideCompletPage() {
         profondeur à la disponibilité de votre partenaire, pas à votre curiosité.
       </blockquote>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 3 : Poser la question avec intention</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           La façon dont vous posez la question compte autant que la question elle-même. Utilisez un
           ton ouvert et chaleureux. Commencez par un adoucisseur : « Je me demandais quelque
           chose… » ou « Je peux te poser une question qui m&rsquo;est venue ? » Cela signale la
@@ -412,7 +412,7 @@ export default function QuestionsCoupleGuideCompletPage() {
           loin. Reformulez ce que vous avez entendu : « On dirait que tu as ressenti… » ou
           « Ça me permet de mieux te comprendre. »
         </p>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Évitez le jugement, les conseils, ou de transformer la réponse en débat. Votre seul rôle
           est de recevoir ce qu&rsquo;ils partagent avec gratitude. Quand les deux partenaires se
           sentent entendus sans être réparés, la confiance s&rsquo;accumule rapidement.
@@ -424,16 +424,16 @@ export default function QuestionsCoupleGuideCompletPage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 4 : Réfléchir ensemble</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           La conversation ne s&rsquo;arrête pas quand la question est répondue. La réflexion est là
           où la vraie connexion opère. Après chaque réponse, prenez un moment pour accueillir ce qui
           a été partagé. Vous pouvez dire : « Merci de m&rsquo;avoir dit ça » ou « Je n&rsquo;avais
           jamais vu les choses comme ça. » Ces petites validations sont puissantes. Elles disent à
           votre partenaire que son honnêteté est en sécurité avec vous.
         </p>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Si ce qu&rsquo;ils partagent éveille une émotion en vous, nommez-la doucement.
           « Entendre ça me rend plus proche de toi. » La réflexion partagée transforme une session
           de questions-réponses en une expérience de rapprochement que vous garderez tous les deux
@@ -446,9 +446,9 @@ export default function QuestionsCoupleGuideCompletPage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Étape 5 : Répéter et créer un rituel</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           La régularité compte plus que l&rsquo;intensité. Un check-in de dix minutes chaque
           semaine approfondira votre connexion plus qu&rsquo;un marathon de quatre heures une fois
           par an. Une étude de 2023 dans le Journal of Social and Personal Relationships a montré
@@ -457,7 +457,7 @@ export default function QuestionsCoupleGuideCompletPage() {
           soir, ou une promenade en milieu de semaine. Faites-en votre truc. Avec le temps, ces
           conversations deviennent un espace sûr où chacun peut amener n&rsquo;importe quoi.
         </p>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Gardez une liste des questions qui ont déclenché les meilleures conversations.
           Revisitez-les quelques mois plus tard et remarquez comment vos réponses ont changé. La
           croissance devient visible quand vous comparez où vous étiez à où vous êtes maintenant. Le
@@ -476,9 +476,9 @@ export default function QuestionsCoupleGuideCompletPage() {
         approfondit votre connexion plus qu&rsquo;un marathon de quatre heures une fois par an.
       </blockquote>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Un dernier mot</h2>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Vous n&rsquo;avez pas besoin de la question parfaite. Vous avez besoin d&rsquo;un moment
           calme, d&rsquo;un cœur ouvert et du courage de commencer. Les questions ci-dessus sont
           des outils, pas des règles. Adaptez-les, mélangez-les et laissez-les évoluer avec votre
@@ -488,8 +488,8 @@ export default function QuestionsCoupleGuideCompletPage() {
         </p>
       </section>
 
-      <section className="mb-10">
-        <p className="text-slate-300 leading-relaxed">
+      <section className="article-block">
+        <p >
           Ces questions fonctionnent mieux quand les deux partenaires sont disponibles pour une
           conversation sans interruption. Si l&apos;un des deux est fatigué ou réticent, commencez par
           les sections légères — l&apos;objectif est la connexion, pas l&apos;exhaustivité.

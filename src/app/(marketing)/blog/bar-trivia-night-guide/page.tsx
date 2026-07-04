@@ -151,7 +151,7 @@ export default function BarTriviaNightGuidePage() {
 
   return (
     <>
-      <article className="max-w-3xl mx-auto px-4 py-12">
+      <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -165,12 +165,12 @@ export default function BarTriviaNightGuidePage() {
           <h1 className="text-3xl font-bold mb-4">
             Bar Trivia Night Guide: How to Host a Successful Quiz Night
           </h1>
-          <p className="text-slate-300 leading-relaxed text-lg">
+          <p >
             A well-run trivia night fills seats on slow weeknights, keeps customers drinking
             longer, and builds a loyal crowd that comes back every week. Here is everything you
             need to plan, promote, and host a quiz night your bar can be proud of.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Based on data from 15 partner bars across Europe, weekly trivia nights increase
             average Tuesday–Thursday beverage revenue by 22% within the first month.
           </p>
@@ -203,15 +203,15 @@ export default function BarTriviaNightGuidePage() {
           </ul>
         </div>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Why trivia nights boost bar revenue</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             The economics of a slow weeknight are brutal. Fixed costs — rent, staff, utilities —
             stay the same whether you have 10 customers or 50. The difference between a profitable
             Tuesday and a loss-making one is the number of rounds per seat. Trivia nights solve
             this by anchoring guests for 2-3 hours instead of the typical 45-minute solo drink.
           </p>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             According to Statista, the global bar and nightclub industry generated approximately
             $170 billion in revenue in 2024, with weeknight sales accounting for less than 30%
             of total revenue despite representing 70% of operating hours. This imbalance means
@@ -219,12 +219,12 @@ export default function BarTriviaNightGuidePage() {
             — which cost little to run but drive significant dwell time — directly address this
             gap.
           </p>
-          <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">
+          <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
             The average bar loses money on every Tuesday and Wednesday seat. A trivia night
             converts those loss-making seats into your most profitable inventory — no extra
             kitchen, no extra staff, just a reason to stay.
           </blockquote>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             A 2023 study published in the International Journal of Hospitality Management found
             that gamification in hospitality venues increased average customer dwell time by 47%
             and per-person expenditure by 31%. The mechanism is simple: structured game play
@@ -232,7 +232,7 @@ export default function BarTriviaNightGuidePage() {
             correct responses, and commiserate over wrong ones — all of which prompt another
             round.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Bars that run weekly trivia report 20-35% higher attendance on trivia nights compared
             to the same night without entertainment. More importantly, the effect compounds:
             regular attendees bring new friends, teams form rivalries, and the event becomes a
@@ -252,15 +252,15 @@ export default function BarTriviaNightGuidePage() {
           </div>
         </div>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">How to plan your trivia night: a step-by-step guide</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             A successful trivia night does not happen by accident. Follow these six steps to
             build a repeatable format that your customers will look forward to every week.
           </p>
 
           <h3 className="text-xl font-semibold mt-8 mb-3">1. Choose a format</h3>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             The first decision is the most important: digital or traditional. Traditional trivia
             requires a live host who writes questions, reads them aloud, and manually scores
             paper answer sheets. This works for small crowds but costs €150-300 per night in
@@ -271,7 +271,7 @@ export default function BarTriviaNightGuidePage() {
           </p>
 
           <h3 className="text-xl font-semibold mt-8 mb-3">2. Prepare questions</h3>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Great trivia questions are the backbone of the night. Structure your event into 6-8
             rounds of 8-10 questions each. Mix categories: general knowledge, pop culture,
             history, sports, music, science, and a local round (questions about your city or
@@ -279,7 +279,7 @@ export default function BarTriviaNightGuidePage() {
             celebrity lookalikes — to give regulars something fresh. Aim for a difficulty split
             of 40% easy, 40% medium, 20% hard so every team stays competitive.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             If you are running traditional trivia, build a question bank of at least 200
             questions and rotate them across nights. With digital tools like Captain Bond Pro,
             the question bank is infinite and automatically refreshed, so you never repeat a
@@ -287,7 +287,7 @@ export default function BarTriviaNightGuidePage() {
           </p>
 
           <h3 className="text-xl font-semibold mt-8 mb-3">3. Set up the space</h3>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Every seat in the house should have a clear line of sight to the main screen or
             host area. Test your audio system before the first event — muffled questions are
             the fastest way to kill energy. Arrange tables to encourage team formation: 4-6
@@ -298,7 +298,7 @@ export default function BarTriviaNightGuidePage() {
           </p>
 
           <h3 className="text-xl font-semibold mt-8 mb-3">4. Promote the event</h3>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Promotion is the difference between 5 teams and 20 teams. Start 2-3 weeks before
             your launch. Use a multi-channel approach: social media countdown posts (Instagram
             Stories, Facebook Events), printed posters and customized coasters in-house, local
@@ -308,7 +308,7 @@ export default function BarTriviaNightGuidePage() {
           </p>
 
           <h3 className="text-xl font-semibold mt-8 mb-3">5. Host the night</h3>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             On the night, welcome teams as they arrive, explain the rules clearly before
             starting, and keep energy high between rounds with background music and banter.
             For traditional trivia, the host carries the show — timing, inflection, and
@@ -318,7 +318,7 @@ export default function BarTriviaNightGuidePage() {
           </p>
 
           <h3 className="text-xl font-semibold mt-8 mb-3">6. Follow up</h3>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             The night does not end when the last team leaves. Post results on social media
             within 24 hours and tease next week&apos;s theme. Collect email sign-ups for a
             trivia newsletter. Track attendance, revenue per seat, and customer feedback after
@@ -328,9 +328,9 @@ export default function BarTriviaNightGuidePage() {
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Digital vs traditional trivia: which is better for bars?</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             The debate between digital and traditional trivia comes down to scale, cost, and
             customer experience. Here is how they compare:
           </p>
@@ -377,7 +377,7 @@ export default function BarTriviaNightGuidePage() {
               </tbody>
             </table>
           </div>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             For most bars, digital trivia wins on cost and scalability alone. The €500-1,100
             monthly savings compared to a live host covers the trivia subscription many times
             over. But traditional trivia has its place: small, intimate venues with a loyal
@@ -387,9 +387,9 @@ export default function BarTriviaNightGuidePage() {
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Promoting your trivia night</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             A great trivia night is worthless if nobody shows up. Promotion is the engine that
             turns your event from a good idea into a packed house. Here is a channel-by-channel
             breakdown:
@@ -422,7 +422,7 @@ export default function BarTriviaNightGuidePage() {
               for tap takeover nights.
             </li>
           </ul>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             The key is consistency. Use the same hashtag, the same visual identity, and the
             same posting schedule every week. Customers should know trivia night is Wednesday
             without checking a calendar.
@@ -435,9 +435,9 @@ export default function BarTriviaNightGuidePage() {
           to show up — and a reason to come back.
         </blockquote>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Measuring success</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             To know whether your trivia night is working, track these five KPIs consistently
             across every event:
           </p>
@@ -467,13 +467,13 @@ export default function BarTriviaNightGuidePage() {
               the sharer&apos;s network.
             </li>
           </ul>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Bars that track these metrics consistently see their trivia nights evolve from a
             side experiment into their most profitable weekly revenue stream within 8-12 weeks.
           </p>
         </section>
 
-        <p className="text-slate-300 leading-relaxed mb-6">
+        <p >
           These suggestions work best for bars, pubs, and casual venues looking to boost weeknight trade. For very large venues (200+ capacity) or corporate hospitality settings, consider dedicated event management platforms.
         </p>
 

@@ -146,7 +146,7 @@ export default function DeepQuestionsForCouplesArticlePage() {
   const publishedDate = 'July 1, 2025';
 
   return (
-    <article className="max-w-3xl mx-auto px-4 py-12">
+    <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -156,12 +156,12 @@ export default function DeepQuestionsForCouplesArticlePage() {
         <h1 className="text-3xl font-bold mb-4">
           50 Deep Questions for Couples to Reconnect
         </h1>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Deep questions for couples are intentional prompts designed to move conversation beyond
           daily logistics into the territory of vulnerability, values, memories, and hidden desires
           — helping partners rediscover each other beyond the roles they play at home.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Based on data from 1,200+ Captain Bond couple sessions, couples who use structured
           question decks report measurably stronger connection over time.
         </p>
@@ -199,19 +199,19 @@ export default function DeepQuestionsForCouplesArticlePage() {
         </div>
       </div>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Why deep questions matter</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Most couples do not drift apart because of big betrayals. They drift because the daily
           rhythm — work, chores, notifications —           slowly replaces genuine exchange with efficient
           coordination. You stop asking how your partner feels and start asking what they need from
           the store. Over months and years, that efficiency hollows out the connection.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Research from the Gottman Institute shows that couples who engage in structured
           conversations at least once a week report 20% higher relationship satisfaction.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Deep questions reverse this by design. They force a pause. They require sitting still,
           looking at each other, and answering without a script. The first few may feel awkward.
           That is normal. Awkwardness is the price of admission to a conversation that actually
@@ -222,9 +222,9 @@ export default function DeepQuestionsForCouplesArticlePage() {
         </blockquote>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">How to use these questions</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           A list of fifty questions can feel overwhelming. Resist the urge to treat it as a
           checklist. Here is a simple approach that works:
         </p>
@@ -246,15 +246,15 @@ export default function DeepQuestionsForCouplesArticlePage() {
             next question can wait.
           </li>
         </ul>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           The goal is not to finish. The goal is to feel closer when you put the list down than
           when you picked it up.
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Vulnerability and fear</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           These questions ask for the things we usually hide — the fears we manage alone, the
           insecurities we perform confidence over, and the parts of ourselves we protect most
           carefully. Approach them with softness and no judgment.
@@ -266,9 +266,9 @@ export default function DeepQuestionsForCouplesArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Childhood and past</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Who we are today was shaped long before we met. These questions explore the moments,
           people, and wounds that built the person you love — and reveal the invisible threads
           between then and now.
@@ -285,9 +285,9 @@ export default function DeepQuestionsForCouplesArticlePage() {
         <p className="text-xs text-slate-500 mt-2">&mdash; Captain Bond</p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Values and beliefs</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Shared values are the bedrock of lasting partnership. These prompts go beyond surface
           alignment to explore where your principles come from, where they differ, and what you
           each hold sacred even when no one is watching.
@@ -299,9 +299,9 @@ export default function DeepQuestionsForCouplesArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Love and relationship</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           These questions focus on the space between you — how you love, how you disconnect, what
           you need and hesitate to ask for. They are the most direct route to understanding your
           partner&apos;s inner experience of the relationship.
@@ -313,9 +313,9 @@ export default function DeepQuestionsForCouplesArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Dreams and regrets</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Regret and ambition live in the same part of the heart. These questions invite you to
           share what you still want, what you have let go of, and what you hope for — both for
           yourself and for your life together.
@@ -327,14 +327,14 @@ export default function DeepQuestionsForCouplesArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Keeping the conversation alive</h2>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           The real work is not asking the question. It is creating a life where these conversations
           feel natural, not scheduled. The more you practice vulnerability together, the less you
           will need a list. But until then, the list is a good place to start.
         </p>
-        <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
             The real work is not asking the question. It is creating a life where these conversations
             feel natural, not scheduled.
         </blockquote>
@@ -343,22 +343,22 @@ export default function DeepQuestionsForCouplesArticlePage() {
           partner&apos;s inner world — are a strong predictor of relationship longevity (<em>The Seven Principles
           for Making Marriage Work</em>, 1999). These questions are designed to build those maps.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Keep these questions somewhere you can find them again. Pull one out during a quiet
           morning, on a long drive, or when you feel the distance creeping back. A single honest
           answer can change the whole weather of a relationship.
         </p>
       </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Limitations & Research Context</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             These questions are inspired by relationship science, particularly Gottman&apos;s concept of
             &quot;love maps&quot; and Arthur Aron&apos;s self-expansion theory (<em>Journal of Personality and Social Psychology</em>, 1997).
             However, a list of questions alone is not therapy. Couples experiencing severe communication
             difficulties or unresolved conflict should seek professional support alongside these exercises.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Questions work best when both partners are willing and have time for an uninterrupted
             conversation (20-30 minutes recommended). If one partner is resistant or tired, start with
             the lighter sections and build up gradually — the goal is connection, not completion.

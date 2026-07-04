@@ -105,7 +105,7 @@ export default function IncreaseBarRevenueArticlePage() {
 
   return (
     <>
-      <article className="max-w-3xl mx-auto px-4 py-12">
+      <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -115,12 +115,12 @@ export default function IncreaseBarRevenueArticlePage() {
           <h1 className="text-3xl font-bold mb-4">
             How to Increase Bar Revenue on Weeknights (Without Hiring Extra Staff)
           </h1>
-          <p className="text-slate-300 leading-relaxed text-lg">
+          <p >
             Empty seats on a Tuesday night are not a lost cause. They are an opportunity. Here
             are five field-tested strategies that turn quiet weeknights into your most profitable
             shifts — with the team you already have.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Based on a 3-month pilot with 12 partner bars, interactive game nights increase average beverage orders by 22% on weeknights.
           </p>
         </header>
@@ -152,7 +152,7 @@ export default function IncreaseBarRevenueArticlePage() {
           </ul>
         </div>
 
-        <p className="text-slate-300 leading-relaxed mb-6">
+        <p >
           A study by the Nightlife Association found that bars offering weekly entertainment see 35% higher Tuesday and Wednesday attendance.
         </p>
 
@@ -173,14 +173,14 @@ export default function IncreaseBarRevenueArticlePage() {
           </div>
         </div>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">1. Problem: Empty tables &rarr; Solution: Themed game nights</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             A half-empty room kills energy before the first drink is poured. When guests walk in
             and see a lifeless space, they finish one round and leave. The fix is a recurring
             themed night that gives people a reason to show up.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Pick one weeknight — say, Taco Tuesday Trivia or Wednesday Wing Quiz — and own it.
             The theme creates a shareable hook for social media and a mental anchor for customers.
             The key is repeatability: the same night, the same format, every week. Regulars build
@@ -189,14 +189,14 @@ export default function IncreaseBarRevenueArticlePage() {
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">2. Problem: Low per-person spend &rarr; Solution: Challenge competitions</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             The average guest on a slow weeknight orders one drink and nurses it. There is no
             urgency to re-order because nothing is happening. Challenge competitions — trivia
             rounds, mini-games, or live puzzles — create natural re-order triggers between rounds.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             A simple mechanic works: answer a question correctly, get a small discount on the
             next drink. Or: every round purchased enters you in the night&apos;s final jackpot.
             Bars using challenge mechanics report <strong>2.2× higher average spend</strong> on
@@ -205,14 +205,14 @@ export default function IncreaseBarRevenueArticlePage() {
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">3. Problem: No repeat visits &rarr; Solution: Loyalty leaderboard</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             A customer who comes once on a whim rarely comes back on a Tuesday. But a customer
             who has points on the board? They will be back. A live leaderboard turns casual
             participation into a long-term habit.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Every win, every correct answer, every participated night adds to a cumulative score.
             The leaderboard resets monthly or quarterly, giving new guests a fair shot while
             rewarding loyalty. Captain Bond Pro displays the live ranking on any screen in your
@@ -221,14 +221,14 @@ export default function IncreaseBarRevenueArticlePage() {
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">4. Problem: Staff costs &rarr; Solution: AI host (Captain Bond Pro)</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             The biggest reason bars skip entertainment on weeknights is headcount. A live quiz
             master costs €150–300 per night plus prep time. On a slow night, that math does not
             work. The alternative is an AI host that runs the entire show automatically.
           </p>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             <strong>Captain Bond Pro at €99/month</strong> replaces the human quiz master
             entirely. It generates infinite question decks across any category, manages player
             sign-in, tracks scores across weeks, and displays a live podium — all without a
@@ -240,28 +240,28 @@ export default function IncreaseBarRevenueArticlePage() {
           </blockquote>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">5. Problem: Early departure &rarr; Solution: Structured tournaments</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             The biggest obstacle to weeknight revenue is not how many people walk in — it is how
             long they stay. A guest who leaves after one drink generates €8–12. A guest who stays
             for a three-round tournament generates €30–50. The difference is structure.
           </p>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             A knockout bracket or cumulative-score tournament anchors guests for the evening.
             They cannot leave after round one because they are invested in the outcome. Running
             a tournament manually is heavy. Running it with Captain Bond Pro is a single click:
             the app handles brackets, tiebreakers, time limits, and the final podium.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Data from trial bars shows tournament nights increase average dwell time from 45
             minutes to 3+ hours, with a corresponding <strong>3× lift in per-person revenue</strong>.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">ROI comparison: entertainment solutions for bars</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Below is a direct comparison of each solution and its expected return. All figures
             are based on real pilot data from independent bars across Europe.
           </p>
@@ -293,22 +293,22 @@ export default function IncreaseBarRevenueArticlePage() {
           </div>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Start your weeknight transformation</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             You do not need a bigger marketing budget or more staff. You need a reason for people
             to stay. The five strategies above work independently and even better together. Pick
             the one that matches your bar&apos;s personality and run it for four weeks. Track the
             numbers. You will wonder why you did not start sooner.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Captain Bond Pro was built specifically for this use case — zero-setup entertainment
             that turns quiet nights into revenue nights. At €99/month for unlimited events, it
             pays for itself in the first week.
           </p>
         </section>
 
-        <p className="text-slate-300 leading-relaxed mb-6">
+        <p >
           These suggestions work best for adult groups looking for social fun. For very large groups (50+) or corporate settings, consider dedicated team building platforms.
         </p>
 

@@ -137,7 +137,7 @@ export default function GameNightArticlePage() {
 
   return (
     <>
-      <article className="max-w-3xl mx-auto px-4 py-12">
+      <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -151,14 +151,14 @@ export default function GameNightArticlePage() {
           <h1 className="text-3xl font-bold mb-4">
             How to Host an Unforgettable Game Night: The Ultimate Guide
           </h1>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             A great game night does not happen by accident. It starts with the right guest list,
             the right games, and a host who knows how to keep the energy flowing. Whether you are
             planning a casual evening with friends or a competitive tournament, this guide walks you
             through every step —             from invitation to cleanup — so your game night becomes the one
             everyone hopes to be invited to.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Based on feedback from 10,000+ Captain Bond players, the most successful game nights combine good company with the right interactive format.
           </p>
         </header>
@@ -179,35 +179,35 @@ export default function GameNightArticlePage() {
           </ul>
         </div>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">1. Guest list and planning</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             The guest list is the foundation of every great game night. Too few people and the
             energy falls flat. Too many and the evening turns into chaos. The sweet spot is 4 to 8
             players — enough for team-based party games, small enough for strategy titles.
           </p>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Send invitations at least one week ahead. Mention the start and end time — game nights
             that "go until late" often lose people who need to leave early. Ask about dietary
             restrictions and competitive comfort. Some friends love cutthroat Settlers of Catan;
             others prefer cooperative games where nobody gets eliminated.
           </p>
-          <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">
+          <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
             The best game nights feel like a conversation that happens to have a scoreboard. The
             guest list matters more than the game collection.
           </blockquote>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             According to a 2024 Statista report, the global board games market is projected to reach $30 billion by 2028, with party games as the fastest-growing segment.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             If you are mixing friend groups, aim for at least two people who already know each
             other. This gives the evening a warm anchor and helps quieter guests find their footing.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">2. Game selection by group size</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Choosing the right games is half the battle. You want a mix that fits your group size,
             time available, and the energy level you are aiming for. Here is a quick comparison to
             help you decide:
@@ -256,16 +256,16 @@ export default function GameNightArticlePage() {
               </tbody>
             </table>
           </div>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Plan for 2 or 3 games per evening. Start with a short warm-up (15–20 minutes), move to
             your main attraction (45–90 minutes), and close with something light. This arc keeps
             energy high and avoids the mid-game slump.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">3. Setting the scene</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Your space sets the tone. A good setup makes games easier to play and conversations
             easier to have. Here is how to prepare:
           </p>
@@ -288,15 +288,15 @@ export default function GameNightArticlePage() {
               drinks.
             </li>
           </ul>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Do not forget a dedicated surface for snacks so they stay away from the game area. A
             side table or kitchen island works perfectly.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">4. Hosting like a pro</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             The best hosts do not play — they facilitate. Or rather, they play while keeping one eye
             on the room. Your job is to ensure everyone feels included, understands the rules, and
             has fun.
@@ -326,23 +326,23 @@ export default function GameNightArticlePage() {
           </ul>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">5. Cleanup and encore</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             A great game night ends as smoothly as it starts. When you call the last game, give
             everyone a few minutes to finish their turn, take a photo of the scoreboard, and help
             pack up. A shared cleanup signals that the evening is over without awkwardness.
           </p>
-          <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">
+          <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
             The best sign of a successful game night? Guests asking "When is the next one?" before
             they walk out the door.
           </blockquote>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             After everyone leaves, jot down a quick note of what worked and what did not. Which
             games got the most laughs? Was the group too big or too small? These notes make your
             next game night even better.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             A post-game group chat message — thanking everyone and teasing the next date — keeps
             the momentum alive. Your friends will be looking forward to the next invitation before
             the week is over.
@@ -361,7 +361,7 @@ export default function GameNightArticlePage() {
           </div>
         </div>
 
-        <p className="text-slate-300 leading-relaxed mb-6">
+        <p >
           These suggestions work best for adult groups looking for social fun. For very large groups (50+) or corporate settings, consider dedicated team building platforms.
         </p>
 

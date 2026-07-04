@@ -186,7 +186,7 @@ export default function WeeklyCoupleRitualArticlePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
-      <article className="max-w-3xl mx-auto px-4 py-12">
+      <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
         <header className="mb-10">
           <time className="text-sm text-slate-400" dateTime="2025-07-01">
             {publishedDate}
@@ -194,12 +194,12 @@ export default function WeeklyCoupleRitualArticlePage() {
           <h1 className="text-3xl font-bold mb-4">
             How to Create a Weekly Couple Ritual (20-Min Guide)
           </h1>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             A weekly couple ritual is a dedicated, recurring time slot — no phones, no agenda, just
             twenty minutes of focused attention on each other. It is the single most effective
             practice to keep a relationship out of autopilot and into intention.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Based on data from 1,200+ Captain Bond couple sessions, couples who use structured
             question decks report measurably stronger connection over time.
           </p>
@@ -222,7 +222,7 @@ export default function WeeklyCoupleRitualArticlePage() {
           </div>
         </div>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Key Takeaways</h2>
           <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
             <li>
@@ -248,9 +248,9 @@ export default function WeeklyCoupleRitualArticlePage() {
           </ul>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Why a weekly ritual changes everything</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Relationships do not fail because of one big fight. They erode gradually — through
             thousands of small moments when one partner reaches for connection and the other is
             distracted. The research is clear: couples who maintain shared rituals report higher
@@ -260,39 +260,39 @@ export default function WeeklyCoupleRitualArticlePage() {
             study in the Journal of Social and Personal Relationships found that couples who ask
             each other novel questions report higher intimacy levels.
           </p>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             A weekly ritual is not another item on your to-do list. It is a container that protects
             your connection from the gravitational pull of logistics. It says: this relationship
             matters enough to appear on the calendar.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             The best part? You do not need candles, music, or a script. You just need twenty minutes
             and the willingness to turn toward each other instead of the nearest screen.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Step 1: Pick a weekly slot and protect it</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Choose a day and time that you can realistically keep. Sunday evening is popular because
             the weekend is winding down and the work week has not started yet. Tuesday morning might
             work better for shift workers. There is no wrong answer — only the one you defend.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Put it in both calendars. Treat it as seriously as a doctor's appointment. If something
             urgent comes up, reschedule within the same week rather than skipping entirely. The
             ritual is the commitment; the slot is just its address.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Step 2: Remove every distraction</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             This is the highest-impact step. Phones go in another room — not face down on the table.
             The TV stays off. Notifications are silenced. If you have children, wait until they are
             asleep or arrange a sitter.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Research shows that the mere presence of a phone — even face down and silent — reduces
             conversation quality and empathy. Your partner deserves your full attention for twenty
             minutes. Nothing is more important in that window.
@@ -303,9 +303,9 @@ export default function WeeklyCoupleRitualArticlePage() {
           </blockquote>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Step 3: Choose a conversation format</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Having a structure prevents the dreaded &ldquo;So, how was your week?&rdquo; dead end.
             The simplest format is a three-part check-in:
           </p>
@@ -323,60 +323,60 @@ export default function WeeklyCoupleRitualArticlePage() {
               partner this week.
             </li>
           </ul>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Captain Bond couple mode generates fresh questions every session, so you never run out
             of material. The app handles the structure; you focus on each other.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Step 4: Take turns speaking and listening</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             The most common mistake couples make in conversations is interrupting to problem-solve.
             When your partner shares something difficult, your instinct is to fix it. Resist that
             instinct for twenty minutes.
           </p>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             Use a simple token system: whoever holds the object speaks; the other person only
             listens. No cross-talk, no advice, no &ldquo;That reminds me of the time…&rdquo; Switch
             after one round. This alone will transform your conversations.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Listening without fixing communicates something profound: I trust you to handle your own
             life. I am here to witness, not to manage.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Step 5: End with gratitude</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">
+          <p >
             The final two minutes are the most important. Each person shares one specific thing they
             appreciated about their partner this week. &ldquo;You made me laugh when I was
             stressed&rdquo; or &ldquo;I noticed you handled the call with my mom really
             gracefully.&rdquo;
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Gratitude is a muscle. The more you practice it, the more your brain automatically scans
             for what is working instead of what is missing. Over time, this rewires the emotional
             climate of your entire relationship.
           </p>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">A final thought</h2>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             You do not need the perfect ritual. You need the courage to start and the discipline to
             protect it. Twenty minutes, once a week, no phones, full attention. That is it. That is
             enough to change the trajectory of your relationship.
           </p>
-          <p className="text-slate-300 leading-relaxed">
+          <p >
             Start this week. Pick a day. Set a timer. Turn toward each other. Everything else is
             practice.
           </p>
         </section>
 
-        <section className="mb-10">
-          <p className="text-slate-300 leading-relaxed">
+        <section className="article-block">
+          <p >
             These questions work best when both partners are willing and have time for an
             uninterrupted conversation. If one partner is resistant or tired, start with the lighter
             sections and build up gradually — the goal is connection, not completion.

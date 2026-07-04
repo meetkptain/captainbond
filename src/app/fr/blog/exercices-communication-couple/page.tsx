@@ -275,7 +275,7 @@ export default function ExercicesCommunicationCouplePage() {
   const publishedDate = '10 juin 2025';
 
   return (
-    <article className="max-w-3xl mx-auto px-4 py-12">
+    <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -285,14 +285,14 @@ export default function ExercicesCommunicationCouplePage() {
         <h1 className="text-3xl font-bold mb-4">
           10 exercices de communication pour couple : renforcez votre lien
         </h1>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           La plupart des couples ne manquent pas d\'amour — ils manquent d\'une boîte à outils de
           communication partagée. Quand les conversations deviennent transactionnelles ou que les
           disputes suivent toujours le même schéma destructeur, ce n\'est pas parce que vous
           tenez moins l\'un à l\'autre. C\'est parce que personne ne vous a jamais appris à
           communiquer dans un couple. Ces 10 exercices comblent ce vide.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Basé sur les données de 1 200+ sessions couple Captain Bond, ces exercices sont conçus pour construire les habitudes de communication qui renforcent les relations réelles.
         </p>
       </header>
@@ -317,26 +317,26 @@ export default function ExercicesCommunicationCouplePage() {
         </div>
       </div>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Que sont les exercices de communication pour couple ?</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Les exercices de communication pour couple sont des activités structurées conçues pour
           améliorer la façon dont les partenaires écoutent, s\'expriment et résolvent les conflits.
           Contrairement aux conversations ordinaires, ces exercices suivent des formats spécifiques
           — mirroring, point quotidien, scripts de conflit — qui interrompent les mauvaises habitudes
           et les remplacent par une connexion intentionnelle.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Considérez-les comme de la musculation pour votre relation. Vous n\'attendez pas d\'être
           blessé pour faire de l\'exercice. De même, n\'attendez pas la crise pour apprendre à bien
           communiquer.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Une méta-analyse de 2023 dans le Journal of Marital and Family Therapy a montré que les exercices de communication structurés améliorent la satisfaction relationnelle de 18% en moyenne sur 8 semaines.
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Points clés à retenir</h2>
         <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed">
           <li>Les exercices de communication construisent l\'habitude de la connexion intentionnelle avant que les conflits n\'apparaissent.</li>
@@ -347,7 +347,7 @@ export default function ExercicesCommunicationCouplePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Tableau comparatif</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-slate-300 border-collapse">
@@ -382,11 +382,11 @@ export default function ExercicesCommunicationCouplePage() {
             {ex.time} &middot; {ex.difficulty} &middot; {ex.bestFor}
           </p>
           <h3 className="text-lg font-medium mt-6 mb-2 text-white">Description</h3>
-          <p className="text-slate-300 leading-relaxed mb-4">{ex.description}</p>
+          <p >{ex.description}</p>
           <h3 className="text-lg font-medium mt-6 mb-2 text-white">Comment le pratiquer</h3>
-          <p className="text-slate-300 leading-relaxed mb-4">{ex.howTo}</p>
+          <p >{ex.howTo}</p>
           <h3 className="text-lg font-medium mt-6 mb-2 text-white">Bénéfice attendu</h3>
-          <p className="text-slate-300 leading-relaxed">{ex.benefit}</p>
+          <p >{ex.benefit}</p>
         </section>
       ))}
 
@@ -395,23 +395,23 @@ export default function ExercicesCommunicationCouplePage() {
         qu\'une séance de 2 heures une fois par mois.
       </blockquote>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Commencez par un exercice dès ce soir</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Vous n\'avez pas besoin de maîtriser les dix à la fois. Choisissez celui qui semble le plus
           pertinent pour votre relation en ce moment et essayez-le ce soir. L\'exercice de mirroring
           prend 10 minutes. Le point quotidien prend 5 minutes. Même un petit changement crée de
           l\'élan.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Le but n\'est pas la perfection. C\'est la pratique. Chaque fois que vous choisissez un
           exercice structuré plutôt que le pilote automatique, vous renforcez le muscle de la
           connexion intentionnelle.
         </p>
       </section>
 
-      <section className="mb-10">
-        <p className="text-slate-300 leading-relaxed">
+      <section className="article-block">
+        <p >
           Ces suggestions fonctionnent mieux pour les couples prêts à s&rsquo;engager ensemble. Si la communication est difficile, envisagez un accompagnement professionnel en complément.
         </p>
       </section>

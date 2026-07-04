@@ -44,29 +44,29 @@ export default function JeuxHalloween() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <article className="max-w-3xl mx-auto px-4 py-12">
+      <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
         <h1 className="text-4xl font-black text-white mb-4">Jeux d&apos;Halloween pour Adultes : 10+ Idées pour une Soirée d&apos;Enfer</h1>
         <p className="text-slate-400 text-sm mb-8">Publié le 4 juillet 2025</p>
 
-        <section className="mb-12">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Pourquoi les jeux d&apos;Halloween pour adultes cartonnent</h2>
-          <p className="text-slate-300 leading-relaxed mb-4">Les jeux d&apos;Halloween pour adultes désignent des activités ludiques thématisées autour de la fête d&apos;Halloween, conçues pour un public adulte avec des ambiances allant du léger frisson à l&apos;humour noir. Contrairement aux versions pour enfants, ils misent sur l&apos;interactivité sociale, la créativité et une dose de compétition bienveillante.</p>
-          <p className="text-slate-300 leading-relaxed mb-4">Selon Statista, les dépenses Halloween aux États-Unis ont atteint 12,2 milliards de dollars en 2024, dont 4,4 milliards pour les décorations et les fêtes. La tendance montre que les adultes de 25 à 40 ans représentent la tranche qui dépense le plus pour organiser des soirées thématiques.</p>
-          <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">Les jeux d&apos;Halloween pour adultes transforment une soirée costumée en expérience interactive où tout le monde participe, pas seulement les extravertis.</blockquote>
+          <p >Les jeux d&apos;Halloween pour adultes désignent des activités ludiques thématisées autour de la fête d&apos;Halloween, conçues pour un public adulte avec des ambiances allant du léger frisson à l&apos;humour noir. Contrairement aux versions pour enfants, ils misent sur l&apos;interactivité sociale, la créativité et une dose de compétition bienveillante.</p>
+          <p >Selon Statista, les dépenses Halloween aux États-Unis ont atteint 12,2 milliards de dollars en 2024, dont 4,4 milliards pour les décorations et les fêtes. La tendance montre que les adultes de 25 à 40 ans représentent la tranche qui dépense le plus pour organiser des soirées thématiques.</p>
+          <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">Les jeux d&apos;Halloween pour adultes transforment une soirée costumée en expérience interactive où tout le monde participe, pas seulement les extravertis.</blockquote>
         </section>
 
-        <section className="mb-12">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">10+ Jeux d&apos;Halloween pour adultes</h2>
           <div className="space-y-4">
-            <div className="p-4 rounded-xl border border-white/10"><h3 className="text-lg font-semibold text-white">1. Icebreaker d&apos;Halloween</h3><p className="text-slate-300 leading-relaxed">Des questions sur le thème de l&apos;horreur, des films cultes et des peurs irrationnelles. Chacun répond depuis son téléphone, les réponses s&apos;affichent sur la TV. 10-50+ joueurs.</p></div>
-            <div className="p-4 rounded-xl border border-white/10"><h3 className="text-lg font-semibold text-white">2. Quiz films d&apos;horreur</h3><p className="text-slate-300 leading-relaxed">Citadelle, Hitchcock, Slasher — testez les connaissances de vos invités. Questions à choix multiples avec réponses en temps réel.</p></div>
-            <div className="p-4 rounded-xl border border-white/10"><h3 className="text-lg font-semibold text-white">3. Concours de costumes interactif</h3><p className="text-slate-300 leading-relaxed">Chaque participant montre son costume, les autres votent anonymement depuis leur téléphone. Catégories : le plus effrayant, le plus créatif, le plus drôle.</p></div>
-            <div className="p-4 rounded-xl border border-white/10"><h3 className="text-lg font-semibold text-white">4. Imposteur Halloween</h3><p className="text-slate-300 leading-relaxed">Version thématisée du jeu de déduction. L&apos;imposteur ne connaît pas le film d&apos;horreur secret. Les autres doivent le démasquer.</p></div>
-            <div className="p-4 rounded-xl border border-white/10"><h3 className="text-lg font-semibold text-white">5. Spooky Speed Dating</h3><p className="text-slate-300 leading-relaxed">Questions rapides en duo, le groupe vote pour les meilleures réponses. Version courte et rythmée pour briser la glace.</p></div>
+            <div className="p-4 rounded-xl border border-white/10"><h3 className="text-lg font-semibold text-white">1. Icebreaker d&apos;Halloween</h3><p >Des questions sur le thème de l&apos;horreur, des films cultes et des peurs irrationnelles. Chacun répond depuis son téléphone, les réponses s&apos;affichent sur la TV. 10-50+ joueurs.</p></div>
+            <div className="p-4 rounded-xl border border-white/10"><h3 className="text-lg font-semibold text-white">2. Quiz films d&apos;horreur</h3><p >Citadelle, Hitchcock, Slasher — testez les connaissances de vos invités. Questions à choix multiples avec réponses en temps réel.</p></div>
+            <div className="p-4 rounded-xl border border-white/10"><h3 className="text-lg font-semibold text-white">3. Concours de costumes interactif</h3><p >Chaque participant montre son costume, les autres votent anonymement depuis leur téléphone. Catégories : le plus effrayant, le plus créatif, le plus drôle.</p></div>
+            <div className="p-4 rounded-xl border border-white/10"><h3 className="text-lg font-semibold text-white">4. Imposteur Halloween</h3><p >Version thématisée du jeu de déduction. L&apos;imposteur ne connaît pas le film d&apos;horreur secret. Les autres doivent le démasquer.</p></div>
+            <div className="p-4 rounded-xl border border-white/10"><h3 className="text-lg font-semibold text-white">5. Spooky Speed Dating</h3><p >Questions rapides en duo, le groupe vote pour les meilleures réponses. Version courte et rythmée pour briser la glace.</p></div>
           </div>
         </section>
 
-        <section className="mb-12">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Conseils pour une soirée Halloween réussie</h2>
           <ul className="list-disc pl-6 space-y-2 text-slate-300 leading-relaxed mb-4">
             <li><strong>Décorez l&apos;écran</strong> — fond d&apos;écran Halloween, lumières tamisées</li>
@@ -76,9 +76,9 @@ export default function JeuxHalloween() {
           </ul>
         </section>
 
-        <section className="mb-10">
+        <section className="article-block">
           <h2 className="text-2xl font-semibold mt-10 mb-4">Note sur le contenu pour adultes</h2>
-          <p className="text-slate-300 leading-relaxed">Ces jeux sont conçus pour un public adulte (18+). Certains thèmes peuvent aborder l&apos;horreur, le frisson et des sujets matures avec humour. Adaptez la sélection des jeux à votre groupe.</p>
+          <p >Ces jeux sont conçus pour un public adulte (18+). Certains thèmes peuvent aborder l&apos;horreur, le frisson et des sujets matures avec humour. Adaptez la sélection des jeux à votre groupe.</p>
         </section>
 
         <aside className="bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 p-6 rounded-2xl border border-white/10 mb-12">

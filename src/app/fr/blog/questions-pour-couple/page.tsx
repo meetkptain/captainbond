@@ -226,14 +226,14 @@ export default function FrenchQuestionsForCoupleArticlePage() {
   const publishedDate = '1 juin 2025';
 
   return (
-    <article className="max-w-3xl mx-auto px-4 py-12">
+    <article className="max-w-3xl mx-auto px-4 py-12 article-body text-slate-300">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <header className="mb-10">
         <time className="text-sm text-slate-400" dateTime="2025-06-01">{publishedDate}</time>
         <h1 className="text-3xl font-bold mb-4">
           150 questions pour couple : du fun au profond
         </h1>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Les meilleures conversations n'arrivent presque jamais par hasard. Elles commencent par
           une question posée avec curiosité, patience et sans arrière-pensée. Que vous soyez au
           début de votre histoire ou que vous partagiez déjà des décennies, la bonne question peut
@@ -258,9 +258,9 @@ export default function FrenchQuestionsForCoupleArticlePage() {
         </div>
       </div>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Pourquoi les questions comptent dans un couple</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           La plupart des couples ne manquent pas d’amour ; ils manquent de nouveauté. Le quotidien
           — courses, factures, emplois du temps — étouffe peu à peu les conversations profondes qui
           autrefois venaient naturellement. Les questions sont la technologie la plus simple pour
@@ -268,7 +268,7 @@ export default function FrenchQuestionsForCoupleArticlePage() {
           intéressant, non pas parce qu’il ou elle a changé, mais parce que vous avez décidé de
           regarder de plus près.
         </p>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Une bonne question n’exige pas une réponse parfaite. Elle invite à l’honnêteté. Elle
           donne la permission de dire ce qui reste d’habitude en sourdine. Au fil du temps, ces
           petites révélations deviennent le tissu de l’intimité : ce sentiment d’être connu, pas
@@ -280,9 +280,9 @@ export default function FrenchQuestionsForCoupleArticlePage() {
         </blockquote>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Comment utiliser cette liste</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           La quantité n’est pas l’objectif. La connexion, si. Voici un rituel simple pour tirer le
           meilleur parti de ces questions :
         </p>
@@ -304,7 +304,7 @@ export default function FrenchQuestionsForCoupleArticlePage() {
             que de courir à la question suivante.
           </li>
         </ul>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Les questions ci-dessous sont regroupées par thème et par intensité. Vous n’avez pas
           besoin de répondre aux 150 en une soirée. Piochez, sautez celles qui ne résonnent pas, et
           revenez quand le moment est propice. Si vous voulez des centaines de questions générées
@@ -312,9 +312,9 @@ export default function FrenchQuestionsForCoupleArticlePage() {
         </p>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Questions fun et légères</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Utilisez-les quand vous voulez rire, vous rappeler que vous vous amusez ensemble, ou
           casser une tension. Le jeu est un des ciments les plus sous-estimés des relations
           durables.
@@ -326,9 +326,9 @@ export default function FrenchQuestionsForCoupleArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Questions pour mieux se connaître</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Même après des années, un couple peut découvrir de nouvelles pièces l’un·e de l’autre.
           Ces questions explorent l’histoire, les valeurs et les petits détails qui rendent une
           personne unique.
@@ -340,9 +340,9 @@ export default function FrenchQuestionsForCoupleArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Questions profondes et émotionnelles</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Réservez ces questions pour un moment calme, quand vous avez tous les deux de la
           disponibilité et que vous voulez vous sentir réellement proches. Elles demandent de la
           vulnérabilité : avancez doucement et sans pression.
@@ -354,9 +354,9 @@ export default function FrenchQuestionsForCoupleArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Questions intimes et pimentées</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Le désir commence dans la tête. Ces questions restent élégantes tout en invitant à parler
           d’attraction, de toucher et de ce qui vous fait sentir désiré·e. Elles construisent
           l’anticipation et la clarté en même temps.
@@ -368,9 +368,9 @@ export default function FrenchQuestionsForCoupleArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Questions sur le futur et les valeurs</h2>
-        <p className="text-slate-300 leading-relaxed mb-4">
+        <p >
           Une direction partagée est ce qui transforme la chimie en partenariat. Ces questions
           aident à calibrer où vous allez et dont chacun·e a besoin en chemin.
         </p>
@@ -381,17 +381,17 @@ export default function FrenchQuestionsForCoupleArticlePage() {
         </ul>
       </section>
 
-      <section className="mb-10">
+      <section className="article-block">
         <h2 className="text-2xl font-semibold mt-10 mb-4">Une dernière pensée</h2>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           Vous n'avez pas besoin de la question parfaite. Vous avez besoin du courage de demander
           et de la patience d'écouter.
         </p>
-        <blockquote className="border-l-4 border-neon-purple pl-6 my-6 italic text-slate-200 text-lg">
+        <blockquote className="border-l-4 border-neon-purple pl-6 my-8 italic text-slate-200 text-lg">
           Vous n'avez pas besoin de la question parfaite. Vous avez besoin du courage de demander
           et de la patience d'écouter.
         </blockquote>
-        <p className="text-slate-300 leading-relaxed">
+        <p >
           La liste ci-dessus est un point de départ. La vraie magie
           opère dans la suite, la pause, le rire, le silence un peu gênant que vous traversez
           ensemble. Gardez quelques favorites dans un coin et sortez-les quand la vie devient trop
