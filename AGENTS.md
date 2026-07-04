@@ -245,6 +245,17 @@ Le fichier `.agents/anchor.md` contient le résumé de tout le travail de la ses
 
 Mettre à jour à chaque phase terminée. Utiliser pour le context dans une nouvelle session.
 
+## Session Start Protocol (CRITICAL)
+- Read `.agents/codebase-map.md` → project structure, routes, data flow, key files
+- Read `.agents/anchor.md` → what was done in the current session
+
+## Codebase Map Maintenance
+Keep `.agents/codebase-map.md` up to date when you:
+- Add/remove/move a route or API endpoint
+- Create/rename a service or component directory
+- Change infrastructure (external service, deploy pipeline, CI/CD)
+- Add or modify a game mode
+
 ## Learning Registry
 
 Chaque fois qu'on découvre un pattern non documenté, l'ajouter dans une section dédiée d'AGENTS.md. Les patterns à capturer incluent :
