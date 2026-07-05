@@ -16,6 +16,7 @@ import {
 } from '@/lib/db/repositories';
 import { Room, Player, Response } from '@/lib/db/types';
 import { AppError } from '@/lib/errors';
+import { assertTransition } from './roomState';
 import { signHostToken } from '@/lib/crypto';
 import { getServerGameMode } from '@/game-modes/manifests';
 
@@ -218,6 +219,10 @@ export async function resetRoom(
   if (room.hostId !== hostId) {
     throw new AppError('FORBIDDEN', 'Seul l\'hôte peut réinitialiser la room');
   }
+  if (room.status !== 'ENDED' && room.status !== 'WAITING') {
+    throw new AppError('FORBIDDEN', 'Impossible de réinitialiser une partie en cours');
+  }
+  assertTransition(room.status, 'WAITING');
 
   if (resetScores) {
     await deleteScoresByRoom(room.id);

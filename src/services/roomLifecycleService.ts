@@ -25,6 +25,7 @@ import { createLogger } from '@/lib/logger';
 
 const FREE_QUESTIONS_LIMIT = 3;
 const DEFAULT_MODE = 'ICEBREAKER';
+const MAX_PLAYED_QUESTION_IDS = 50;
 
 function injectCorporateQuestions(
   room: Room,
@@ -133,13 +134,15 @@ export async function startNextRound(roomCode: string, hostId: string): Promise<
   if (!pool.length) throw new AppError('NOT_FOUND', 'Database is empty or missing content');
 
   const selectedQuestion = room.targetType === 'CORPORATE' ? selectCorporateQuestion(pool) : pool[Math.floor(Math.random() * pool.length)];
-  const updatedPlayedIds = Array.from(new Set([...Array.from(playedQuestionIds), selectedQuestion.id]));
+  const updatedPlayedIds = Array.from(new Set([...Array.from(playedQuestionIds), selectedQuestion.id])).slice(-MAX_PLAYED_QUESTION_IDS);
 
   let roundConfig: Record<string, unknown> = { playedQuestionIds: updatedPlayedIds };
   if (currentMode === 'IMPOSTEUR') {
     const nonHosts = players.filter((p) => !p.isHost);
     if (nonHosts.length < 2) throw new AppError('BAD_REQUEST', 'L\'Imposteur nécessite au moins 3 joueurs (2 civils + 1 intrus).');
-    roundConfig = { ...roundConfig, mode: 'IMPOSTEUR', detections: {}, questionId: selectedQuestion.id, roundDuration: 120 };
+    const impostor = nonHosts[Math.floor(Math.random() * nonHosts.length)];
+    const imposterHash = await getPlayerHmac(impostor.id);
+    roundConfig = { ...roundConfig, mode: 'IMPOSTEUR', imposterHash, detections: {}, questionId: selectedQuestion.id, roundDuration: 120 };
   }
 
   let newRound: number;
@@ -269,7 +272,7 @@ export async function skipQuestion(roomCode: string, playerId: string): Promise<
   if (!pool.length) throw new AppError('NOT_FOUND', 'Aucune question disponible');
 
   const selectedQuestion = room.targetType === 'CORPORATE' ? selectCorporateQuestion(pool) : pool[Math.floor(Math.random() * pool.length)];
-  const updatedPlayedIds = Array.from(new Set([...Array.from(playedQuestionIds), selectedQuestion.id]));
+  const updatedPlayedIds = Array.from(new Set([...Array.from(playedQuestionIds), selectedQuestion.id])).slice(-MAX_PLAYED_QUESTION_IDS);
   const roundConfig = { ...existingConfig, playedQuestionIds: updatedPlayedIds };
 
   let updatedRoom: Room;
