@@ -117,4 +117,5 @@ export const AnalyticsEvents = {
   QUESTION_ANSWERED: 'question_answered',
   SAFE_WORD_TRIGGERED: 'safe_word_triggered',
   GAME_ENDED: 'game_ended',
+  SHARE_WHATSAPP: 'share_whatsapp',
 } as const;
