@@ -3,7 +3,6 @@ import { logger } from '@/lib/logger';
 
 export type ProductType =
   | 'PASS_24H'
-  | 'PASS_WEEKEND'
   | 'SUBSCRIPTION_ANNUAL'
   | 'SUBSCRIPTION_MONTHLY'
   | 'BAR_MONTHLY'
@@ -43,19 +42,6 @@ export const CATALOG_FALLBACK: Pack[] = [
     stripePriceId: null,
     stripeProductId: null,
     productType: 'PASS_24H',
-    scope: { modes: ['DEEP_CONNECTION', 'DATE_NIGHT'], features: ['profiles'] },
-    isSubscription: false,
-    isPro: false,
-  },
-  {
-    id: 'pack-pass-weekend',
-    sku: 'PASS_WEEKEND',
-    name: 'Pass Week-end',
-    description: 'Tous les modes et profils du vendredi soir au dimanche minuit.',
-    price: 4.99,
-    stripePriceId: null,
-    stripeProductId: null,
-    productType: 'PASS_WEEKEND',
     scope: { modes: ['DEEP_CONNECTION', 'DATE_NIGHT'], features: ['profiles'] },
     isSubscription: false,
     isPro: false,

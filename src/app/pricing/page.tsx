@@ -37,7 +37,7 @@ const plans = [
       { name: 'Free', price: '0', period: 'forever', features: ['3 free cards per mode', '5 game modes', '2-50+ players'], cta: 'Start Playing', href: '/party' },
       { name: 'Pass 24h', price: '2.99', period: '24h', features: ['All modes unlimited', 'Profiles & dossiers', 'One night access'], cta: 'Get Pass', href: '/party' },
       { name: 'Monthly', price: '7.99', period: '/month', features: ['All modes unlimited', 'All profiles & packs', 'Cancel anytime'], cta: 'Subscribe', href: '/party' },
-      { name: 'Lifetime', price: '69.99', period: 'once', features: ['All current + future content', 'All profiles & packs', 'One payment'], cta: 'Get Lifetime', href: '/party', badge: 'Best value' },
+      { name: 'Lifetime', price: '69.99', period: 'once', features: ['All current + future content', 'All profiles & packs', '🎉 Limited Launch offer'], cta: 'Get Lifetime', href: '/party', badge: '🎉 Limited Launch' },
     ],
   },
   {

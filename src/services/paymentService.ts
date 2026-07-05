@@ -122,7 +122,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
   const { activeUserId, userEmail, userName } = await resolveOrCreateUser(session, metadata);
   const pack = await resolvePack(metadata, session.id);
 
-  const durationHours = pack.productType === 'PASS_WEEKEND' ? 72 : 24;
+  const durationHours = 24;
   const subscriptionId = pack.isSubscription
     ? (typeof session.subscription === 'string' ? session.subscription : session.subscription?.id ?? null)
     : null;
