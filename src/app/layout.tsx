@@ -38,6 +38,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
+    site: '@captainbond_app',
+    creator: '@nicolasvirin',
   },
 };
 
@@ -71,6 +73,10 @@ export default async function RootLayout({
               url: 'https://captainbond.com',
               logo: 'https://captainbond.com/og/home-en.webp',
               sameAs: [
+                'https://instagram.com/captainbond.app',
+                'https://tiktok.com/@captainbond',
+                'https://youtube.com/@captainbond',
+                'https://x.com/captainbond_app',
                 'https://github.com/meetkptain/captainbond-couple-data-study',
               ],
               description: lang === 'fr'

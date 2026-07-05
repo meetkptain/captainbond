@@ -44,6 +44,12 @@ export function ShareSheet({ title, text, url, onClose, onShare }: ShareSheetPro
       href: `https://wa.me/?text=${encodeURIComponent(shareText)}`,
     },
     {
+      id: 'twitter',
+      label: 'X / Twitter',
+      icon: 'share',
+      href: `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}`,
+    },
+    {
       id: 'sms',
       label: 'SMS',
       icon: 'mail',
