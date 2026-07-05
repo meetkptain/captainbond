@@ -1,50 +1,35 @@
-# Session: Production-Grade Architecture — All Sessions Complete
+# Session: Social Media Foundations + Shorts/Reels Pipeline
 
 ## Goal
-Transform captainbond.com into a production-grade, evolvable codebase with Medium-quality reading UX, documented knowledge, expert-audited architecture, and product-ready ICP positioning. 9 sessions total (S1-S9).
+Poser les fondations sociales de Captain Bond (liens footer, métadonnées, partage) + construire la pipeline de production vidéo pour Shorts/Reels/TikTok.
 
 ## Progress
-
 ### Done
-- **Artéfacts de connaissance**: AGENTS.md (460l, 9 new sections), codebase-map.md (Mermaid diagrams), anchor.md, CLAUDE.md, .opencode.json, .githooks/pre-commit
-- **Auth**: JWT refresh token (admin 7d/30d, player 30d/90d), middleware auto-refresh, 2 cookies/session
-- **Architecture**: 3 vagues d'audit → ~30 findings (RLS 18 tables, error boundaries, CI/CD, Sentry, middleware matcher 22 patterns, PII fix, feature flags deleted, tw-animate-css removed)
-- **Game architecture**: imposterHash set serveur, formal FSM (roomState.ts with canTransition + assertTransition), playedQuestionIds capped 50, 6 new tests (deep-connection + date-night), duplicate baseEngine removed
-- **ICP/Product**: pricing unifié (Couple Monthly 4.99€), Weekend Pass deleted, Lifetime → Limited Launch badge, gauge free cards real count, player unlock banner, WhatsApp Share, free Barnum preview
-- **Services refactored**: roomGameService split (roomLifecycle, gamePlay, profile), packService deleted, withCronHandler 6 routes, supabase-admin lazy proxy
-- **CSS article system**: .article-* classes, clamp fonts, selection amber, blockquote XXL, hero 2:1, TOC clean, ending questions
-- **Build**: 71/71 static pages, npm run build + pages:build OK
-- **Tous les P0 audits résolus**: gameEnginesRegistry fallback, prix, gauge free, paiement unlock, micro-onboarding, vocab thérapeutique, hostToken signature, Zod routes, player limit — tous traités
+- **Social links footer**: Instagram, TikTok, YouTube, X dans LandingLayout.tsx
+- **twitter:site + twitter:creator** dans le root layout
+- **JSON-LD sameAs** : 4 réseaux ajoutés (était : GitHub uniquement)
+- **ShareSheet** : bouton X/Twitter share intent ajouté
+- **Pipeline vidéo** : scripts/render_video.py (Pillow + FFmpeg), test render ✅
+- **Build 71/71** ✅, push main
 
-### Blocked
-- Déploiement Cloudflare pas fait (manque `CLOUDFLARE_API_TOKEN` dans GitHub Secrets)
-- Backlinks 0 → CITE score ~34/100
-- 17 services sans tests (trop couplés à supabaseAdmin)
+### In Progress / Blocked
+- Production des 5 vraies vidéos Shorts/Reels → bloqué OpenAI API key (pas encore configurée dans .env)
+- Phase 2 : optimiser OG/twitter meta sur toutes les pages filles
 
 ## Key Decisions
-- Refresh token: 2 cookies séparés, fallback sur JWT secret si REFRESH_SECRET absent
-- FSM formel avec canTransition + assertTransition dans roomState.ts
-- AGENTS.md = source unique de conventions (pas de .md multiples)
-- Sentry: withSentryConfig dans next.config.ts, pas de CI sentry-cli
+- Footer links > header (header nav déjà plein). Social proof visible mais pas intrusive.
+- Utiliser Twitter/X share intent plutôt que l'API Twitter (pas de dépendance OAuth)
+- Pipeline vidéo custom (Pillow + FFmpeg) plutôt que Remotion — plus rapide pour du texte + background
 
 ## Next Steps
-1. Ajouter `CLOUDFLARE_API_TOKEN` + 22 secrets Cloudflare Dashboard → déployer
-2. Google Search Console + Bing Webmaster Tools
-3. Product Hunt / BetaList / AlternativeTo pour backlinks natifs
-4. Lancer les cron workers (rituals, push, recap...)
-5. Tests d'intégration pour les 17 services sans coverage
-
-## Critical Context
-- Nicolas Virin, indie hacker à La Réunion — authenticité personnelle = levier de marque
-- Build stable (71/71), CI/CD prêt. Seul frein: `CLOUDFLARE_API_TOKEN`
-- Tous les P0 audits (5 audits × ~10 findings) sont résolus ou documentés dans AGENTS.md: Known Bugs
+1. Ajouter `OPENAI_API_KEY=sk-...` dans `.env` → lancer génération assets + TTS
+2. Production des 5 vidéos (Party 3x + Couple 2x)
+3. Optimiser twitter:site sur toutes les landing pages filles
+4. Embed Instagram/TikTok sur landing page (preuve sociale)
 
 ## Relevant Files
-- `AGENTS.md`: master rules (conventions, known bugs, architecture decisions, P0 fix list, skill loading, security)
-- `.agents/codebase-map.md`: Mermaid diagrams (infra, routes, data flow, auth) + directory tree + key files
-- `src/middleware.ts`: lang detection, admin/player auth + refresh token, 22 route patterns
-- `src/lib/auth/admin.ts` / `player.ts`: sign/verify + refresh token (sign/verify/tryRefresh)
-- `src/services/roomState.ts`: formal FSM with canTransition + assertTransition
-- `src/services/roomLifecycleService.ts`: startNextRound with imposterHash set server-side
-- `src/app/globals.css`: .article-* system + selection amber + clamp fonts
-- `src/lib/api/withCronHandler.ts`: cron auth + lock + error handling (6 routes)
+- `src/components/landing/LandingLayout.tsx` : footer avec 4 liens sociaux
+- `src/app/layout.tsx` : twitter:site/creator + sameAs enrichi
+- `src/components/ShareSheet.tsx` : X share intent ajouté
+- `scripts/render_video.py` : pipeline vidéo Pillow + FFmpeg
+- `docs/AUDIT_GAME_DESIGN_UX_MARKET_2026-06-20.md` : social proof score 3/10 (amélioré)

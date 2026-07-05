@@ -326,9 +326,10 @@ sequenceDiagram
 |---|---|---|
 | **Règlles générales** | `AGENTS.md` | Conventions, bugs connus, architecture decisions, P0 fixes |
 | **Mémoire de session** | `.agents/anchor.md` | Résumé de la session en cours (lire en début de session) |
-| **Layout global** | `src/app/layout.tsx` | 5 JSON-LD schemas, GA4, PostHog, LanguageProvider |
-| **Middleware** | `src/middleware.ts` | Lang detection, admin auth, player auth |
+| **Layout global** | `src/app/layout.tsx` | 5 JSON-LD schemas (org + twitter:site + sameAs sociaux), GA4, PostHog, LanguageProvider |
+| **Middleware** | `src/middleware.ts` | Lang detection, admin auth, player auth, refresh token |
 | **CSS global** | `src/app/globals.css` | Tailwind v4 theme, `.article-*` system, animations |
+| **Social links footer** | `src/components/landing/LandingLayout.tsx` | Instagram, TikTok, YouTube, X dans le footer |
 | **Erreurs** | `src/lib/errors.ts` | AppError class, 20+ error codes |
 | **Auth admin** | `src/lib/auth/admin.ts` | Admin JWT, cookie management, refresh token |
 | **Auth player** | `src/lib/auth/player.ts` | Player JWT, cookie management, refresh token |
