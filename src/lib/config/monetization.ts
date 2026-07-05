@@ -5,6 +5,7 @@
 export const MONETIZATION_CONFIG = {
   PROFILE_PRICE_CENTS: 499,
   COUPLE_PROFILE_PRICE_CENTS: 499,
+  COUPLE_MONTHLY_PRICE_CENTS: 499,
   PASS_24H_PRICE_CENTS: 299,
   PASS_WEEKEND_PRICE_CENTS: 499,
   SUBSCRIPTION_MONTHLY_PRICE_CENTS: 799,
@@ -43,6 +44,11 @@ export const REVENUECAT_PRODUCT_MAPPING: Record<
   },
   'com.meetkptain.captainbond.subcouple': {
     packId: 'pack-sub-monthly',
+    productType: 'SUBSCRIPTION_MONTHLY',
+    durationHours: 24 * 30,
+  },
+  'com.meetkptain.captainbond.couplemonthly': {
+    packId: 'pack-couple-monthly',
     productType: 'SUBSCRIPTION_MONTHLY',
     durationHours: 24 * 30,
   },
