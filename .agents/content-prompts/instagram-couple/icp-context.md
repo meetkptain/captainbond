@@ -33,6 +33,18 @@ Exact words :
 
 ## Ce qui arrete son scroll
 
+...
+
+## Sub-ICPs (hyper-ciblage)
+
+Ce profil generique couvre 4 sous-ICP distincts avec des problemes profonds differents.
+Charge le fichier correspondant pour du contenu hyper-precis :
+
+- `sub-icps/new-couple.md` — Nouveau Couple (1-3 ans) : incertitude referentielle, normalite
+- `sub-icps/roommate-couple.md` — Couple Colocataire (5-10 ans) : resignation, paix vide
+- `sub-icps/parents.md` — Parents (jeunes enfants) : culpabilite, injonction contradictoire
+- `sub-icps/post-crisis.md` — Post-Crise : hypervigilance, reconstruction
+
 - Une citation d'Esther Perel ou Gottman (autorite instantanee)
 - "Si tu t'es jamais senti.e comme ca dans ton couple, regarde ca" (ciblage emotionnel)
 - Une question SPECIFIQUE a poser a son/sa partenaire CE SOIR (utilite immediate)

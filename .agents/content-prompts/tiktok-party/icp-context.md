@@ -32,6 +32,17 @@ Exact words :
 
 ## Ce qui arrete son scroll
 
+...
+
+## Sub-ICPs (hyper-ciblage)
+
+Ce profil générique couvre 3 sous-ICP distincts avec des problèmes profonds différents.
+Charge le fichier correspondant pour du contenu hyper-precis :
+
+- `sub-icps/new-host.md` — Nouvel Hote (25-28) : legitimite, peur de l'echec
+- `sub-icps/established-host.md` — Hote Etabli (28-32) : erosion identitaire, renouveau
+- `sub-icps/introvert-host.md` — Hote Introverti (tout age) : epuisement social, masque
+
 - "Tu sais ce moment ou..." (relatabilite immediate)
 - Une photo de groupe qui rit vraiment (aspirationnel)
 - Un jeu qu'il/elle n'a jamais vu (nouveaute + utilite)
