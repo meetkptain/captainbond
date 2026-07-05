@@ -30,6 +30,11 @@ HOOK : "Il/elle range mal le lave-vaisselle. Est-ce que c'est un motif de ruptur
 STRUCTURE : Question absurde → Données (Gottman : les disputes de vie commune sont normales) → Permission
 TON : Léger, rassurant, data-backed
 CTA : "Dis-moi la chose qui t'énerve le PLUS chez ton/ta partenaire — je valide ou pas"
+DESCRIPTION : Il/elle range mal le lave-vaisselle. C'est un motif de rupture ? Spoiler : non. Les disputes de vie commune sont normales.
+→ Balance ton plus gros agacement du quotidien
+→ @captainbond
+https://captainbond.com
+#viedeux #disputecouple #captainbond
 ANGLE CAPTAIN BOND : Mode Date Night = baromètre de santé. Si vous riez encore ensemble, tout va bien.
 ```
 
@@ -41,6 +46,11 @@ HOOK : "Votre première dispute n'est pas un signe d'échec. C'est un signe que 
 STRUCTURE : Mythe ("les couples parfaits ne se disputent pas") → Réalité (conflit = signe d'investissement) → Outil
 TON : Sage, rassurant
 CTA : "Dis-moi le sujet de VOTRE première dispute en commentaire"
+DESCRIPTION : Votre premiere dispute n'est pas un signe d'echec. C'est un signe que vous vous investissez dans la relation.
+→ Sujet de votre premiere dispute ? On ecoute tout
+→ @captainbond
+https://captainbond.com
+#premieredispute #couple #captainbond
 ```
 
 ### Template 3 : Routine vs amour
@@ -51,6 +61,11 @@ HOOK : "Le petit-déjeuner en silence. Netflix sans se regarder. Est-ce que c'es
 STRUCTURE : Description relatable → Explication (c'est la transition, pas la fin) → 1 rituel
 TON : Doux, poétique, réaliste
 CTA : "Sauvegarde ce post et essaie une question Captain Bond ce soir"
+DESCRIPTION : Le petit-dejeuner en silence. Netflix sans se regarder. C'est ca la vie a deux ? Oui, et c'est normal.
+→ Garde ce post pour votre prochain moment a deux
+→ @captainbond
+https://captainbond.com
+#viedecouple #routineamour #captainbond
 ```
 
 ### Template 4 : Les 3 crises
@@ -61,6 +76,11 @@ HOOK : "Les 3 crises silencieuses de la première année — et pourquoi elles s
 STRUCTURE : Crise 1 (l'intimité quotidienne) → Crise 2 (l'argent) → Crise 3 (le temps seul)
 TON : Calme, structuré, documenté
 CTA : "Laquelle des 3 a été la plus dure pour vous ?"
+DESCRIPTION : 3 crises silencieuses attendent tous les couples en premiere annee. Les reconnaitre, c'est deja les traverser.
+→ Laquelle des 3 crises a ete la plus dure pour vous ?
+→ @captainbond
+https://captainbond.com
+#crisedecouple #premiereannee #captainbond
 ```
 
 ### Template 5 : Le diagnostic
@@ -71,6 +91,11 @@ HOOK : "3 questions à vous poser ce soir pour savoir si votre relation est soli
 STRUCTURE : Question 1 → Pourquoi c'est important → Question 2 → Question 3
 TON : Sérieux, bienveillant
 CTA : "Prenez 10 minutes ce soir pour ces 3 questions. Gratuit."
+DESCRIPTION : 3 questions a vous poser ce soir pour savoir si votre relation est solide ou si vous stressez pour rien.
+→ Prenez 10 minutes. Juste vous deux. Pas de telephone.
+→ @captainbond
+https://captainbond.com
+#testcouple #relationsaine #captainbond
 ```
 
 ## CAPTAIN BOND ANGLE

@@ -30,6 +30,11 @@ HOOK : "J'ai organisé 50 soirées. Et puis je me suis ennuyé."
 STRUCTURE : Constat → Analyse → Solution → Renouveau
 TON : Honnête, sans filtre, un peu triste puis lumineux
 CTA : "Quand as-tu essayé QUELQUE CHOSE de nouveau pour la dernière fois ?"
+DESCRIPTION : 50 soirees. Les memes tetes. Les memes jeux. Tu t'ennuies de toi-meme en tant qu'hote. Le vrai probleme ? Tu es plus creatif que ca.
+→ Dis-nous quand ton dernier renouvellement de soiree remonte
+→ @captainbond
+https://captainbond.com
+#burnouthote #soireerepetitive #captainbond
 ANGLE CAPTAIN BOND : Nouveaux contenus saisonniers, modes avancés.
 ```
 
@@ -41,6 +46,11 @@ HOOK : "Vous pensiez tout connaître des jeux de soirée ? Celui-ci va vous surp
 STRUCTURE : "J'ai testé un nouveau mode... et ça a changé la dynamique"
 TON : Surpris, enthousiaste
 CTA : "Teste le mode Imposteur. C'est gratuit."
+DESCRIPTION : Tu pensais tout connaitre des jeux de soiree ? Celui-la va te surprendre. J'ai teste un nouveau mode et la dynamique a completement change.
+→ Tague ton partenaire de soiree prefere
+→ @captainbond
+https://captainbond.com
+#nouveaumode #jeudesoiree #captainbond
 ```
 
 ### Template 3 : Comparaison avant/après
@@ -51,6 +61,11 @@ HOOK : "Ma soirée 'classique' vs ma soirée 'renouvelée'"
 STRUCTURE : Avant (prévisible) → Pendant (transition) → Après (révélation)
 TON : Analytique mais passionné
 CTA : "Quel est ton plus grand changement entre tes premières soirées et maintenant ?"
+DESCRIPTION : Ma soiree classique VS ma soiree renouvelee. La difference est flagrante et ca m'a rendu ma passion d'organiser.
+→ Raconte comment tes soirees ont evolue
+→ @captainbond
+https://captainbond.com
+#evolutionhote #avantapres #captainbond
 ```
 
 ### Template 4 : Le calendrier de l'hôte
@@ -61,6 +76,11 @@ HOOK : "Le calendrier secret des hôtes confirmés : quand garder les classiques
 STRUCTURE : 4 saisons → 4 types de soirées → 4 approches
 TON : Stratégique, insider
 CTA : "Sauvegarde ce calendrier pour l'année"
+DESCRIPTION : Quand garder les classiques, quand innover. Le calendrier secret des hotes confirmes pour ne jamais tomber dans la routine.
+→ Imprime-le pour ta prochaine saison de soirees
+→ @captainbond
+https://captainbond.com
+#calendrierhote #planificationsoiree #captainbond
 ```
 
 ### Template 5 : Reconnaissance du statut
@@ -71,6 +91,11 @@ HOOK : "À tous ceux qui organisent les soirées depuis des années : on ne vous
 STRUCTURE : Hommage → Validation → "Mais vous méritez mieux" → Nouvelle étape
 TON : Reconnaissant, chaleureux
 CTA : "Tag l'hôte de TON groupe pour le remercier"
+DESCRIPTION : A tous ceux qui organisent les soirees depuis des annees : on ne vous remercie pas assez. Vous meritez la reconnaissance.
+→ Tague l'hote de ton groupe dans les commentaires
+→ @captainbond
+https://captainbond.com
+#reconnaissancehote #meilleurhote #captainbond
 ```
 
 ## CAPTAIN BOND ANGLE

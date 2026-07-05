@@ -11,6 +11,38 @@ Trigger : "je n'ai jamais vu ca dit comme ca" — profondeur rare.
 - Musique : minimale ou silence (la voix-off/texte porte)
 - Noir et blanc ou tons satures
 
+## Description copywritee + SEO
+
+Chaque template genere automatiquement une description en 4 blocs :
+
+```
+BLOC 1 — Hook réécrit en phrase
+Reprendre l'accroche de la video en mieux, plus profond.
+
+BLOC 2 — CTA commentaire
+→ Dis-nous en commentaire : {question simplifiee}
+→ Tag ton/ta partenaire
+
+BLOC 3 — CTA lien doux
+3 questions gratuites → captainbond.com
+{1 phrase de valeur, pas vendeuse}
+
+BLOC 4 — 3 hashtags max
+#couple #relation #captainbond
+```
+
+Structure exacte de la description :
+```
+{HOOK_REECRIT}
+
+→ {CTA_COMMENTAIRE}
+→ {CTA_TAG}
+
+{LIEN_DOUX}
+
+{3_HASHTAGS}
+```
+
 ## Template Prompt
 
 ```
@@ -21,6 +53,7 @@ Variables :
 - {EXPLICATION} : vulgarisation du concept
 - {REFAME} : ce que ca change dans la facon de voir sa relation
 - {CTA} : question ouverte en commentaire
+- {DESCRIPTION} : generee automatiquement (hook reecrit + CTA com + lien doux + 3 hashtags)
 
 Structure :
 0-10s : {CONCEPT} — la citation ou l'idee, en texte seul
@@ -30,6 +63,16 @@ Structure :
 75-90s : {CTA}
 
 Hashtags : #estherperel #gottman #psychologie #attachement #relation #couple #captainbond
+
+Description generee :
+{HOOK_REECRIT}
+
+→ {CTA_COMMENTAIRE}
+→ {CTA_TAG}
+
+{LIEN_DOUX}
+
+{3_HASHTAGS}
 ```
 
 ## Exemples concrets
@@ -41,6 +84,14 @@ EXPLICATION : "Avant, on avait plusieurs personnes pour differents besoins. Un p
 REFAME : "Si vous etes decus de votre partenaire, ce n'est peut-etre pas qu'il/elle manque. C'est que vous lui demandez l'impossible."
 APPLICATION : "La solution ? Construire un 'village' pour votre relation. Des amis. Des hobbies. Du temps separe."
 CTA : "Tu ressens cette pression ? Dis-moi en commentaire."
+DESCRIPTION : "On attend tout d'une seule personne. Et on est decu. La solution ? Retrouver son village.
+
+→ Tu ressens cette pression ? Dis-nous en commentaire.
+→ Tag ton/ta partenaire — lisez les reponses ensemble
+
+3 questions gratuites pour reconnecter → captainbond.com
+
+#couple #relation #psychologie"
 ```
 
 ### Exemple 2 : Les 4 cavaliers (Gottman)
@@ -50,6 +101,14 @@ EXPLICATION : "1. La critique (pas 'ca m'embete' mais 'tu es nul'). 2. Le mépri
 REFAME : "La bonne nouvelle ? Chaque cavalier a un antidote. Le mépris → l'appreciation. La defense → l'ecoute."
 APPLICATION : "Ce soir, essayez : remplacer 'tu n'as jamais...' par 'j'ai besoin de...'"
 CTA : "Sauvegarde pour t'en souvenir la prochaine fois"
+DESCRIPTION : "4 comportements qui tuent l'amour. Le pire ? Le mépris. L'antidote ? L'appreciation.
+
+→ Combien de cavaliers chez toi ?
+→ Sauvegarde ce post — les antidotes sont precieux
+
+3 questions gratuites → captainbond.com
+
+#couple #relation #gottman"
 ```
 
 ### Exemple 3 : Attachement anxieux vs evitement
@@ -59,6 +118,14 @@ EXPLICATION : "Les anxieux cherchent la proximite quand ils stressent. Les evita
 REFAME : "La sortie ? Arreter le jeu. L'anxieux apprend a s'auto-reguler. L'evitant apprend a rester."
 APPLICATION : "Prochaine fois que tu sens le cycle : respire. Ne poursuit pas. Ne fuis pas. Reste."
 CTA : "Quel pattern tu reconnais chez toi ?"
+DESCRIPTION : "Tu poursuit, il/elle fuit. Ce n'est pas l'amour, c'est un pattern d'attachement. Voici comment en sortir.
+
+→ Anxieux.se ou evitante ? Dis-nous en commentaire
+→ Tag ton/ta partenaire — brisez le cycle ensemble
+
+3 questions gratuites → captainbond.com
+
+#couple #relation #attachement"
 ```
 
 ## Notes

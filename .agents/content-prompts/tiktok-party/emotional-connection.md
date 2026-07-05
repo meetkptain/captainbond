@@ -11,6 +11,38 @@ Trigger : vulnerabilite authentique + besoin d'etre vu.
 - Musique : instrumentale douce, piano, lo-fi
 - Texte overlay : present mais pas dominant (le recit porte)
 
+## Description copywritee + SEO
+
+Chaque template genere automatiquement une description en 4 blocs :
+
+```
+BLOC 1 — Hook réécrit en phrase
+Reprendre l'accroche de la video en mieux, plus profond.
+
+BLOC 2 — CTA commentaire
+→ Dis-nous en commentaire : {question simplifiee}
+→ Tag l'ami/la personne concernee
+
+BLOC 3 — CTA lien doux
+3 questions gratuites → captainbond.com
+{1 phrase de valeur, pas vendeuse}
+
+BLOC 4 — 3 hashtags max
+#motcle1 #motcle2 #motcle3
+```
+
+Structure exacte de la description :
+```
+{HOOK_REECRIT}
+
+→ {CTA_COMMENTAIRE}
+→ {CTA_TAG}
+
+{LIEN_DOUX}
+
+{3_HASHTAGS}
+```
+
 ## Template Prompt
 
 ```
@@ -21,6 +53,7 @@ Variables :
 - {REVELATION} : le "plot twist" emotionnel
 - {VALEUR} : ce que l'hote a appris
 - {CTA} : reflet + appel
+- {DESCRIPTION} : generee automatiquement (hook reecrit + CTA com + lien doux + 3 hashtags)
 
 Structure :
 0-5s : {HOOK} : question ouverte ou constat
@@ -29,6 +62,16 @@ Structure :
 45-55s : {VALEUR} + {CTA}
 
 Hashtags : #amitie #connexion #moments #coeur #captainbond
+
+Description generee :
+{HOOK_REECRIT}
+
+→ {CTA_COMMENTAIRE}
+→ {CTA_TAG}
+
+{LIEN_DOUX}
+
+{3_HASHTAGS}
 ```
 
 ## Exemples concrets
@@ -40,6 +83,14 @@ RECIT : "Au debut, je voulait que tout soit parfait. La deco, la musique, les in
 REVELATION : "...c'etait la meilleure soiree. Parce que les gens etaient la, ensemble."
 VALEUR : "La perfection ne fait pas les souvenirs. Les gens les font."
 CTA : "A tous les hotes qui stressent : vous faites deja assez bien."
+DESCRIPTION : "J'ai voulu la soiree parfaite. J'ai eu une soiree imparfaite. C'etait la meilleure 💛
+
+→ A tous les hotes qui stressent
+→ Quelle a ete TA meilleure soiree imparfaite ?
+
+3 questions gratuites → captainbond.com
+
+#amitie #moments #captainbond"
 ```
 
 ### Exemple 2 : La soiree ou personne n'etait sur son telephone
@@ -49,6 +100,14 @@ RECIT : "Un jeu un peu bete. Des questions. Des reponses. Et soudain tout le mon
 REVELATION : "Pendant 2 heures, personne n'a regarde son telephone. 2 HEURES."
 VALEUR : "C'est pour ca qu'on organise des soirees. Pas pour les photos. Pour les regards."
 CTA : "Ta meilleure soiree ? Raconte en commentaire."
+DESCRIPTION : "2 heures sans telephone. Juste des regards. C'est pour ca qu'on organise des soirees 📵💛
+
+→ Raconte ta meilleure soiree en commentaire
+→ Tague les amis avec qui tu veux vivre ca
+
+3 questions gratuites → captainbond.com
+
+#amitie #connexion #captainbond"
 ```
 
 ## Notes

@@ -30,6 +30,11 @@ HOOK : "Ne lis pas ça. Tes enfants ont besoin de toi. (Je rigole. Tes enfants O
 STRUCTURE : Accroche qui choque → Reframe (être un bon parent = être un bon conjoint) → Permission
 TON : Provocant puis doux, libérateur
 CTA : "Sauvegarde ce post pour les jours où tu culpabilises de penser à toi"
+DESCRIPTION : Ne lis pas ca. Tes enfants ont besoin de toi. (Je rigole. Tes enfants ONT besoin que tu lises ca.) Etre un bon parent commence par etre un bon conjoint.
+→ Garde ce post pour les moments ou la culpabilite te rattrape
+→ @captainbond
+https://captainbond.com
+#parentalite #coupleparent #captainbond
 ANGLE CAPTAIN BOND : Mode Micro-date 5/10/15 minutes. Pas de nounou. Pas de sortie.
 ```
 
@@ -41,6 +46,11 @@ HOOK : "5 minutes par jour qui sauvent votre couple quand vous n'avez pas 5 heur
 STRUCTURE : La règle des 5 minutes → 1 question par jour → Pourquoi c'est plus efficace qu'un date de 3h
 TON : Concret, réaliste, pas culpabilisant
 CTA : "5 minutes. Ce soir. Après le coucher des enfants. Essayez."
+DESCRIPTION : 5 minutes par jour qui sauvent votre couple quand vous n'avez pas 5 heures. Pas de nounou. Pas de sortie. Juste vous deux apres le coucher.
+→ 5 minutes ce soir. Juste apres le coucher des enfants. Promis.
+→ @captainbond
+https://captainbond.com
+#microdate #parentssansnounou #captainbond
 ```
 
 ### Template 3 : Le reframe parental
@@ -51,6 +61,11 @@ HOOK : "Le meilleur cadeau que vous puissiez faire à vos enfants ? Un couple he
 STRUCTURE : Données (les enfants de parents en couple solide réussissent mieux) → Conséquence → Action
 TON : Data-backed, chaleureux
 CTA : "Vos enfants n'ont pas besoin de parents parfaits. Ils ont besoin de parents qui s'aiment."
+DESCRIPTION : Le meilleur cadeau que vous puissiez faire a vos enfants ? Un couple heureux. Les donnees le prouvent.
+→ Offre a tes enfants le plus beau des cadeaux : des parents qui s'aiment
+→ @captainbond
+https://captainbond.com
+#cadeauenfanf #coupleheureux #captainbond
 ```
 
 ### Template 4 : La chuchot-thérapie
@@ -61,6 +76,11 @@ HOOK : "Quand les enfants sont couchés et que vous êtes trop fatigués pour pa
 STRUCTURE : Le problème (épuisement) → Solution low-energy (2 questions chuchotées) → Résultat
 TON : Fatigué mais tendre, complice
 CTA : "Chuchote une question à ton/ta partenaire. Juste une. Gratuit."
+DESCRIPTION : Les enfants sont couches, vous etes vides. Pas l'energie de parler ? 2 questions chuchotees et la connexion revient.
+→ Chuchote une question ce soir. Gratuit. Sans sortir du lit.
+→ @captainbond
+https://captainbond.com
+#chuchottherapie #parentepuise #captainbond
 ```
 
 ### Template 5 : La culpabilité normale
@@ -71,6 +91,11 @@ HOOK : "La vérité inconfortable : négliger votre couple pour vos enfants, c'e
 STRUCTURE : Croyance → Chiffres → Reframe → Permission
 TON : Direct, aimant, ferme et doux
 CTA : "Prendre 15 minutes pour vous deux ce soir. Pas pour les enfants. Pour vous. Vous le méritez."
+DESCRIPTION : La verite inconfortable : negliger son couple pour ses enfants, c'est aussi les negliger. Prendre du temps pour vous n'est pas egoiste.
+→ 15 minutes. Ce soir. Pas pour les enfants. Pour vous.
+→ @captainbond
+https://captainbond.com
+#tempsdecouple #parentalitebienveillante #captainbond
 ```
 
 ## CAPTAIN BOND ANGLE

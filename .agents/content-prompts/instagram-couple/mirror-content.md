@@ -11,6 +11,38 @@ Trigger : reconnaissance douloureuse + "je ne suis pas seul.e".
 - Musique : piano doux, lo-fi, instrumentale chaude
 - Pas de cuts rapides — plans tenus, respiration
 
+## Description copywritee + SEO
+
+Chaque template genere automatiquement une description en 4 blocs :
+
+```
+BLOC 1 — Hook réécrit en phrase
+Reprendre l'accroche de la video en mieux, plus profond.
+
+BLOC 2 — CTA commentaire
+→ Dis-nous en commentaire : {question simplifiee}
+→ Tag ton/ta partenaire
+
+BLOC 3 — CTA lien doux
+3 questions gratuites → captainbond.com
+{1 phrase de valeur, pas vendeuse}
+
+BLOC 4 — 3 hashtags max
+#couple #relation #captainbond
+```
+
+Structure exacte de la description :
+```
+{HOOK_REECRIT}
+
+→ {CTA_COMMENTAIRE}
+→ {CTA_TAG}
+
+{LIEN_DOUX}
+
+{3_HASHTAGS}
+```
+
 ## Template Prompt
 
 ```
@@ -21,6 +53,7 @@ Variables :
 - {NORMALISATION} : "c'est normal, voici pourquoi"
 - {SOLUTION} : ce qu'on peut y faire
 - {CTA} : sauvegarde / partage / reflet
+- {DESCRIPTION} : generee automatiquement (hook reecrit + CTA com + lien doux + 3 hashtags)
 
 Structure Reel :
 0-5s : {HOOK} — "Tu t'es deja senti.e comme... ?"
@@ -30,6 +63,16 @@ Structure Reel :
 55-60s : {CTA}
 
 Hashtags : #couple #relation #amour #connexion #couplegoals #captainbond
+
+Description generee :
+{HOOK_REECRIT}
+
+→ {CTA_COMMENTAIRE}
+→ {CTA_TAG}
+
+{LIEN_DOUX}
+
+{3_HASHTAGS}
 ```
 
 ## Exemples concrets
@@ -40,6 +83,14 @@ PHENOMENE : "Vous vous aimez mais vous vous sentez comme des colocs"
 NORMALISATION : "C'est le stade le plus courant des relations long-terme. La routine s'installe. C'est pas un echec."
 SOLUTION : "La difference entre un couple qui dure et un couple qui s'eteint ? L'intentionnalite. Un rituel par semaine."
 CTA : "Sauvegarde pour ton prochain date night"
+DESCRIPTION : "Le syndrome du colocataire touche 70% des couples. Et c'est normal.
+
+→ Reconnais-toi dans ce post ?
+→ Tag ton/ta partenaire — lisez les reponses ensemble
+
+3 questions gratuites pour briser la routine → captainbond.com
+
+#couple #relation #captainbond"
 ```
 
 ### Exemple 2 : On n'a plus rien a se dire
@@ -48,6 +99,14 @@ PHENOMENE : "Le diner ou vous parlez des courses, du boulot, des enfants... et c
 NORMALISATION : "Esther Perel dit : quand l'intimite devient fusion, ce n'est pas le manque de proximite mais TROP de proximite qui tue le desir."
 SOLUTION : "3 questions a poser ce soir pour sortir de la routine conversationnelle : 1. Quel est ton souvenir prefere de nous ? 2. Qu'est-ce que tu aimerais qu'on decouvre ensemble ? 3. Qu'est-ce qui te fait sentir desire.e ?"
 CTA : "Pose ces questions ce soir et reviens me dire"
+DESCRIPTION : "Le diner ou vous parlez des courses, du boulot... et c'est tout ? Esther Perel a une theorie sur pourquoi.
+
+→ Sauvegarde les 3 questions pour ce soir
+→ Pose-les a ton/ta partenaire — regarde sa reaction
+
+3 questions gratuites → captainbond.com
+
+#couple #relation #date"
 ```
 
 ### Exemple 3 : Les 7 signes du mode "maintenance"
@@ -56,6 +115,14 @@ PHENOMENE : "Vous etes en mode maintenance, pas en mode connexion"
 ITEMS (Carrousel) : "1. Vos conversations = logistique. 2. Vous regardez plus Netflix que vous. 3. Les dates sont devenus des rendez-vous. 4. Vous ne vous surprenez plus. 5. Le sexe est programme ou absent. 6. Vous ne racontez plus votre journee. 7. Mais vous vous aimez encore."
 REFAME : "La maintenance n'est pas la mort. C'est le signal qu'il faut un reset."
 CTA : "Sauvegarde ce carrousel comme check-in"
+DESCRIPTION : "Les 7 signes que vous etes en mode 'maintenance' (pas en mode 'connexion')
+
+→ Combien de signes sur 7 chez vous ?
+→ Sauvegarde ce carrousel pour votre prochain check-in
+
+3 questions gratuites → captainbond.com
+
+#couple #relation #captainbond"
 ```
 
 ## Notes

@@ -30,6 +30,11 @@ HOOK : "Vous avez pardonné. Votre corps, lui, n'a pas encore signé."
 STRUCTURE : Le décalage (tête/coeur) → L'hypervigilance expliquée → Normalisation → Outil
 TON : Scientifique et doux, pas de "lâchez prise" culpabilisant
 CTA : "Si ton corps réagit encore, ce n'est pas une trahison. C'est une protection. Et c'est normal."
+DESCRIPTION : Tu as pardonne. Ton corps, lui, n'a pas encore signe. L'hypervigilance n'est pas une faiblesse, c'est une cicatrice.
+→ Partage ce post a quelqu'un qui vit encore dans l'hypervigilance
+→ @captainbond
+https://captainbond.com
+#aprescrrise #hypervigilance #captainbond
 ANGLE CAPTAIN BOND : Mode Renouveau — des questions qui créent des SOUVENIRS POSITIFS pour écraser les anciens.
 ```
 
@@ -41,6 +46,11 @@ HOOK : "Vous ne pouvez pas revenir à 'avant la crise'. Mais vous pouvez créer 
 STRUCTURE : Deuil de l'ancienne relation → Acceptation → Construction du nouveau récit
 TON : Sérieux, doux, porteur d'espoir réaliste
 CTA : "Qu'est-ce que vous voulez construire maintenant que vous avez survécu au pire ?"
+DESCRIPTION : Vous ne pouvez pas revenir a "avant la crise". Mais vous pouvez creer quelque chose de plus fort et de plus solide.
+→ Repondez en commentaire : qu'est-ce que vous voulez construire maintenant ?
+→ @captainbond
+https://captainbond.com
+#nouveaurecit #reconstructioncouple #captainbond
 ```
 
 ### Template 3 : Les questions sans déclencheur
@@ -51,6 +61,11 @@ HOOK : "Les questions qui NE déclenchent PAS — qui guérissent au lieu de gra
 STRUCTURE : Le problème (questions qui ravivent) → La solution (questions tournées vers l'avenir) → 3 exemples
 TON : Thérapeutique, prudent, précis
 CTA : "3 questions à poser ce soir. Elles ne parlent PAS du passé. Elles construisent l'avenir."
+DESCRIPTION : Des questions qui ne declenchent pas — qui guerissent. Tournees vers l'avenir, sans rouvrir les blessures.
+→ Pose ces 3 questions ce soir. Pas de passe. Que du futur.
+→ @captainbond
+https://captainbond.com
+#questionsquisoignent #avenircouple #captainbond
 ```
 
 ### Template 4 : La permission d'être fatigué
@@ -61,6 +76,11 @@ HOOK : "Vous avez le droit d'être fatigué. La reconstruction est épuisante, m
 STRUCTURE : Honte → Permission → Repos → Cycle sain
 TON : Doux, sans injonction
 CTA : "Aujourd'hui, vous n'avez pas à 'travailler sur votre couple'. Aujourd'hui, vous avez juste le droit d'être."
+DESCRIPTION : Tu as le droit d'etre fatigue de reparer. La reconstruction est epuisante, meme quand elle reussit. Repose-toi.
+→ Accorde-toi cette permission aujourd'hui : juste etre, sans reparer.
+→ @captainbond
+https://captainbond.com
+#droitdetrefatigue #reconstructiondouce #captainbond
 ```
 
 ### Template 5 : Les 3 phases
@@ -71,6 +91,11 @@ HOOK : "Les 3 phases du rétablissement post-crise (et comment savoir où vous e
 STRUCTURE : Phase 1 (chaos et survie) → Phase 2 (reconstruction active) → Phase 3 (nouveau territoire)
 TON : Clinique mais chaleureux, structurant
 CTA : "À quelle phase êtes-vous ? Répondez honnêtement, pas comme vous voudriez être."
+DESCRIPTION : Chaos, reconstruction active, nouveau territoire. 3 phases du retablissement. A laquelle etes-vous vraiment ?
+→ Phase 1, 2 ou 3 ? Sois honnete, pas comme tu voudrais etre.
+→ @captainbond
+https://captainbond.com
+#phasesretablissement #couplepostcrise #captainbond
 ```
 
 ## CAPTAIN BOND ANGLE

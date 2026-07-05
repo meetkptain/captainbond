@@ -30,6 +30,11 @@ HOOK : "Vous avez passé 3h à préparer et vous stressez encore ?"
 STRUCTURE : Validation → Normalisation → Outil → CTA
 TON : Chaleureux, "je te vois", pas de jugement
 CTA : "Vous gérez déjà. Un petit outil en + pour être tranquille ?"
+DESCRIPTION : Tu passes 3h à préparer et tu stresses encore avant que les invités arrivent ? Spoiler : personne ne voit ta nervosité. Un petit outil et c'est réglé.
+→ Raconte ton rituel d'avant-soirée en commentaire
+→ @captainbond
+https://captainbond.com
+#stresssoiree #hotedebutant #captainbond
 ANGLE CAPTAIN BOND : "L'app est l'hôte à votre place. Vous profitez."
 ```
 
@@ -41,6 +46,11 @@ HOOK : "Ma première soirée était une catastrophe. Voici ce que j'ai appris."
 STRUCTURE : Récit d'échec → Twist → Leçon → Outil
 TON : Vulnérable, drôle, authentique
 CTA : "Raconte ta pire première soirée en commentaire"
+DESCRIPTION : Ma première soirée était une catastrophe. Mais devine quoi ? Tout le monde s'en fiche. Ce qui compte c'est de recommencer.
+→ Balance ta pire anecdote de première soirée
+→ @captainbond
+https://captainbond.com
+#soireeratelee #premierefois #captainbond
 ```
 
 ### Template 3 : Le jeu sauveur
@@ -51,6 +61,11 @@ HOOK : "Le jeu qui sauve TOUTES les soirées quand tu débutes"
 STRUCTURE : Problème → Solution (le jeu) → Démo → Résultat
 TON : Concret, pas de bullshit
 CTA : "3 cartes gratuites sur captainbond.com"
+DESCRIPTION : Le jeu qui sauve TOUTES les soirées quand tu ne sais pas encore animer. Testé et approuvé par les hôtes débutants.
+→ Tague ton pote qui stresse pour sa prochaine soirée
+→ @captainbond
+https://captainbond.com
+#jeudesoel #soireeentreprises #captainbond
 ```
 
 ### Template 4 : Checklist de survie
@@ -61,6 +76,11 @@ HOOK : "La checklist de l'hôte débutant (imprime-la)"
 STRUCTURE : Liste de 5 items indispensables → Chaque item expliqué en 5s
 TON : Amical, structuré
 CTA : "Sauvegarde pour ta prochaine soirée"
+DESCRIPTION : T'as aucune idée par où commencer pour organiser ta soirée ? Voici les 5 indispensables à avoir sous le coude.
+→ Epingle ce post pour ta prochaine prepa
+→ @captainbond
+https://captainbond.com
+#checklistsoiree #organisationfete #captainbond
 ```
 
 ### Template 5 : Le mindset
@@ -71,6 +91,11 @@ HOOK : "La vérité que personne te dit sur l'accueil : personne ne compare à u
 STRUCTURE : Croyance limitante → Réalité → Permission → CTA
 TON : Sage, doux, libérateur
 CTA : "Vous avez TOUT ce qu'il faut. Respirez."
+DESCRIPTION : La vérité que personne ne dit sur l'accueil : personne ne compare à un idéal. Tes invites veulent juste passer un bon moment AVEC toi.
+→ Partage ce post a un hote qui en a besoin
+→ @captainbond
+https://captainbond.com
+#mindsethote #confianceensoi #captainbond
 ```
 
 ## CAPTAIN BOND ANGLE

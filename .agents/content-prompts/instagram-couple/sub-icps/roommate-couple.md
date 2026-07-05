@@ -30,6 +30,11 @@ HOOK : "Vous ne vous disputez pas. Vous ne vous parlez pas non plus. Il y a pire
 STRUCTURE : Description précise (silence, téléphones, courses) → Normalisation (70% des couples) → 1 micro-geste
 TON : Calme, sans jugement, précis
 CTA : "Sauvegarde ce post. Il est pour le moment où vous serez prêts."
+DESCRIPTION : Vous ne vous disputez pas. Vous ne vous parlez pas non plus. La paix vide est pire que la guerre froide.
+→ Garde ce post pour le jour ou vous serez prets a briser le silence
+→ @captainbond
+https://captainbond.com
+#paixvide #couplecolocataire #captainbond
 ANGLE CAPTAIN BOND : Mode Reconnexion — des questions qui brise le silence sans pression.
 ```
 
@@ -41,6 +46,11 @@ HOOK : "Les 4 cavaliers qui tuent les couples (et pourquoi ils se sont invités 
 STRUCTURE : Critique vs plainte → Mépris (le pire) → Défense → Fuite → Antidotes
 TON : Data-driven, concret, pas culpabilisant
 CTA : "Lequel des 4 reconnaissez-vous chez vous ?"
+DESCRIPTION : 4 cavaliers qui tuent les couples : critique, mepris, defense, fuite. Les reconnaitre, c'est les desamorcer.
+→ Lequel des 4 est entre chez vous ? Sois honnete.
+→ @captainbond
+https://captainbond.com
+#cavaliercouple #gottman #captainbond
 ```
 
 ### Template 3 : Le micro-moment
@@ -51,6 +61,11 @@ HOOK : "Le geste que vous avez arrêté de faire sans vous en rendre compte — 
 STRUCTURE : Avant (bids for connection) → Arrêt progressif → Conséquence → Comment reprendre
 TON : Doux, nostalgique, sans reproche
 CTA : "Ce soir, faites un geste que vous faisiez au début — voyez ce qui se passe"
+DESCRIPTION : Il y a un geste que vous avez arrete de faire sans vous en rendre compte. Et ca a tout change.
+→ Fais ce geste ce soir et observe ce qu'il se passe
+→ @captainbond
+https://captainbond.com
+#microgeste #reconnexioncouple #captainbond
 ```
 
 ### Template 4 : Replay de l'histoire
@@ -61,6 +76,11 @@ HOOK : "Une question à poser ce soir : 'Quand est-ce que tu as su que tu voulai
 STRUCTURE : Question → Pourquoi elle est puissante → Préparation → Résultat attendu
 TON : Intime, sérieux, espoir
 CTA : "Pose la question ce soir. Pas de téléphone. Juste vous deux."
+DESCRIPTION : Une seule question a poser ce soir : "Quand est-ce que tu as su que tu voulais de moi ?" Les reponses vont vous surprendre.
+→ Pose la question. Ecoute. Ne reponds pas tout de suite.
+→ @captainbond
+https://captainbond.com
+#souvenirscouple #questionsprofondes #captainbond
 ```
 
 ### Template 5 : Le choix actif
@@ -71,6 +91,11 @@ HOOK : "Le choix que vous faites chaque matin (sans le savoir) : rester par amou
 STRUCTURE : La distinction → Le test → Le renouvellement
 TON : Philosophique, percutant, doux
 CTA : "Est-ce que tu choisis encore ton/ta partenaire ? La réponse peut tout changer."
+DESCRIPTION : Chaque matin tu fais un choix sans le savoir : rester par amour ou par habitude. Il est temps de choisir activement.
+→ Reponds honnetement en commentaire : est-ce que tu choisis encore ?
+→ @captainbond
+https://captainbond.com
+#choisiramour #habitudeouamour #captainbond
 ```
 
 ## CAPTAIN BOND ANGLE

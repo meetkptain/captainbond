@@ -30,6 +30,11 @@ HOOK : "J'adore mes amis. Je déteste organiser des soirées. Le paradoxe."
 STRUCTURE : Confession → Pourquoi je le fais quand même → Comment je survis
 TON : Authentique, sans filtre, libérateur
 CTA : "Vous êtes combien à ressentir ça ? Commentez 🤝"
+DESCRIPTION : J'adore mes amis. Je deteste organiser des soirees. Le paradoxe de l'hote introverti qui porte un masque toute la soiree.
+→ Tu te reconnais ? Lache un 🤝 en commentaire
+→ @captainbond
+https://captainbond.com
+#introvertisocial #soireeintime #captainbond
 ANGLE CAPTAIN BOND : Le jeu est l'animateur, pas l'hôte.
 ```
 
@@ -41,6 +46,11 @@ HOOK : "Vous voulez voir vos amis sans vous épuiser ? Essayez la micro-soirée.
 STRUCTURE : Concept → Règles (max 4 pers, 2h, 1 jeu) → Pourquoi ça marche
 TON : Doux, précis, validant
 CTA : "Teste : invite 3 personnes, 1 jeu, 2h max."
+DESCRIPTION : Tu veux voir tes amis sans t'epuiser ? La micro-soiree est ta meilleure alliee. Max 4 personnes, 2h, 1 jeu.
+→ Qui serait sur ta liste pour une micro-soiree ?
+→ @captainbond
+https://captainbond.com
+#microsoiree #introverti #captainbond
 ```
 
 ### Template 3 : Le bouclier social
@@ -51,6 +61,11 @@ HOOK : "Le secret des hôtes introvertis : ils choisissent des jeux qui font le 
 STRUCTURE : Problème → Le jeu comme bouclier → Démo → Soulagement
 TON : Complice, "je sais exactement ce que tu ressens"
 CTA : "Un jeu qui anime la soirée sans que t'aies à faire le clown."
+DESCRIPTION : Le secret des hotes introvertis : ils choisissent des jeux qui font le travail a leur place. Toi tu profites.
+→ Prends le jeu qui fait tout le boulot, toi tu profites
+→ @captainbond
+https://captainbond.com
+#boucliersocial #jeuquianime #captainbond
 ```
 
 ### Template 4 : L'acceptation
@@ -61,6 +76,11 @@ HOOK : "Si vous êtes fatigué après une soirée, vous n'êtes pas antisocial. 
 STRUCTURE : Normalisation → Science (l'introversion n'est pas un défaut) → Permission
 TON : Doux, éducatif, libérateur
 CTA : "Sauvegarde ce post pour les jours où tu culpabilises"
+DESCRIPTION : Si tu es fatigue apres une soiree, tu n'es pas antisocial. Tu es juste... toi. Et c'est parfaitement valide.
+→ Mets ce post de cote pour les jours ou tu doutes
+→ @captainbond
+https://captainbond.com
+#fatiguesociale #droitdetresoi #captainbond
 ```
 
 ### Template 5 : Observer plutôt qu'animer
@@ -71,6 +91,11 @@ HOOK : "Le superpouvoir de l'hôte introverti : il observe. Il écoute. Il crée
 STRUCTURE : Reframe du rôle d'hôte → L'observation comme force → Outil
 TON : Fier, valorisant, "tu es déjà bon comme tu es"
 CTA : "Montre ça à quelqu'un qui pense qu'être extraverti est la seule façon d'être un bon hôte"
+DESCRIPTION : Le superpouvoir de l'hote introverti : il observe. Il ecoute. Il cree l'espace ou les autres se liberent.
+→ Tague un introverti qui est un excellent hote sans le savoir
+→ @captainbond
+https://captainbond.com
+#superpouvoirintroverti #hotedouceur #captainbond
 ```
 
 ## CAPTAIN BOND ANGLE
