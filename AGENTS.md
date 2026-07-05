@@ -419,7 +419,9 @@ Prisma incompatible with Edge Workers. Supabase JS client used for all runtime D
 ### JWT Secrets — ALL Must Be Distinct
 ```
 ADMIN_JWT_SECRET        → admin session tokens
+ADMIN_REFRESH_SECRET    → admin refresh tokens (OPTIONAL: falls back to ADMIN_JWT_SECRET)
 PLAYER_JWT_SECRET       → player auth
+PLAYER_REFRESH_SECRET   → player refresh tokens (OPTIONAL: falls back to PLAYER_JWT_SECRET)
 HOST_TOKEN_SECRET       → host tokens (DIFFERENT from ADMIN_SYNC_SECRET)
 HMAC_IMPOSTEUR_SECRET   → imposter game HMAC
 COUPLE_INVITE_SECRET    → couple invite links

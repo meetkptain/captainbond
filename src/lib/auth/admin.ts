@@ -1,9 +1,10 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { SignJWT, jwtVerify } from 'jose';
 import bcrypt from 'bcryptjs';
 import { AppError } from '@/lib/errors';
 
 export const ADMIN_COOKIE_NAME = 'koze_admin_session';
+export const ADMIN_REFRESH_COOKIE_NAME = 'koze_admin_refresh';
 
 export interface AdminSessionPayload {
   role: 'admin';
@@ -17,6 +18,14 @@ function getSecret(): Uint8Array {
   return new TextEncoder().encode(secret);
 }
 
+function getRefreshSecret(): Uint8Array {
+  const secret = process.env.ADMIN_REFRESH_SECRET || process.env.ADMIN_JWT_SECRET;
+  if (!secret) {
+    throw new Error('Missing ADMIN_JWT_SECRET for refresh token');
+  }
+  return new TextEncoder().encode(secret);
+}
+
 export async function signAdminSession(): Promise<string> {
   const secret = getSecret();
   return new SignJWT({ role: 'admin' })
@@ -24,6 +33,25 @@ export async function signAdminSession(): Promise<string> {
     .setIssuedAt()
     .setExpirationTime('7d')
     .sign(secret);
+}
+
+export async function signAdminRefreshToken(): Promise<string> {
+  const secret = getRefreshSecret();
+  return new SignJWT({ role: 'admin', type: 'refresh' })
+    .setProtectedHeader({ alg: 'HS256' })
+    .setIssuedAt()
+    .setExpirationTime('30d')
+    .sign(secret);
+}
+
+export async function verifyAdminRefreshToken(token: string): Promise<boolean> {
+  const secret = getRefreshSecret();
+  try {
+    const { payload } = await jwtVerify(token, secret, { algorithms: ['HS256'] });
+    return payload.role === 'admin' && payload.type === 'refresh';
+  } catch {
+    return false;
+  }
 }
 
 export async function verifyAdminSession(token: string): Promise<AdminSessionPayload> {
@@ -47,6 +75,25 @@ export async function requireAdminSession(req: NextRequest): Promise<AdminSessio
     throw new AppError('UNAUTHORIZED', 'Session admin manquante');
   }
   return verifyAdminSession(token);
+}
+
+export async function tryAdminRefresh(req: NextRequest, response?: NextResponse): Promise<boolean> {
+  const refreshToken = req.cookies.get(ADMIN_REFRESH_COOKIE_NAME)?.value;
+  if (!refreshToken) return false;
+
+  const valid = await verifyAdminRefreshToken(refreshToken);
+  if (!valid) return false;
+
+  const newJwt = await signAdminSession();
+  const newRefresh = await signAdminRefreshToken();
+  const cookieOpts = getAdminCookieOptions();
+  const refreshOpts = getAdminRefreshCookieOptions();
+
+  if (response) {
+    response.cookies.set(ADMIN_COOKIE_NAME, newJwt, cookieOpts);
+    response.cookies.set(ADMIN_REFRESH_COOKIE_NAME, newRefresh, refreshOpts);
+  }
+  return true;
 }
 
 export async function requireAdminOrSyncAuth(req: NextRequest): Promise<AdminSessionPayload | { role: 'sync' }> {
@@ -94,5 +141,15 @@ export function getAdminCookieOptions() {
     sameSite: 'strict' as const,
     path: '/',
     maxAge: 60 * 60 * 24 * 7, // 7 days
+  };
+}
+
+export function getAdminRefreshCookieOptions() {
+  return {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict' as const,
+    path: '/',
+    maxAge: 60 * 60 * 24 * 30, // 30 days
   };
 }

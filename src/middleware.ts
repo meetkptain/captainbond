@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { verifyAdminSession, ADMIN_COOKIE_NAME } from '@/lib/auth/admin';
-import { verifyPlayerSession, PLAYER_COOKIE_NAME } from '@/lib/auth/player';
+import { verifyAdminSession, ADMIN_COOKIE_NAME, ADMIN_REFRESH_COOKIE_NAME, verifyAdminRefreshToken, signAdminSession, signAdminRefreshToken, getAdminCookieOptions, getAdminRefreshCookieOptions } from '@/lib/auth/admin';
+import { verifyPlayerSession, PLAYER_COOKIE_NAME, PLAYER_REFRESH_COOKIE_NAME, verifyPlayerRefreshToken, signPlayerSession, signPlayerRefreshToken, getPlayerCookieOptions, getPlayerRefreshCookieOptions } from '@/lib/auth/player';
 import { logger } from '@/lib/logger';
 
 const PUBLIC_ADMIN_PATHS = new Set([
@@ -125,6 +125,23 @@ async function handleAdminAuth(req: NextRequest, requestId: string, lang: string
 
   const isAdmin = await verifyAdminCookie(req);
   if (!isAdmin) {
+    // Try silent refresh before denying
+    const refreshToken = req.cookies.get(ADMIN_REFRESH_COOKIE_NAME)?.value;
+    if (refreshToken) {
+      const valid = await verifyAdminRefreshToken(refreshToken);
+      if (valid) {
+        const newJwt = await signAdminSession();
+        const newRefresh = await signAdminRefreshToken();
+        const headers = new Headers(req.headers);
+        headers.set('x-request-id', requestId);
+        headers.set('x-lang', lang);
+        const response = NextResponse.next({ request: { headers } });
+        response.cookies.set(ADMIN_COOKIE_NAME, newJwt, getAdminCookieOptions());
+        response.cookies.set(ADMIN_REFRESH_COOKIE_NAME, newRefresh, getAdminRefreshCookieOptions());
+        return response;
+      }
+    }
+
     logger.warn('Unauthorized admin access attempt', { requestId, pathname });
     if (pathname.startsWith('/api/admin')) {
       return setCommonHeaders(NextResponse.json({ error: 'Non autorisé' }, { status: 401 }), requestId, lang);
@@ -154,6 +171,23 @@ async function handlePlayerAuth(req: NextRequest, requestId: string, lang: strin
   try {
     await verifyPlayerSession(token);
   } catch {
+    // Try silent refresh before denying
+    const refreshToken = req.cookies.get(PLAYER_REFRESH_COOKIE_NAME)?.value;
+    if (refreshToken) {
+      const payload = await verifyPlayerRefreshToken(refreshToken);
+      if (payload) {
+        const newJwt = await signPlayerSession(payload);
+        const newRefresh = await signPlayerRefreshToken(payload);
+        const headers = new Headers(req.headers);
+        headers.set('x-request-id', requestId);
+        headers.set('x-lang', lang);
+        const response = NextResponse.next({ request: { headers } });
+        response.cookies.set(PLAYER_COOKIE_NAME, newJwt, getPlayerCookieOptions());
+        response.cookies.set(PLAYER_REFRESH_COOKIE_NAME, newRefresh, getPlayerRefreshCookieOptions());
+        return response;
+      }
+    }
+
     logger.warn('Invalid player session', { requestId, pathname });
     const response = NextResponse.json({ error: 'Session joueur invalide', code: 'UNAUTHORIZED' }, { status: 401 });
     response.cookies.set(PLAYER_COOKIE_NAME, '', { maxAge: 0, path: '/' });

@@ -3,9 +3,12 @@ import { withApiHandler } from '@/lib/api/withApiHandler';
 import { adminLoginSchema } from '@/lib/schemas/api';
 import {
   signAdminSession,
+  signAdminRefreshToken,
   verifyAdminPassword,
   ADMIN_COOKIE_NAME,
+  ADMIN_REFRESH_COOKIE_NAME,
   getAdminCookieOptions,
+  getAdminRefreshCookieOptions,
 } from '@/lib/auth/admin';
 import { adminLoginLimiter } from '@/lib/rate-limit';
 
@@ -21,6 +24,7 @@ export const POST = withApiHandler({
     await verifyAdminPassword(body.password);
 
     const token = await signAdminSession();
+    const refreshToken = await signAdminRefreshToken();
 
     const response = NextResponse.json({
       success: true,
@@ -28,6 +32,7 @@ export const POST = withApiHandler({
     });
 
     response.cookies.set(ADMIN_COOKIE_NAME, token, getAdminCookieOptions());
+    response.cookies.set(ADMIN_REFRESH_COOKIE_NAME, refreshToken, getAdminRefreshCookieOptions());
 
     return response;
   },
