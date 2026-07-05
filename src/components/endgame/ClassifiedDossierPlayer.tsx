@@ -734,18 +734,11 @@ export function ClassifiedDossierPlayer({ playerName, playerId, roomCode }: Clas
           </div>
         )}
 
-        {/* Description Barnum floutée */}
-        <div className="relative w-full p-4 bg-white/5 border border-white/10 rounded-xl overflow-hidden mb-6">
-          <p className="text-slate-300 text-sm filter blur-sm select-none leading-relaxed italic">
-            Tu lis en tes amis comme dans un livre ouvert. Tu sais exactement ce qu&apos;ils attendent de toi, et tu t&apos;en sers avec une précision chirurgicale. Dangereux, mais charmant. Les gens t&apos;adorent sans savoir qu&apos;ils sont dans ta main.
+        {/* Description Barnum visible gratuitement (hook viral) */}
+        <div className="w-full p-4 bg-white/5 border border-white/10 rounded-xl mb-6">
+          <p className="text-slate-300 text-sm leading-relaxed italic">
+            &ldquo;{profile?.barnumText}&rdquo;
           </p>
-          <div className="absolute inset-0 bg-black/45 backdrop-blur-[2px] flex items-center justify-center">
-            {/* Ligne laser animée */}
-            <div className="absolute inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-80 animate-scan" />
-            <span className="font-mono text-xs text-red-400 font-bold bg-black/80 px-3 py-1.5 border border-red-500/30 rounded uppercase tracking-widest shadow-lg z-10">
-              Description Verrouillée
-            </span>
-          </div>
         </div>
 
         {/* Axes floutés */}
