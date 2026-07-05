@@ -85,6 +85,7 @@ captainbond/
 │   │
 │   ├── services/                     ← 30 services métier
 │   │   ├── roomGameService.ts        ← Barrel re-export (3 split services)
+│   │   ├── roomState.ts              ← Formal FSM (room status transitions)
 │   │   ├── roomLifecycleService.ts   ← startNextRound, revealRound, skip, endRoom
 │   │   ├── gamePlayService.ts       ← recordVote, getActiveQuestion, getImposteurRole
 │   │   ├── profileService.ts        ← getPlayerGameProfile, getRoomGameProfiles
