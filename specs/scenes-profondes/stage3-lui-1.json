@@ -1,0 +1,13 @@
+{
+  "project": { "title": "s3-lui-inutile" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 1.5, "text": "Elle fait tout. Les biberons. Les nuits. Le linge.", "gradient": ["#1e3a5f", "#0f172a"] },
+    { "duration_sec": 1.5, "text": "Tu veux aider. Tu sais pas par où commencer.", "gradient": ["#0f172a", "#0f172a"] },
+    { "duration_sec": 2.0, "text": "Tu te sens inutile. Alors tu travailles plus. Pour te sentir utile ailleurs.", "subtitle": "Tu veux être un PÈRE. Pas un assistant.", "gradient": ["#0f172a", "#1e3a5f"] },
+    { "duration_sec": 1.5, "text": "Ça te parle ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+  ],
+  "description": "Elle fait tout. Biberons, nuits, linge. Tu veux aider. Tu sais pas par ou. Tu travailles plus pour te sentir utile ailleurs.\n\n→ Pareil ? Dis-le en commentaire\n→ Tag un papa\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #pere #inutile"
+}

@@ -1,0 +1,13 @@
+{
+  "project": { "title": "s1-elle-23h" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.0, "text": "23h. Il dort. Toi tu repasses la conversation dans ta tête.", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Tu lui as dit 'je me sens pas bien' et il a dit 'ah'.", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Tu n'as pas été sécurisée. Juste écoutée.", "subtitle": "Ce n'est pas la même chose.", "gradient": ["#1c1917", "#be185d"] },
+    { "duration_sec": 2.0, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+  ],
+  "description": "23h. Il dort. Toi tu repasses la conversation dans ta tete. Tu n'as pas ete securisee. Juste ecoutee. Ce n'est pas la meme chose.\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag celle qui a vecu ca hier soir\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #securite"
+}

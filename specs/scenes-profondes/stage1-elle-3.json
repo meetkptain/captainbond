@@ -1,0 +1,13 @@
+{
+  "project": { "title": "s1-elle-message-analyse" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.0, "text": "Tu passes 20 minutes à rédiger un message. Tu le relis 3 fois.", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Il répond 4h plus tard : 'ok'.", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Tu passes 10 minutes à analyser ce 'ok'. Il y a un point ou pas ?", "subtitle": "Tu n'es pas folle. Tu as juste besoin d'être rassurée.", "gradient": ["#1c1917", "#be185d"] },
+    { "duration_sec": 2.0, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+  ],
+  "description": "Tu passes 20 minutes a rediger un message. Il repond 4h plus tard : 'ok'. Analyse du point ou pas ? Toi aussi ?\n\n→ Balance ton pire 'ok' analysee en commentaire\n→ Tag celle qui fait pareil\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #message"
+}

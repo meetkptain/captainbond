@@ -1,0 +1,13 @@
+{
+  "project": { "title": "s3-elle-leve" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 1.5, "text": "7h. Bébé pleure. Lui il dort.", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "Tu te lèves. Encore une fois. Sans un mot.", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Tu te demandes : est-ce qu'il fait exprès de pas entendre ?", "subtitle": "Tu n'es pas une mère par défaut. Tu es une mère ET tu es toi.", "gradient": ["#1c1917", "#be185d"] },
+    { "duration_sec": 1.5, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+  ],
+  "description": "7h. Bebe pleure. Lui dort. Tu te leves sans un mot. Tu te demandes s'il fait exprès de pas entendre.\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag une maman\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #mere #reveil"
+}

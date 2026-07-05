@@ -1,0 +1,13 @@
+{
+  "project": { "title": "s4-elle-sourire" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 1.5, "text": "Il sourit devant son téléphone.", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "Ton cœur s'arrête. C'était juste un meme.", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Tu sais que c'est idiot. Mais les infidélités commencent par un sourire que tu vois pas.", "subtitle": "Tu as besoin qu'il te RASSURE. Même pour rien.", "gradient": ["#1c1917", "#be185d"] },
+    { "duration_sec": 1.5, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+  ],
+  "description": "Il sourit devant son telephone. Ton coeur s'arrete. C'etait juste un meme. Tu sais que c'est idiot. Mais tu peux pas t'en empecher.\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag celle qui sait\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #confiance #doute"
+}

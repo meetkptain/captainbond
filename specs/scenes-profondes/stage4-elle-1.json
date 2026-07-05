@@ -1,0 +1,13 @@
+{
+  "project": { "title": "s4-elle-retard" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 1.5, "text": "Il rentre 15 minutes en retard. Sans texte.", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "Ton ventre se serre. Ton cerveau invente 3 scenarios.", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Tu veux pas être celle qui vérifie. Mais tu peux pas t'en empêcher.", "subtitle": "La confiance ça se construit. Chaque silence la creuse.", "gradient": ["#1c1917", "#be185d"] },
+    { "duration_sec": 1.5, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+  ],
+  "description": "Il rentre 15 min en retard. Sans texte. Ton ventre se serre. Tu veux pas etre celle qui verifie. Mais tu peux pas t'en empecher.\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag celle qui comprend\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #confiance #anxiete"
+}

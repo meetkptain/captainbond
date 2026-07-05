@@ -1,0 +1,13 @@
+{
+  "project": { "title": "s3-elle-douche" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 1.5, "text": "Tu prends une douche. 5 minutes à toi.", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "Il toque. 'Tu finis ? J'ai besoin de...'", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Tu dis 'oui' alors que t'as pas eu le temps de respirer.", "subtitle": "Tu n'es pas un service. Tu es quelqu'un.", "gradient": ["#1c1917", "#be185d"] },
+    { "duration_sec": 1.5, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+  ],
+  "description": "Tu prends une douche. 5 minutes a toi. Il toque. 'Tu finis ?' Tu dis oui alors que t'as pas respire.\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag celle qui connait\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #mere #pause"
+}

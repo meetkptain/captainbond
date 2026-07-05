@@ -1,0 +1,13 @@
+{
+  "project": { "title": "s3-lui-fatigue" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 1.5, "text": "Elle : 'je suis fatiguée'.", "gradient": ["#1e3a5f", "#0f172a"] },
+    { "duration_sec": 1.5, "text": "Toi : 'repose-toi'. Tu pensais bien faire.", "gradient": ["#0f172a", "#0f172a"] },
+    { "duration_sec": 2.0, "text": "Quand elle dit fatiguée, elle veut dire : 'j'ai besoin que tu me VOIES lutter'.", "subtitle": "Tu apprends encore à traduire ce qu'elle ne dit pas.", "gradient": ["#0f172a", "#1e3a5f"] },
+    { "duration_sec": 1.5, "text": "Ça te parle ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+  ],
+  "description": "Elle : 'je suis fatiguee'. Toi : 'repose-toi'. Tu pensais bien faire. Tu apprends encore a traduire ce qu'elle ne dit pas.\n\n→ Pareil ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #fatigue #traduction"
+}

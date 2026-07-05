@@ -1,0 +1,13 @@
+{
+  "project": { "title": "s4-lui-suspect" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 1.5, "text": "Tu rentres 10 min en retard. Elle a vérifié l'heure.", "gradient": ["#1e3a5f", "#0f172a"] },
+    { "duration_sec": 1.5, "text": "Tu le vois dans son regard. Le soupçon.", "gradient": ["#0f172a", "#0f172a"] },
+    { "duration_sec": 2.0, "text": "Tu voudrais lui dire 'je suis là, regarde-moi'. Mais l'accusation est déjà dans ses yeux.", "subtitle": "Tu as besoin qu'elle TE FASSE CONFIANCE. Pas qu'elle te surveille.", "gradient": ["#0f172a", "#1e3a5f"] },
+    { "duration_sec": 1.5, "text": "Ça te parle ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+  ],
+  "description": "Tu rentres 10 min en retard. Le regard. Le soupçon. Tu voudrais qu'elle te voie. Pas qu'elle te surveille.\n\n→ Pareil ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #confiance #soupcon"
+}

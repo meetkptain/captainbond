@@ -1,0 +1,13 @@
+{
+  "project": { "title": "s1-lui-parle-moi" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.0, "text": "Elle : 'parle-moi'. Toi : '...'", "gradient": ["#1e3a5f", "#0f172a"] },
+    { "duration_sec": 2.0, "text": "Dans ta tête : JE SAIS PAS QUOI DIRE.", "gradient": ["#0f172a", "#0f172a"] },
+    { "duration_sec": 2.0, "text": "Plus le silence dure, plus tu paniques.", "subtitle": "Tu voudrais qu'elle te FASSE CONFIANCE. Même sans mots.", "gradient": ["#0f172a", "#1e3a5f"] },
+    { "duration_sec": 2.0, "text": "Ça te parle ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+  ],
+  "description": "Elle : 'parle-moi'. Toi : '...'. Dans ta tete : JE SAIS PAS QUOI DIRE. Ca te parle ?\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag un pote qui vit ca\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #confiance"
+}

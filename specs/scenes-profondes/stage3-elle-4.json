@@ -1,0 +1,13 @@
+{
+  "project": { "title": "s3-elle-dort" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 1.5, "text": "22h. Il s'approche dans le lit.", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "Tu fais semblant de dormir.", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Pas parce que t'es fatiguée. Parce que t'as plus la force de faire semblant d'aller bien.", "subtitle": "Tu veux du désir. Pas de la routine.", "gradient": ["#1c1917", "#be185d"] },
+    { "duration_sec": 1.5, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+  ],
+  "description": "22h. Il s'approche dans le lit. Tu fais semblant de dormir. Pas parce que t'es fatiguee. Parce que t'as plus la force.\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag celle qui comprend\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #desir #fatigue"
+}

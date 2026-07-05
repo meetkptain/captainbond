@@ -1,0 +1,13 @@
+{
+  "project": { "title": "s4-ellechange" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 1.5, "text": "Il dit : 'j'ai changé'.", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "Tu veux le croire. Une partie de toi veut courir.", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Combien de fois tu as entendu ça ? Combien de fois tu y as cru ?", "subtitle": "Tu veux y croire. Mais ton corps s'en souvient.", "gradient": ["#1c1917", "#be185d"] },
+    { "duration_sec": 1.5, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+  ],
+  "description": "Il dit 'j'ai change'. Tu veux le croire. Une partie de toi veut courir. Combien de fois tu as entendu ca ?\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag celle qui comprend\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #changement #confiance"
+}
