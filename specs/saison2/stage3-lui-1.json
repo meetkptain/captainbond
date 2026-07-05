@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s2-st3-lui-1"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as grandi avec une mère qui portait tout. Ton père n'était pas là, ou mal.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu t'es dit : 'moi, je serai présent'. Tu es présent. Mais elle te repousse.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Pas parce que tu es inutile.",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ],
+      "subtitle": "Parce qu'elle ne sait pas partager. Et toi non plus."
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps t'a figé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Tu as grandi avec une mère qui portait tout. Ton père n'était pas là, ou mal. Tu t'es dit : 'moi, je serai présent'. Tu es présent. Mais elle te repousse. Pas parce que tu es inutile. Parce qu'elle ne sait pas partager. Et toi non plus.\n\n→ Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #origines #attachement"
+}

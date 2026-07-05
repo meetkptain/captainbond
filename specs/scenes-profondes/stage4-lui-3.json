@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s4-lui-confiance" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "project": {
+    "title": "s4-lui-confiance"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 1.5, "text": "Elle : 'je te fais confiance'.", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 1.5, "text": "Ses yeux disent : 'je te surveille'.", "gradient": ["#0f172a", "#0f172a"] },
-    { "duration_sec": 2.0, "text": "Tu voudrais lui dire : 'si tu me faisais vraiment confiance, tu me regarderais pas comme ça'.", "subtitle": "Tu as besoin qu'elle TE FASSE CONFIANCE. Pas qu'elle te teste.", "gradient": ["#0f172a", "#1e3a5f"] },
-    { "duration_sec": 1.5, "text": "Ça te parle ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Elle dit : 'je te fais confiance'. Mais tu vois ses yeux. Ils vérifient.",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Les mots disent oui. Le corps dit 'pas encore'.",
+      "gradient": [
+        "#0f172a",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Et tu vois les deux.",
+      "subtitle": "Et ça te brise.",
+      "gradient": [
+        "#0f172a",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps t'a figé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    }
   ],
-  "description": "Elle : 'je te fais confiance'. Ses yeux : 'je te surveille'. Tu voudrais qu'elle te fasse confiance. Pas qu'elle te teste.\n\n→ Pareil ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #confiance #regard"
+  "description": "Elle dit 'je te fais confiance'. Mais tu vois ses yeux. Ils vérifient. Les mots disent oui. Le corps dit 'pas encore'. Et tu vois les deux. Et ça te brise.\n\n→ Ton corps t'a figé ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #confiance"
 }

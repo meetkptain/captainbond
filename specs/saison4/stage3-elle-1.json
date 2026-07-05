@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st3-elle-1"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Le réveil est un rituel. Pas une corvée.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Chaque matin où tu te lèves la première, tu sacrifies ton sommeil pour votre enfant.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "C'est beau. Mais dans ce sacrifice, tu oublies que tu as le droit d'être fatiguée, et lui le droit d'être père.",
+      "subtitle": "Réveille-le. Pas pour qu'il t'aide. Pour qu'il soit père.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton âme a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Le réveil est un rituel. Pas une corvée. Chaque matin où tu te lèves la première, tu sacrifies ton sommeil pour votre enfant. C'est beau. Mais dans ce sacrifice, tu oublies que tu as le droit d'être fatiguée, et lui le droit d'être père. Réveille-le. Pas pour qu'il t'aide. Pour qu'il soit père.\n\n→ Ton âme a parlé ? Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st3-lui-2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Le père et l'amant ne sont pas ennemis. Ce sont deux visages d'un même homme.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Le père EST un amant. Il a fait l'amour. Il a créé la vie. Il peut encore la créer.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Retrouve l'homme qui a séduit.",
+      "subtitle": "Pas pour la séduire elle. Pour te rappeler QUI TU ES.",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as entendu ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Le père et l'amant ne sont pas ennemis. Ce sont deux visages d'un même homme. Le père EST un amant. Il a fait l'amour. Il a créé la vie. Il peut encore la créer. Retrouve l'homme qui a séduit. Pas pour la séduire elle. Pour te rappeler QUI TU ES.\n\n→ Tu as entendu ? Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

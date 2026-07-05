@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st1-elle-2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Samedi 14h. Tu ranges. Tu t'agites. Pourquoi ?",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Pour te sentir utile ? Pour exister ?",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Et si tu posais le chiffon, et que tu TE regardais, sans rien faire d'autre ?",
+      "subtitle": "Être, pas faire. C'est peut-être ça, la prochaine étape.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton âme a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Samedi 14h. Tu ranges. Tu t'agites. Pour te sentir utile ? Pour exister ? Et si tu posais le chiffon, et que tu TE regardais, sans rien faire d'autre ? Être, pas faire. C'est peut-être ça, la prochaine étape.\n\n→ Ton âme a parlé ? Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

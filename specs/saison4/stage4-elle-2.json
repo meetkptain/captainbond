@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st4-elle-2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Chaque sourire sur un téléphone est un test pour toi. Pas pour lui.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Un test de ta capacité à rester dans le présent.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "'C'était un meme.' Il te dit la vérité.",
+      "subtitle": "La question n'est pas : 'est-ce qu'il ment ?' La question est : 'est-ce que tu choisis de le croire ?' Pas parce qu'il le mérite. Parce que la méfiance est une prison et que tu mérites d'en sortir.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton âme a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Chaque sourire sur un téléphone est un test pour toi. Pas pour lui. Un test de ta capacité à rester dans le présent. 'C'était un meme.' Il te dit la vérité. La question n'est pas : 'est-ce qu'il ment ?' La question est : 'est-ce que tu choisis de le croire ?' Pas parce qu'il le mérite. Parce que la méfiance est une prison et que tu mérites d'en sortir.\n\n→ Ton âme a parlé ? Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

@@ -1,0 +1,13 @@
+{
+  "project": { "title": "cadre-couple-1" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#92400e", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.0, "text": "La connexion sans cadre n'est pas de l'amour. C'est de la dependance.", "gradient": ["#92400e", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Vous pensez etre proches. Vous etes juste colles sans squelette.", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "La connexion vraie, c'est se tenir la main en restant debout chacun sur ses deux pieds.", "subtitle": "captainbond.com", "gradient": ["#1c1917", "#92400e"] },
+    { "duration_sec": 2.0, "text": "Vos corps se reconnaissent ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#92400e", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#92400e", "#1c1917"] }
+  ],
+  "description": "La connexion sans cadre n'est pas de l'amour. C'est de la dependance.\n\n→ Vos corps se reconnaissent ? Dites-le en commentaire\n\n3 questions gratuites → captainbond.com\n\n#couple #cadre #connexion"
+}

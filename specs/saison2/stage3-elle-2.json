@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s2-st3-elle-2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as vu ta mère disparaître dans la maternité. Elle n'était plus une femme. Elle était 'maman'.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu t'es dit que toi, tu resterais TOI.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Mais la fatigue a gommé les contours.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ],
+      "subtitle": "Tu es devenue ce que tu as vu."
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Tu as vu ta mère disparaître dans la maternité. Elle n'était plus une femme. Elle était 'maman'. Tu t'es dit que toi, tu resterais TOI. Mais la fatigue a gommé les contours. Tu es devenue ce que tu as vu.\n\n→ Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #origines #attachement"
+}

@@ -1,0 +1,13 @@
+{
+  "project": { "title": "cadre-lui-4" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.0, "text": "Ta bienveillance est belle. Mais elle t'a couté 3.5 ans.", "gradient": ["#1e3a5f", "#0f172a"] },
+    { "duration_sec": 2.0, "text": "Pas parce qu'elle était trop forte. Parce qu'elle n'avait pas de squelette.", "gradient": ["#0f172a", "#0f172a"] },
+    { "duration_sec": 2.0, "text": "Ajoute le cadre à ta douceur. Tu deviens l'homme le plus solide.", "subtitle": "captainbond.com", "gradient": ["#0f172a", "#1e3a5f"] },
+    { "duration_sec": 2.0, "text": "Ton corps t'a figé ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+  ],
+  "description": "Ta bienveillance est belle. Ajoute le cadre a ta douceur. Tu deviens l'homme le plus solide.\n\n→ Ton corps t'a fige ? Dis-le en commentaire\n\n3 questions gratuites → captainbond.com\n\n#couple #cadre #respect"
+}

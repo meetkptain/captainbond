@@ -1,0 +1,13 @@
+{
+  "project": { "title": "cadre-couple-3" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#92400e", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.0, "text": "Il a besoin que tu respectes ses limites. Pas que tu les testes.", "gradient": ["#92400e", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "S'il dit non, c'est non.", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Ne fais pas de ses limites un champ de bataille.", "subtitle": "captainbond.com", "gradient": ["#1c1917", "#92400e"] },
+    { "duration_sec": 2.0, "text": "Vos corps se reconnaissent ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#92400e", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#92400e", "#1c1917"] }
+  ],
+  "description": "Il a besoin que tu respectes ses limites. Pas que tu les testes.\n\n→ Vos corps se reconnaissent ? Dites-le en commentaire\n\n3 questions gratuites → captainbond.com\n\n#couple #cadre #connexion"
+}

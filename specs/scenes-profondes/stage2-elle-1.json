@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s2-elle-canape-silence" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "project": {
+    "title": "s2-elle-canape-silence"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 1.5, "text": "Chacun sur son téléphone. Sur le même canapé.", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "3 jours que vous parlez des courses et du planning.", "gradient": ["#1c1917", "#1c1917"] },
-    { "duration_sec": 2.0, "text": "Tu regardes sa nuque. Tu te souviens quand tu l'embrassais pour un oui.", "subtitle": "Vous êtes coloc'. Pas un couple.", "gradient": ["#1c1917", "#be185d"] },
-    { "duration_sec": 1.5, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Jeudi soir. Vous êtes sur le canapé. Chacun son téléphone.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ta nuque est tendue depuis 3 jours. Vous ne vous êtes pas parlés. Juste des infos.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Ton corps sait que quelque chose cloche.",
+      "subtitle": "Même si tout a l'air calme.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
   ],
-  "description": "Chacun sur son telephone, sur le meme canape. 3 jours que vous parlez courses et planning. Vous etes coloc', pas un couple.\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag celle qui comprend\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #silence #coloc"
+  "description": "Jeudi soir. Vous êtes sur le canapé. Chacun son téléphone. Ta nuque est tendue depuis 3 jours. Vous ne vous êtes pas parlés. Juste des infos. Ton corps sait que quelque chose cloche. Même si tout a l'air calme.\n\n→ Ton corps a parlé ? Dis-le en commentaire\n→ Tag celle qui comprend\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #securite"
 }

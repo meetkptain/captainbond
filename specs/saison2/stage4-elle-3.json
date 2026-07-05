@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s2-st4-elle-3"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Le corps garde les comptes. Il n'oublie pas.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Pendant l'acte le plus intime, il peut TE rappeler la douleur passée. Pas pour te punir. Pour te protéger.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Mais il a besoin d'apprendre que ce moment-ci est SÛR.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ],
+      "subtitle": "Il a besoin de RÉPÉTITION. De beaucoup de moments sûrs."
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Le corps garde les comptes. Il n'oublie pas. Pendant l'acte le plus intime, il peut TE rappeler la douleur passée. Pas pour te punir. Pour te protéger. Mais il a besoin d'apprendre que ce moment-ci est SÛR. Il a besoin de RÉPÉTITION. De beaucoup de moments sûrs.\n\n→ Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #origines #attachement"
+}

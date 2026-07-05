@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s1-elle-message-analyse" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "project": {
+    "title": "s1-elle-message-analyse"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 2.0, "text": "Tu passes 20 minutes à rédiger un message. Tu le relis 3 fois.", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 2.0, "text": "Il répond 4h plus tard : 'ok'.", "gradient": ["#1c1917", "#1c1917"] },
-    { "duration_sec": 2.0, "text": "Tu passes 10 minutes à analyser ce 'ok'. Il y a un point ou pas ?", "subtitle": "Tu n'es pas folle. Tu as juste besoin d'être rassurée.", "gradient": ["#1c1917", "#be185d"] },
-    { "duration_sec": 2.0, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Tu vérifies ton téléphone. 47 fois. Ta nuque est bloquée.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Pas parce que t'es folle. Parce que ton système cherche un signal : 'je suis en sécurité, oui ou non ?'",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Chaque minute sans réponse est une minute d'alerte.",
+      "subtitle": "Ton corps ne lâche pas tant qu'il ne sait pas.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
   ],
-  "description": "Tu passes 20 minutes a rediger un message. Il repond 4h plus tard : 'ok'. Analyse du point ou pas ? Toi aussi ?\n\n→ Balance ton pire 'ok' analysee en commentaire\n→ Tag celle qui fait pareil\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #message"
+  "description": "Tu vérifies ton téléphone. 47 fois. Ta nuque est bloquée. Pas parce que t'es folle. Ton système cherche un signal : 'je suis en sécurité, oui ou non ?' Chaque minute sans réponse est une minute d'alerte.\n\n→ Ton corps a parlé ? Dis-le en commentaire\n→ Tag celle qui comprend\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #securite"
 }

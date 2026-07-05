@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st2-lui-4"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Le corps dit ce que la bouche ne dit pas.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Dos à dos : 'je te tourne le dos'. Face à face : 'je te vois'.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Le choix est simple.",
+      "subtitle": "Mais il demande de tout laisser derrière — l'orgueil, l'habitude, la peur. Juste une fois. Se retourner. La regarder.",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as entendu ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Le corps dit ce que la bouche ne dit pas. Dos à dos : 'je te tourne le dos'. Face à face : 'je te vois'. Le choix est simple. Mais il demande de tout laisser derrière — l'orgueil, l'habitude, la peur. Juste une fois. Se retourner. La regarder.\n\n→ Tu as entendu ? Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

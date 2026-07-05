@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st2-lui-3"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Le rire est un baromètre spirituel.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Un couple qui ne rit plus a perdu quelque chose d'essentiel : la capacité à OUBLIER.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Oublier les comptes. Les rôles. Les devoirs.",
+      "subtitle": "Juste être deux âmes qui se rappellent pourquoi elles jouaient ensemble au début.",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as entendu ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Le rire est un baromètre spirituel. Un couple qui ne rit plus a perdu quelque chose d'essentiel : la capacité à OUBLIER. Oublier les comptes. Les rôles. Les devoirs. Juste être deux âmes qui se rappellent pourquoi elles jouaient ensemble au début.\n\n→ Tu as entendu ? Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

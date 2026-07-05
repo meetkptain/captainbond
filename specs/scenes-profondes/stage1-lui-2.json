@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s1-lui-ecoutes-pas" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "project": {
+    "title": "s1-lui-ecoutes-pas"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 2.0, "text": "Elle : 'tu m'écoutes pas'. Toi : 'si'.", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 2.0, "text": "Tu te souviens de chaque mot. Mais dans le désordre.", "gradient": ["#0f172a", "#0f172a"] },
-    { "duration_sec": 2.0, "text": "Tu sais que tu vas te faire griller.", "subtitle": "Tu as besoin qu'elle CROIE en toi. Pas qu'elle vérifie.", "gradient": ["#0f172a", "#1e3a5f"] },
-    { "duration_sec": 2.0, "text": "Ça te parle ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Elle dit : 'tu m'écoutes pas'. Ta mâchoire se serre.",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as tout entendu. Mais tu sais que tu vas te faire griller.",
+      "gradient": [
+        "#0f172a",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Tu voudrais qu'elle te croie SANS preuve.",
+      "subtitle": "Quand elle vérifie, ton corps se ferme.",
+      "gradient": [
+        "#0f172a",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps t'a figé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    }
   ],
-  "description": "Elle : 'tu m'ecoutes pas'. Toi : 'si'. Tu te souviens des mots mais dans le desordre. Ca te parle ?\n\n→ Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #ecoute"
+  "description": "Elle dit : 'tu m'écoutes pas'. Ta mâchoire se serre. Tu as tout entendu. Tu voudrais qu'elle te croie SANS preuve. Quand elle vérifie, ton corps se ferme.\n\n→ Ton corps t'a figé ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #confiance"
 }

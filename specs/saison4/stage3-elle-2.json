@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st3-elle-2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Les enfants sont un cadeau. Mais ils ne sont pas TOUTE l'histoire.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Vous étiez un couple avant d'être parents. Vous le restez.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Retrouver cette conversation. Pas sur les enfants.",
+      "subtitle": "Sur VOS rêves. Ils sont encore là. Juste endormis.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton âme a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Les enfants sont un cadeau. Mais ils ne sont pas TOUTE l'histoire. Vous étiez un couple avant d'être parents. Vous le restez. Retrouver cette conversation. Pas sur les enfants. Sur VOS rêves. Ils sont encore là. Juste endormis.\n\n→ Ton âme a parlé ? Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

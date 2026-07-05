@@ -1,0 +1,13 @@
+{
+  "project": { "title": "cadre-lui-2" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.0, "text": "3.5 ans. Tu as tout compris d'elle. Ses blessures, son histoire.", "gradient": ["#1e3a5f", "#0f172a"] },
+    { "duration_sec": 2.0, "text": "Tu pensais que ta comprehension la guerirait.", "gradient": ["#0f172a", "#0f172a"] },
+    { "duration_sec": 2.0, "text": "Mais comprendre l'autre ne le change pas. Il change quand il CHOISIT.", "subtitle": "captainbond.com", "gradient": ["#0f172a", "#1e3a5f"] },
+    { "duration_sec": 2.0, "text": "Ton corps t'a figé ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+  ],
+  "description": "3.5 ans. Tu as tout compris. Mais comprendre l'autre ne le change pas.\n\n→ Ton corps t'a fige ? Dis-le en commentaire\n\n3 questions gratuites → captainbond.com\n\n#couple #cadre #respect"
+}

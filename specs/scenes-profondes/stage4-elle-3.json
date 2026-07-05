@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s4-elle-intrusive" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "project": {
+    "title": "s4-elle-intrusive"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 1.5, "text": "Vous faites l'amour. Ça fait longtemps.", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "Et là. Une pensée intrusive. 'Est-ce qu'il pense à une autre ?'", "gradient": ["#1c1917", "#1c1917"] },
-    { "duration_sec": 2.0, "text": "Ton corps est là. Ta tête est partie. Tu fais semblant.", "subtitle": "Tu veux être DÉSIRÉE. Pas juste disponible.", "gradient": ["#1c1917", "#be185d"] },
-    { "duration_sec": 1.5, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Vous faites l'amour. Il est là. Tu es là.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Mais une pensée traverse ton corps. Une image. Un souvenir. Tu te tends.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Tu dis : 'non, tout va bien'.",
+      "subtitle": "Tu mens. Ton corps ne ment pas.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
   ],
-  "description": "Vous faites l'amour. Pensee intrusive. 'Est-ce qu'il pense a une autre ?' Ton corps est la. Ta tete est partie. Tu fais semblant.\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag celle qui a vecu ca\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #intrusive #desir"
+  "description": "Vous faites l'amour. Il est là. Tu es là. Mais une pensée traverse ton corps. Une image. Un souvenir. Tu te tends. Tu dis 'non, tout va bien'. Tu mens. Ton corps ne ment pas.\n\n→ Ton corps a parlé ? Dis-le en commentaire\n→ Tag celle qui a vécu ça\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #securite"
 }

@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st3-elle-3"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "La douche est ton sanctuaire. 5 minutes. Pas de enfants. Pas de conjoint.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Toi. Seule. C'est sacré.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Ne le laisse pas devenir une corvée de plus. Protège ce moment.",
+      "subtitle": "Pas loin d'eux. POUR eux. Une mère qui se retrouve est une mère qui donne mieux.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton âme a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "La douche est ton sanctuaire. 5 minutes. Pas de enfants. Pas de conjoint. Toi. Seule. C'est sacré. Ne le laisse pas devenir une corvée de plus. Protège ce moment. Pas loin d'eux. POUR eux. Une mère qui se retrouve est une mère qui donne mieux.\n\n→ Ton âme a parlé ? Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

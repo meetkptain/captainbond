@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s2-st2-elle-2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as passé ton enfance à attendre. Que ta mère ou ton père voient tes efforts.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Que quelqu'un DEVINE tes besoins sans que tu aies à les dire.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Tu attends encore.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ],
+      "subtitle": "Parce que demander, c'est risquer d'entendre 'non'."
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Tu as passé ton enfance à attendre. Que ta mère ou ton père voient tes efforts. Que quelqu'un DEVINE tes besoins sans que tu aies à les dire. Tu attends encore. Parce que demander, c'est risquer d'entendre 'non'.\n\n→ Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #origines #attachement"
+}

@@ -1,0 +1,50 @@
+{
+  "project": {
+    "title": "proto-e4"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 2.0,
+      "text": "Tu ne le desires plus. Parce que tu le traites comme un fils.",
+      "gradient": ["#be185d", "#1c1917"]
+    },
+    {
+      "duration_sec": 3.0,
+      "text": "7 jours sans le materner. Il est adulte. Il survivra.",
+      "gradient": ["#1c1917", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Le desir a besoin d'un egal, pas d'un dependant.",
+      "gradient": ["#1c1917", "#be185d"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Dans 7 jours, tu le regarderas differemment.",
+      "gradient": ["#be185d", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Qui tente le defi des 7 jours ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": ["#be185d", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": ["#be185d", "#1c1917"]
+    }
+  ],
+  "description": "Tu ne le desires plus. Parce que tu le traites comme un fils. 7 jours sans le materner. Il est adulte. Il survivra. Le desir a besoin d'un egal, pas d'un dependant. Dans 7 jours, tu le regarderas differemment.\n\n→ Qui tente le defi des 7 jours ?\n→ Tag celle qui doit arreter de materner\n\n3 questions gratuites → captainbond.com\n\n#couple #feminin #protocole"
+}

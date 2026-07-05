@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st4-elle-1"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "La confiance ne se reconstruit pas avec des preuves.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Elle se reconstruit avec des PRÉSENCES.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Chaque fois qu'il rentre et qu'il est là, ton corps peut apprendre à se détendre.",
+      "subtitle": "Un retard de 15 minutes n'est pas un signe. C'est une chance de CHOISIR la confiance plutôt que la peur.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton âme a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "La confiance ne se reconstruit pas avec des preuves. Elle se reconstruit avec des PRÉSENCES. Chaque fois qu'il rentre et qu'il est là, ton corps peut apprendre à se détendre. Un retard de 15 minutes n'est pas un signe. C'est une chance de CHOISIR la confiance plutôt que la peur.\n\n→ Ton âme a parlé ? Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s3-stage3-lui-3"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Tu veux résoudre sa fatigue pour qu'elle aille mieux.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Mais aussi pour que la vie reprenne comme avant — pour que tu ne sois pas dérangé.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Son « je suis fatiguée » est une accusation implicite : « tu ne portes pas assez ».",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ],
+      "subtitle": "Et ça te touche parce que c'est vrai."
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton ombre a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Tu veux résoudre sa fatigue pour qu'elle aille mieux... et pour retrouver ta tranquillité. Car son « je suis fatiguée » te touche parce que c'est vrai.\n\n→ Ton ombre a parlé ? Dis-le en commentaire\n→ Tag ton/ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #ombre #projection"
+}

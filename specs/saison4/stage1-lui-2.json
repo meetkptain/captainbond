@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st1-lui-2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Elle vérifie parce qu'elle a peur.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Toi tu te fermes parce que tu as peur aussi.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Deux peurs qui ne savent pas comment se rencontrer.",
+      "subtitle": "Et si la confiance commençait par dire : 'j'ai peur moi aussi' ?",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as entendu ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Elle vérifie parce qu'elle a peur. Toi tu te fermes parce que tu as peur aussi. Deux peurs qui ne savent pas comment se rencontrer. Et si la confiance commençait par dire : 'j'ai peur moi aussi' ?\n\n→ Tu as entendu ? Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st1-lui-3"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Elle a besoin d'être choisie. Chaque jour.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Pas juste une fois au début. Ça te semble excessif.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Mais elle te demande une forme de présence qui te dépasse.",
+      "subtitle": "Et si c'était ça, l'amour ? Choisir. Encore. Toujours.",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as entendu ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Elle a besoin d'être choisie. Chaque jour. Pas juste une fois au début. Ça te semble excessif. Mais elle te demande une forme de présence qui te dépasse. Et si c'était ça, l'amour ? Choisir. Encore. Toujours.\n\n→ Tu as entendu ? Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

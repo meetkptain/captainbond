@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s1-lui-lit-desir" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "project": {
+    "title": "s1-lui-lit-desir"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 2.0, "text": "Vous êtes au lit. Tu veux faire l'amour.", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 2.0, "text": "Tu te demandes : elle est fatiguée ? en colère ? elle a ses règles ?", "gradient": ["#0f172a", "#0f172a"] },
-    { "duration_sec": 2.0, "text": "Tu devrais demander. Tu demandes pas.", "subtitle": "Tu as besoin qu'elle te FASSE CONFIANCE. Même pour ça.", "gradient": ["#0f172a", "#1e3a5f"] },
-    { "duration_sec": 2.0, "text": "Ça te parle ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Vous êtes au lit. Tu la désires. Mais tu ne bouges pas.",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ta poitrine est serrée. Peur d'être rejeté, peur de mal faire, peur qu'elle pense que tu ne penses qu'à ça.",
+      "gradient": [
+        "#0f172a",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Alors tu ne fais rien.",
+      "subtitle": "Et le vide s'installe.",
+      "gradient": [
+        "#0f172a",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps t'a figé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    }
   ],
-  "description": "Vous etes au lit. Tu veux faire l'amour. Tu te demandes : fatiguée ? en colère ? Tu demandes pas. Ca te parle ?\n\n→ Pareil ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #desir"
+  "description": "Vous êtes au lit. Tu la désires. Mais tu ne bouges pas. Ta poitrine est serrée. Peur d'être rejeté, peur de mal faire. Alors tu ne fais rien. Et le vide s'installe.\n\n→ Ton corps t'a figé ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #confiance"
 }

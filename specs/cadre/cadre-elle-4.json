@@ -1,0 +1,13 @@
+{
+  "project": { "title": "cadre-elle-4" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.0, "text": "Tu as confondu connexion et fusion.", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "La connexion c'est être proche sans se perdre. La fusion c'est se perdre.", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Tu as voulu fusionner. Il a eu besoin d'espace.", "subtitle": "captainbond.com", "gradient": ["#1c1917", "#be185d"] },
+    { "duration_sec": 2.0, "text": "Ton corps a parlé ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+  ],
+  "description": "Tu as confondu connexion et fusion. La connexion c'est etre proche sans se perdre.\n\n→ Ton corps a parle ? Dis-le en commentaire\n\n3 questions gratuites → captainbond.com\n\n#couple #cadre #respect"
+}

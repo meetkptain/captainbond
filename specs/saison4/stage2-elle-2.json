@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st2-elle-2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "2 semaines. Personne n'a bougé.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Et si le problème n'était pas 'qui commence', mais 'pourquoi le silence dure' ?",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Un couple ne se nourrit pas de devoirs. Il se nourrit d'élans.",
+      "subtitle": "Et les élans commencent par une décision : celle de SORTIR du calcul.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton âme a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "2 semaines. Personne n'a bougé. Et si le problème n'était pas 'qui commence', mais 'pourquoi le silence dure' ? Un couple ne se nourrit pas de devoirs. Il se nourrit d'élans. Et les élans commencent par une décision : celle de SORTIR du calcul.\n\n→ Ton âme a parlé ? Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

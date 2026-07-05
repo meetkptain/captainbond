@@ -1,0 +1,50 @@
+{
+  "project": {
+    "title": "proto-m3"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 2.0,
+      "text": "Tu etouffes. Tu n'as plus d'espace a toi.",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    },
+    {
+      "duration_sec": 3.0,
+      "text": "1 soir par semaine. Seul. Sans role. Sans devoir. Juste toi.",
+      "gradient": ["#1c1917", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Recharger ta batterie sociale pour etre mieux avec elle.",
+      "gradient": ["#1c1917", "#1e3a5f"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Dans 1 mois, tu respireras. Et elle aussi.",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Qui prend son 1er soir seul cette semaine ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    }
+  ],
+  "description": "Tu etouffes. Tu n'as plus d'espace a toi. 1 soir par semaine. Seul. Sans role. Sans devoir. Juste toi. Recharger ta batterie sociale pour etre mieux avec elle. Dans 1 mois, tu respireras. Et elle aussi.\n\n→ Qui prend son 1er soir seul cette semaine ?\n→ Tag celui qui a besoin de souffler\n\n3 questions gratuites → captainbond.com\n\n#couple #masculin #protocole"
+}

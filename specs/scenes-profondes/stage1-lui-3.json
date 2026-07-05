@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s1-lui-choisis-moi" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "project": {
+    "title": "s1-lui-choisis-moi"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 2.0, "text": "Elle dit 'j'ai besoin que tu me choisisses'.", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 2.0, "text": "Dans ta tête : je suis avec toi non ? Je suis pas ailleurs.", "gradient": ["#0f172a", "#0f172a"] },
-    { "duration_sec": 2.0, "text": "Tu aimerais que ton 'je suis là' soit suffisant.", "subtitle": "Tu as besoin qu'elle te FASSE CONFIANCE. Pas qu'elle te le fasse dire.", "gradient": ["#0f172a", "#1e3a5f"] },
-    { "duration_sec": 2.0, "text": "Ça te parle ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Elle a besoin de preuves. Ton corps se glace.",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu es là, pourtant. Tu restes. Tu l'as choisie.",
+      "gradient": [
+        "#0f172a",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Tu ne comprends pas pourquoi ça ne suffit pas.",
+      "subtitle": "Elle voudrait autre chose. Tu ne sais pas quoi.",
+      "gradient": [
+        "#0f172a",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps t'a figé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    }
   ],
-  "description": "Elle dit 'j'ai besoin que tu me choisisses'. Dans ta tete : je suis avec toi non ? Ca te parle ?\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag un pote qui comprendra\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #choix"
+  "description": "Elle a besoin de preuves. Ton corps se glace. Tu es là, pourtant. Tu restes. Tu l'as choisie. Tu ne comprends pas pourquoi ça ne suffit pas.\n\n→ Ton corps t'a figé ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #confiance"
 }

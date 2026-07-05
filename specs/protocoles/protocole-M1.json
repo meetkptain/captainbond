@@ -1,0 +1,50 @@
+{
+  "project": {
+    "title": "proto-m1"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 2.0,
+      "text": "Tu essaies de resoudre son bonheur. Ca ne marche pas.",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    },
+    {
+      "duration_sec": 3.0,
+      "text": "Ce soir, demande : tu veux que je t'ecoute ou que je resole ?",
+      "gradient": ["#1c1917", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "90% des malentendus viennent de ne pas savoir quel role jouer.",
+      "gradient": ["#1c1917", "#1e3a5f"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Dans 7 jours, elle sera surprise que tu aies compris.",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Qui pose la question ce soir ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    }
+  ],
+  "description": "Tu essaies de resoudre son bonheur. Ca ne marche pas. Ce soir, demande : tu veux que je t'ecoute ou que je resole ? 90% des malentendus viennent de ne pas savoir quel role jouer. Dans 7 jours, elle sera surprise que tu aies compris.\n\n→ Qui pose la question ce soir ?\n→ Tag celui qui a besoin d'entendre ca\n\n3 questions gratuites → captainbond.com\n\n#couple #masculin #protocole"
+}

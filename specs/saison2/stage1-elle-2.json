@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s2-st1-elle-2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Ta mère rangeait aussi pendant que ton père regardait la télé.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu lui as promis que tu ne ferais pas pareil. Et pourtant.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Tu n'as pas appris à déléguer.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ],
+      "subtitle": "Tu as appris à tout porter."
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Ta mère rangeait aussi pendant que ton père regardait la télé. Tu lui as promis que tu ne ferais pas pareil. Et pourtant. Tu n'as pas appris à déléguer. Tu as appris à tout porter.\n\n→ Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #origines #attachement"
+}

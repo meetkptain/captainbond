@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st3-lui-4"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Quand tu prends le relais sans être vu, tu fais un sacrifice silencieux.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "C'est noble. Mais le sacrifice qui n'est pas reconnu devient amer.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "La prochaine fois, ne prends pas le relais en silence.",
+      "subtitle": "DIS : 'Je vois que tu es fatiguée. Je prends le relais. Pas pour que tu me voies. Parce que je suis là.' Pas pour être vu. POUR ÊTRE PRÉSENT.",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as entendu ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Quand tu prends le relais sans être vu, tu fais un sacrifice silencieux. C'est noble. Mais le sacrifice qui n'est pas reconnu devient amer. La prochaine fois, ne prends pas le relais en silence. DIS : 'Je vois que tu es fatiguée. Je prends le relais. Pas pour que tu me voies. Parce que je suis là.' Pas pour être vu. POUR ÊTRE PRÉSENT.\n\n→ Tu as entendu ? Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

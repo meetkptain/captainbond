@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s3-stage2-elle-1"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Tu lui en veux de ne pas parler. Mais toi, tu parles ?",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu attends qu'il commence. Comme dans la voiture. Comme toujours.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Son silence te renvoie à TON silence.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ],
+      "subtitle": "Et au fait que toi aussi, tu as peur de commencer."
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton ombre a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Tu lui en veux de son silence — mais toi, tu parles ? Son silence te renvoie au tien. Toi aussi tu as peur de commencer.\n\n→ Ton ombre a parlé ? Dis-le en commentaire\n→ Tag ton/ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #ombre #projection"
+}

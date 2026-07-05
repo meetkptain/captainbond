@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s2-lui-impuissant" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "project": {
+    "title": "s2-lui-impuissant"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 1.5, "text": "Elle : 'on s'ennuie'.", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 1.5, "text": "Toi : 'ben on est tranquilles non ?'", "gradient": ["#0f172a", "#0f172a"] },
-    { "duration_sec": 2.0, "text": "Dans ta tête : JE SAIS PAS CE QU'ELLE VEUT. On peut pas juste être bien ?", "subtitle": "Tu voudrais qu'elle te DISE. Pas qu'elle attende que tu devines.", "gradient": ["#0f172a", "#1e3a5f"] },
-    { "duration_sec": 1.5, "text": "Ça te parle ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Elle dit : 'on s'ennuie'. Ta poitrine se serre.",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu sais qu'elle a raison. Mais tu ne sais pas quoi faire.",
+      "gradient": [
+        "#0f172a",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Alors tu dis : 'non, tout va bien'.",
+      "subtitle": "Tu mens. Ton corps le sait. Elle aussi.",
+      "gradient": [
+        "#0f172a",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps t'a figé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    }
   ],
-  "description": "Elle : 'on s'ennuie'. Toi : 'ben on est tranquilles non ?' Tu sais pas ce qu'elle veut. Ca te parle ?\n\n→ Pareil ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #impuissance #ennui"
+  "description": "Elle dit 'on s'ennuie'. Ta poitrine se serre. Tu sais qu'elle a raison. Tu ne sais pas quoi faire. Alors tu dis 'non, tout va bien'. Tu mens. Ton corps le sait. Elle aussi.\n\n→ Ton corps t'a figé ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #confiance"
 }

@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s3-stage1-lui-4"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Tu ne bouges pas. Tu attends qu'elle fasse le premier pas.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Mais toi aussi tu attends.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Et si le vrai blocage n'était pas sa fatigue, mais ta peur d'être vu dans ton désir ?",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ],
+      "subtitle": "Nu. Sans masque."
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton ombre a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Tu attends qu'elle fasse le premier pas. Mais le vrai blocage n'est pas sa fatigue — c'est ta peur d'être vu dans ton désir, sans masque.\n\n→ Ton ombre a parlé ? Dis-le en commentaire\n→ Tag ton/ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #ombre #projection"
+}

@@ -1,0 +1,50 @@
+{
+  "project": {
+    "title": "proto-c2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#92400e",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 2.0,
+      "text": "Le sexe est mort. Vous vous touchez par habitude ou par fatigue.",
+      "gradient": ["#92400e", "#1c1917"]
+    },
+    {
+      "duration_sec": 3.0,
+      "text": "7 jours de toucher non sexuel. Main, epaule, front. Rien d'autre.",
+      "gradient": ["#1c1917", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Reveiller la peau avant de reveiller le sexe.",
+      "gradient": ["#1c1917", "#92400e"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Dans 7 jours, le desir reviendra naturellement.",
+      "gradient": ["#92400e", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Qui tente les 7 jours de toucher ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": ["#92400e", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": ["#92400e", "#1c1917"]
+    }
+  ],
+  "description": "Le sexe est mort. Vous vous touchez par habitude ou par fatigue. 7 jours de toucher non sexuel. Main, epaule, front. Rien d'autre. Reveiller la peau avant de reveiller le sexe. Dans 7 jours, le desir reviendra naturellement.\n\n→ Qui tente les 7 jours de toucher ?\n→ Tag ton/ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #intimite #protocole"
+}

@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st2-elle-4"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Il y a deux sortes de silence.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Le silence de la fatigue — où l'on s'endort ensemble. Et le silence de l'absence — où l'on s'éloigne sans bruit.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Lequel est le vôtre ?",
+      "subtitle": "La réponse n'est pas dans les mots. Elle est dans la sensation. Si vous pouvez vous taire sans vous fuir, vous êtes en vie.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton âme a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Il y a deux sortes de silence. Le silence de la fatigue — où l'on s'endort ensemble. Et le silence de l'absence — où l'on s'éloigne sans bruit. Lequel est le vôtre ? La réponse n'est pas dans les mots. Elle est dans la sensation. Si vous pouvez vous taire sans vous fuir, vous êtes en vie.\n\n→ Ton âme a parlé ? Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

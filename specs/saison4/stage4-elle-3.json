@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st4-elle-3"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "L'intimité après une crise est une forme de mort et de renaissance.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Chaque fois que vous faites l'amour, vous risquez de raviver la douleur.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Mais chaque fois que vous CHOISISSEZ de vous montrer vulnérables, vous créez un souvenir nouveau.",
+      "subtitle": "Plus fort que l'ancien.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton âme a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "L'intimité après une crise est une forme de mort et de renaissance. Chaque fois que vous faites l'amour, vous risquez de raviver la douleur. Mais chaque fois que vous CHOISISSEZ de vous montrer vulnérables, vous créez un souvenir nouveau. Plus fort que l'ancien.\n\n→ Ton âme a parlé ? Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

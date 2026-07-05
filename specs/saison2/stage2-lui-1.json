@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s2-st2-lui-1"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "On t'a appris à RÉSOUDRE, pas à RESSENTIR.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Elle te dit qu'elle s'ennuie, tu cherches la solution. Il n'y en a pas.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Le problème n'est pas pratique. Il est relationnel.",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ],
+      "subtitle": "Et tu n'as pas d'outil pour ça."
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps t'a figé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "On t'a appris à RÉSOUDRE, pas à RESSENTIR. Elle te dit qu'elle s'ennuie, tu cherches la solution. Il n'y en a pas. Le problème n'est pas pratique. Il est relationnel. Et tu n'as pas d'outil pour ça.\n\n→ Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #origines #attachement"
+}

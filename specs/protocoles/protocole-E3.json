@@ -1,0 +1,50 @@
+{
+  "project": {
+    "title": "proto-e3"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 2.0,
+      "text": "Tu portes tout. Tu es epuisee. Et tu en veux a tout le monde.",
+      "gradient": ["#be185d", "#1c1917"]
+    },
+    {
+      "duration_sec": 3.0,
+      "text": "Cette semaine, delegue 1 chose. Accepte que ce soit moins bien fait.",
+      "gradient": ["#1c1917", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Reprendre du temps pour toi, pas pour en faire plus.",
+      "gradient": ["#1c1917", "#be185d"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Dans 1 mois, tu auras recupere 10 heures.",
+      "gradient": ["#be185d", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Quelle est la 1ere chose que tu deligues ? Dis-le.",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": ["#be185d", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": ["#be185d", "#1c1917"]
+    }
+  ],
+  "description": "Tu portes tout. Tu es epuisee. Et tu en veux a tout le monde. Cette semaine, delegue 1 chose. Accepte que ce soit moins bien fait. Reprendre du temps pour toi, pas pour en faire plus. Dans 1 mois, tu auras recupere 10 heures.\n\n→ Quelle est la 1ere chose que tu deligues ? Dis-le\n→ Tag celle qui a besoin de lacher prise\n\n3 questions gratuites → captainbond.com\n\n#couple #feminin #protocole"
+}

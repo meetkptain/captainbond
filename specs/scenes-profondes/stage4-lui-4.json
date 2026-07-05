@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s4-lui-seul" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "project": {
+    "title": "s4-lui-seul"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 1.5, "text": "Tu voudrais passer à autre chose.", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 1.5, "text": "Mais 'passer à autre chose' c'est quoi ? Être seul ?", "gradient": ["#0f172a", "#0f172a"] },
-    { "duration_sec": 2.0, "text": "Tu l'aimes encore. Mais tu sais plus comment rester sans te perdre.", "subtitle": "Tu as besoin de SAVOIR si ça vaut le coup. Pas de fuir.", "gradient": ["#0f172a", "#1e3a5f"] },
-    { "duration_sec": 1.5, "text": "Ça te parle ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Tu voudrais qu'on passe à autre chose. Elle ne peut pas.",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Alors tu fais comme si tout allait bien. Mais ta poitrine est serrée.",
+      "gradient": [
+        "#0f172a",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Tu portes ça seul.",
+      "subtitle": "Parce que si tu dis que tout ne va pas bien, tu brises l'équilibre fragile que vous avez reconstruit.",
+      "gradient": [
+        "#0f172a",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps t'a figé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    }
   ],
-  "description": "Tu voudrais passer a autre chose. Mais c'est quoi ? Etre seul ? Tu l'aimes encore. Tu sais plus comment rester sans te perdre.\n\n→ Pareil ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #seul #choix"
+  "description": "Tu voudrais qu'on passe à autre chose. Elle ne peut pas. Alors tu fais comme si tout allait bien. Mais ta poitrine est serrée. Tu portes ça seul. Parce que si tu dis que tout ne va pas bien, tu brises l'équilibre fragile que vous avez reconstruit.\n\n→ Ton corps t'a figé ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #confiance"
 }

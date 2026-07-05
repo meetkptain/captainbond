@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s3-stage4-lui-1"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Elle vérifie. Tu te justifies. Le cycle infernal.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Plus tu te justifies, plus elle vérifie.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Et si tu arrêtais ?",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ],
+      "subtitle": "« Je suis rentré en retard. Je comprends que ça t'angoisse. Mais je ne vais pas passer la soirée à le prouver. »"
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton ombre a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Elle vérifie, tu te justifies — le cycle infernal. Et si tu arrêtais de te justifier ? L'innocence ne se prouve pas, elle se vit.\n\n→ Ton ombre a parlé ? Dis-le en commentaire\n→ Tag ton/ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #ombre #projection"
+}

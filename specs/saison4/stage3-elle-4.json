@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st3-elle-4"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Le désir entre parents est un défi.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Il demande de réapprendre à être AMANTS après avoir été SOIGNANTS.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Ce n'est pas impossible. Mais ça demande un passage : quitter le rôle de parent pour entrer dans le rôle d'aimant.",
+      "subtitle": "10 minutes. Une question. 'Si on avait une nuit entière, qu'est-ce que tu voudrais qu'on fasse ?'",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton âme a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Le désir entre parents est un défi. Il demande de réapprendre à être AMANTS après avoir été SOIGNANTS. Ce n'est pas impossible. Mais ça demande un passage : quitter le rôle de parent pour entrer dans le rôle d'aimant. 10 minutes. Une question. 'Si on avait une nuit entière, qu'est-ce que tu voudrais qu'on fasse ?'\n\n→ Ton âme a parlé ? Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st4-elle-4"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "'J'ai changé' n'est pas une promesse. C'est un PROCESSUS.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "La confiance ne se décrète pas. Elle se construit, jour après jour.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Il change aujourd'hui. Il changera demain. Toi aussi.",
+      "subtitle": "Ce n'est pas un point d'arrivée. C'est un chemin. Vous marchez.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton âme a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "'J'ai changé' n'est pas une promesse. C'est un PROCESSUS. La confiance ne se décrète pas. Elle se construit, jour après jour. Il change aujourd'hui. Il changera demain. Toi aussi. Ce n'est pas un point d'arrivée. C'est un chemin. Vous marchez.\n\n→ Ton âme a parlé ? Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

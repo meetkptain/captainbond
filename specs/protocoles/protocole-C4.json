@@ -1,0 +1,50 @@
+{
+  "project": {
+    "title": "proto-c4"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#92400e",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 2.0,
+      "text": "Vous avez peur de vous perdre. Vous marchez sur des oeufs.",
+      "gradient": ["#92400e", "#1c1917"]
+    },
+    {
+      "duration_sec": 3.0,
+      "text": "1h par semaine. Parlez de vos reves, pas de vos peurs.",
+      "gradient": ["#1c1917", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Le couple guerit par le futur, pas par le passe.",
+      "gradient": ["#1c1917", "#92400e"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Retrouver la direction ensemble.",
+      "gradient": ["#92400e", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Qui prend 1h ce week-end pour rever ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": ["#92400e", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": ["#92400e", "#1c1917"]
+    }
+  ],
+  "description": "Vous avez peur de vous perdre. Vous marchez sur des oeufs. 1h par semaine. Parlez de vos reves, pas de vos peurs. Le couple guerit par le futur, pas par le passe. Retrouver la direction ensemble.\n\n→ Qui prend 1h ce week-end pour rever ?\n→ Tag ton/ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #reves #protocole"
+}

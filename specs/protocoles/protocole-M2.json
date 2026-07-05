@@ -1,0 +1,50 @@
+{
+  "project": {
+    "title": "proto-m2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 2.0,
+      "text": "Tu te sens invisible. Personne ne te voit chez toi.",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    },
+    {
+      "duration_sec": 3.0,
+      "text": "Cette semaine, prends UNE initiative. Choisis. Decides. Annonces.",
+      "gradient": ["#1c1917", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Le desir feminin s'alimente a la direction.",
+      "gradient": ["#1c1917", "#1e3a5f"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Quand tu sais ou tu vas, elle peut te suivre.",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Quelle est ton initiative cette semaine ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    }
+  ],
+  "description": "Tu te sens invisible. Personne ne te voit chez toi. Cette semaine, prends UNE initiative. Choisis. Decides. Annonces. Le desir feminin s'alimente a la direction. Quand tu sais ou tu vas, elle peut te suivre.\n\n→ Quelle est ton initiative cette semaine ?\n→ Tag celui qui a besoin de reprendre sa place\n\n3 questions gratuites → captainbond.com\n\n#couple #masculin #protocole"
+}

@@ -1,0 +1,13 @@
+{
+  "project": { "title": "cadre-couple-2" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#92400e", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.0, "text": "Elle a besoin de sentir que tu tiens. Pas que tu encaisses tout.", "gradient": ["#92400e", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Que tu ne cedes pas a la peur de la perdre.", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Car si tu cedes a ca, tu es gouverne par elle.", "subtitle": "captainbond.com", "gradient": ["#1c1917", "#92400e"] },
+    { "duration_sec": 2.0, "text": "Vos corps se reconnaissent ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#92400e", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#92400e", "#1c1917"] }
+  ],
+  "description": "Elle a besoin de sentir que tu tiens. Pas que tu encaisses tout.\n\n→ Vos corps se reconnaissent ? Dites-le en commentaire\n\n3 questions gratuites → captainbond.com\n\n#couple #cadre #connexion"
+}

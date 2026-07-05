@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s3-stage4-elle-1"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Tu vérifies. Tu comptes. Tu analyses. Tu sais que c'est malsain.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Mais tu ne peux pas t'arrêter. Parce que si tu t'arrêtes et qu'il te trahit, tu ne survivras pas.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Le contrôle est ta prison.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ],
+      "subtitle": "Mais il est aussi ta sécurité."
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton ombre a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Tu vérifies, tu comptes — tu sais que c'est malsain. Mais t'arrêter, c'est risquer de ne pas survivre à une nouvelle trahison. Le contrôle est ta prison et ta sécurité.\n\n→ Ton ombre a parlé ? Dis-le en commentaire\n→ Tag ton/ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #ombre #projection"
+}

@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s2-st1-elle-1"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Tu vérifies la conversation dans ta tête. 3 fois. 10 fois.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu l'as appris où ? À surveiller les signes. À anticiper les départs.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Petite fille, tu guettais les silences de tes parents.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ],
+      "subtitle": "Cette vigilance t'a sauvée à l'époque. Aujourd'hui, elle t'épuise."
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Tu vérifies la conversation dans ta tête. 3 fois. 10 fois. Tu l'as appris où ? À surveiller les signes. À anticiper les départs. Petite fille, tu guettais les silences de tes parents. Cette vigilance t'a sauvée à l'époque. Aujourd'hui, elle t'épuise.\n\n→ Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #origines #attachement"
+}

@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s2-elle-ennui" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "project": {
+    "title": "s2-elle-ennui"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 1.5, "text": "Tu dis : 'on s'ennuie'.", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "Il dit : 'on est tranquilles'.", "gradient": ["#1c1917", "#1c1917"] },
-    { "duration_sec": 2.0, "text": "Il a pas compris. Tu veux pas partir. Tu veux qu'il TE REVEILLE.", "subtitle": "L'ennui tue plus lentement que les disputes.", "gradient": ["#1c1917", "#be185d"] },
-    { "duration_sec": 1.5, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Tu dis : 'on s'ennuie'. Il dit : 'non, on est tranquilles'.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ta mâchoire se serre. Tranquille et vide, c'est la même chose dans ton corps.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Mais tu ne dis rien.",
+      "subtitle": "Tu avales.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
   ],
-  "description": "Tu dis 'on s'ennuie'. Il dit 'on est tranquilles'. Il a pas compris. Tu veux pas partir. Tu veux qu'il te reveille.\n\n→ Pareil ? Dis-le en commentaire\n→ Tag celle qui comprend\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #ennui #reveil"
+  "description": "Tu dis 'on s'ennuie'. Il dit 'non, on est tranquilles'. Ta mâchoire se serre. Tranquille et vide, c'est la même chose dans ton corps. Mais tu ne dis rien. Tu avales.\n\n→ Ton corps a parlé ? Dis-le en commentaire\n→ Tag celle qui comprend\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #securite"
 }

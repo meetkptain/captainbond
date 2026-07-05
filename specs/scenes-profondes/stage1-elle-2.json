@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s1-elle-samedi-14h" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "project": {
+    "title": "s1-elle-samedi-14h"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 2.0, "text": "Samedi 14h. Vous devriez être en train de faire l'amour.", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 2.0, "text": "Vous êtes en train de discuter de QUI va plier le linge.", "gradient": ["#1c1917", "#1c1917"] },
-    { "duration_sec": 2.0, "text": "Tu aimerais qu'il PRENNE LES DEVANTS. Juste une fois.", "subtitle": "Pour te sentir en sécurité.", "gradient": ["#1c1917", "#be185d"] },
-    { "duration_sec": 2.0, "text": "Ça te parle ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Tes épaules sont remontées. Samedi 14h. Tu ranges.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Il regarde son téléphone. Tu attends qu'il prenne les devants.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Ton corps attend. Tu es fatiguée de porter.",
+      "subtitle": "Pas la maison. La relation.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
   ],
-  "description": "Samedi 14h. Vous devriez faire l'amour. Vous discutez de qui va plier le linge. Tu aimerais qu'il prenne les devants. Juste une fois.\n\n→ Ca te parle ? Dis-nous en commentaire\n→ Tag celle qui comprend\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #desir"
+  "description": "Tes épaules sont remontées. Samedi 14h. Tu ranges. Il regarde son téléphone. Ton corps attend. Tu es fatiguée de porter. Pas la maison. La relation.\n\n→ Ton corps a parlé ? Dis-le en commentaire\n→ Tag celle qui porte tout\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #securite"
 }

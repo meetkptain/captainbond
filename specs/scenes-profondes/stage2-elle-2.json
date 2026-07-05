@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s2-elle-attente" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "project": {
+    "title": "s2-elle-attente"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 1.5, "text": "Ca fait 2 semaines que t'as arrêté d'initier.", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "Tu voulais voir s'il remarquerait. Il remarque pas.", "gradient": ["#1c1917", "#1c1917"] },
-    { "duration_sec": 2.0, "text": "Tu te demandes si c'est mieux avant ou si t'as juste arrêté d'espérer.", "subtitle": "Tu ne veux pas TOUT porter. Juste être deux.", "gradient": ["#1c1917", "#be185d"] },
-    { "duration_sec": 1.5, "text": "Pareil ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as arrêté d'initier. Tu voulais voir s'il le ferait.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "2 semaines. Rien. Ta poitrine est serrée en permanence.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Tu n'es pas invisible. Tu le sais.",
+      "subtitle": "Mais ton corps ne le sent plus.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
   ],
-  "description": "2 semaines que t'as arrete d'initier. Tu voulais voir s'il remarquerait. Il remarque pas. Tu te demandes si c'est mieux avant.\n\n→ Pareil ? Dis-le en commentaire\n→ Tag celle qui a vecu ca\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #attente #desir"
+  "description": "Tu as arrêté d'initier. Tu voulais voir s'il le ferait. 2 semaines. Rien. Ta poitrine est serrée en permanence. Tu n'es pas invisible. Mais ton corps ne le sent plus.\n\n→ Ton corps a parlé ? Dis-le en commentaire\n→ Tag celle qui attend\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #securite"
 }

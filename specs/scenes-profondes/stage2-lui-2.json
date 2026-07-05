@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s2-lui-inutile" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "project": {
+    "title": "s2-lui-inutile"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 1.5, "text": "Tu veux aider. Tu proposes.", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 1.5, "text": "Elle : 'non c'est bon'. 3 fois de suite.", "gradient": ["#0f172a", "#0f172a"] },
-    { "duration_sec": 2.0, "text": "Tu sais plus quoi faire. Alors tu fais rien. Et c'est pire.", "subtitle": "Tu veux être UTILE. Pas juste présent.", "gradient": ["#0f172a", "#1e3a5f"] },
-    { "duration_sec": 1.5, "text": "Ça te parle ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Tu la regardes ranger la cuisine. Tu veux l'aider. Tu te lèves.",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Elle dit : 'non c'est bon'. Tu te rassois. Tu sens le poids sur ta poitrine.",
+      "gradient": [
+        "#0f172a",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Tu ne sers à rien.",
+      "subtitle": "Tu regardes ton téléphone pour ne pas la regarder.",
+      "gradient": [
+        "#0f172a",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps t'a figé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    }
   ],
-  "description": "Tu veux aider. Tu proposes. Elle : 'non c'est bon'. Tu sais plus quoi faire. Alors tu fais rien. Ca te parle ?\n\n→ Pareil ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #inutile #aide"
+  "description": "Tu la regardes ranger la cuisine. Tu veux l'aider. Tu te lèves. Elle dit 'non c'est bon'. Tu te rassois. Tu sens le poids sur ta poitrine. Tu ne sers à rien.\n\n→ Ton corps t'a figé ? Dis-le en commentaire\n→ Tag un pote\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #confiance"
 }

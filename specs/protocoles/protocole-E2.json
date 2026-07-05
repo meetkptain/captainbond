@@ -1,0 +1,50 @@
+{
+  "project": {
+    "title": "proto-e2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 2.0,
+      "text": "Tu te compares aux autres. Tu cherches sa validation.",
+      "gradient": ["#be185d", "#1c1917"]
+    },
+    {
+      "duration_sec": 3.0,
+      "text": "Chaque soir, ecris 1 chose que tu as bien faite aujourd'hui.",
+      "gradient": ["#1c1917", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Pour te prouver a toi-meme que tu es digne.",
+      "gradient": ["#1c1917", "#be185d"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Dans 21 jours, tu n'auras plus besoin de son regard pour exister.",
+      "gradient": ["#be185d", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Qui commence ce soir ? Dis-le.",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": ["#be185d", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": ["#be185d", "#1c1917"]
+    }
+  ],
+  "description": "Tu te compares aux autres. Tu cherches sa validation. Chaque soir, ecris 1 chose que tu as bien faite aujourd'hui. Pour te prouver a toi-meme que tu es digne. Dans 21 jours, tu n'auras plus besoin de son regard pour exister.\n\n→ Qui commence ce soir ? Dis-le\n→ Tag celle qui a besoin de reprendre confiance\n\n3 questions gratuites → captainbond.com\n\n#couple #feminin #protocole"
+}

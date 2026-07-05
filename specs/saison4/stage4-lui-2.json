@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st4-lui-2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Offrir des fleurs n'est pas un acte stratégique. C'est un acte POÉTIQUE.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Un geste gratuit. Sans attente.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Achete-les. Pas pour qu'elle t'aime. Pas pour qu'elle te croie.",
+      "subtitle": "Pour toi. Pour te rappeler que tu es capable de beauté gratuite.",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as entendu ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Offrir des fleurs n'est pas un acte stratégique. C'est un acte POÉTIQUE. Un geste gratuit. Sans attente. Achete-les. Pas pour qu'elle t'aime. Pas pour qu'elle te croie. Pour toi. Pour te rappeler que tu es capable de beauté gratuite.\n\n→ Tu as entendu ? Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s3-lui-invisible" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#1e3a5f", "text_color": "#ffffff" },
+  "project": {
+    "title": "s3-lui-invisible"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 1.5, "text": "Elle te regarde. Mais elle voit le père de ses enfants.", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 1.5, "text": "Toi tu veux qu'elle voie l'homme. Celui qu'elle a choisi.", "gradient": ["#0f172a", "#0f172a"] },
-    { "duration_sec": 2.0, "text": "Tu demandes plus. Tu fais semblant que ça va.", "subtitle": "Tu as besoin qu'elle te VOIE. Pas qu'elle te gère.", "gradient": ["#0f172a", "#1e3a5f"] },
-    { "duration_sec": 1.5, "text": "Ça te parle ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e3a5f", "#0f172a"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#1e3a5f", "#0f172a"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Elle ne te regarde plus comme un homme. Elle te regarde comme un co-parent.",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu le sens dans le vide entre vous le soir.",
+      "gradient": [
+        "#0f172a",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Ta place s'est rétrécie.",
+      "subtitle": "Tu ne sais pas comment la retrouver.",
+      "gradient": [
+        "#0f172a",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps t'a figé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#0f172a"
+      ]
+    }
   ],
-  "description": "Elle te regarde. Mais elle voit le pere de ses enfants. Toi tu veux qu'elle voie l'homme. Tu fais semblant que ca va.\n\n→ Pareil ? Dis-le en commentaire\n→ Tag un pere\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #pere #invisible"
+  "description": "Elle ne te regarde plus comme un homme. Elle te regarde comme un co-parent. Tu le sens dans le vide entre vous le soir. Ta place s'est rétrécie. Tu ne sais pas comment la retrouver.\n\n→ Ton corps t'a figé ? Dis-le en commentaire\n→ Tag un père\n\n3 questions gratuites → captainbond.com\n\n#couple #homme #confiance"
 }

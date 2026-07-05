@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s2-st4-lui-2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as appris que les gestes gentils sont suspects. Quand tu faisais du bien, on se demandait ce que tu voulais.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Alors tu as arrêté.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Aujourd'hui, tu n'oses plus être gentil parce que la gentillesse a été instrumentalisée.",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ],
+      "subtitle": "Par d'autres. Par le passé."
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps t'a figé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Tu as appris que les gestes gentils sont suspects. Quand tu faisais du bien, on se demandait ce que tu voulais. Alors tu as arrêté. Aujourd'hui, tu n'oses plus être gentil parce que la gentillesse a été instrumentalisée. Par d'autres. Par le passé.\n\n→ Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #origines #attachement"
+}

@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st4-lui-4"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Guérir à deux, ce n'est pas attendre que l'autre aille mieux.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "C'est marcher ensemble dans la blessure.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "'Moi aussi, ça me fait mal. Moi aussi, j'ai peur.'",
+      "subtitle": "Dire ça, ce n'est pas briser l'équilibre. C'est LE CRÉER. Un vrai. Pas un fragile.",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as entendu ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Guérir à deux, ce n'est pas attendre que l'autre aille mieux. C'est marcher ensemble dans la blessure. 'Moi aussi, ça me fait mal. Moi aussi, j'ai peur.' Dire ça, ce n'est pas briser l'équilibre. C'est LE CRÉER. Un vrai. Pas un fragile.\n\n→ Tu as entendu ? Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

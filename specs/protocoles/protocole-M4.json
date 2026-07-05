@@ -1,0 +1,50 @@
+{
+  "project": {
+    "title": "proto-m4"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 2.0,
+      "text": "Tu ne sais plus pourquoi tu es avec elle.",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    },
+    {
+      "duration_sec": 3.0,
+      "text": "Prends 1h ce soir. Ecris : quel etait notre projet commun ?",
+      "gradient": ["#1c1917", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Retrouver le sens perdu de votre histoire.",
+      "gradient": ["#1c1917", "#1e3a5f"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Le couple a besoin d'une mission. Pas juste de sentiments.",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Qui fait cet exercice ce soir ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": ["#1e3a5f", "#1c1917"]
+    }
+  ],
+  "description": "Tu ne sais plus pourquoi tu es avec elle. Prends 1h ce soir. Ecris : quel etait notre projet commun ? Retrouver le sens perdu de votre histoire. Le couple a besoin d'une mission. Pas juste de sentiments.\n\n→ Qui fait cet exercice ce soir ?\n→ Tag celui qui a perdu le sens\n\n3 questions gratuites → captainbond.com\n\n#couple #masculin #protocole"
+}

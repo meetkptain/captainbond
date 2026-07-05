@@ -1,0 +1,13 @@
+{
+  "project": { "title": "cadre-couple-4" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#92400e", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.0, "text": "Le couple qui tient n'est pas celui ou on ne se blesse jamais.", "gradient": ["#92400e", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "C'est celui ou chacun sait ou commence l'autre.", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Sans cadre, pas de confiance. Sans confiance, pas de couple.", "subtitle": "captainbond.com", "gradient": ["#1c1917", "#92400e"] },
+    { "duration_sec": 2.0, "text": "Vos corps se reconnaissent ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#92400e", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#92400e", "#1c1917"] }
+  ],
+  "description": "Le couple qui tient n'est pas celui ou on ne se blesse jamais. C'est celui ou chacun sait ou commence l'autre.\n\n→ Vos corps se reconnaissent ? Dites-le en commentaire\n\n3 questions gratuites → captainbond.com\n\n#couple #cadre #connexion"
+}

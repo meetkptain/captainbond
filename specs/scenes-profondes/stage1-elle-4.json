@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s1-elle-voiture-silence" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "project": {
+    "title": "s1-elle-voiture-silence"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 2.0, "text": "Vous êtes en voiture. Silence. Tu regardes par la fenêtre.", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 2.0, "text": "Tu attends qu'il dise quelque chose. Il attend que tu dises quelque chose.", "gradient": ["#1c1917", "#1c1917"] },
-    { "duration_sec": 2.0, "text": "Le silence dure. Tu te sens seule.", "subtitle": "Pas parce qu'il n'est pas là. Parce qu'il ne te SÉCURISE PAS par sa présence.", "gradient": ["#1c1917", "#be185d"] },
-    { "duration_sec": 2.0, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Silence dans la voiture. Ta respiration est superficielle.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu n'oses pas parler. Lui non plus.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Le silence pèse sur ta poitrine.",
+      "subtitle": "Pas parce qu'il n'est pas là. Parce qu'il n'y a pas d'espace où déposer ce que tu portes.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
   ],
-  "description": "Vous etes en voiture. Silence. Tu attends qu'il parle. Il attend que tu parles. Le silence dure. Tu te sens seule.\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag celle qui comprend\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #silence"
+  "description": "Silence dans la voiture. Ta respiration est superficielle. Tu n'oses pas parler. Lui non plus. Le silence pèse sur ta poitrine. Pas parce qu'il n'est pas là. Parce qu'il n'y a pas d'espace où déposer ce que tu portes.\n\n→ Ton corps a parlé ? Dis-le en commentaire\n→ Tag celle qui comprend\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #securite"
 }

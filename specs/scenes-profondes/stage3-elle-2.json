@@ -1,13 +1,60 @@
 {
-  "project": { "title": "s3-elle-maman" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "project": {
+    "title": "s3-elle-maman"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 1.5, "text": "Dernière conversation qui parlait PAS des enfants.", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "Tu comptes sur tes doigts. Ca remonte.", "gradient": ["#1c1917", "#1c1917"] },
-    { "duration_sec": 2.0, "text": "Tu sais encore parler d'autre chose ? Il sait encore te parler à TOI ?", "subtitle": "Tu existes encore en dehors d'être maman.", "gradient": ["#1c1917", "#be185d"] },
-    { "duration_sec": 1.5, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Dernière conversation qui n'était pas sur les enfants ? La couleur de la poussette. C'était il y a 2 jours.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tes épaules n'ont pas touché le dossier du canapé depuis des semaines.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Tu es en permanence en 'prête à'.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
   ],
-  "description": "Derniere conversation qui parlait PAS des enfants. Tu comptes sur tes doigts. Ca remonte. Tu sais encore parler d'autre chose ?\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag une maman\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #mere #identite"
+  "description": "Dernière conversation qui n'était pas sur les enfants ? La couleur de la poussette. Tes épaules n'ont pas touché le dossier du canapé depuis des semaines. Tu es en permanence en 'prête à'.\n\n→ Ton corps a parlé ? Dis-le en commentaire\n→ Tag une maman\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #securite"
 }

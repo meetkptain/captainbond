@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st4-lui-1"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "L'innocence ne se prouve pas. Elle se VIT.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu ne peux pas contrôler sa peur. Mais tu peux contrôler ta réaction.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Ne pas te justifier nerveusement. Ne pas te fermer. Rester présent. Calme.",
+      "subtitle": "'Je suis là. Maintenant. Avec toi. C'est tout ce qui compte.'",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as entendu ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "L'innocence ne se prouve pas. Elle se VIT. Tu ne peux pas contrôler sa peur. Mais tu peux contrôler ta réaction. Ne pas te justifier nerveusement. Ne pas te fermer. Rester présent. Calme. 'Je suis là. Maintenant. Avec toi. C'est tout ce qui compte.'\n\n→ Tu as entendu ? Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

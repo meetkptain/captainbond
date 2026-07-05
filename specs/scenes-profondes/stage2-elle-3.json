@@ -1,13 +1,61 @@
 {
-  "project": { "title": "s2-elle-main" },
-  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
-  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "project": {
+    "title": "s2-elle-main"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
   "scenes": [
-    { "duration_sec": 1.5, "text": "Vous marchez. Il te prend la main.", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "Ca faisait des mois. Tes yeux piquent.", "gradient": ["#1c1917", "#1c1917"] },
-    { "duration_sec": 2.0, "text": "Tu te dis : 'c'est maintenant ou jamais'. Mais tu sais pas par où commencer.", "subtitle": "Tu as besoin d'un geste. Pas d'un discours.", "gradient": ["#1c1917", "#be185d"] },
-    { "duration_sec": 1.5, "text": "Toi aussi ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
-    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+    {
+      "duration_sec": 1.5,
+      "text": "Il te prend la main dans la rue. Sur le moment, ton ventre se relâche.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Puis tu réalises : ça n'est pas arrivé depuis des mois. Tu retiens tes larmes.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Ton corps avait oublié ce que ça faisait.",
+      "subtitle": "D'être touchée avec intention.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
   ],
-  "description": "Vous marchez. Il te prend la main. Ca faisait des mois. Tes yeux piquent. Tu te dis 'c'est maintenant ou jamais'.\n\n→ Toi aussi ? Dis-le en commentaire\n→ Tag celle qui sait\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #geste #retour"
+  "description": "Il te prend la main dans la rue. Sur le moment, ton ventre se relâche. Puis tu réalises : ça n'est pas arrivé depuis des mois. Ton corps avait oublié ce que ça faisait, d'être touchée avec intention.\n\n→ Ton corps a parlé ? Dis-le en commentaire\n→ Tag celle qui sait\n\n3 questions gratuites → captainbond.com\n\n#couple #femme #securite"
 }

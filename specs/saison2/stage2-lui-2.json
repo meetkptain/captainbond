@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s2-st2-lui-2"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as grandi avec une mère qui faisait tout. Tu as appris que la place de l'homme n'était pas là.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Aide ? Non. 'Va travailler, je gère.'",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Aujourd'hui, tu proposes d'aider. Et elle répète le scénario.",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ],
+      "subtitle": "Et toi, tu te soumets au scénario."
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton corps t'a figé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "Tu as grandi avec une mère qui faisait tout. Tu as appris que la place de l'homme n'était pas là. Aide ? Non. 'Va travailler, je gère.' Aujourd'hui, tu proposes d'aider. Et elle répète le scénario. Et toi, tu te soumets au scénario.\n\n→ Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #origines #attachement"
+}

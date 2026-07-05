@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st4-lui-3"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#1e3a5f",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "La confiance est une décision qui se prend AVANT d'avoir la preuve.",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "C'est un acte de foi.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "Elle ne peut pas décider de te croire si tu ne décides pas d'être cru.",
+      "subtitle": "Montre-lui. Pas avec des mots. Avec une constance silencieuse. Chaque jour. Sans faillir. Jusqu'à ce que ses yeux rejoignent ses mots.",
+      "gradient": [
+        "#1c1917",
+        "#1e3a5f"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Tu as entendu ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#1e3a5f",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "La confiance est une décision qui se prend AVANT d'avoir la preuve. C'est un acte de foi. Elle ne peut pas décider de te croire si tu ne décides pas d'être cru. Montre-lui. Pas avec des mots. Avec une constance silencieuse. Chaque jour. Sans faillir. Jusqu'à ce que ses yeux rejoignent ses mots.\n\n→ Tu as entendu ? Dis-le en commentaire\n→ Tag ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}

@@ -1,0 +1,13 @@
+{
+  "project": { "title": "cadre-elle-3" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#be185d", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.0, "text": "Son cadre n'est pas une attaque. C'est un cadeau.", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Il te dit jusqu'où tu peux aller sans perdre son respect.", "gradient": ["#1c1917", "#1c1917"] },
+    { "duration_sec": 2.0, "text": "Si tu testes ses limites, tu perds le respect. Les deux.", "subtitle": "captainbond.com", "gradient": ["#1c1917", "#be185d"] },
+    { "duration_sec": 2.0, "text": "Ton corps a parlé ?", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#be185d", "#1c1917"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#be185d", "#1c1917"] }
+  ],
+  "description": "Son cadre n'est pas une attaque. C'est un cadeau.\n\n→ Ton corps a parle ? Dis-le en commentaire\n\n3 questions gratuites → captainbond.com\n\n#couple #cadre #respect"
+}

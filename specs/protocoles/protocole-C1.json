@@ -1,0 +1,50 @@
+{
+  "project": {
+    "title": "proto-c1"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#92400e",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 2.0,
+      "text": "Vous ne vous parlez plus. Juste des infos, des courses, du vide.",
+      "gradient": ["#92400e", "#1c1917"]
+    },
+    {
+      "duration_sec": 3.0,
+      "text": "1 question par soir pendant 7 jours. Pas de logistique.",
+      "gradient": ["#1c1917", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Recreer l'intimite des confidences.",
+      "gradient": ["#1c1917", "#92400e"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Dans 7 jours, vous saurez a nouveau ce qui se passe dans l'autre.",
+      "gradient": ["#92400e", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Qui commence ce soir ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": ["#92400e", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": ["#92400e", "#1c1917"]
+    }
+  ],
+  "description": "Vous ne vous parlez plus. Juste des infos, des courses, du vide. 1 question par soir pendant 7 jours. Pas de logistique. Recreer l'intimite des confidences. Dans 7 jours, vous saurez a nouveau ce qui se passe dans l'autre.\n\n→ Qui commence ce soir ?\n→ Tag ton/ta partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #communication #protocole"
+}

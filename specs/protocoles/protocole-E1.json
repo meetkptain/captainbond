@@ -1,0 +1,50 @@
+{
+  "project": {
+    "title": "proto-e1"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 2.0,
+      "text": "Tu as fusionne. Tu ne sais plus qui tu es sans lui.",
+      "gradient": ["#be185d", "#1c1917"]
+    },
+    {
+      "duration_sec": 3.0,
+      "text": "1h par jour. Seule. Sans telephone. Sans distraction. Pour toi.",
+      "gradient": ["#1c1917", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Reapprendre a exister sans etre regardee.",
+      "gradient": ["#1c1917", "#be185d"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Dans 3 semaines, tu ne pourras plus vivre sans cette heure.",
+      "gradient": ["#be185d", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Qui essaie ce soir ? Dis-le en commentaire.",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": ["#be185d", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": ["#be185d", "#1c1917"]
+    }
+  ],
+  "description": "Tu as fusionne. Tu ne sais plus qui tu es sans lui. 1h par jour. Seule. Sans telephone. Sans distraction. Pour toi. Reapprendre a exister sans etre regardee. Dans 3 semaines, tu ne pourras plus vivre sans cette heure.\n\n→ Qui essaie ce soir ? Dis-le en commentaire\n→ Tag celle qui a besoin de se retrouver\n\n3 questions gratuites → captainbond.com\n\n#couple #feminin #protocole"
+}

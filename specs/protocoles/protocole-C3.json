@@ -1,0 +1,50 @@
+{
+  "project": {
+    "title": "proto-c3"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#92400e",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 2.0,
+      "text": "Vous etes devenus des cogerants de votre vie.",
+      "gradient": ["#92400e", "#1c1917"]
+    },
+    {
+      "duration_sec": 3.0,
+      "text": "1 date experience par semaine. Nouveau. Jamais fait ensemble.",
+      "gradient": ["#1c1917", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "La nouveaute = le desir.",
+      "gradient": ["#1c1917", "#92400e"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Faire ensemble ce que vous n'avez jamais fait.",
+      "gradient": ["#92400e", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "Quel est votre 1er date experience ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": ["#92400e", "#1c1917"]
+    },
+    {
+      "duration_sec": 2.0,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": ["#92400e", "#1c1917"]
+    }
+  ],
+  "description": "Vous etes devenus des cogerants de votre vie. 1 date experience par semaine. Nouveau. Jamais fait ensemble. La nouveaute = le desir. Faire ensemble ce que vous n'avez jamais fait.\n\n→ Quel est votre 1er date experience ?\n→ Tag ton/ta partenaire pour planifier\n\n3 questions gratuites → captainbond.com\n\n#couple #date #protocole"
+}

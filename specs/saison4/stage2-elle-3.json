@@ -1,0 +1,61 @@
+{
+  "project": {
+    "title": "s4-st2-elle-3"
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "video_bitrate": "4M"
+  },
+  "style": {
+    "background_color": "#be185d",
+    "text_color": "#ffffff"
+  },
+  "scenes": [
+    {
+      "duration_sec": 1.5,
+      "text": "La main qui te prend. Ce geste est un sacrement.",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Il dit : 'je te choisis parmi tous les autres'. Il ne s'use pas. Il s'oublie.",
+      "gradient": [
+        "#1c1917",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 2,
+      "text": "La différence entre 'je t'aime' dit par habitude et 'je t'aime' dit par choix ?",
+      "subtitle": "C'est cette main qui te prend. Pas par réflexe. Par décision.",
+      "gradient": [
+        "#1c1917",
+        "#be185d"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "Ton âme a parlé ?",
+      "subtitle": "3 questions gratuites → captainbond.com",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    },
+    {
+      "duration_sec": 1.5,
+      "text": "CAPTAIN BOND",
+      "subtitle": "des questions qui connectent",
+      "gradient": [
+        "#be185d",
+        "#1c1917"
+      ]
+    }
+  ],
+  "description": "La main qui te prend. Ce geste est un sacrement. Il dit : 'je te choisis parmi tous les autres'. Il ne s'use pas. Il s'oublie. La différence entre 'je t'aime' dit par habitude et 'je t'aime' dit par choix ? C'est cette main qui te prend. Pas par réflexe. Par décision.\n\n→ Ton âme a parlé ? Dis-le en commentaire\n→ Tag ton partenaire\n\n3 questions gratuites → captainbond.com\n\n#couple #sens #mission"
+}
