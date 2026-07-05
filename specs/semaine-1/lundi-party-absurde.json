@@ -1,0 +1,11 @@
+{
+  "project": { "title": "lundi-truc-bizarre" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#6d28d9", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 3.0, "text": "Quel est le truc le plus bizarre que vous faites chez vous quand vous etes seul ? 👀", "gradient": ["#6d28d9", "#1e1b4b"] },
+    { "duration_sec": 2.5, "text": "Reponds en commentaire 👇", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e1b4b", "#6d28d9"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#6d28d9", "#1e1b4b"] }
+  ],
+  "description": "Le truc le plus bizarre que tu fais chez toi quand personne regarde ? On veut TOUT savoir 👀\n\n→ Balance en commentaire (on jugera pas... enfin si un peu)\n→ Tag ton/ta partenaire pour savoir ce qu'il/elle cache\n\n3 questions gratuites → captainbond.com\n\n#questions #soiree #captainbond"
+}

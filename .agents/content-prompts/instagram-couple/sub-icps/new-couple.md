@@ -3,107 +3,186 @@
 ## ONE DEEP PROBLEM (qu'il/elle ne peut PAS nommer)
 **"Je ne sais pas si ce qu'on ressent est normal ou si c'est le signe qu'on n'est pas faits l'un pour l'autre. J'ai peur d'être dans un produit défectueux sans le savoir."**
 
-Ce n'est pas "on sort de la lune de miel" — c'est une **incertitude référentielle**. Ils n'ont pas de cadre pour évaluer ce qui est "normal" dans un couple. Chaque conflit, chaque silence, chaque baisse de désir est analysé comme un signal potentiel d'échec : est-ce normal ou est-ce que ça signifie qu'on ne devrait pas être ensemble ? Cette oscillation permanente épuise. Le vrai besoin est une **validation externe** — un tiers de confiance qui leur dit "vous êtes normaux".
+Ce n'est pas "on sort de la lune de miel" — c'est une **incertitude référentielle**. Ils n'ont pas de cadre pour évaluer ce qui est "normal". Chaque conflit, chaque silence, chaque baisse de désir est analysé comme un signal potentiel d'échec. Le vrai besoin est une **validation externe**.
 
-## INTERNAL MONOLOGUE
-*"Le premier mois où on a emménagé ensemble, tout était incroyable. Maintenant il/elle laisse ses chaussettes par terre et ça m'énerve VRAIMENT. Trop ? Est-ce que c'est normal ? Ma mère disait toujours 'la première année est la plus dure.' Mais si c'est la première qui est dure, est-ce que ça veut dire que les prochaines seront pires ?"*
+## Dimension genrée
 
-## 10 EXACT HOOKS
-1. "Vous avez emménagé ensemble récemment et vous découvrez que l'amour ne paie pas le loyer."
-2. "Les 3 crises silencieuses de la première année de vie commune (et pourquoi elles sont normales)."
-3. "Il/elle range mal le lave-vaisselle. Est-ce que c'est un motif de rupture ?"
-4. "Ce que personne ne dit sur la première dispute : elle est obligatoire, et elle est saine."
-5. "On s'aime mais on se tape sur les nerfs. C'est normal ?"
-6. "Le test ultime du couple qui emménage : le placard partagé."
-7. "Vous pensiez tout savoir de l'autre avant d'habiter ensemble ?"
-8. "Le moment où tu réalises que l'amour ne suffit pas — il faut aussi de l'organisation."
-9. "3 choses que j'aurais aimé savoir avant de vivre avec mon/ma partenaire."
-10. "La première année est dure. Vraiment dure. Mais voici pourquoi c'est normal."
+Ce sous-ICP se manifeste DIFFEREMMENT selon le genre à cause de conditionnements sociaux. Le contenu doit parler aux DEUX mais PAS de la même façon.
 
-## 5 CONTENT TEMPLATES
+### Pour ELLE (gatekeeper de la relation, 70% des décisions d'achat)
+- On lui a appris à **prendre soin de l'autre** → elle porte la charge mentale de la relation
+- Son problème : "C'est toujours moi qui initie, qui planifie, qui 'travaille sur nous'"
+- Son Barnum : *"Tu portes la relation sur tes épaules. Tu anticipes, tu stresses pour deux. Et si t'arrêtais ?"*
+- Ce qu'elle cherche : **Permission de lâcher prise** + **Preuve que lui aussi s'investit**
 
-### Template 1 : Normalisation
+### Pour LUI (consommateur silencieux, besoin de compétence)
+- On lui a appris à **ne pas montrer ses émotions** → il n'a pas les mots
+- Son problème : "Elle dit qu'on est plus connectés. Je ne sais pas quoi faire. Pourquoi elle insiste ?"
+- Son Barnum : *"Tu veux que ça marche mais tu n'as pas les mots. Ce n'est pas ta faute. On t'a appris à agir, pas à parler."*
+- Ce qu'il cherche : **Des outils, pas des reproches** + **Un rôle compétent dans la relation**
+
+## Approche systémique
+
+Le problème du Nouveau Couple n'est PAS l'un des partenaires. C'est le **SYSTEME** qu'ils ont construit à deux : des habitudes, des attentes implicites, des rôles non dits, des patterns hérités de leurs familles.
+
+### Principe
+- Ne jamais dire "l'homme doit..." ou "la femme doit..." (rejet garanti en 2026)
+- Dire : **"On t'a appris à... Et ça ne marche plus. Captain Bond est là pour toi."**
+- Le conditionnement est réel. Le jugement est repoussoir.
+- Nommer le pattern SANS le juger, proposer une issue.
+
+## Format vidéo Barnum (structure obligatoire)
+
+```
+┌──────────────────────────────────────────────┐
+│  0-2s  : BARNUM HOOK                          │
+│  "Tu fais partie de ces gens qui..."          │
+│  → La personne se sent visée                  │
+│                                              │
+│  2-3.5s : RÉSONANCE + PAUSE                  │
+│  "On se trompe ?" / "Avoue." / "Ça te parle ?"
+│  → 1s de silence visuel (la personne          │
+│    confirme intérieurement)                   │
+│                                              │
+│  3.5-6s : DIRECTION DOUCE                    │
+│  "Captain Bond a été créé pour ça."           │
+│  → Solution naturelle, pas forcée             │
+│                                              │
+│  6-7s : BRAND CARD                           │
+│  CAPTAIN BOND + "des questions qui connectent"│
+└──────────────────────────────────────────────┘
+```
+
+## Couleurs signature
+
+| Cible | Couleur | Hex |
+|-------|---------|-----|
+| Neutre (les deux) | Ambré | #92400e → #1c1917 |
+| Pour ELLE | Rose doux | #be185d → #1c1917 |
+| Pour LUI | Bleu nuit | #1e3a5f → #0f172a |
+
+## 12 BARUM HOOKS (exacts)
+
+### Pour les deux (neutre)
+1. "Vous avez emménagé ensemble et vous découvrez que l'amour ne paie pas le loyer."
+2. "Il/elle a mal rangé la vaisselle. Et tu t'es demandé si c'était un signe."
+3. "Votre dispute de la semaine ? Un truc ABSURDE. Mais sur le moment c'était grave."
+4. "Vous êtes passés de 'je t'aime' à 't'as sorti les poubelles' sans vous en rendre compte."
+5. "Le problème dans votre couple n'est pas l'un de vous. C'est le système que vous avez construit à deux."
+
+### Pour ELLE
+6. "Tu portes la relation sur tes épaules. Tu anticipes, tu stresses pour deux."
+7. "Tu es celle qui checke, qui planifie, qui 'travaille sur nous'. Et parfois tu te demandes : et si j'arrêtais ?"
+8. "Tu as initié LA dernière conversation difficile. Comme d'habitude."
+9. "Tu aimerais qu'UN JOUR ce soit lui qui lance le sujet. Juste une fois."
+
+### Pour LUI
+10. "Elle te dit 'on est plus connectés'. Toi tu te dis 'tout va bien, non ?'. Tu veux que ça marche."
+11. "Tu ne sais pas quoi dire. Mais tu veux que ça marche. Ces deux choses peuvent coexister."
+12. "On t'a appris à agir, pas à parler. Captain Bond te donne les mots."
+
+## 5 CONTENT TEMPLATES (Barnum + genre)
+
+### Template 1 — Neutre (Lundi)
 ```
 SUB-ICP : Nouveau Couple
-DEEP PROBLEM : "Suis-je normal ?"
-HOOK : "Il/elle range mal le lave-vaisselle. Est-ce que c'est un motif de rupture ?"
-STRUCTURE : Question absurde → Données (Gottman : les disputes de vie commune sont normales) → Permission
-TON : Léger, rassurant, data-backed
-CTA : "Dis-moi la chose qui t'énerve le PLUS chez ton/ta partenaire — je valide ou pas"
-DESCRIPTION : Il/elle range mal le lave-vaisselle. C'est un motif de rupture ? Spoiler : non. Les disputes de vie commune sont normales.
-→ Balance ton plus gros agacement du quotidien
-→ @captainbond
-https://captainbond.com
-#viedeux #disputecouple #captainbond
-ANGLE CAPTAIN BOND : Mode Date Night = baromètre de santé. Si vous riez encore ensemble, tout va bien.
+CIBLE : Les deux
+COULEUR : Ambré
+BARUM HOOK : "Vous avez emménagé ensemble et vous découvrez que l'amour ne paie pas le loyer."
+RESONANCE : "On se trompe ?"
+DIRECTION : "3 questions gratuites pour vous rappeler pourquoi vous avez emménagé ensemble."
+STRUCTURE : 0-2s barnum → 2-3.5s resonance + pause → 3.5-6s direction → 6-7s brand
+CTA : "Balance ta pire anecdote de vie commune en commentaire"
+DESCRIPTION : "Vous avez emmenage ensemble et vous decouvrez que l'amour ne paie pas le loyer. On se trompe ?"
+→ Balance ta pire anecdote de vie commune en commentaire
+→ Tag ton/ta partenaire
+
+3 questions gratuites → captainbond.com
+
+#couple #emménagement #amour
 ```
 
-### Template 2 : La première dispute
+### Template 2 — Pour ELLE (Mardi)
 ```
 SUB-ICP : Nouveau Couple
-DEEP PROBLEM : "On s'est disputés. Est-ce que c'est grave ?"
-HOOK : "Votre première dispute n'est pas un signe d'échec. C'est un signe que vous vous engagez."
-STRUCTURE : Mythe ("les couples parfaits ne se disputent pas") → Réalité (conflit = signe d'investissement) → Outil
-TON : Sage, rassurant
-CTA : "Dis-moi le sujet de VOTRE première dispute en commentaire"
-DESCRIPTION : Votre premiere dispute n'est pas un signe d'echec. C'est un signe que vous vous investissez dans la relation.
-→ Sujet de votre premiere dispute ? On ecoute tout
-→ @captainbond
-https://captainbond.com
-#premieredispute #couple #captainbond
+CIBLE : Elle
+COULEUR : Rose doux
+BARUM HOOK : "Tu portes la relation sur tes épaules. tu anticipes, tu stresses pour deux."
+RESONANCE : "On se trompe ?"
+DIRECTION : "Pose ton sac. 3 questions. Il/elle répond. Toi tu écoutes."
+STRUCTURE : 0-2s barnum → 2-3.5s resonance + pause → 3.5-6s direction → 6-7s brand
+CTA : "Tag celle qui fait tout dans ton couple"
+DESCRIPTION : "Tu portes la relation sur tes epaules. Tu anticipes, tu stresses pour deux. On se trompe ?"
+→ Tag celle qui fait tout dans ton couple
+→ Envoie-lui ce post
+
+3 questions gratuites → captainbond.com
+
+#chargevidentale #couple #relation
 ```
 
-### Template 3 : Routine vs amour
+### Template 3 — Neutre drôle (Mercredi)
 ```
 SUB-ICP : Nouveau Couple
-DEEP PROBLEM : "La routine s'installe, est-ce que l'amour s'en va ?"
-HOOK : "Le petit-déjeuner en silence. Netflix sans se regarder. Est-ce que c'est ça, la vie à deux ?"
-STRUCTURE : Description relatable → Explication (c'est la transition, pas la fin) → 1 rituel
-TON : Doux, poétique, réaliste
-CTA : "Sauvegarde ce post et essaie une question Captain Bond ce soir"
-DESCRIPTION : Le petit-dejeuner en silence. Netflix sans se regarder. C'est ca la vie a deux ? Oui, et c'est normal.
-→ Garde ce post pour votre prochain moment a deux
-→ @captainbond
-https://captainbond.com
-#viedecouple #routineamour #captainbond
+CIBLE : Les deux
+COULEUR : Ambré
+BARUM HOOK : "Votre dispute de la semaine ? Un truc ABSURDE. Mais sur le moment c'était GRAVE."
+RESONANCE : "Avoue."
+DIRECTION : "Captain Bond remet du jeu là où il n'y a que du sérieux."
+STRUCTURE : 0-2s barnum → 2-3.5s resonance + pause → 3.5-6s direction → 6-7s brand
+CTA : "Dis-nous le sujet le plus ridicule de votre dispute"
+DESCRIPTION : "Votre dispute de la semaine ? Un truc absurde. Mais sur le moment, c'etait la 3e guerre mondiale. Avoue."
+→ Dis-nous le sujet le plus ridicule
+→ Tag ton/ta partenaire
+
+3 questions gratuites → captainbond.com
+
+#dispute #couple #amour
 ```
 
-### Template 4 : Les 3 crises
+### Template 4 — Pour LUI (Jeudi)
 ```
 SUB-ICP : Nouveau Couple
-DEEP PROBLEM : "Je ne comprends pas ce qui nous arrive"
-HOOK : "Les 3 crises silencieuses de la première année — et pourquoi elles sont obligatoires"
-STRUCTURE : Crise 1 (l'intimité quotidienne) → Crise 2 (l'argent) → Crise 3 (le temps seul)
-TON : Calme, structuré, documenté
-CTA : "Laquelle des 3 a été la plus dure pour vous ?"
-DESCRIPTION : 3 crises silencieuses attendent tous les couples en premiere annee. Les reconnaitre, c'est deja les traverser.
-→ Laquelle des 3 crises a ete la plus dure pour vous ?
-→ @captainbond
-https://captainbond.com
-#crisedecouple #premiereannee #captainbond
+CIBLE : Lui
+COULEUR : Bleu nuit
+BARUM HOOK : "Elle te dit 'on est plus connectés'. Toi tu te dis 'tout va bien, non ?'. Tu veux que ça marche mais tu sais pas comment."
+RESONANCE : "Ça te parle ?"
+DIRECTION : "Captain Bond te donne les mots. Pas de psycho. Des questions. Tu lis. Elle répond. C'est tout."
+STRUCTURE : 0-2s barnum → 2-3.5s resonance + pause → 3.5-6s direction → 6-7s brand
+CTA : "Pose 1 question à ton/ta partenaire ce soir. Pas plus."
+DESCRIPTION : "Elle te dit 'on est plus connectes'. Toi tu te dis 'tout va bien, non ?'. Tu veux que ca marche. Ca te parle ?"
+→ Pose 1 question ce soir. Regarde ce qui se passe.
+
+3 questions gratuites → captainbond.com
+
+#couple #homme #relation
 ```
 
-### Template 5 : Le diagnostic
+### Template 5 — Systémique (Vendredi)
 ```
 SUB-ICP : Nouveau Couple
-DEEP PROBLEM : "J'ai besoin de savoir si on va bien"
-HOOK : "3 questions à vous poser ce soir pour savoir si votre relation est solide (ou si vous stressez pour rien)"
-STRUCTURE : Question 1 → Pourquoi c'est important → Question 2 → Question 3
-TON : Sérieux, bienveillant
-CTA : "Prenez 10 minutes ce soir pour ces 3 questions. Gratuit."
-DESCRIPTION : 3 questions a vous poser ce soir pour savoir si votre relation est solide ou si vous stressez pour rien.
-→ Prenez 10 minutes. Juste vous deux. Pas de telephone.
-→ @captainbond
-https://captainbond.com
-#testcouple #relationsaine #captainbond
+CIBLE : Les deux
+COULEUR : Ambré
+BARUM HOOK : "Le problème dans votre couple n'est pas l'un de vous. C'est le SYSTÈME que vous avez construit à deux sans le savoir."
+RESONANCE : "Ça résonne ?"
+DIRECTION : "Captain Bond vous aide à créer un nouveau rituel. Un qui fonctionne pour LES DEUX."
+STRUCTURE : 0-2s barnum → 2-3.5s resonance + pause → 3.5-6s direction → 6-7s brand
+CTA : "Quelle règle implicite aimeriez-vous casser dans votre couple ?"
+DESCRIPTION : "Le probleme dans votre couple n'est pas l'un de vous. C'est le SYSTEME que vous avez construit a deux. Vous ne l'avez pas choisi. Mais vous pouvez le changer."
+→ Quelle regle implicite aimeriez-vous casser ?
+
+3 questions gratuites → captainbond.com
+
+#couple #relation #systemique
 ```
 
 ## CAPTAIN BOND ANGLE
-Le vrai besoin n'est pas "jouer" — c'est un **outil de diagnostic** qui leur dit "vous êtes normaux". Mode Date Night (2 joueurs) avec des questions progressives (légères → profondes) = espace sécurisé de test. "Est-ce qu'on peut encore rire ensemble ? Partager des rêves ?" Si oui, la relation va bien. Si non, le produit identifie OÙ porter l'attention. Le baromètre caché.
+Le produit est un **outil de diagnostic** qui leur dit "vous êtes normaux" + un **espace sécurisé** où elle peut lâcher prise et il peut avoir un rôle compétent. Mode Date Night = questions progressives qui créent un baromètre de santé relationnelle sans pression.
 
 ## CONTENT THAT HEALS
-- "Ce que vous ressentez n'est pas unique. C'est universel. Et c'est rassurant."
-- "La première dispute n'est pas la fissure dans le mur. C'est le premier vrai coup de marteau qui construit la maison."
-- "L'amour ne suffit pas ? Faux. L'amour seul ne suffit pas — mais l'amour + la conscience que ça demande du travail, ça suffit."
-- "Vous n'êtes pas en train d'échouer. Vous êtes en train d'apprendre à être deux. C'est différent."
+- "Ce qui te manque n'est pas une preuve d'échec. C'est une preuve que tu tiens à votre histoire."
+- "Elle n'est pas fatiguée de toi. Elle est fatiguée de porter la relation. Ce n'est pas la même chose."
+- "Tu n'as pas à être parfait. Tu as juste à être présent."
+- "Le problème n'est pas l'un de vous. Le problème est entre vous. Et entre vous, ça se soigne à deux."
 - "Les chaussettes par terre ne sont pas la fin de l'amour. Ce sont juste des chaussettes."
+- "Elle a besoin que tu comprennes. Tu as besoin qu'elle te dise quoi faire. Les deux besoins sont valides."

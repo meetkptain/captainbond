@@ -1,0 +1,11 @@
+{
+  "project": { "title": "mardi-question-non-posee" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#92400e", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.5, "text": "Quelle question vous n'osez pas poser a votre partenaire ? 💔", "gradient": ["#92400e", "#1c1917"] },
+    { "duration_sec": 2.5, "text": "Ecrivez-la en commentaire (anonyme si vous voulez)", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1c1917", "#92400e"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#92400e", "#1c1917"] }
+  ],
+  "description": "La question que vous n'osez pas poser a votre partenaire — ecrivez-la ici, anonymement si vous voulez 💔\n\n→ Pose ta question en commentaire\n→ Tag ton/ta partenaire — la reponse pourrait vous surprendre\n\n3 questions gratuites → captainbond.com\n\n#couple #relation #captainbond"
+}

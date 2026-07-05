@@ -10,6 +10,18 @@ Trigger : reconnaissance douloureuse + "je ne suis pas seul.e".
 - Structure : Hook reconnaissance → Exploration → Reframe positif → CTA
 - Musique : piano doux, lo-fi, instrumentale chaude
 - Pas de cuts rapides — plans tenus, respiration
+- Pause de resonance OBLIGATOIRE : 1s de silence visuel apres le hook (fond fixe, pas de texte)
+
+## Nouveau format Barnum (pour contenu court 6-7s)
+
+```
+0-2s   : BARNUM HOOK — phrase qui fait "c'est MOI"
+2-3.5s : RÉSONANCE + PAUSE — "On se trompe ?" (1s fond fixe)
+3.5-6s : DIRECTION — "Captain Bond est fait pour ça"
+6-7s   : BRAND CARD — CAPTAIN BOND + tagline
+```
+
+Couleurs signature : ambré #92400e (neutre), rose #be185d (elle), bleu #1e3a5f (lui)
 
 ## Description copywritee + SEO
 

@@ -35,21 +35,43 @@ Exact words :
 
 ...
 
+## Approche systémique & genrée
+
+### Principe fondamental
+Le problème n'est PAS l'un des partenaires. C'est le **système** qu'ils ont construit à deux : habitudes, attentes implicites, rôles non dits, patterns hérités.
+
+### Dynamique de genre dans le couple
+Le conditionnement social crée des expériences différentes pour chaque genre dans la relation. Le contenu doit en tenir compte SANS tomber dans les rôles traditionnels.
+
+| | Pour ELLE | Pour LUI |
+|--|-----------|----------|
+| Problème | Porte la charge mentale de la relation | N'a pas les mots pour dire "j'ai peur de te perdre" |
+| Barnum | "Tu portes la relation sur tes épaules" | "Tu veux que ça marche mais tu sais pas comment" |
+| Besoin | Permission de lâcher prise | Des outils, pas des reproches |
+| CTA | "Tag celle qui fait tout" | "Pose 1 question ce soir. C'est tout." |
+| Couleur | Rose doux #be185d | Bleu nuit #1e3a5f |
+
+### Règle d'or
+- Ne jamais dire "l'homme doit..." ou "la femme doit..."
+- Dire : "On t'a appris à... Et ça ne marche plus. Captain Bond est là pour toi."
+- Le conditionnement est réel, le jugement est repoussoir
+- Nommer le pattern SANS le juger, proposer une issue
+
+### Format Barnum (obligatoire pour tout contenu Nouveau Couple)
+```
+0-2s   : BARUM HOOK — phrase qui fait "c'est MOI"
+2-3.5s : RÉSONANCE + PAUSE — "On se trompe ?"
+3.5-6s : DIRECTION — "Captain Bond est fait pour ça"
+6-7s   : BRAND CARD — CAPTAIN BOND + tagline
+```
 ## Sub-ICPs (hyper-ciblage)
 
-Ce profil generique couvre 4 sous-ICP distincts avec des problemes profonds differents.
 Charge le fichier correspondant pour du contenu hyper-precis :
 
-- `sub-icps/new-couple.md` — Nouveau Couple (1-3 ans) : incertitude referentielle, normalite
+- `sub-icps/new-couple.md` — Nouveau Couple (1-3 ans) : incertitude referentielle, normalite. **Barnum + genre + systemique** dans le nouveau format.
 - `sub-icps/roommate-couple.md` — Couple Colocataire (5-10 ans) : resignation, paix vide
 - `sub-icps/parents.md` — Parents (jeunes enfants) : culpabilite, injonction contradictoire
 - `sub-icps/post-crisis.md` — Post-Crise : hypervigilance, reconstruction
-
-- Une citation d'Esther Perel ou Gottman (autorite instantanee)
-- "Si tu t'es jamais senti.e comme ca dans ton couple, regarde ca" (ciblage emotionnel)
-- Une question SPECIFIQUE a poser a son/sa partenaire CE SOIR (utilite immediate)
-- "Ce que personne ne dit sur l'amour long-terme" (curiosite + fatigue des conseils superficiels)
-- Un moment de vulnerabilite vraie (authenticite)
 
 ## Ce qui le/la fait partager
 

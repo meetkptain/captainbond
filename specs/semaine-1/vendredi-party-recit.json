@@ -1,0 +1,11 @@
+{
+  "project": { "title": "vendredi-pire-soiree" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#6d28d9", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.5, "text": "Votre pire experience en soiree ? On ecoute tout. 👇", "gradient": ["#6d28d9", "#1e1b4b"] },
+    { "duration_sec": 2.5, "text": "Balancez vos histoires en commentaire 😂", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e1b4b", "#6d28d9"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#6d28d9", "#1e1b4b"] }
+  ],
+  "description": "Votre pire experience en soiree ? On ecoute TOUT (et on va rire avec vous) 😂\n\n→ Balance ton histoire en commentaire\n→ Tag la personne qui etait la avec toi\n\n3 questions gratuites → captainbond.com\n\n#soiree #histoire #captainbond"
+}

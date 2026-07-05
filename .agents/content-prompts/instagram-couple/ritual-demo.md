@@ -11,6 +11,15 @@ Trigger : utilite immediate + faible friction.
 - Musique : douce, chaleureuse, piano
 - Alterner texte overlay + visuel appeasant
 
+## Format Barnum court (6-7s, pour TikTok)
+
+```
+0-2s   : BARNUM HOOK — phrase qui fait "c'est MOI"
+2-3.5s : RÉSONANCE + PAUSE — "On se trompe ?" (1s fond fixe)  
+3.5-6s : DIRECTION — "Captain Bond est fait pour ça"
+6-7s   : BRAND CARD — CAPTAIN BOND + tagline
+```
+
 ## Description copywritee + SEO
 
 Chaque template genere automatiquement une description en 4 blocs :

@@ -1,0 +1,11 @@
+{
+  "project": { "title": "samedi-notre-chanson" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#92400e", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.5, "text": "Tag ton/ta partenaire : c'est quoi VOTRE chanson ? 🎵", "gradient": ["#92400e", "#1c1917"] },
+    { "duration_sec": 2.5, "text": "Mettez le titre en commentaire 💕", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1c1917", "#92400e"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#92400e", "#1c1917"] }
+  ],
+  "description": "Tag ton/ta partenaire et dis-nous : c'est quoi VOTRE chanson ? 🎵\n\n→ Ecris le titre en commentaire\n→ Tag la personne — elle saura que tu penses a elle\n\n3 questions gratuites → captainbond.com\n\n#couple #musique #captainbond"
+}

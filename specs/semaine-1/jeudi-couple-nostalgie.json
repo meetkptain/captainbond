@@ -1,0 +1,11 @@
+{
+  "project": { "title": "jeudi-proches-sentiment" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#92400e", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 3.0, "text": "Le dernier moment ou tu t'es senti.e vraiment proche de quelqu'un ? 💫", "gradient": ["#92400e", "#1c1917"] },
+    { "duration_sec": 2.5, "text": "Racontez-nous en commentaire 👇", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1c1917", "#92400e"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#92400e", "#1c1917"] }
+  ],
+  "description": "Le dernier moment ou tu t'es senti.e vraiment proche de quelqu'un ? Raconte-nous 💫\n\n→ Partage ton moment en commentaire\n→ Tag la personne concerne (elle va fondre)\n\n3 questions gratuites → captainbond.com\n\n#connexion #couple #captainbond"
+}

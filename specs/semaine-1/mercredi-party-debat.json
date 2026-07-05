@@ -1,0 +1,11 @@
+{
+  "project": { "title": "mercredi-mayo-ketchup" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#6d28d9", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 2.5, "text": "Mayonnaise ou ketchup sur les frites ?", "gradient": ["#6d28d9", "#1e1b4b"] },
+    { "duration_sec": 2.0, "text": "Repondez. C'est serieux. 👇", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1e1b4b", "#6d28d9"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#6d28d9", "#1e1b4b"] }
+  ],
+  "description": "Mayonnaise ou ketchup sur les frites ? On regle CE debat une bonne fois pour toutes.\n\n→ Reponds en commentaire (choisis ton camp)\n→ Tag ton pote qui a TORT\n\n3 questions gratuites → captainbond.com\n\n#debat #nourriture #captainbond"
+}

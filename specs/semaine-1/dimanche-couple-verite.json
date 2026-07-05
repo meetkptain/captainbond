@@ -1,0 +1,11 @@
+{
+  "project": { "title": "dimanche-verite-amour" },
+  "output": { "width": 1080, "height": 1920, "fps": 30, "video_bitrate": "4M" },
+  "style": { "background_color": "#92400e", "text_color": "#ffffff" },
+  "scenes": [
+    { "duration_sec": 3.0, "text": "Une verite sur l'amour que personne ne vous a dite 💫", "gradient": ["#92400e", "#1c1917"] },
+    { "duration_sec": 3.0, "text": "Partagez-la en commentaire 👇", "subtitle": "3 questions gratuites → captainbond.com", "gradient": ["#1c1917", "#92400e"] },
+    { "duration_sec": 1.5, "text": "CAPTAIN BOND", "subtitle": "des questions qui connectent", "gradient": ["#92400e", "#1c1917"] }
+  ],
+  "description": "Une verite sur l'amour que vous avez apprise et que personne ne vous avait dite 💫\n\n→ Partage ta verite en commentaire\n→ Tag ton/ta partenaire — lisez les reponses ensemble\n\n3 questions gratuites → captainbond.com\n\n#amour #verite #captainbond"
+}

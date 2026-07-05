@@ -48,15 +48,26 @@ CTA : "..."
 ## Rythme hebdomadaire type
 
 ```markdown
-| Jour | Plateforme | Type | ICP |
-|------|-----------|------|-----|
-| Lundi | TikTok | Humor / Sketch | Party |
-| Mardi | Instagram | Carousel Educational | Couple |
-| Mercredi | TikTok | Game Showcase | Party |
-| Jeudi | Instagram | Mirror Content | Couple |
-| Vendredi | TikTok | Identity | Party |
-| Samedi | Instagram | Ritual Demo | Couple |
-| Dimanche | TikTok | Tactical Tips | Party |
+| Jour | Plateforme | Type | ICP | Cible | Couleur |
+|------|-----------|------|-----|-------|---------|
+| Lundi | TikTok | Barnum neutre | Nouveau Couple | Les deux | Ambré |
+| Mardi | TikTok | Barnum genre | Nouveau Couple | Elle | Rose |
+| Mercredi | TikTok | Barnum humoristique | Nouveau Couple | Les deux | Ambré |
+| Jeudi | TikTok | Barnum genre | Nouveau Couple | Lui | Bleu |
+| Vendredi | TikTok | Barnum systémique | Nouveau Couple | Les deux | Ambré |
+| Samedi | TikTok | Réactions / UGC | Tous | Les deux | Variable |
+| Dimanche | TikTok | Question libre | Tous | Les deux | Variable |
+```
+
+### Rythme alterné (quand plusieurs ICPs)
+
+```markdown
+| Semaine | ICP principal |
+|---------|---------------|
+| Semaine 1 | Nouveau Couple (Barnum + genre + systémique) |
+| Semaine 2 | Couple Colocataire (Barnum + genre) |
+| Semaine 3 | Parents (Barnum + genre) |
+| Semaine 4 | Nouveau Couple (variantes, réactions) |
 ```
 
 ## Checklist du Dimanche
