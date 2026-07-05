@@ -132,7 +132,7 @@ captainbond/
 │   ├── lib/                          ← Infrastructure partagée
 │   │   ├── db/repositories/          ← Accès Supabase (CRUD)
 │   │   ├── auth/                     ← Admin, player auth
-│   │   ├── config/features.ts        ← Feature flags (default: false)
+│   │   ├── config/                     ← Config constants
 │   │   ├── monetization/             ← Pricing, catalog
 │   │   ├── cron/                     ← Cron lock
 │   │   ├── pricing/                  ← Pricing tiers
@@ -329,10 +329,9 @@ sequenceDiagram
 | **Layout global** | `src/app/layout.tsx` | 5 JSON-LD schemas, GA4, PostHog, LanguageProvider |
 | **Middleware** | `src/middleware.ts` | Lang detection, admin auth, player auth |
 | **CSS global** | `src/app/globals.css` | Tailwind v4 theme, `.article-*` system, animations |
-| **Feature flags** | `src/lib/config/features.ts` | Tous les flags (default: false) |
 | **Erreurs** | `src/lib/errors.ts` | AppError class, 20+ error codes |
-| **Auth admin** | `src/lib/auth/admin/` | Admin JWT, cookie management |
-| **Auth player** | `src/lib/auth/player/` | Player JWT, cookie management |
+| **Auth admin** | `src/lib/auth/admin.ts` | Admin JWT, cookie management, refresh token |
+| **Auth player** | `src/lib/auth/player.ts` | Player JWT, cookie management, refresh token |
 | **Jeux** | `src/game-modes/` | 5 modes + manifests, prompts, types |
 | **Services métier** | `src/services/*.ts` | 30 services, toute la logique |
 | **Accès DB** | `src/lib/db/repositories/` | CRUD Supabase |
@@ -355,15 +354,15 @@ sequenceDiagram
 ## 7. Auth & Security Overview
 
 ```
-                    SIGNUP / LOGIN
+                    SIGNUP / LOGIN / JOIN
                           │
                           v
-              ┌──────────────────────┐
-              │   middleware.ts       │
-              │   - Check cookie      │
-              │   - Verify JWT        │
-              │   - Set x-lang        │
-              └──────┬───────────────┘
+              ┌──────────────────────────────────┐
+              │         middleware.ts             │
+              │   - Check JWT cookie              │
+              │   - Si expiré → try refresh cookie │
+              │   - Set x-lang, x-request-id       │
+              └──────┬───────────────────────────┘
                      │
           ┌──────────┼──────────┐
           v          v          v
@@ -373,12 +372,14 @@ sequenceDiagram
     └─────────┘ └─────────┘ └──────────┘
          │           │            │
          v           v            v
-     /admin/*   /api/player/*   /blog/*
-     /api/admin/*  /api/room/*   /pricing
-                  /couple        /party
+     /admin/*    /api/player/*  /blog/*
+     /api/admin/*  /api/room/*  /pricing
+                  /couple       /party
 ```
 
-**JWT expiry**: Admin 7d, Player 30d. No refresh token yet — hard expiry forces re-login.
+**JWT + Refresh**: Deux cookies séparés par session. Middleware auto-refresh si JWT expiré + refresh cookie valide.
+- Admin: JWT 7d, refresh 30d. Secrets: `ADMIN_JWT_SECRET`, `ADMIN_REFRESH_SECRET` (fallback: JWT secret).
+- Player: JWT 30d, refresh 90d. Secrets: `PLAYER_JWT_SECRET`, `PLAYER_REFRESH_SECRET` (fallback: JWT secret).
 
 ---
 
