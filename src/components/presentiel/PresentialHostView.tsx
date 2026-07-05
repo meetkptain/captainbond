@@ -131,6 +131,8 @@ export function PresentialHostView({
       <Paywall
         roomCode={roomCode}
         hostId={hostId}
+        currentRound={currentQuestionIndex}
+        freeQuestionsLimit={3}
         onExit={onExit}
       />
     );

@@ -11,10 +11,12 @@ import { useTranslation } from '@/lib/i18n';
 interface PaywallProps {
   roomCode: string;
   hostId: string;
+  currentRound?: number;
+  freeQuestionsLimit?: number;
   onExit: () => void;
 }
 
-export function Paywall({ roomCode, hostId, onExit }: PaywallProps) {
+export function Paywall({ roomCode, hostId, currentRound = 3, freeQuestionsLimit = 3, onExit }: PaywallProps) {
   const [availablePacks, setAvailablePacks] = useState<Pack[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -67,8 +69,8 @@ export function Paywall({ roomCode, hostId, onExit }: PaywallProps) {
             roomCode={roomCode}
             playerId={hostId}
             packs={availablePacks}
-            freeQuestionsUsed={3}
-            freeQuestionsLimit={3}
+            freeQuestionsUsed={currentRound}
+            freeQuestionsLimit={freeQuestionsLimit}
             successUrl={`${typeof window !== 'undefined' ? window.location.origin : ''}/room/${roomCode}`}
             cancelUrl={`${typeof window !== 'undefined' ? window.location.origin : ''}/room/${roomCode}`}
             onCheckoutError={(msg) => setError(msg)}

@@ -34,6 +34,7 @@ export function ActivePlayStage({
   const { play: playSynthesizedSound } = useAudioSynthesis();
   const previousVoteStateRef = useRef(voteState);
   const { t, language } = useTranslation();
+  const isPremiumMode = modeId === 'DEEP_CONNECTION' || modeId === 'DATE_NIGHT';
 
   useEffect(() => {
     if (voteState === 'reveal' && previousVoteStateRef.current !== 'reveal') {
@@ -163,6 +164,14 @@ export function ActivePlayStage({
               <span>{t('stick_skip_question')}</span>
             </button>
           )}
+        </div>
+      )}
+
+      {isPremiumMode && (
+        <div className="w-full p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center">
+          <p className="text-xs text-amber-400 font-medium">
+            {language === 'fr' ? '⭐ Mode premium — demandez à l\'hôte de débloquer' : '⭐ Premium mode — ask the host to unlock'}
+          </p>
         </div>
       )}
     </div>
