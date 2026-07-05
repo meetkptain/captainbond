@@ -22,6 +22,7 @@ interface TalkingStickProps {
   onSkip?: () => void;
   showSkip?: boolean;
   modeId?: string;
+  roomCode?: string;
   onVoteComplete?: (votedPlayerId: string) => void;
   isMuted?: boolean;
   // New props for Host rotation and Theme selection
@@ -38,6 +39,7 @@ export function TalkingStick({
   onSkip,
   showSkip = false,
   modeId = '',
+  roomCode = '',
   onVoteComplete,
   isMuted = false,
   questions,
@@ -111,6 +113,7 @@ export function TalkingStick({
           currentPlayerIndex={currentPlayerIndex}
           question={question}
           modeId={modeId}
+          roomCode={roomCode}
           isMuted={isMuted}
           onNext={onNext}
           onSkip={onSkip}

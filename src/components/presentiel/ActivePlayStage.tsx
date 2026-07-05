@@ -1,17 +1,21 @@
 'use client';
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAudioSynthesis } from '@/hooks/useAudioSynthesis';
 import { mostLikelyToManifest } from '@/game-modes/most-likely-to';
 import type { Player } from './TalkingStick';
 import { useVoteCountdown } from './useVoteCountdown';
 import { useTranslation } from '@/lib/i18n';
+import { api } from '@/lib/api/client';
+import type { Pack } from '@/lib/monetization/catalog';
+import { UnlockPanel } from '@/components/UnlockPanel';
 
 interface ActivePlayStageProps {
   players: Player[];
   currentPlayerIndex: number;
   question: string;
   modeId?: string;
+  roomCode?: string;
   isMuted?: boolean;
   onNext: () => void;
   onSkip?: () => void;
@@ -24,6 +28,7 @@ export function ActivePlayStage({
   currentPlayerIndex,
   question,
   modeId = '',
+  roomCode = '',
   isMuted = false,
   onNext,
   onSkip,
@@ -34,6 +39,8 @@ export function ActivePlayStage({
   const { play: playSynthesizedSound } = useAudioSynthesis();
   const previousVoteStateRef = useRef(voteState);
   const { t, language } = useTranslation();
+  const [showUnlock, setShowUnlock] = useState(false);
+  const [packs, setPacks] = useState<Pack[]>([]);
   const isPremiumMode = modeId === 'DEEP_CONNECTION' || modeId === 'DATE_NIGHT';
 
   useEffect(() => {
@@ -167,11 +174,35 @@ export function ActivePlayStage({
         </div>
       )}
 
-      {isPremiumMode && (
-        <div className="w-full p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center">
-          <p className="text-xs text-amber-400 font-medium">
-            {language === 'fr' ? '⭐ Mode premium — demandez à l\'hôte de débloquer' : '⭐ Premium mode — ask the host to unlock'}
-          </p>
+      {isPremiumMode && !showUnlock && (
+        <button
+          onClick={() => {
+            api.get<Pack[]>('/api/packs').then(setPacks).catch(() => {});
+            setShowUnlock(true);
+          }}
+          className="w-full py-3 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-400 font-semibold text-sm rounded-xl transition-all cursor-pointer"
+        >
+          {language === 'fr' ? '⭐ Débloquer le mode premium' : '⭐ Unlock premium mode'}
+        </button>
+      )}
+
+      {showUnlock && (
+        <div className="w-full animate-fade-in">
+          <UnlockPanel
+            roomCode={roomCode}
+            playerId=""
+            packs={packs}
+            freeQuestionsUsed={3}
+            freeQuestionsLimit={3}
+            context="group"
+            onCheckoutError={(msg) => console.error(msg)}
+          />
+          <button
+            onClick={() => setShowUnlock(false)}
+            className="w-full mt-2 py-2 text-xs text-slate-500 hover:text-slate-400 cursor-pointer border-none bg-transparent"
+          >
+            {language === 'fr' ? 'Fermer' : 'Close'}
+          </button>
         </div>
       )}
     </div>

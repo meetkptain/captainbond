@@ -164,6 +164,7 @@ export function PresentialQuestionView({
         onSkip={handlePlayerSkipped}
         showSkip={modeId === 'DEEP_CONNECTION' || modeId === 'DATE_NIGHT' || modeId === 'SPICY'}
         modeId={modeId}
+        roomCode={roomCode}
         onVoteComplete={handleVoteComplete}
         isMuted={isMuted}
         questions={questions}
