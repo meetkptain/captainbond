@@ -7,6 +7,7 @@ import {
 } from '@/lib/db/repositories/coupleTreeRepository';
 import { getCoupleById } from '@/lib/db/repositories/coupleRepository';
 import { COUPLE_SEED_QUESTIONS } from '@/lib/couple/seedQuestions';
+import { importPartyAnswersIntoCouple } from './coupleTreePartySeedService';
 import { AppError } from '@/lib/errors';
 
 /**
@@ -21,7 +22,7 @@ import { AppError } from '@/lib/errors';
  * Idempotent: if the tree already holds a full set of seed nodes, it is
  * skipped (also protects against re-runs of couple creation).
  */
-export async function seedStarterSky(coupleId: string): Promise<void> {
+export async function seedStarterSky(coupleId: string, userId?: string): Promise<void> {
   const couple = await getCoupleById(coupleId);
   if (!couple) {
     throw new AppError('NOT_FOUND', `Couple ${coupleId} introuvable.`);
@@ -41,5 +42,14 @@ export async function seedStarterSky(coupleId: string): Promise<void> {
       intensity: question.intensity,
       answeredBy,
     });
+  }
+
+  // M3 cross-sell: import the joining user's own party answers as extra stars.
+  // Only their data crosses context (RGPD-safe). Best-effort, never blocks.
+  const ownerId = userId ?? couple.user1Id;
+  try {
+    await importPartyAnswersIntoCouple(ownerId, tree.id);
+  } catch {
+    // Party data is a bonus; ignore failures so couple creation never breaks.
   }
 }

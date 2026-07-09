@@ -7,12 +7,16 @@ vi.mock('@/lib/db/repositories/coupleTreeRepository', () => ({
   listNodes: vi.fn(),
   addNode: vi.fn(),
 }));
+vi.mock('@/lib/db/repositories/treeRepository', () => ({
+  listUserPartyTreeNodes: vi.fn(),
+}));
 vi.mock('@/services/distanciel/treeService', () => ({
   createTreeForCouple: vi.fn(),
 }));
 
 import { getCoupleById } from '@/lib/db/repositories/coupleRepository';
 import { listNodes, addNode } from '@/lib/db/repositories/coupleTreeRepository';
+import { listUserPartyTreeNodes } from '@/lib/db/repositories/treeRepository';
 import { createTreeForCouple } from '@/services/distanciel/treeService';
 import { seedStarterSky } from './coupleTreeSeedService';
 import { COUPLE_SEED_QUESTIONS } from '@/lib/couple/seedQuestions';
@@ -21,6 +25,7 @@ const mockedGetCouple = vi.mocked(getCoupleById);
 const mockedListNodes = vi.mocked(listNodes);
 const mockedAddNode = vi.mocked(addNode);
 const mockedCreateTree = vi.mocked(createTreeForCouple);
+const mockedPartyList = vi.mocked(listUserPartyTreeNodes);
 
 const couple = { id: 'c1', user1Id: 'u1', user2Id: 'u2' };
 
@@ -30,6 +35,7 @@ beforeEach(() => {
   mockedCreateTree.mockResolvedValue({ id: 't1' } as never);
   mockedListNodes.mockResolvedValue([] as never);
   mockedAddNode.mockResolvedValue({ id: 'n' } as never);
+  mockedPartyList.mockResolvedValue([] as never);
 });
 
 describe('seedStarterSky', () => {

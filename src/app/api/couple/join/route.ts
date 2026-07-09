@@ -53,7 +53,7 @@ export const POST = withApiHandler({
     // Seed a starter sky so the constellation is non-empty on day 0.
     // Best-effort: a failure here must never break couple creation.
     try {
-      await seedStarterSky(couple.id);
+      await seedStarterSky(couple.id, authUser.id);
     } catch (err) {
       logger.error(
         'seedStarterSky failed',
