@@ -8,6 +8,7 @@ import {
   updateUser,
   updatePurchase,
 } from '@/lib/db/repositories';
+import { setUserSubscriptionStatus } from '@/lib/monetization/entitlements';
 
 const subscriptionsRetrieve = vi.fn().mockResolvedValue({
   id: 'sub_1',
@@ -53,6 +54,8 @@ vi.mock('@/lib/supabase-admin', () => ({
 vi.mock('@/lib/monetization/entitlements', () => ({
   invalidateUserEntitlements: vi.fn(),
   invalidateRoomPassInfo: vi.fn(),
+  grantUserPass: vi.fn(),
+  setUserSubscriptionStatus: vi.fn(),
 }));
 
 vi.mock('@/lib/analytics', () => ({
@@ -315,7 +318,7 @@ describe('paymentService', () => {
           data: { object: invoice },
         } as unknown as Stripe.Event);
 
-        expect(updateUser).toHaveBeenCalledWith('u1', { subscriptionStatus: 'ACTIVE' });
+        expect(setUserSubscriptionStatus).toHaveBeenCalledWith('u1', 'ACTIVE');
         expect(supabaseAdmin.from).toHaveBeenCalledWith('Purchase');
       });
 
@@ -389,8 +392,7 @@ describe('paymentService', () => {
           data: { object: { id: 'sub_1', customer: 'cus_1', status: 'active' } },
         } as unknown as Stripe.Event);
 
-        expect(updateUser).toHaveBeenCalledWith('u1', {
-          subscriptionStatus: 'ACTIVE',
+        expect(setUserSubscriptionStatus).toHaveBeenCalledWith('u1', 'ACTIVE', {
           stripeSubscriptionId: 'sub_1',
         });
       });
@@ -404,8 +406,7 @@ describe('paymentService', () => {
           data: { object: { id: 'sub_1', customer: 'cus_1', status: 'canceled' } },
         } as unknown as Stripe.Event);
 
-        expect(updateUser).toHaveBeenCalledWith('u1', {
-          subscriptionStatus: 'CANCELLED',
+        expect(setUserSubscriptionStatus).toHaveBeenCalledWith('u1', 'CANCELLED', {
           stripeSubscriptionId: 'sub_1',
         });
       });

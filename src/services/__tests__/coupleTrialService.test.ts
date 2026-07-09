@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { supabaseAdmin } from '@/lib/supabase-admin';
-import { invalidateUserEntitlements } from '@/lib/monetization/entitlements';
+import { invalidateUserEntitlements, grantUserPass } from '@/lib/monetization/entitlements';
 import { grantCoupleTrial } from '../coupleTrialService';
 
 vi.mock('@/lib/supabase-admin', () => ({
@@ -9,8 +9,13 @@ vi.mock('@/lib/supabase-admin', () => ({
   },
 }));
 
+vi.mock('@/lib/monetization/catalog', () => ({
+  getPackBySku: vi.fn().mockResolvedValue({ id: 'pack-couple', sku: 'COUPLE_MONTHLY', isSubscription: true }),
+}));
+
 vi.mock('@/lib/monetization/entitlements', () => ({
   invalidateUserEntitlements: vi.fn(),
+  grantUserPass: vi.fn(),
 }));
 
 function buildFrom() {
@@ -43,8 +48,7 @@ describe('coupleTrialService', () => {
       }),
       expect.objectContaining({ onConflict: 'userId,source' }),
     );
-    expect(fromMock.update).toHaveBeenCalledWith(expect.objectContaining({ activePassExpiresAt: expect.any(String) }));
-    expect(invalidateUserEntitlements).toHaveBeenCalledWith('user-1');
+    expect(grantUserPass).toHaveBeenCalledWith('user-1', expect.any(String));
   });
 
   it('skips when a couple_trial pass already exists', async () => {

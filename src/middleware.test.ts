@@ -231,7 +231,7 @@ describe('middleware', () => {
       })
     );
     const res = await middleware(req);
-    expect(res.status).toBe(301);
+    expect(res.status).toBe(302);
     expect(res.headers.get('location')).toContain('/fr/blog/questions-pour-couple');
   });
 
@@ -245,7 +245,7 @@ describe('middleware', () => {
       })
     );
     const res = await middleware(req);
-    expect(res.status).toBe(301);
+    expect(res.status).toBe(302);
     expect(res.headers.get('location')).toContain('/fr/soiree');
   });
 
@@ -259,7 +259,7 @@ describe('middleware', () => {
       })
     );
     const res = await middleware(req);
-    expect(res.status).toBe(301);
+    expect(res.status).toBe(302);
     expect(res.headers.get('location')).toContain('/fr/pro');
   });
 
@@ -271,6 +271,7 @@ describe('middleware', () => {
       '/corporate',
       '/couple',
       '/vault',
+      '/privacy',
       '/b2b/bars-cafes',
       '/group/:path*',
       '/blog',
@@ -280,6 +281,11 @@ describe('middleware', () => {
       '/api/room/:path*',
       '/api/me/:path*',
       '/api/checkout/:path*',
+      '/api/couple/:path*',
+      '/api/storage/:path*',
+      '/api/trees/:path*',
+      '/api/user/:path*',
+      '/api/questions/:path*',
       '/api/player/delete-me',
     ]);
   });
