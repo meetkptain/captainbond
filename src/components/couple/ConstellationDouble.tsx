@@ -10,16 +10,17 @@ export interface ConstellationDoubleProps {
   onSelect: (id: string) => void;
   width?: number;
   height?: number;
+  canvasRef?: React.RefObject<HTMLCanvasElement | null>;
 }
 
-export default function ConstellationDouble({ nodes, connections, onSelect, width = 1080, height = 1920 }: ConstellationDoubleProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+export default function ConstellationDouble({ nodes, connections, onSelect, width = 1080, height = 1920, canvasRef }: ConstellationDoubleProps) {
+  const canvasRefProp = useRef<HTMLCanvasElement>(null);
   // keep latest props for the RAF closure without restarting the loop
   const propsRef = useRef({ nodes, connections, onSelect });
   propsRef.current = { nodes, connections, onSelect };
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = canvasRefProp.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -63,7 +64,7 @@ export default function ConstellationDouble({ nodes, connections, onSelect, widt
   }, [nodes, connections, width, height]);
 
   const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const canvas = canvasRef.current;
+    const canvas = canvasRefProp.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
@@ -81,7 +82,10 @@ export default function ConstellationDouble({ nodes, connections, onSelect, widt
 
   return (
     <canvas
-      ref={canvasRef}
+      ref={(el) => {
+        if (canvasRef) canvasRef.current = el;
+        canvasRefProp.current = el;
+      }}
       width={width}
       height={height}
       onClick={handleClick}
