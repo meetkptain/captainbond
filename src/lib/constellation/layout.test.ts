@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { computeLayout } from './layout';
 import type { TreeNode, TreeConnection } from '@/lib/db/types';
 
@@ -15,14 +15,17 @@ function node(id: string, category: string, answeredAt?: string): TreeNode {
 
 describe('computeLayout', () => {
   it('is deterministic for same input', () => {
+    const fixedNow = 1_700_000_000_000;
+    vi.spyOn(Date, 'now').mockReturnValue(fixedNow);
     const nodes: TreeNode[] = [
       node('n1', 'CHILL'),
       node('n2', 'DEEP'),
-      node('n3', 'SPICY', new Date(Date.now() - 10 * 86400000).toISOString()),
+      node('n3', 'SPICY', new Date(fixedNow - 10 * 86400000).toISOString()),
     ];
     const a = computeLayout(nodes, []);
     const b = computeLayout(nodes, []);
     expect(a).toEqual(b);
+    vi.restoreAllMocks();
   });
 
   it('places different categories in different sectors', () => {
