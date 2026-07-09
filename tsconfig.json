@@ -32,5 +32,13 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "ui-ux-pro-max-skill"]
+  "exclude": [
+    "node_modules",
+    "ui-ux-pro-max-skill",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "__tests__"
+  ]
 }
