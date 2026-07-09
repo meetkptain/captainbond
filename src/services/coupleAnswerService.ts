@@ -19,6 +19,7 @@ import {
 import { getTreeByCouple } from '@/lib/db/repositories/coupleTreeRepository';
 import { getCoupleById } from '@/lib/db/repositories/coupleRepository';
 import { mapAnswerToOrbe } from '@/services/totemMappingService';
+import { ritualConstellationCategory } from '@/lib/couple/ritualCategory';
 import type { Couple, DailyQuestion, TreeNode } from '@/lib/db/types';
 
 const logger = createLogger({ route: 'coupleAnswerService' });
@@ -181,8 +182,8 @@ export async function submitAnswer(
     treeId: tree.id,
     questionId: dailyQuestion.questionId,
     customText: dailyQuestion.customText || '',
-    intensity: 1,
-    category: 'daily',
+    intensity: dailyQuestion.intensity,
+    category: ritualConstellationCategory(dailyQuestion.intensity, dailyQuestion.theme),
     answeredAt: new Date().toISOString(),
     answeredBy: [userId],
     embedding,

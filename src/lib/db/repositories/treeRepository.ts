@@ -69,6 +69,28 @@ export async function listTreeConnections(treeId: string): Promise<TreeConnectio
  * @param threshold Similarity threshold [0, 1]
  * @param limit Max match count
  */
+/**
+ * Returns TreeNodes the given user contributed inside PARTY (room) trees.
+ * Used by the couple cross-sell (M3): a player's own party answers are
+ * imported as starter stars for their new couple tree. We only select room
+ * trees (Tree.roomId not null) and the user's own answers (answeredBy
+ * contains userId), so no partner/other data crosses context.
+ */
+export async function listUserPartyTreeNodes(
+  userId: string,
+  limit = 12,
+): Promise<TreeNode[]> {
+  const { data, error } = await supabaseAdmin
+    .from('TreeNode')
+    .select('*, Tree!inner(roomId)')
+    .contains('answeredBy', [userId])
+    .not('Tree.roomId', 'is', null)
+    .order('answeredAt', { ascending: false })
+    .limit(limit);
+  if (error) throw error;
+  return (data ?? []) as TreeNode[];
+}
+
 export async function findSimilarTreeNodes(
   treeId: string,
   embedding: number[],

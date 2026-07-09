@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { BackgroundOrbs } from '@/components/BackgroundOrbs';
 import { CoupleLanding } from '@/components/couple/CoupleLanding';
@@ -14,6 +14,8 @@ import { OnboardingInvite } from './OnboardingInvite';
 import { OnboardingChecklist } from './OnboardingChecklist';
 import { getOnboardingCurrentDay } from '@/lib/couple/onboarding';
 import { CouplePaywall } from '@/components/couple/CouplePaywall';
+import { usePushConsent, PushConsentBanner } from '@/components/couple/PushConsentBanner';
+import { capture, AnalyticsEvents } from '@/lib/analytics';
 
 interface CoupleDashboardViewProps {
   defaultLang?: 'fr' | 'en';
@@ -23,7 +25,7 @@ const ONBOARDING_STORAGE_KEY = 'captainbond:onboarding-dismissed';
 
 export function CoupleDashboardView({ defaultLang = 'en' }: CoupleDashboardViewProps) {
   const router = useRouter();
-  const { loading, error, userId, couple, todayQuestion, dailyQuestions, totemState, entitlements, timeCapsules } = useCoupleData();
+  const { loading, error, userId, couple, todayQuestion, dailyQuestions, totemState, entitlements, timeCapsules, streak } = useCoupleData();
   const { showAuthModal } = useDashboardUIState();
   const { setShowAuthModal } = useDashboardUISetters();
 
@@ -38,6 +40,65 @@ export function CoupleDashboardView({ defaultLang = 'en' }: CoupleDashboardViewP
       // ignore localStorage errors
     }
   }, [couple?.id]);
+
+  // Capture l'attribution cross-sell depuis l'URL (?ref=) au premier chargement
+  // et la persiste pour le rattachement au grant d'essai (funnel).
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const ref = new URLSearchParams(window.location.search).get('ref');
+    if (!ref) return;
+    try {
+      localStorage.setItem('cb_ref', ref);
+    } catch {
+      // ignore localStorage errors
+    }
+    capture(AnalyticsEvents.COUPLE_LANDING_REF, { ref });
+  }, []);
+
+  // Nombre de rituels déjà répondus (pour déclencher le consentement push après 2).
+  const completedRituals = useMemo(
+    () => dailyQuestions.filter((q) => q.isAnswered).length + (todayQuestion?.isAnswered ? 1 : 0),
+    [dailyQuestions, todayQuestion]
+  );
+
+  const { showBanner, enablePush, dismissBanner } = usePushConsent(userId, completedRituals);
+
+  // ─── Retention: ouverture du rituel du jour (1x par question / session) ───
+  const openedQuestionId = useRef<string | null>(null);
+  useEffect(() => {
+    if (!couple?.id || !todayQuestion?.id) return;
+    if (openedQuestionId.current === todayQuestion.id) return;
+    openedQuestionId.current = todayQuestion.id;
+    capture(AnalyticsEvents.COUPLE_DAILY_OPENED, {
+      coupleId: couple.id,
+      dailyQuestionId: todayQuestion.id,
+      theme: todayQuestion.theme ?? null,
+    });
+  }, [couple?.id, todayQuestion?.id, todayQuestion?.theme]);
+
+  // ─── Retention: évolution du streak (au changement de valeur, hors mount) ─
+  const prevStreak = useRef<number | null>(null);
+  useEffect(() => {
+    if (!couple?.id) return;
+    if (prevStreak.current === null) {
+      prevStreak.current = streak;
+      return;
+    }
+    if (streak === prevStreak.current) return;
+    prevStreak.current = streak;
+    if (streak <= 0) return;
+    capture(AnalyticsEvents.DAILY_STREAK, { coupleId: couple.id, streak });
+  }, [couple?.id, streak]);
+
+  // Essai gratuit actif (pass actif sans abonnement) → jours restants.
+  const trialDaysLeft = useMemo(() => {
+    if (!entitlements?.hasActivePass || entitlements?.hasActiveSubscription || !entitlements?.passExpiresAt) {
+      return null;
+    }
+    const ms = new Date(entitlements.passExpiresAt).getTime() - Date.now();
+    if (ms <= 0) return null;
+    return Math.max(1, Math.ceil(ms / (1000 * 60 * 60 * 24)));
+  }, [entitlements]);
 
   const currentDay = useMemo(() => getOnboardingCurrentDay(couple?.createdAt), [couple?.createdAt]);
   const revealedCount = useMemo(
@@ -150,6 +211,14 @@ export function CoupleDashboardView({ defaultLang = 'en' }: CoupleDashboardViewP
               <Icon name="bookOpen" className="w-4 h-4 mr-1 text-slate-300" />
               <span className="text-slate-300 text-sm font-medium">Journal</span>
             </button>
+            <button
+              className="couple-back-link min-h-[44px] min-w-[44px] flex items-center justify-center px-3 py-1 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors duration-200"
+              onClick={() => router.push('/couple/constellation')}
+              disabled={!couple?.id}
+            >
+              <Icon name="sparkles" className="w-4 h-4 mr-1 text-slate-300" />
+              <span className="text-slate-300 text-sm font-medium">Constellation</span>
+            </button>
             <button className="couple-back-link min-h-[44px] min-w-[44px] flex items-center justify-center px-3 py-1 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors duration-200" onClick={() => router.push('/')}>
               <Icon name="arrowLeft" className="w-4 h-4 mr-1 text-slate-300" /> <span className="text-slate-300 text-sm font-medium">Retour</span>
             </button>
@@ -161,6 +230,33 @@ export function CoupleDashboardView({ defaultLang = 'en' }: CoupleDashboardViewP
           <h1>Miroir Relationnel</h1>
           <p>Votre rendez-vous quotidien pour comprendre, ressentir et grandir ensemble.</p>
         </section>
+
+        {/* Trial banner — surfaced when a free trial is active */}
+        {trialDaysLeft !== null && (
+          <div className="mb-6 flex items-center justify-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-sm text-emerald-300">
+            <span>💖</span>
+            <span>
+              Essai gratuit actif — rituel quotidien débloqué ({trialDaysLeft} jour{trialDaysLeft > 1 ? 's' : ''} restant{trialDaysLeft > 1 ? 's' : ''})
+            </span>
+          </div>
+        )}
+
+        {/* Daily streak — visible retention signal */}
+        {streak > 0 && (
+          <div className="mb-6 flex items-center justify-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm text-amber-300">
+            <span>🔥</span>
+            <span>
+              {streak} jour{streak > 1 ? 's' : ''} d&apos;affilée — votre rituel vous colle à la peau
+            </span>
+          </div>
+        )}
+
+        {/* Push opt-in — proposé après ≥2 rituels complétés */}
+        {showBanner && (
+          <div className="mb-6">
+            <PushConsentBanner onEnable={enablePush} onDismiss={dismissBanner} />
+          </div>
+        )}
 
         {/* Onboarding Checklist */}
         {showOnboarding && (
