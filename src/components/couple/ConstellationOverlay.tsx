@@ -51,6 +51,8 @@ export default function ConstellationOverlay({
       {!selection ? (
         <p className="py-8 text-center text-slate-400">
           Touchez une étoile pour découvrir ce que vous résonnez tous les deux.
+          <br />
+          Répondez à vos rituel pour illuminer de nouvelles connexions.
         </p>
       ) : (
         <div className="space-y-4">

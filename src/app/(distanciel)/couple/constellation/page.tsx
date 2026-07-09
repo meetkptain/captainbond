@@ -100,15 +100,31 @@ function ConstellationPageInner() {
         canvasRef={canvasRef}
       />
 
-      <div className="mt-6">
-        <ConstellationOverlay
-          selection={selection}
-          monthLabel={monthLabel}
-          starsThisMonth={starsThisMonth}
-          totalStars={totalStars}
-          canvasRef={canvasRef as RefObject<HTMLCanvasElement>}
-        />
-      </div>
+      {!loading && totalStars === 0 ? (
+        <div className="mt-6 rounded-2xl bg-white/[0.03] p-6 text-center">
+          <p className="text-slate-200">Votre ciel est encore vierge.</p>
+          <p className="mt-1 text-sm text-slate-400">
+            Répondez à votre premier rituel pour faire naître vos premières étoiles en commun.
+          </p>
+          <button
+            type="button"
+            onClick={() => router.push('/couple')}
+            className="mt-4 inline-flex items-center justify-center rounded-xl bg-amber-400 px-4 py-2 font-medium text-slate-900 hover:bg-amber-300"
+          >
+            Commencer le rituel
+          </button>
+        </div>
+      ) : (
+        <div className="mt-6">
+          <ConstellationOverlay
+            selection={selection}
+            monthLabel={monthLabel}
+            starsThisMonth={starsThisMonth}
+            totalStars={totalStars}
+            canvasRef={canvasRef as RefObject<HTMLCanvasElement>}
+          />
+        </div>
+      )}
     </div>
   );
 }
