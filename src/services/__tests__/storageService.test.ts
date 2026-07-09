@@ -7,6 +7,8 @@ vi.mock('@/lib/wasabi', () => ({
 
 describe('storageService', () => {
   beforeEach(() => {
+    vi.stubEnv('WASABI_ACCESS_KEY_ID', 'test-access-key');
+    vi.stubEnv('WASABI_SECRET_ACCESS_KEY', 'test-secret-key');
     vi.stubEnv('WASABI_BUCKET_NAME', 'test-bucket');
     vi.stubEnv('WASABI_ENDPOINT', 'https://s3.test.wasabisys.com');
   });

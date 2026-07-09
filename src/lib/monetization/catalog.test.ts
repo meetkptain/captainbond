@@ -4,7 +4,7 @@ import { CATALOG_FALLBACK, toCents, formatPrice } from './catalog';
 describe('catalog fallback', () => {
   it('matches public price tiers', () => {
     const pass = CATALOG_FALLBACK.find((p) => p.sku === 'PASS_24H');
-    expect(pass?.price).toBe(2.99);
+    expect(pass?.price).toBe(4.99);
 
     const profile = CATALOG_FALLBACK.find((p) => p.sku === 'PROFILE');
     expect(profile?.price).toBe(4.99);

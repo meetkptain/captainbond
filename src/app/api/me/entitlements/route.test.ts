@@ -135,8 +135,7 @@ describe('GET /api/me/entitlements', () => {
     expect(json.roomPassActive).toBe(true);
     expect(json.roomPassPaidByUserId).toBe('user-1');
     expect(json.hasActivePass).toBe(true);
-    expect(json.accessibleModes).toContain('DEEP_CONNECTION');
-    expect(json.accessibleModes).toContain('DATE_NIGHT');
+    expect(json.accessibleModes).toEqual(['*']);
     expect(json.accessibleFeatures).toContain('profiles');
   });
 

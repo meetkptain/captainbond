@@ -14,12 +14,15 @@ vi.mock('@/lib/rate-limit', () => ({
 
 vi.mock('@/lib/auth/player', () => ({
   signPlayerSession: vi.fn(),
+  signPlayerRefreshToken: vi.fn(),
   PLAYER_COOKIE_NAME: 'player-token',
+  PLAYER_REFRESH_COOKIE_NAME: 'player-refresh-token',
   getPlayerCookieOptions: vi.fn(() => ({})),
+  getPlayerRefreshCookieOptions: vi.fn(() => ({})),
 }));
 
 import { joinRoom } from '@/services/roomService';
-import { signPlayerSession } from '@/lib/auth/player';
+import { signPlayerSession, signPlayerRefreshToken } from '@/lib/auth/player';
 
 function request(body: unknown): NextRequest {
   return new NextRequest('http://localhost/api/room/join', {
