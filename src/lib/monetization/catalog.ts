@@ -1,5 +1,9 @@
 import { supabaseAdmin } from '@/lib/supabase-admin';
 import { logger } from '@/lib/logger';
+import { PACK_PRICES } from '@/lib/config/monetization';
+
+// Cents → euros helper so CATALOG_FALLBACK never hardcodes a price again.
+const euros = (cents: number): number => cents / 100;
 
 export type ProductType =
   | 'PASS_24H'
@@ -38,7 +42,7 @@ export const CATALOG_FALLBACK: Pack[] = [
     sku: 'PASS_24H',
     name: 'Pass 24h',
     description: 'Accès complet à tous les modes et profils pour la soirée.',
-    price: 2.99,
+    price: euros(PACK_PRICES.PASS_24H),
     stripePriceId: null,
     stripeProductId: null,
     productType: 'PASS_24H',
@@ -51,7 +55,7 @@ export const CATALOG_FALLBACK: Pack[] = [
     sku: 'PROFILE',
     name: 'Dossier Classifié',
     description: 'Votre rapport individuel à garder ou partager après la soirée.',
-    price: 4.99,
+    price: euros(PACK_PRICES.PROFILE),
     stripePriceId: null,
     stripeProductId: null,
     productType: 'PROFILE',
@@ -64,7 +68,7 @@ export const CATALOG_FALLBACK: Pack[] = [
     sku: 'PROFILE_COUPLE',
     name: 'Dossier Couple',
     description: 'Le rapport de compatibilité de votre soirée en tête-à-tête.',
-    price: 4.99,
+    price: euros(PACK_PRICES.PROFILE_COUPLE),
     stripePriceId: null,
     stripeProductId: null,
     productType: 'PROFILE_COUPLE',
@@ -77,7 +81,7 @@ export const CATALOG_FALLBACK: Pack[] = [
     sku: 'COUPLE_MONTHLY',
     name: 'Captain Bond Couple — Mensuel',
     description: 'Sessions illimitées en mode Couple, heatmap, arbre neuronal et récaps hebdomadaires.',
-    price: 4.99,
+    price: euros(PACK_PRICES.COUPLE_MONTHLY),
     stripePriceId: null,
     stripeProductId: null,
     productType: 'SUBSCRIPTION_MONTHLY',
@@ -90,7 +94,7 @@ export const CATALOG_FALLBACK: Pack[] = [
     sku: 'SUBSCRIPTION_ANNUAL',
     name: 'Captain Bond Premium — Annuel',
     description: 'Tous les modes, dossiers et packs pendant 1 an.',
-    price: 39.99,
+    price: euros(PACK_PRICES.SUBSCRIPTION_ANNUAL),
     stripePriceId: null,
     stripeProductId: null,
     productType: 'SUBSCRIPTION_ANNUAL',
@@ -103,7 +107,7 @@ export const CATALOG_FALLBACK: Pack[] = [
     sku: 'SUBSCRIPTION_MONTHLY',
     name: 'Captain Bond Premium — Mensuel',
     description: 'Tous les modes, dossiers et packs pendant 1 mois.',
-    price: 7.99,
+    price: euros(PACK_PRICES.SUBSCRIPTION_MONTHLY),
     stripePriceId: null,
     stripeProductId: null,
     productType: 'SUBSCRIPTION_MONTHLY',
@@ -116,7 +120,7 @@ export const CATALOG_FALLBACK: Pack[] = [
     sku: 'LIFETIME',
     name: 'Captain Bond Lifetime',
     description: 'Accès à vie à tout le contenu actuel et futur.',
-    price: 69.99,
+    price: euros(PACK_PRICES.LIFETIME),
     stripePriceId: null,
     stripeProductId: null,
     productType: 'LIFETIME',
@@ -129,7 +133,7 @@ export const CATALOG_FALLBACK: Pack[] = [
     sku: 'B2B_EVENT',
     name: 'Captain Bond Pro — Événement',
     description: 'Une session team-building personnalisée, questions filtrées et dashboard facilitateur.',
-    price: 299.00,
+    price: euros(PACK_PRICES.B2B_EVENT),
     stripePriceId: null,
     stripeProductId: null,
     productType: 'PACK',
@@ -142,7 +146,7 @@ export const CATALOG_FALLBACK: Pack[] = [
     sku: 'BAR_MONTHLY',
     name: 'Captain Bond Pro — Bar (99€/mois)',
     description: 'Abonnement mensuel pour bars, pubs et restaurants : jeu sur écran géant, kit de com et DJ vocal IA inclus.',
-    price: 99.00,
+    price: euros(PACK_PRICES.BAR_MONTHLY),
     stripePriceId: null,
     stripeProductId: null,
     productType: 'BAR_MONTHLY',

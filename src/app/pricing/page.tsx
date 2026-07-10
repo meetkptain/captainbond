@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { PACK_PRICES, formatPriceValue } from '@/lib/config/monetization';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://captainbond.com';
 
 export const metadata: Metadata = {
   title: 'Pricing — Captain Bond | Free, Pass & Subscription Plans',
-  description: 'Start free with 3 cards. Unlock unlimited party games with Pass 24h (2.99€), Monthly (7.99€), or Lifetime (69.99€). Pro plans from 99€/month.',
+  description: `Start free with 3 cards. Unlock unlimited party games with Pass 24h (${formatPriceValue(PACK_PRICES.PASS_24H)}€), Monthly (${formatPriceValue(PACK_PRICES.SUBSCRIPTION_MONTHLY)}€), or Lifetime (${formatPriceValue(PACK_PRICES.LIFETIME)}€). Pro plans from ${formatPriceValue(PACK_PRICES.BAR_MONTHLY)}€/month.`,
   alternates: {
     canonical: `${siteUrl}/pricing`,
     languages: {
@@ -35,9 +36,9 @@ const plans = [
     desc: 'Game nights with friends. TV board, phone controllers.',
     tiers: [
       { name: 'Free', price: '0', period: 'forever', features: ['3 free cards per mode', '5 game modes', '2-50+ players'], cta: 'Start Playing', href: '/party' },
-      { name: 'Pass 24h', price: '2.99', period: '24h', features: ['All modes unlimited', 'Profiles & dossiers', 'One night access'], cta: 'Get Pass', href: '/party' },
-      { name: 'Monthly', price: '7.99', period: '/month', features: ['All modes unlimited', 'All profiles & packs', 'Cancel anytime'], cta: 'Subscribe', href: '/party' },
-      { name: 'Lifetime', price: '69.99', period: 'once', features: ['All current + future content', 'All profiles & packs', '🎉 Limited Launch offer'], cta: 'Get Lifetime', href: '/party', badge: '🎉 Limited Launch' },
+      { name: 'Pass 24h', price: formatPriceValue(PACK_PRICES.PASS_24H, 'en'), period: '24h', features: ['All modes unlimited', 'Profiles & dossiers', 'One night access'], cta: 'Get Pass', href: '/party' },
+      { name: 'Monthly', price: formatPriceValue(PACK_PRICES.SUBSCRIPTION_MONTHLY, 'en'), period: '/month', features: ['All modes unlimited', 'All profiles & packs', 'Cancel anytime'], cta: 'Subscribe', href: '/party' },
+      { name: 'Lifetime', price: formatPriceValue(PACK_PRICES.LIFETIME, 'en'), period: 'once', features: ['All current + future content', 'All profiles & packs', '🎉 Limited Launch offer'], cta: 'Get Lifetime', href: '/party', badge: '🎉 Limited Launch' },
     ],
   },
   {
@@ -48,8 +49,8 @@ const plans = [
     desc: 'Daily rituals, harmony gauge, deep connection.',
     tiers: [
       { name: 'Free', price: '0', period: 'forever', features: ['3 free sessions', 'Daily Mirror mode', 'Basic harmony gauge'], cta: 'Start Free', href: '/couple' },
-      { name: 'Monthly', price: '4.99', period: '/month', features: ['Unlimited sessions', 'Full harmony gauge', 'Neural Tree', 'Weekly recaps'], cta: 'Subscribe', href: '/couple' },
-      { name: 'Annual', price: '39.99', period: '/year', features: ['Everything in Monthly', 'Save 33% vs monthly', 'Premium insights'], cta: 'Subscribe Annual', href: '/couple', badge: 'Save 33%' },
+      { name: 'Monthly', price: formatPriceValue(PACK_PRICES.COUPLE_MONTHLY, 'en'), period: '/month', features: ['Unlimited sessions', 'Full harmony gauge', 'Neural Tree', 'Weekly recaps'], cta: 'Subscribe', href: '/couple' },
+      { name: 'Annual', price: formatPriceValue(PACK_PRICES.SUBSCRIPTION_ANNUAL, 'en'), period: '/year', features: ['Everything in Monthly', 'Save 33% vs monthly', 'Premium insights'], cta: 'Subscribe Annual', href: '/couple', badge: 'Save 33%' },
     ],
   },
   {
@@ -60,8 +61,8 @@ const plans = [
     desc: 'Bars, corporate events, team building.',
     tiers: [
       { name: 'Demo', price: '0', period: 'free', features: ['Guided demo call', 'See TV mode live', 'Ask your questions'], cta: 'Book Demo', href: '/pro' },
-      { name: 'Bar Monthly', price: '99', period: '/month', features: ['TV game mode', 'AI Voice DJ', 'Bar kit (coasters + posters)', 'Dashboard'], cta: 'Start Free Trial', href: '/b2b/bars-cafes' },
-      { name: 'Corporate Event', price: '299', period: '/event', features: ['500+ participants', 'Custom question decks', 'Cohesion report', 'Facilitator dashboard'], cta: 'Book Event', href: '/corporate' },
+      { name: 'Bar Monthly', price: formatPriceValue(PACK_PRICES.BAR_MONTHLY, 'en'), period: '/month', features: ['TV game mode', 'AI Voice DJ', 'Bar kit (coasters + posters)', 'Dashboard'], cta: 'Start Free Trial', href: '/b2b/bars-cafes' },
+      { name: 'Corporate Event', price: formatPriceValue(PACK_PRICES.B2B_EVENT, 'en'), period: '/event', features: ['500+ participants', 'Custom question decks', 'Cohesion report', 'Facilitator dashboard'], cta: 'Book Event', href: '/corporate' },
     ],
   },
 ];
@@ -72,7 +73,7 @@ const faqSchema = {
   mainEntity: [
     { '@type': 'Question', name: 'Is Captain Bond really free?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. You get 3 free cards per game mode in Party and 3 free sessions in Couple. No credit card required. Free cards are enough for most groups.' } },
     { '@type': 'Question', name: 'Can I cancel my subscription?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, anytime. Your access continues until the end of the billing period. No questions asked.' } },
-    { '@type': 'Question', name: 'What is the Lifetime plan?', acceptedAnswer: { '@type': 'Answer', text: 'One payment of 69.99€ gives you access to all current and future content forever. No recurring fees.' } },
+    { '@type': 'Question', name: 'What is the Lifetime plan?', acceptedAnswer: { '@type': 'Answer', text: `One payment of ${formatPriceValue(PACK_PRICES.LIFETIME)}€ gives you access to all current and future content forever. No recurring fees.` } },
     { '@type': 'Question', name: 'Do you offer team or educational discounts?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Contact us for team subscriptions and educational rates.' } },
     { '@type': 'Question', name: 'How does billing work?', acceptedAnswer: { '@type': 'Answer', text: 'Secure payment via Stripe. We accept Visa, Mastercard, and Apple Pay. Your data is never stored on our servers.' } },
   ],

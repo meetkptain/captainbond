@@ -7,6 +7,7 @@ import { MobileCta } from '@/components/ui/MobileCta';
 import { headers } from 'next/headers';
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { PACK_PRICES, formatPriceValue } from '@/lib/config/monetization';
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -137,11 +138,11 @@ export default async function RootLayout({
               brand: { '@type': 'Brand', name: 'Captain Bond' },
               offers: [
                 { '@type': 'Offer', name: 'Party Free', price: '0', priceCurrency: 'EUR' },
-                { '@type': 'Offer', name: 'Party Pass 24h', price: '2.99', priceCurrency: 'EUR' },
-                { '@type': 'Offer', name: 'Party Monthly', price: '7.99', priceCurrency: 'EUR' },
-                { '@type': 'Offer', name: 'Couple Monthly', price: '4.99', priceCurrency: 'EUR' },
-                { '@type': 'Offer', name: 'Pro Bar', price: '99', priceCurrency: 'EUR' },
-                { '@type': 'Offer', name: 'Pro Corporate', price: '299', priceCurrency: 'EUR' },
+                { '@type': 'Offer', name: 'Party Pass 24h', price: formatPriceValue(PACK_PRICES.PASS_24H), priceCurrency: 'EUR' },
+                { '@type': 'Offer', name: 'Party Monthly', price: formatPriceValue(PACK_PRICES.SUBSCRIPTION_MONTHLY), priceCurrency: 'EUR' },
+                { '@type': 'Offer', name: 'Couple Monthly', price: formatPriceValue(PACK_PRICES.COUPLE_MONTHLY), priceCurrency: 'EUR' },
+                { '@type': 'Offer', name: 'Pro Bar', price: formatPriceValue(PACK_PRICES.BAR_MONTHLY), priceCurrency: 'EUR' },
+                { '@type': 'Offer', name: 'Pro Corporate', price: formatPriceValue(PACK_PRICES.B2B_EVENT), priceCurrency: 'EUR' },
               ],
             }),
           }}

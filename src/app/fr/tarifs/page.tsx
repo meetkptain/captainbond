@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { PACK_PRICES, formatPriceValue } from '@/lib/config/monetization';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://captainbond.com';
 
 export const metadata: Metadata = {
   title: 'Tarifs — Captain Bond | Gratuit, Pass & Abonnements',
-  description: 'Commencez gratuitement avec 3 cartes. Débloquez les jeux illimités avec Pass 24h (2,99€), Mensuel (7,99€) ou Lifetime (69,99€). Offres Pro dès 99€/mois.',
+  description: `Commencez gratuitement avec 3 cartes. Débloquez les jeux illimités avec Pass 24h (${formatPriceValue(PACK_PRICES.PASS_24H, 'fr')}€), Mensuel (${formatPriceValue(PACK_PRICES.SUBSCRIPTION_MONTHLY, 'fr')}€) ou Lifetime (${formatPriceValue(PACK_PRICES.LIFETIME, 'fr')}€). Offres Pro dès ${formatPriceValue(PACK_PRICES.BAR_MONTHLY, 'fr')}€/mois.`,
   alternates: {
     canonical: `${siteUrl}/fr/tarifs`,
     languages: {
@@ -33,9 +34,9 @@ const plans = [
     desc: 'Soirées jeux entre amis. La TV comme plateau, les smartphones comme manettes.',
     tiers: [
       { name: 'Gratuit', price: '0', period: 'toujours', features: ['3 cartes gratuites par mode', '5 modes de jeu', '2-50+ joueurs'], cta: 'Commencer', href: '/fr/soiree' },
-      { name: 'Pass 24h', price: '2,99', period: '24h', features: ['Tous les modes illimité', 'Profils & dossiers', 'Accès une soirée'], cta: 'Prendre le Pass', href: '/fr/soiree' },
-      { name: 'Mensuel', price: '7,99', period: '/mois', features: ['Tous les modes illimité', 'Tous les profils & packs', 'Annulation libre'], cta: 'S\'abonner', href: '/fr/soiree' },
-      { name: 'Lifetime', price: '69,99', period: 'unique', features: ['Tout le contenu actuel + futur', 'Tous les profils & packs', 'Paiement unique'], cta: 'Acheter Lifetime', href: '/fr/soiree', badge: 'Meilleure offre' },
+      { name: 'Pass 24h', price: formatPriceValue(PACK_PRICES.PASS_24H, 'fr'), period: '24h', features: ['Tous les modes illimité', 'Profils & dossiers', 'Accès une soirée'], cta: 'Prendre le Pass', href: '/fr/soiree' },
+      { name: 'Mensuel', price: formatPriceValue(PACK_PRICES.SUBSCRIPTION_MONTHLY, 'fr'), period: '/mois', features: ['Tous les modes illimité', 'Tous les profils & packs', 'Annulation libre'], cta: 'S\'abonner', href: '/fr/soiree' },
+      { name: 'Lifetime', price: formatPriceValue(PACK_PRICES.LIFETIME, 'fr'), period: 'unique', features: ['Tout le contenu actuel + futur', 'Tous les profils & packs', 'Paiement unique'], cta: 'Acheter Lifetime', href: '/fr/soiree', badge: 'Meilleure offre' },
     ],
   },
   {
@@ -45,8 +46,8 @@ const plans = [
     desc: 'Rituels quotidiens, jauge d\'harmonie, connexion profonde.',
     tiers: [
       { name: 'Gratuit', price: '0', period: 'toujours', features: ['3 sessions gratuites', 'Mode Daily Mirror', 'Jauge d\'harmonie de base'], cta: 'Commencer', href: '/fr/couple' },
-      { name: 'Mensuel', price: '4,99', period: '/mois', features: ['Sessions illimitées', 'Jauge d\'harmonie complète', 'Arbre relationnel', 'Récapitulatifs hebdo'], cta: 'S\'abonner', href: '/fr/couple' },
-      { name: 'Annuel', price: '39,99', period: '/an', features: ['Tout le Mensuel', 'Économisez 33%', 'Analyses premium'], cta: 'Abonnement Annuel', href: '/fr/couple', badge: 'Économisez 33%' },
+      { name: 'Mensuel', price: formatPriceValue(PACK_PRICES.COUPLE_MONTHLY, 'fr'), period: '/mois', features: ['Sessions illimitées', 'Jauge d\'harmonie complète', 'Arbre relationnel', 'Récapitulatifs hebdo'], cta: 'S\'abonner', href: '/fr/couple' },
+      { name: 'Annuel', price: formatPriceValue(PACK_PRICES.SUBSCRIPTION_ANNUAL, 'fr'), period: '/an', features: ['Tout le Mensuel', 'Économisez 33%', 'Analyses premium'], cta: 'Abonnement Annuel', href: '/fr/couple', badge: 'Économisez 33%' },
     ],
   },
   {
@@ -56,8 +57,8 @@ const plans = [
     desc: 'Bars, événements d\'entreprise, team building.',
     tiers: [
       { name: 'Démo', price: '0', period: 'gratuite', features: ['Appel démo guidé', 'Voir le mode TV en direct', 'Poser vos questions'], cta: 'Réserver une Démo', href: '/fr/pro' },
-      { name: 'Bar Mensuel', price: '99', period: '/mois', features: ['Mode TV', 'DJ Vocal IA', 'Kit bar (sous-verres + affiches)', 'Tableau de bord'], cta: 'Essai Gratuit', href: '/fr/b2b/bars-cafes' },
-      { name: 'Événement', price: '299', period: '/événement', features: ['500+ participants', 'Questions personnalisées', 'Rapport de cohésion', 'Dashboard animateur'], cta: 'Réserver', href: '/fr/corporate' },
+      { name: 'Bar Mensuel', price: formatPriceValue(PACK_PRICES.BAR_MONTHLY, 'fr'), period: '/mois', features: ['Mode TV', 'DJ Vocal IA', 'Kit bar (sous-verres + affiches)', 'Tableau de bord'], cta: 'Essai Gratuit', href: '/fr/b2b/bars-cafes' },
+      { name: 'Événement', price: formatPriceValue(PACK_PRICES.B2B_EVENT, 'fr'), period: '/événement', features: ['500+ participants', 'Questions personnalisées', 'Rapport de cohésion', 'Dashboard animateur'], cta: 'Réserver', href: '/fr/corporate' },
     ],
   },
 ];
@@ -68,7 +69,7 @@ const faqSchema = {
   mainEntity: [
     { '@type': 'Question', name: 'Captain Bond est-il vraiment gratuit ?', acceptedAnswer: { '@type': 'Answer', text: 'Oui. Vous avez 3 cartes gratuites par mode de jeu en Soirée et 3 sessions gratuites en Couple. Aucune carte bancaire requise.' } },
     { '@type': 'Question', name: 'Puis-je annuler mon abonnement ?', acceptedAnswer: { '@type': 'Answer', text: 'Oui, à tout moment. Votre accès continue jusqu\'à la fin de la période de facturation.' } },
-    { '@type': 'Question', name: 'C\'est quoi le plan Lifetime ?', acceptedAnswer: { '@type': 'Answer', text: 'Un paiement unique de 69,99€ vous donne accès à tout le contenu actuel et futur. Sans frais récurrents.' } },
+    { '@type': 'Question', name: 'C\'est quoi le plan Lifetime ?', acceptedAnswer: { '@type': 'Answer', text: `Un paiement unique de ${formatPriceValue(PACK_PRICES.LIFETIME, 'fr')}€ vous donne accès à tout le contenu actuel et futur. Sans frais récurrents.` } },
     { '@type': 'Question', name: 'Proposez-vous des réductions pour les équipes ?', acceptedAnswer: { '@type': 'Answer', text: 'Oui. Contactez-nous pour les tarifs de groupe.' } },
     { '@type': 'Question', name: 'Comment fonctionne le paiement ?', acceptedAnswer: { '@type': 'Answer', text: 'Paiement sécurisé par Stripe. Nous acceptons Visa, Mastercard et Apple Pay.' } },
   ],
