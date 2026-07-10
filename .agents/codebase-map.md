@@ -413,7 +413,7 @@ sequenceDiagram
 
 **Unified coverage:** `src/app/sitemap.ts` uses `allPosts` only now (legacy mirror empty). `scripts/audit-blog.ts` validates all 34 (TODO-aware geoBlock) → **0 errors / 0 warnings**.
 
-**Agent workflow:** `npm run blog:new -- --en ... --fr ... --slug ... --frslug ... --hub ...` scaffolds EN+FR pairs. `npm run blog:build` = sync + sync-legacy + og + audit. `npm run blog:enrich` fills `related` + flags TODOs. `npm run blog:geo` / `npm run blog:fix` fill geoBlock / FAQ+related.
+**Agent workflow (3 commands):** `npm run blog:new -- --en ... --fr ... --slug ... --frslug ... --hub ...` scaffolds EN+FR pairs with TODOs → `npm run blog:enrich` (GENERIC, idempotent: auto-fills `related` + `geoBlock` + `faq` + `endingQuestion` via hub/localized templates, reads disk directly so fresh articles are enriched without sync) → `npm run blog:build` = sync + sync-legacy + og + audit. `npm run blog:audit` and `npm run blog:report` for checks. `blog:geo`/`blog:fix` are aliases of `blog:enrich`. Full playbook: `docs/BLOG_WORKFLOW.md`.
 
 **CI:** `.github/workflows/blog-audit.yml` runs `blog:build` on PR/push touching blog content.
 
