@@ -23,8 +23,8 @@ jobs:
 
       - run: npm ci
 
-      - name: Type check & Lint
-        run: npm run build 2>&1 | head -5
+      - name: Type check
+        run: npx tsc --noEmit -p tsconfig.json
 
       - name: Test
         run: npm test
