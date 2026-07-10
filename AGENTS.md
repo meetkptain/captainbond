@@ -234,6 +234,29 @@ Autres patterns visuels à retenir :
 **Générateur** : `scripts/generate-og-images.ts` — usage: `npx tsx scripts/generate-og-images.ts`
 **Référencement** : dans metadata → `openGraph.images[0]` + `twitter.images` + parfois `<img className="article-hero">`
 
+## Blog Process — Operations (create / enrich / SEO-GEO / audit) (CRITICAL)
+
+Tout le blog est en **content-layer** : chaque article = un objet `BlogPost` typé dans `src/content/blog/*.ts`, rendu par `src/components/blog/BlogArticle.tsx`. Auteurs (agents/humains) n'écrivent JAMAIS de JSX. Process complet : `docs/BLOG_PROCESS.md` + quick-start `docs/BLOG_WORKFLOW.md`.
+
+### Boucle quotidienne (3 commandes)
+```bash
+npm run blog:new -- --en "EN title" --fr "FR title" --slug en-slug --frslug fr-slug --hub party
+npm run blog:enrich      # auto: related + geoBlock + faq(3 Q&R) + endingQuestion (générique, idempotent, FR/EN par hub)
+npm run blog:build       # sync index + OG + audit
+```
+Objectif : `Audit: … | 0 errors | 0 warnings` + `GEO: 34/34`.
+
+### Règles de robustesse (OBEY)
+- `blog:enrich` est **idempotent** et lit le disque directement → un article neuf est enrichi sans `sync` préalable. Ne jamais écraser le vrai contenu.
+- **Ne JAMAIS overwrite `published`/`modified`** avec today (la migration préserve les dates legacy 2025).
+- `hreflang` toujours 3 entrées (x-default/en/fr) via `frSlug`.
+- `geoBlock` = paragraphe GEO/AI-citation ; l'audit est **TODO-aware** (`/TODO/i` = gap). Un `geoBlock:'TODO…'` ne passe pas.
+- Pour ajouter un hub : étendre les maps `GEO`/`FAQ`/`ENDING` dans `scripts/blog-enrich.ts` (1 bloc par hub×locale). Rien d'autre à toucher.
+- CI guard : `.github/workflows/blog-audit.yml` lance `blog:build` au push.
+
+### Commandes
+`blog:new` (scaffold EN/FR) · `blog:enrich`=`blog:geo`=`blog:fix` (SEO/GEO auto) · `blog:build` (sync+og+audit) · `blog:audit` (lecture seule) · `blog:report` · `blog:migrate` (legacy→content) · `blog:related`.
+
 ## Multi-Langue FR/EN
 
 **Routes**:
