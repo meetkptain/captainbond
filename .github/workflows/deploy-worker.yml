@@ -16,8 +16,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Deploy to Cloudflare
-        uses: cloudflare/wrangler-action@v3
-        with:
-          working-directory: workers/cron-trigger
-          api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: deploy
+        run: npx wrangler deploy
+        working-directory: workers/cron-trigger
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
