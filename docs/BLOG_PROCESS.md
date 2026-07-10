@@ -121,13 +121,30 @@ extend it to loop). After migrating, run `blog:enrich` + `blog:build`.
 
 ## 7. Audit expectations & guardrails
 
-- **SEO:** every article must have `faq` with answers ≥40 chars, `description`
-  ≥50 chars, `sections` with real `p`, `takeaways` filled.
-- **GEO:** every article must have a `geoBlock` ≥40 chars. The audit is
-  **TODO-aware** — `geoBlock: 'TODO…'` counts as a gap, so nothing ships silently
-  incomplete.
+`npm run blog:audit` (also run inside `blog:build`) enforces the following on
+every post. **err** blocks the build/merge; **warn** is non-blocking but must be
+cleaned before shipping.
+
+| Field | Rule | Level |
+|---|---|---|
+| `title` | ≥10 chars | err |
+| `description` | ≥50 chars | warn |
+| `ogImage` | file exists in `public/` | err |
+| `faq` | ≥3 Q&A, each `q`+`a` present | err |
+| `faq[].a` | non-TODO, ≥40 chars (AI-citation quality) | warn |
+| `sections` | ≥3 blocks with real `p` | err |
+| `takeaways` | ≥3, none `TODO` / <5 chars | warn |
+| `related` | ≥1 internal link, routes valid | warn |
+| `frSlug` | has a counterpart post (EN↔FR) | err |
+| `geoBlock` | non-TODO, ≥40 chars | warn |
+| `endingQuestion` | present (filled by `blog:enrich`) | (via enrich) |
+
+- **SEO:** `faq` answers ≥40 chars, `description` ≥50, `sections` with real
+  `p`, `takeaways` filled.
+- **GEO:** `geoBlock` ≥40 chars — **TODO-aware** (`geoBlock: 'TODO…'` = gap), so
+  nothing ships silently incomplete.
 - **Locales:** every EN post needs a `frSlug` counterpart and vice-versa; the
-  audit errors if an `frSlug` has no matching post.
+  audit **errors** if an `frSlug` has no matching post.
 - **CI:** `.github/workflows/blog-audit.yml` runs `blog:build` on push — a red
   audit blocks merge.
 
