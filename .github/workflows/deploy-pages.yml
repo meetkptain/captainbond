@@ -42,4 +42,5 @@ jobs:
       - name: Deploy to Cloudflare Pages
         run: npx wrangler pages deploy .vercel/output/static --branch main
         env:
+          # Re-trigger commit: ensure CLOUDFLARE_API_TOKEN is set in GitHub repo secrets before this run.
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
