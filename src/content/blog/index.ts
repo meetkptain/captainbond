@@ -4,6 +4,7 @@ import type { BlogPost } from '@/lib/content/types';
 
 import { post as p50DeepQuestionsForCouples } from './50-deep-questions-for-couples';
 import { post as p50QuestionsProfondesCouple } from './50-questions-profondes-couple';
+import { post as actionVeriteAdultes } from './action-verite-adultes';
 import { post as augmenterChiffreBarSemaine } from './augmenter-chiffre-bar-semaine';
 import { post as barTriviaNightGuide } from './bar-trivia-night-guide';
 import { post as bestCoupleApp2026 } from './best-couple-app-2026';
@@ -35,11 +36,13 @@ import { post as questionsPourCouple } from './questions-pour-couple';
 import { post as questionsToAskYourPartner } from './questions-to-ask-your-partner';
 import { post as questionsToBuildIntimacy } from './questions-to-build-intimacy';
 import { post as rituelCoupleHebdomadaire } from './rituel-couple-hebdomadaire';
+import { post as truthOrDareQuestionsAdults } from './truth-or-dare-questions-adults';
 import { post as weeklyCoupleRitual } from './weekly-couple-ritual';
 
 export const allPosts: BlogPost[] = [
   p50DeepQuestionsForCouples,
   p50QuestionsProfondesCouple,
+  actionVeriteAdultes,
   augmenterChiffreBarSemaine,
   barTriviaNightGuide,
   bestCoupleApp2026,
@@ -71,6 +74,7 @@ export const allPosts: BlogPost[] = [
   questionsToAskYourPartner,
   questionsToBuildIntimacy,
   rituelCoupleHebdomadaire,
+  truthOrDareQuestionsAdults,
   weeklyCoupleRitual,
 ];
 
