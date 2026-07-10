@@ -19,7 +19,18 @@
     "pages:preview": "wrangler pages dev",
     "pages:deploy": "npm run pages:build && wrangler pages deploy",
     "cap:sync": "cap sync",
-    "cap:open-ios": "cap open ios"
+    "cap:open-ios": "cap open ios",
+    "blog:sync": "npx tsx scripts/sync-blog.ts",
+    "blog:og": "npx tsx scripts/generate-og-images.ts",
+    "blog:audit": "npx tsx scripts/audit-blog.ts",
+    "blog:sync-legacy": "npx tsx scripts/sync-legacy.ts",
+    "blog:ssg": "npx tsx scripts/ssg-legacy.ts",
+    "blog:new": "npx tsx scripts/new-article.ts",
+    "blog:related": "npx tsx scripts/suggest-related.ts",
+    "blog:report": "npx tsx scripts/blog-report.ts",
+    "blog:migrate": "npx tsx scripts/migrate-one.ts",
+    "blog:enrich": "npx tsx scripts/blog-enrich.ts",
+    "blog:build": "npx tsx scripts/sync-blog.ts && npx tsx scripts/sync-legacy.ts && npx tsx scripts/generate-og-images.ts && npx tsx scripts/audit-blog.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

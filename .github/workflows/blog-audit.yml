@@ -1,0 +1,29 @@
+name: Blog SEO Audit
+
+on:
+  pull_request:
+    paths:
+      - 'src/content/blog/**'
+      - 'src/content/legacy.ts'
+      - 'scripts/audit-blog.ts'
+      - 'scripts/sync-blog.ts'
+      - 'scripts/sync-legacy.ts'
+      - 'src/app/sitemap.ts'
+  push:
+    branches: [main]
+    paths:
+      - 'src/content/blog/**'
+      - 'src/content/legacy.ts'
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Sync content + legacy, generate OG, audit SEO
+        run: npm run blog:build

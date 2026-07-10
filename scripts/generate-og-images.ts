@@ -226,7 +226,27 @@ async function main() {
     console.log(`✅ ${img.filename.padEnd(40)} ${(stats.size / 1024).toFixed(1).padStart(6)} KB`);
   }
 
-  console.log(`\nDone. ${images.length} images in ${OUT_DIR}`);
+  // ── CONTENT-LAYER POSTS: fill any missing OG derived from allPosts ──
+  const { allPosts } = await import(path.resolve('src/content/blog/index.ts'));
+  const HUB_STYLE: Record<string, { g1: string; g2: string; decoration: Decoration }> = {
+    party: { g1: '#db2777', g2: '#ea580c', decoration: 'confetti' },
+    couple: { g1: '#ec4899', g2: '#7c3aed', decoration: 'couple-circles' },
+    bar: { g1: '#d97706', g2: '#dc2626', decoration: 'bubbles' },
+  };
+  let generated = 0;
+  for (const p of allPosts) {
+    const rel = p.ogImage.replace(/^\//, '');
+    const outPath = path.resolve('public', rel);
+    if (fs.existsSync(outPath)) continue;
+    const style = HUB_STYLE[p.hub ?? 'party'] ?? HUB_STYLE.party;
+    const subtitle = (p.description || '').slice(0, 90);
+    const svg = buildSvg(p.title, subtitle, style.g1, style.g2, style.decoration, 'left');
+    await sharp(Buffer.from(svg)).webp({ quality: 85 }).toFile(outPath);
+    generated++;
+    console.log(`✅ (content) ${rel}`);
+  }
+
+  console.log(`\nDone. ${images.length} base images + ${generated} content OG in ${OUT_DIR}`);
 }
 
 main().catch(console.error);

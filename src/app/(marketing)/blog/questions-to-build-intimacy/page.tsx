@@ -252,3 +252,7 @@ export default function QuestionsToBuildIntimacyPage() {
     </article>
   );
 }
+
+// SSG: prerender this static article at build time (override root edge runtime).
+export const runtime = 'nodejs';
+export const dynamic = 'force-static';

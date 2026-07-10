@@ -1,4 +1,6 @@
 import { MetadataRoute } from 'next';
+import { allPosts } from '@/content/blog';
+import { legacyPosts } from '@/content/legacy';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://captainbond.com';
 
@@ -28,42 +30,27 @@ const staticPages = [
   { path: '/printables/couple-questions-deck', priority: 0.5, freq: 'monthly' as const },
 ];
 
-const blogPostsEn = [
-  '/blog/questions-to-ask-your-partner',
-  '/blog/questions-pour-couple',
-  '/blog/50-deep-questions-for-couples',
-  '/blog/couple-questions-complete-guide',
-  '/blog/weekly-couple-ritual',
-  '/blog/couple-communication-exercises',
-  '/blog/questions-to-build-intimacy',
-  '/blog/best-couple-app-2026',
-  '/blog/couple-connection-data-study',
-  '/blog/best-party-games-for-adults-2026',
-  '/blog/how-to-host-game-night',
-  '/blog/icebreaker-games-for-adults',
-  '/blog/increase-bar-revenue-weeknight',
-  '/blog/best-party-games-for-large-groups',
-  '/blog/halloween-party-games-adults',
-  '/blog/bar-trivia-night-guide',
-];
+type SitemapPost = {
+  slug: string;
+  locale: 'en' | 'fr';
+  frSlug?: string;
+  lastMod: string;
+};
 
-const blogPostsFr = [
-  '/fr/blog/questions-a-poser-a-son-partenaire',
-  '/fr/blog/questions-pour-couple',
-  '/fr/blog/50-questions-profondes-couple',
-  '/fr/blog/questions-couple-guide-complet',
-  '/fr/blog/rituel-couple-hebdomadaire',
-  '/fr/blog/exercices-communication-couple',
-  '/fr/blog/questions-pour-construire-intimite',
-  '/fr/blog/meilleure-application-couple-2026',
-  '/fr/blog/etude-donnees-connexion-couple',
-  '/fr/blog/meilleurs-jeux-soiree-adulte-2026',
-  '/fr/blog/organiser-soiree-jeux',
-  '/fr/blog/jeux-brise-glace-adultes',
-  '/fr/blog/augmenter-chiffre-bar-semaine',
-  '/fr/blog/meilleurs-jeux-de-soiree-grand-groupe',
-  '/fr/blog/jeux-halloween-adultes',
-  '/fr/blog/guide-soiree-quiz-bar',
+// One combined source: content-layer (full) + legacy (metadata mirror).
+const combined: SitemapPost[] = [
+  ...allPosts.map((p) => ({
+    slug: p.slug,
+    locale: p.locale,
+    frSlug: p.frSlug,
+    lastMod: p.modified ?? p.published,
+  })),
+  ...legacyPosts.map((p) => ({
+    slug: p.slug,
+    locale: p.locale,
+    frSlug: p.frSlug,
+    lastMod: p.modified ?? p.published,
+  })),
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -76,19 +63,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: p.priority,
   }));
 
-  const blogEntriesEn = blogPostsEn.map((p) => ({
-    url: `${siteUrl}${p}`,
-    lastModified: now,
-    changeFrequency: 'weekly' as const,
-    priority: 0.7,
-  }));
+  const blogEntries = combined.map((p) => {
+    const url = `${siteUrl}${p.locale === 'fr' ? '/fr' : ''}/blog/${p.slug}`;
+    const languages: Record<string, string> = { 'x-default': url };
+    if (p.frSlug) {
+      languages['en'] = `${siteUrl}/blog/${p.frSlug}`;
+      languages['fr'] = `${siteUrl}/fr/blog/${p.frSlug}`;
+    }
+    return {
+      url,
+      lastModified: new Date(p.lastMod),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+      alternates: { languages },
+    };
+  });
 
-  const blogEntriesFr = blogPostsFr.map((p) => ({
-    url: `${siteUrl}${p}`,
-    lastModified: now,
-    changeFrequency: 'weekly' as const,
-    priority: 0.7,
-  }));
-
-  return [...staticEntries, ...blogEntriesEn, ...blogEntriesFr];
+  return [...staticEntries, ...blogEntries];
 }

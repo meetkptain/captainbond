@@ -396,3 +396,21 @@ sequenceDiagram
 | Most Likely To | 3-8 | Party | Vote who's most likely to... | ~10min |
 | Mission Impossible | 3-8 | Challenge | Dares, truth or dare style | ~20min |
 | Family | 4-10 | Family-friendly | Adapted questions for all ages | ~20min |
+
+---
+
+## 9. Blog System (content layer + legacy hybrid) — added 2026-07-10
+
+**Two engines, one SEO source of truth:**
+- **Content layer** (NEW articles): `src/content/blog/*.ts` = typed `BlogPost` data → rendered by `src/components/blog/BlogArticle.tsx`. Zero JSX for authors. SSG via `src/app/(marketing)/blog/[slug]/page.tsx` + `src/app/fr/blog/[slug]/page.tsx` (`runtime='nodejs'`, `dynamic='force-static'`, `dynamicParams=false`).
+- **Legacy articles** (~32): original `page.tsx` JSX in `src/app/(marketing)/blog/<slug>/page.tsx` + `src/app/fr/blog/<slug>/page.tsx`. Bodies untouched; SEO metadata mirrored to `src/content/legacy.ts` by `scripts/sync-legacy.ts` (parses `export const metadata` via `new Function`). SSG injected per-route by `scripts/ssg-legacy.ts` (`force-static`+`nodejs`).
+
+**Unified coverage:** `src/app/sitemap.ts` merges `allPosts` (content) + `legacyPosts` (mirror) → single hreflang sitemap. `scripts/audit-blog.ts` validates BOTH (0 errors / 0 warnings as of build).
+
+**Agent workflow:** `npm run blog:new -- --en ... --fr ... --slug ... --frslug ... --hub ...` scaffolds EN+FR pairs. `npm run blog:build` = sync + sync-legacy + og + audit. `npm run blog:related -- <slug>` suggests same-hub related.
+
+**CI:** `.github/workflows/blog-audit.yml` runs `blog:build` on PR/push touching blog content.
+
+**Key scripts:** `scripts/sync-blog.ts` (regenerate index.ts), `scripts/sync-legacy.ts`, `scripts/ssg-legacy.ts`, `scripts/generate-og-images.ts` (content OG loop), `scripts/audit-blog.ts`, `scripts/new-article.ts`, `scripts/suggest-related.ts`.
+
+**Build proof:** 34 blog HTML prerendered (`●` SSG content + `○` static legacy); sitemap.xml.body has 102 hreflang alternates.
