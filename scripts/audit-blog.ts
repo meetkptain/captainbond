@@ -41,6 +41,7 @@ for (const p of allPosts) {
   if (!p.faq || p.faq.length < 3) err(`${where}: faq < 3`);
   else p.faq.forEach((f, i) => {
     if (!f.q || !f.a) err(`${where}: faq[${i}] incomplete`);
+    else if (/TODO/i.test(f.a) || f.a.length < 40) warn(`${where}: faq[${i}] answer TODO/short (<40) — AI-citation gap`);
   });
 
   if (!p.sections || p.sections.length < 3) err(`${where}: sections < 3`);
