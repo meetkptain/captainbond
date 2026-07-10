@@ -15,9 +15,11 @@ for (const p of allPosts) {
   if (!fs.existsSync(file)) continue;
   let src = fs.readFileSync(file, 'utf8');
 
-  // 1) Auto-fill related from same hub
+  // 1) Auto-fill related from same hub (fallback: any same-locale post to avoid broken cross-locale links)
   if (!p.related || p.related.length === 0) {
-    const same = allPosts.filter((x) => x.hub === p.hub && x.slug !== p.slug).slice(0, 3);
+    const sameHub = allPosts.filter((x) => x.hub === p.hub && x.locale === p.locale && x.slug !== p.slug);
+    const pool = (sameHub.length >= 2 ? sameHub : allPosts.filter((x) => x.locale === p.locale && x.slug !== p.slug)).slice(0, 3);
+    const same = pool;
     if (same.length) {
       const arr = same
         .map(
