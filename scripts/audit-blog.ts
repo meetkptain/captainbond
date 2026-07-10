@@ -44,7 +44,9 @@ for (const p of allPosts) {
   });
 
   if (!p.sections || p.sections.length < 3) err(`${where}: sections < 3`);
-  if (!p.takeaways || p.takeaways.length < 3) warn(`${where}: takeaways < 3`);
+  const tk = p.takeaways || [];
+  const tkBAD = tk.length < 3 || tk.some((t) => !t || t.startsWith('TODO') || t.length < 5);
+  if (tkBAD) warn(`${where}: takeaways missing/TODO (<3 or placeholder)`);
 
   if (!p.related || p.related.length === 0) {
     const sameHub = allPosts

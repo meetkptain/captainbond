@@ -238,19 +238,20 @@ Autres patterns visuels à retenir :
 
 Tout le blog est en **content-layer** : chaque article = un objet `BlogPost` typé dans `src/content/blog/*.ts`, rendu par `src/components/blog/BlogArticle.tsx`. Auteurs (agents/humains) n'écrivent JAMAIS de JSX. Process complet : `docs/BLOG_PROCESS.md` + quick-start `docs/BLOG_WORKFLOW.md`.
 
-### Boucle quotidienne (3 commandes)
+### Boucle quotidienne (2 étapes — le plus rapide pour un agent)
 ```bash
 npm run blog:new -- --en "EN title" --fr "FR title" --slug en-slug --frslug fr-slug --hub party
-npm run blog:enrich      # auto: related + geoBlock + faq(3 Q&R) + endingQuestion (générique, idempotent, FR/EN par hub)
+# → blog:new remplit AUTO related+geoBlock+faq+endingQuestion (templates hub). L'agent écrit seulement le corps.
 npm run blog:build       # sync index + OG + audit
 ```
+Le agent écrit UNIQUEMENT `description`, `sections[].p`, `takeaways`. Tout le SEO/GEO est déjà prêt à l'étape 1.
 Objectif : `Audit: … | 0 errors | 0 warnings` + `GEO: 34/34`.
 
 ### Règles de robustesse (OBEY)
 - `blog:enrich` est **idempotent** et lit le disque directement → un article neuf est enrichi sans `sync` préalable. Ne jamais écraser le vrai contenu.
 - **Ne JAMAIS overwrite `published`/`modified`** avec today (la migration préserve les dates legacy 2025).
 - `hreflang` toujours 3 entrées (x-default/en/fr) via `frSlug`.
-- `geoBlock` = paragraphe GEO/AI-citation ; l'audit est **TODO-aware** (`/TODO/i` = gap). Un `geoBlock:'TODO…'` ne passe pas.
+- `geoBlock` = paragraphe GEO/AI-citation ; l'audit est **TODO-aware** : `geoBlock:'TODO…'`, `takeaways` avec placeholder `TODO`, et `description` courte sont des gaps. Rien ne passe silencieusement.
 - Pour ajouter un hub : étendre les maps `GEO`/`FAQ`/`ENDING` dans `scripts/blog-enrich.ts` (1 bloc par hub×locale). Rien d'autre à toucher.
 - CI guard : `.github/workflows/blog-audit.yml` lance `blog:build` au push.
 

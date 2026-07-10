@@ -10,6 +10,7 @@
 //                      --hub party
 import fs from 'fs';
 import path from 'path';
+import { execSync } from 'child_process';
 
 function getArg(name: string): string | undefined {
   const i = process.argv.indexOf(`--${name}`);
@@ -69,5 +70,12 @@ export const post: BlogPost = {
 
 fs.writeFileSync(path.join(dir, `${slug}.ts`), file(slug, 'en', en, frSlug));
 fs.writeFileSync(path.join(dir, `${frSlug}.ts`), file(frSlug, 'fr', fr, slug));
-console.log(`✅ Created ${slug}.ts (en) + ${frSlug}.ts (fr). Fill the TODOs, then run:`);
-console.log('   npm run blog:build');
+console.log(`✅ Created ${slug}.ts (en) + ${frSlug}.ts (fr).`);
+console.log('   Auto-filling SEO/GEO (related / geoBlock / faq / endingQuestion)…');
+try {
+  execSync('npx tsx scripts/blog-enrich.ts', { stdio: 'inherit' });
+} catch {
+  console.warn('⚠️  Auto-enrich failed — run `npm run blog:enrich` manually.');
+}
+console.log('\nAgent: write ONLY `description`, `sections[].p`, `takeaways` (real copy).');
+console.log('   Then: npm run blog:build   (sync + OG + audit)');
