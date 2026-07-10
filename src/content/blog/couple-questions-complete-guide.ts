@@ -89,9 +89,7 @@ export const post: BlogPost = {
     { q: "What project or cause would you love for us to tackle together?", a: "Take a moment to reflect and share honestly." },
     { q: "What legacy do you want us to leave in our relationship?", a: "Take a moment to reflect and share honestly." }
   ],
-  takeaways: [
-    'TODO takeaway 1', 'TODO takeaway 2', 'TODO takeaway 3'
-  ],
+    takeaways: [ 'Focus: What you will get from this guide.', 'Not every moment calls for the same depth of conversation.', 'The environment shapes the conversation.' ],
   sections: [
     { h2: "What you will get from this guide", p: "", list: ["A proven 5-step framework for meaningful couple conversations", "150+ curated questions organized by depth and theme", "A comparison table to choose the right connection level for any moment", "Practical advice on how to listen, respond, and build intimacy over time", "Bonus tips for turning questions into a lasting weekly ritual"] },
     { h2: "The five connection levels at a glance", p: "Not every moment calls for the same depth of conversation. This table helps you match the right level to the right mood." },

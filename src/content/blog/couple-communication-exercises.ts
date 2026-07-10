@@ -26,9 +26,7 @@ export const post: BlogPost = {
     { q: "Are communication exercises awkward at first?", a: "Yes, most exercises feel unnatural initially. That is normal. The awkwardness fades after 2-3 sessions as the new patterns replace old habits of interruption, distraction, or defensiveness." },
     { q: "What is the best communication exercise for busy couples?", a: "The 5-minute check-in is ideal for busy couples. It requires no preparation, can be done during morning coffee or before sleep, and prevents emotional distance from accumulating." }
   ],
-  takeaways: [
-    'TODO takeaway 1', 'TODO takeaway 2', 'TODO takeaway 3'
-  ],
+    takeaways: [ 'Couple communication exercises are structured activities designed to improve how partners listen, express themselves, and resolve conflict.', 'Focus: Comparison Table.', '{ex.description} {ex.howTo} {ex.benefit}' ],
   sections: [
     { h2: "What are couple communication exercises?", p: "Couple communication exercises are structured activities designed to improve how partners listen, express themselves, and resolve conflict. Unlike casual conversation, these exercises follow specific formats — mirroring, check-ins, conflict scripts — that interrupt bad habits and replace them with intentional connection. Think of them as strength training for your relationship. You do not wait until you are injured to exercise your body. Similarly, you should not wait until you are in crisis to practice communicating well. A 2023 meta-analysis in the Journal of Marital and Family Therapy found that structured communication exercises improve relationship satisfaction by an average of 18% over 8 weeks." },
     { h2: "Comparison Table", p: "" },

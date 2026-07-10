@@ -89,9 +89,7 @@ export const post: BlogPost = {
     { q: "Quel projet ou cause aimerais-tu qu'on entreprenne ensemble ?", a: "Prenez un moment pour réfléchir et partager honnêtement." },
     { q: "Quel héritage veux-tu qu'on laisse dans notre relation ?", a: "Prenez un moment pour réfléchir et partager honnêtement." }
   ],
-  takeaways: [
-    'TODO takeaway 1', 'TODO takeaway 2', 'TODO takeaway 3'
-  ],
+    takeaways: [ 'Focus: Ce que vous allez découvrir dans ce guide.', 'Chaque moment ne réclame pas la même profondeur de conversation.', 'L environnement façonne la conversation.' ],
   sections: [
     { h2: "Ce que vous allez découvrir dans ce guide", p: "", list: ["Un cadre en 5 étapes pour des conversations de couple qui comptent", "150+ questions organisées par profondeur et thème", "Un tableau comparatif pour choisir le bon niveau de connexion à chaque moment", "Des conseils pratiques pour écouter, répondre et construire l intimité dans la durée", "Des astuces pour transformer les questions en un rituel hebdomadaire durable"] },
     { h2: "Les cinq niveaux de connexion en un coup d œil", p: "Chaque moment ne réclame pas la même profondeur de conversation. Ce tableau vous aide à choisir le bon niveau pour la bonne humeur." },

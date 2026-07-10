@@ -29,9 +29,7 @@ export const post: BlogPost = {
     { q: "What icebreaker game is fun for mixed-age groups?", a: "Categories, Would You Rather, and Show and Tell work across all ages. They rely on general knowledge and personal experience rather than pop culture references." },
     { q: "How do you end an icebreaker session?", a: "End on a high note before energy dips. Close with a quick round of gratitude or a fun vote (e.g. \"best liar of the night\"). A clear ending leaves people wanting more." }
   ],
-  takeaways: [
-    'TODO takeaway 1', 'TODO takeaway 2', 'TODO takeaway 3'
-  ],
+    takeaways: [ 'Icebreaker games for adults are short, structured activities that help people relax, connect, and start conversations in group settings.', 'Focus: Comparison Table: Best Icebreakers by Group Size and Time.', 'These games take under 5 minutes each and need zero setup.' ],
   sections: [
     { h2: "What Are Icebreaker Games for Adults?", p: "Icebreaker games for adults are short, structured activities that help people relax, connect, and start conversations in group settings. Unlike children s games, they rely on conversation, imagination, and light interaction rather than physical movement or complex rules. The best ones require zero equipment, can be explained in under 30 seconds, and work across any setting — parties, first dates, team offsites, and virtual calls. Their real job is not entertainment (although they should be fun). It is lowering the social friction that keeps people from being themselves around new faces." },
     { h2: "Comparison Table: Best Icebreakers by Group Size and Time", p: "" },

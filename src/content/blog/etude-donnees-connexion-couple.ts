@@ -24,9 +24,7 @@ export const post: BlogPost = {
     { q: "Comment les données ont-elles été collectées ?", a: "Les données ont été collectées automatiquement depuis 1 237 sessions Captain Bond entre janvier et juin 2025. Toutes les données sont anonymisées et agrégées." },
     { q: "Quel segment démographique est le plus engagé ?", a: "Les couples âgés de 28 à 35 ans représentent 44 % de toutes les sessions, ce qui en fait la tranche d'âge la plus active." }
   ],
-  takeaways: [
-    'TODO takeaway 1', 'TODO takeaway 2', 'TODO takeaway 3'
-  ],
+    takeaways: [ 'Focus: Résultats clés.', 'Les données ont été collectées automatiquement depuis{\' \'} {totalSessions.toLocaleString()} sessions Captain Bond entre{\' \'} {dateRange} .', 'Le signal le plus fort de l\'ensemble des données : les couples qui réalisent des sessions courtes mais fréquentes obtiennent des scores d\'harmonie…' ],
   sections: [
     { h2: "Résultats clés", p: "{f.detail}" },
     { h2: "Méthodologie", p: "Les données ont été collectées automatiquement depuis{' '} {totalSessions.toLocaleString()} sessions Captain Bond entre{' '} {dateRange} . Durée moyenne de session :{' '} {avgDuration} . Nombre moyen de questions répondues par session :{' '} {avgQuestions} . Tous les indicateurs marqués \"Mesuré\" proviennent des données internes de Captain Bond. Les scores d'harmonie sont calculés à partir des auto-évaluations post-session des deux partenaires. Les taux de complétion indiquent si une session a atteint sa fin naturelle. Les données sont anonymisées et agrégées — aucune session individuelle n'est identifiable." },

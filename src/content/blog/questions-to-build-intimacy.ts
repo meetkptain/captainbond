@@ -17,9 +17,7 @@ export const post: BlogPost = {
     { q: "When have you felt most emotionally safe with me?", a: "Naming the moments of emotional safety shows your partner exactly what builds trust. It turns an abstract feeling into a repeatable behavior they can lean into." },
     { q: "What can I do this week to help you feel more connected?", a: "Intimacy grows from specific asks, not general intentions. A concrete request for the week turns connection from a hope into an action you can both follow through on." }
   ],
-  takeaways: [
-    'TODO takeaway 1', 'TODO takeaway 2', 'TODO takeaway 3'
-  ],
+    takeaways: [ 'Intimacy-building questions are prompts designed to move conversation beyond surface-level exchange into deeper emotional, physical, and intellectu…', 'Emotional intimacy lives in the space between what you feel and what you share.', 'Physical intimacy is not just about sex — it is about touch, presence, and being at home in your body together.' ],
   sections: [
     { h2: "What are intimacy-building questions?", p: "Intimacy-building questions are prompts designed to move conversation beyond surface-level exchange into deeper emotional, physical, and intellectual territory. Unlike casual questions about your day, these invite vulnerability, reflection, and genuine curiosity about your partner\\'s inner world. They work because they bypass the autopilot of daily life. When you ask a question your partner has never considered before, you create a small moment of novelty — and novelty is the raw material of desire and connection. According to research published in the Archives of Sexual Behavior (2022), couples who discuss intimacy preferences report 30% higher sexual satisfaction." },
     { h2: "Emotional intimacy questions", p: "Emotional intimacy lives in the space between what you feel and what you share. These questions invite your partner into your inner world — your fears, your memories, your quietest hopes. Go slowly here. These questions ask for real vulnerability." },

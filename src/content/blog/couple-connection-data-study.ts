@@ -24,9 +24,7 @@ export const post: BlogPost = {
     { q: "How was the data collected?", a: "Data was collected automatically from 1,237 Captain Bond couple sessions between January and June 2025. All data is anonymized and aggregated." },
     { q: "What was the most engaged demographic segment?", a: "Couples aged 28 to 35 represent <strong>44%</strong> of all sessions, making them the most engaged age demographic." }
   ],
-  takeaways: [
-    'TODO takeaway 1', 'TODO takeaway 2', 'TODO takeaway 3'
-  ],
+    takeaways: [ 'Data was collected automatically from {totalSessions.toLocaleString()} Captain Bond couple sessions {\' \'} between {dateRange} .', 'The single strongest signal in the dataset: couples who run shorter sessions more frequently report significantly higher harmony scores.', 'When couples self-select question categories, fun and light prompts are the most frequently chosen — a reminder that playfulness is not a detour fr…' ],
   sections: [
     { h2: "Methodology", p: "Data was collected automatically from {totalSessions.toLocaleString()} Captain Bond couple sessions {' '} between {dateRange} . Average session duration:{' '} {avgDuration} . Average questions answered per session:{' '} {avgQuestions} . All metrics labeled \"Measured\" are drawn from Captain Bond internal session data. Harmony scores are computed from post-session self-reports by both partners. Session completion rates track whether a started session reached its natural end. Data is anonymized and aggregated — no individual session data is identifiable." },
     { h2: "1. Communication Patterns: Frequency over Duration", p: "The single strongest signal in the dataset: couples who run shorter sessions more frequently report significantly higher harmony scores. A 2019 study in the Journal of Marriage and Family similarly found that relationship maintenance behaviors are a strong predictor of marital quality over time. Couples who completed 3+ sessions per week reported{' '} 40% higher harmony scores compared to couples who completed one monthly session. The effect held across all relationship lengths and age groups." },

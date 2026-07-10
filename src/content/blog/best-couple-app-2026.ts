@@ -24,9 +24,7 @@ export const post: BlogPost = {
     { q: "What is the cheapest couple app?", a: "Captain Bond offers the best value with its free tier and affordable premium subscription. At $4.99/month, it is significantly more affordable than competitors like Paired ($9.99/month) while offering more features." },
     { q: "Which couple app is best for long-distance relationships?", a: "Captain Bond is ideal for long-distance couples thanks to its cross-platform availability, real-time game sessions, and rich conversation prompts that bridge the physical gap. Paired is also a strong option with its daily question format." }
   ],
-  takeaways: [
-    'TODO takeaway 1', 'TODO takeaway 2', 'TODO takeaway 3'
-  ],
+    takeaways: [ 'The best couple app for connection blends conversation prompts that feel natural, activities you genuinely want to do together, and tools that supp…', 'Focus: Comparison Table.', 'Captain Bond is the most versatile couple app in 2026.' ],
   sections: [
     { h2: "What Is the Best Couple App for Connection?", p: "The best couple app for connection blends conversation prompts that feel natural, activities you genuinely want to do together, and tools that support intimacy without feeling like homework. After testing five leading apps, Captain Bond takes the top spot because it solves the hardest problem: getting both partners to open the app willingly. Its game-like approach to connection — AI-generated prompts, interactive couple games, and a shared intimacy toolkit — makes relationship maintenance feel like play rather than work. It is the only app that works equally well for deepening your bond (couple mode) and having fun with friends (party mode), giving you one tool for all your connection moments." },
     { h2: "Comparison Table", p: "" },
