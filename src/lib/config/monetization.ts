@@ -9,6 +9,9 @@ export const MONETIZATION_CONFIG = {
   PASS_24H_PRICE_CENTS: 299,
   SUBSCRIPTION_MONTHLY_PRICE_CENTS: 799,
   SUBSCRIPTION_ANNUAL_PRICE_CENTS: 3999,
+  LIFETIME_PRICE_CENTS: 6999,
+  BAR_MONTHLY_PRICE_CENTS: 9900,
+  B2B_EVENT_PRICE_CENTS: 29900,
   CURRENCY: 'eur' as const,
 
   FREE_TEASER_ENABLED: true,
@@ -19,6 +22,31 @@ export const MONETIZATION_CONFIG = {
   STRIPE_COUPLE_PRODUCT_NAME: 'Dossier de Compatibilité ludique — Captain Bond',
   STRIPE_PASS_24H_PRODUCT_NAME: 'Pass 24h — Captain Bond',
 } as const;
+
+/**
+ * SINGLE SOURCE OF TRUTH for every paid pack's price, in cents (EUR).
+ * The Stripe checkout, the DB fallback catalog and the pricing UI pages
+ * must all read from this map — never hardcode a price anywhere else.
+ */
+export const PACK_PRICES = {
+  PASS_24H: MONETIZATION_CONFIG.PASS_24H_PRICE_CENTS,
+  PROFILE: MONETIZATION_CONFIG.PROFILE_PRICE_CENTS,
+  PROFILE_COUPLE: MONETIZATION_CONFIG.COUPLE_PROFILE_PRICE_CENTS,
+  COUPLE_MONTHLY: MONETIZATION_CONFIG.COUPLE_MONTHLY_PRICE_CENTS,
+  SUBSCRIPTION_MONTHLY: MONETIZATION_CONFIG.SUBSCRIPTION_MONTHLY_PRICE_CENTS,
+  SUBSCRIPTION_ANNUAL: MONETIZATION_CONFIG.SUBSCRIPTION_ANNUAL_PRICE_CENTS,
+  LIFETIME: MONETIZATION_CONFIG.LIFETIME_PRICE_CENTS,
+  BAR_MONTHLY: MONETIZATION_CONFIG.BAR_MONTHLY_PRICE_CENTS,
+  B2B_EVENT: MONETIZATION_CONFIG.B2B_EVENT_PRICE_CENTS,
+} as const;
+
+export type PackSku = keyof typeof PACK_PRICES;
+
+/** Formats a cents amount as a localized price value (no currency symbol). */
+export function formatPriceValue(cents: number, locale: 'fr' | 'en' = 'en'): string {
+  const value = (cents / 100).toFixed(2);
+  return locale === 'fr' ? value.replace('.', ',') : value;
+}
 
 export type MonetizationConfig = typeof MONETIZATION_CONFIG;
 
