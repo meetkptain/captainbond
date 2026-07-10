@@ -118,4 +118,8 @@ export const AnalyticsEvents = {
   SAFE_WORD_TRIGGERED: 'safe_word_triggered',
   GAME_ENDED: 'game_ended',
   SHARE_WHATSAPP: 'share_whatsapp',
+  COUPLE_LANDING_REF: 'couple_landing_ref',
+  COUPLE_DAILY_OPENED: 'couple_daily_opened',
+  DAILY_STREAK: 'daily_streak',
+  TRIAL_GRANTED: 'trial_granted',
 } as const;

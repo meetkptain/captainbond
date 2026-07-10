@@ -35,6 +35,7 @@
   "exclude": [
     "node_modules",
     "ui-ux-pro-max-skill",
+    "prisma",
     "**/*.test.ts",
     "**/*.test.tsx",
     "**/*.spec.ts",
