@@ -451,9 +451,17 @@ export default function PlayerController() {
             </button>
           )}
           {freeQuestions && freeQuestions.limit > 0 && !gameModesRegistry[activeMode]?.manifest.isPremium && (
-            <span className="text-xs font-mono text-amber-400">
-              🎴 {freeQuestions.used}/{freeQuestions.limit} {language === 'fr' ? 'gratuit' : 'free'}
-            </span>
+            <div className="flex flex-col items-end gap-1" title={`${freeQuestions.used}/${freeQuestions.limit} ${language === 'fr' ? 'cartes gratuites' : 'free cards'}`}>
+              <span className="text-xs font-mono text-amber-400">
+                🎴 {freeQuestions.used}/{freeQuestions.limit} {language === 'fr' ? 'gratuit' : 'free'}
+              </span>
+              <div className="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700/30">
+                <div
+                  className="h-full bg-gradient-to-r from-amber-500 to-yellow-500 transition-all duration-500"
+                  style={{ width: `${(Math.min(freeQuestions.used, freeQuestions.limit) / freeQuestions.limit) * 100}%` }}
+                />
+              </div>
+            </div>
           )}
           {stats && stats.currentStreak > 0 && (
             <span className="text-xs font-mono text-amber-400" title="Daily Bond">
