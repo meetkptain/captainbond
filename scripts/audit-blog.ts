@@ -45,6 +45,13 @@ for (const p of allPosts) {
   });
 
   if (!p.sections || p.sections.length < 3) err(`${where}: sections < 3`);
+  const prose = (p.sections || []).reduce((n, s) => {
+    const pw = s.p ? s.p.split(/\s+/).length : 0;
+    const lw = (s.list || []).reduce((m, l) => m + String(l).split(/\s+/).length, 0);
+    const qw = s.quote ? s.quote.split(/\s+/).length : 0;
+    return n + pw + lw + qw;
+  }, 0);
+  if (prose < 1000) warn(`${where}: thin content (${prose} words < 1000) — SEO weak`);
   const tk = p.takeaways || [];
   const tkBAD = tk.length < 3 || tk.some((t) => !t || t.startsWith('TODO') || t.length < 5);
   if (tkBAD) warn(`${where}: takeaways missing/TODO (<3 or placeholder)`);
