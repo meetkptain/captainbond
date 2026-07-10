@@ -11,6 +11,7 @@ import { Testimonials } from '@/components/Testimonials';
 import { Icon } from '@/components/Icon';
 import { api, ApiClientError } from '@/lib/api/client';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
+import { captureUtmOnLoad } from '@/lib/utm-client';
 
 const content = {
   fr: {
@@ -109,6 +110,7 @@ export default function PartyLanding({ defaultLang = 'en' }: { defaultLang?: 'fr
   const [publicStats, setPublicStats] = useState<{ totalRooms: number; totalPlayers: number } | null>(null);
 
   useEffect(() => {
+    captureUtmOnLoad();
     if (typeof window !== 'undefined') {
       const isFr = window.location.pathname.startsWith('/fr');
       setLang(isFr ? 'fr' : 'en');

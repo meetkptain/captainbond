@@ -195,7 +195,7 @@ export async function createCheckoutSession(input: CreateCheckoutSessionInput): 
   }
 
   const isSubscription = pack.isSubscription;
-  const lineItem = buildLineItem(pack);
+  const lineItem = await buildLineItem(pack);
 
   const session = await withTimeout(getStripe().checkout.sessions.create({
     customer: customerId,
@@ -238,12 +238,12 @@ export async function createCheckoutSession(input: CreateCheckoutSessionInput): 
   return { sessionId: session.id, sessionUrl: session.url };
 }
 
-function buildLineItem(pack: Pack): Stripe.Checkout.SessionCreateParams.LineItem {
+async function buildLineItem(pack: Pack): Promise<Stripe.Checkout.SessionCreateParams.LineItem> {
   if (pack.isSubscription) {
-    if (!pack.stripePriceId) {
-      throw new AppError('INTERNAL_ERROR', `Prix Stripe manquant pour l'abonnement ${pack.sku}`);
-    }
-    return { price: pack.stripePriceId, quantity: 1 };
+    // Lazily create + persist the Stripe recurring price so subscriptions
+    // work even when stripePriceId is not pre-seeded in the DB/catalog.
+    const priceId = await getOrCreateStripePrice(pack);
+    return { price: priceId, quantity: 1 };
   }
 
   return {

@@ -7,6 +7,7 @@ import { ConsentModal } from '@/components/ConsentModal';
 import { Icon } from '@/components/Icon';
 import { api, ApiClientError } from '@/lib/api/client';
 import { capture, AnalyticsEvents } from '@/lib/analytics';
+import { captureUtmOnLoad } from '@/lib/utm-client';
 
 const content = {
   fr: {
@@ -47,6 +48,7 @@ export default function JoinRoomWithCode() {
   const nameInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    captureUtmOnLoad();
     nameInputRef.current?.focus();
     
     // Autodetect language based on room configuration

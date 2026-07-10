@@ -10,6 +10,7 @@ import { getCoupleById } from '@/lib/db/repositories/coupleRepository';
 import { getPackById, getPackBySku } from '@/lib/monetization/catalog';
 import { invalidateUserEntitlements } from '@/lib/monetization/entitlements';
 import { captureServer, AnalyticsEvents } from '@/lib/analytics';
+import { trackPurchaseConversion } from '@/lib/conversions';
 import { AppError } from '@/lib/errors';
 import { supabaseAdmin } from '@/lib/supabase-admin';
 import { dbRetry, withRetry } from '@/lib/db/withRetry';
@@ -166,6 +167,19 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
     playerId: metadata.playerId, roomCode: metadata.roomCode,
     userId: activeUserId, stripeSessionId: session.id,
   });
+
+  // Forward to ad platforms (Meta CAPI + GA4) so paid ROAS is measurable.
+  // Graceful no-op when META_*/GA4_* env vars are absent.
+  const customerEmail = session.customer_details?.email || null;
+  await trackPurchaseConversion({
+    eventId: session.id,
+    value: pack.price,
+    currency: 'eur',
+    sku: pack.sku,
+    email: customerEmail,
+    clientId: activeUserId,
+    source: (session.metadata as Record<string, string> | undefined)?.utm_source || null,
+  }).catch((err) => logger.error('trackPurchaseConversion failed', {}, err));
 
   logger.info('Purchase completed', { sku: pack.sku, userId: activeUserId, stripeSessionId: session.id });
 }
