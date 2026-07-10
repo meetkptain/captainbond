@@ -48,8 +48,8 @@ export function EndGameSummary({
   } else if (modeId === 'IMPOSTEUR') {
     archetypeTitle = language === 'fr' ? "Le Manoir des Secrets" : "The Mansion of Secrets";
     archetypeDescription = language === 'fr'
-      ? "Bluff, manipulation bienveillante et déduction. Vos regards en disent long sur votre complicité stratégique."
-      : "Bluffing, kind manipulation, and deduction. Your glances speak volumes about your strategic complicity.";
+      ? "Bluff, stratégie de jeu et déduction. Vos regards en disent long sur votre complicité stratégique."
+      : "Bluffing, playful strategy, and deduction. Your glances speak volumes about your strategic complicity.";
     archetypeEmoji = "🎭";
   } else if (modeId === 'DATE_NIGHT') {
     archetypeTitle = language === 'fr' ? "Le Cocon Doré" : "The Golden Cocoon";
@@ -93,7 +93,7 @@ export function EndGameSummary({
     if (idx === 1) return {
       name: p.name,
       title: language === 'fr' ? "L'As du Bluff 🃏" : "The Bluffing Ace 🃏",
-      desc: language === 'fr' ? "Expert en manipulation bienveillante et mystères." : "Expert in kind manipulation and mystery."
+      desc: language === 'fr' ? "Expert en stratégie de jeu et mystères." : "Expert in playful strategy and mystery."
     };
     return {
       name: p.name,

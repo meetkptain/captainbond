@@ -209,7 +209,7 @@ export function calculateProfile(
   if (axesAvailable.deception) {
     const deceptionResponses = exploitableResponses.filter(r => DECEPTION_MODES.has(r.mode));
 
-    // Score basé sur les points (heuristique : un bon manipulateur gagne des points)
+    // Score basé sur les points (heuristique : un bon stratège gagne des points)
     // Le max théorique par question est 3 (imposteur). On normalise sur 3 pts/question.
     const totalPoints = playerScores.reduce((sum, s) => sum + s.points, 0);
     if (deceptionResponses.length > 0) {

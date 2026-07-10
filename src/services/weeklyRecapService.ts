@@ -66,7 +66,7 @@ export async function generateWeeklyRecap(
   }));
 
   const prompt = `
-Tu es un psychothérapeute de couple bienveillant et expert. Tu analises les réponses de deux partenaires à des questions profondes sur leur relation.
+Tu es un expert en dynamique de couple bienveillant. Tu analyses les réponses de deux partenaires à des questions profondes sur leur relation.
 
 Voici les données de la semaine du ${weekStart} au ${weekEndDate} :
 
