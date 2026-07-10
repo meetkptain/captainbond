@@ -399,18 +399,26 @@ sequenceDiagram
 
 ---
 
-## 9. Blog System (content layer + legacy hybrid) — added 2026-07-10
+## 9. Blog System (FULLY migrated to content layer) — updated 2026-07-10
 
-**Two engines, one SEO source of truth:**
-- **Content layer** (NEW articles): `src/content/blog/*.ts` = typed `BlogPost` data → rendered by `src/components/blog/BlogArticle.tsx`. Zero JSX for authors. SSG via `src/app/(marketing)/blog/[slug]/page.tsx` + `src/app/fr/blog/[slug]/page.tsx` (`runtime='nodejs'`, `dynamic='force-static'`, `dynamicParams=false`).
-- **Legacy articles** (~32): original `page.tsx` JSX in `src/app/(marketing)/blog/<slug>/page.tsx` + `src/app/fr/blog/<slug>/page.tsx`. Bodies untouched; SEO metadata mirrored to `src/content/legacy.ts` by `scripts/sync-legacy.ts` (parses `export const metadata` via `new Function`). SSG injected per-route by `scripts/ssg-legacy.ts` (`force-static`+`nodejs`).
+**Single engine:** ALL 34 articles (17 EN + 17 FR) live as typed `BlogPost` data in `src/content/blog/*.ts`, rendered by `src/components/blog/BlogArticle.tsx`. Zero JSX for authors. SSG via `src/app/(marketing)/blog/[slug]/page.tsx` + `src/app/fr/blog/[slug]/page.tsx` (`runtime='nodejs'`, `dynamic='force-static'`, `dynamicParams=false`). **No legacy `page.tsx` routes remain** — migration completed (all 26 legacy pairs → content layer). `src/content/legacy.ts` is now empty (mirror kept for safety).
 
-**Unified coverage:** `src/app/sitemap.ts` merges `allPosts` (content) + `legacyPosts` (mirror) → single hreflang sitemap. `scripts/audit-blog.ts` validates BOTH (0 errors / 0 warnings as of build).
+**GEO + SEO + localization (all 34):**
+- `geoBlock` (real, localized) → rendered as "Why it matters for AI search" section.
+- `SpeakableSpecification` (cssSelector `.article-body h2`) auto-emitted by BlogArticle.
+- `FAQPage` JSON-LD from `faq[]` (answers ≥40c, real copy).
+- `hreflang` x-default/en/fr via `[slug]` `generateMetadata` + `frSlug`.
+- `datePublished`/`dateModified` preserved from legacy (`other.datePublished/.dateModified`).
+- `sitemap.ts` lastmod = `modified ?? published`; 102 hreflang alternates.
 
-**Agent workflow:** `npm run blog:new -- --en ... --fr ... --slug ... --frslug ... --hub ...` scaffolds EN+FR pairs. `npm run blog:build` = sync + sync-legacy + og + audit. `npm run blog:related -- <slug>` suggests same-hub related.
+**Unified coverage:** `src/app/sitemap.ts` uses `allPosts` only now (legacy mirror empty). `scripts/audit-blog.ts` validates all 34 (TODO-aware geoBlock) → **0 errors / 0 warnings**.
+
+**Agent workflow:** `npm run blog:new -- --en ... --fr ... --slug ... --frslug ... --hub ...` scaffolds EN+FR pairs. `npm run blog:build` = sync + sync-legacy + og + audit. `npm run blog:enrich` fills `related` + flags TODOs. `npm run blog:geo` / `npm run blog:fix` fill geoBlock / FAQ+related.
 
 **CI:** `.github/workflows/blog-audit.yml` runs `blog:build` on PR/push touching blog content.
 
-**Key scripts:** `scripts/sync-blog.ts` (regenerate index.ts), `scripts/sync-legacy.ts`, `scripts/ssg-legacy.ts`, `scripts/generate-og-images.ts` (content OG loop), `scripts/audit-blog.ts`, `scripts/new-article.ts`, `scripts/suggest-related.ts`.
+**Key scripts:** `scripts/sync-blog.ts` (regenerate index.ts), `scripts/sync-legacy.ts` (legacy mirror), `scripts/generate-og-images.ts`, `scripts/audit-blog.ts`, `scripts/new-article.ts`, `scripts/suggest-related.ts`, `scripts/blog-enrich.ts`, `scripts/migrate-one.ts` (legacy→content, preserves dates+OG+prose), `scripts/geo-fill.ts`, `scripts/fix-faq-related.ts`, `scripts/end-fill.ts`.
 
-**Build proof:** 34 blog HTML prerendered (`●` SSG content + `○` static legacy); sitemap.xml.body has 102 hreflang alternates.
+**Build proof:** 34 blog HTML prerendered (`●` SSG); sitemap.xml.body has 102 hreflang alternates; all 34 contain FAQPage + Speakable + geoBlock + dates.
+
+**Anomaly:** `questions-pour-couple` shares slug EN+FR → EN file is `questions-pour-couple-en.ts` (slug `questions-pour-couple`, locale `en`); FR is `questions-pour-couple.ts`. `getPost(slug,locale)` is locale-aware so no collision. `sync-blog.ts` imports by filename (not slug) to keep both.

@@ -30,6 +30,8 @@
     "blog:report": "npx tsx scripts/blog-report.ts",
     "blog:migrate": "npx tsx scripts/migrate-one.ts",
     "blog:enrich": "npx tsx scripts/blog-enrich.ts",
+    "blog:geo": "npx tsx scripts/geo-fill.ts",
+    "blog:fix": "npx tsx scripts/fix-faq-related.ts",
     "blog:build": "npx tsx scripts/sync-blog.ts && npx tsx scripts/sync-legacy.ts && npx tsx scripts/generate-og-images.ts && npx tsx scripts/audit-blog.ts"
   },
   "dependencies": {

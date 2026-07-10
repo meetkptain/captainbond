@@ -1,7 +1,15 @@
 // Migrate ONE legacy blog article (EN + its FR counterpart) into the
 // content layer. The script reads the JSX, extracts metadata + faqSchema +
-// takeaways + section headings, writes BlogPost data files, then DELETES the
+// takeaways + section prose, writes BlogPost data files, then DELETES the
 // legacy page.tsx routes (to avoid slug collision with the [slug] SSG route).
+//
+// Robustness guarantees:
+//   - published/modified are PRESERVED from legacy `other.datePublished/.dateModified`
+//     (never reset to today) so Google's freshness signals stay accurate.
+//   - ogImage is taken from the real legacy openGraph/twitter image path
+//     (slug-based guessing breaks the already-generated OG files).
+//   - section prose (<p>/<li>) is extracted, not just <h2> headings,
+//     so migrated articles keep their body content.
 //
 // Usage: npm run blog:migrate -- <enSlug> <frSlug> <hub>
 //   e.g. npm run blog:migrate -- how-to-host-game-night organiser-soiree-jeux party
@@ -28,11 +36,30 @@ function extractMeta(src: string): Record<string, any> {
 function extractFaq(src: string): { q: string; a: string }[] {
   const m = src.match(/const faqSchema\s*=\s*(\{[\s\S]*?\n\})/);
   if (!m) return [];
+  // faqSchema often maps external question arrays (e.g. `${name}Questions.map(...)`).
+  // Collect every top-level string-array const so the schema eval can resolve them.
+  const scope: Record<string, any> = {};
+  for (const am of src.matchAll(/const\s+(\w+)\s*=\s*\[([\s\S]*?)\]\s*;/g)) {
+    const name = am[1];
+    const body = am[2];
+    if (!/'([^'\\]|\\.)*'|"([^"\\]|\\.)*"/.test(body)) continue; // only string-element arrays
+    try {
+      const arr = new Function(`return [${body}];`)();
+      if (Array.isArray(arr)) scope[name] = arr;
+    } catch {
+      /* ignore non-array / dynamic bodies */
+    }
+  }
   const code = `const faqSchema = ${m[1]};\nreturn faqSchema;`;
-  const schema = new Function(code)() as any;
+  let schema: any;
+  try {
+    schema = new Function(...Object.keys(scope), code)(...Object.values(scope));
+  } catch {
+    return [];
+  }
   const ents = schema?.mainEntity ?? [];
   return ents
-    .map((e: any) => ({ q: String(e.question ?? '').trim(), a: String(e.acceptedAnswer?.text ?? e.answer ?? '').trim() }))
+    .map((e: any) => ({ q: String(e.question ?? e.name ?? '').trim(), a: String(e.acceptedAnswer?.text ?? e.answer ?? '').trim() }))
     .filter((f: any) => f.q && f.a);
 }
 
@@ -43,14 +70,44 @@ function extractTakeaways(src: string): string[] {
 }
 
 function strip(html: string): string {
-  return html.replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim();
+  return html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&[a-z]+;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
-function extractSections(src: string): { h2: string; p: string }[] {
-  const h2s = [...src.matchAll(/<h2[^>]*>([\s\S]*?)<\/h2>/g)]
-    .map((m) => strip(m[1]))
-    .filter((t) => t && !/key takeaways|why it matters/i.test(t));
-  return h2s.map((h) => ({ h2: h, p: '' }));
+function extractSections(src: string): { h2: string; p?: string; list?: string[] }[] {
+  const blocks = [...src.matchAll(/<section[^>]*>([\s\S]*?)<\/section>/g)];
+  return blocks
+    .map((b) => {
+      const inner = b[1];
+      const hm = inner.match(/<h2[^>]*>([\s\S]*?)<\/h2>/);
+      const h2 = hm ? strip(hm[1]) : '';
+      if (!h2 || /key takeaways|why it matters/i.test(h2)) return null;
+      const ps = [...inner.matchAll(/<p>([\s\S]*?)<\/p>/g)].map((m) => strip(m[1])).filter(Boolean);
+      const lis = [...inner.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((m) => strip(m[1])).filter(Boolean);
+      const p = ps.join(' ');
+      return { h2, p: p || undefined, list: lis.length ? lis : undefined };
+    })
+    .filter((s): s is { h2: string; p?: string; list?: string[] } => !!s);
+}
+
+// Real OG path from legacy metadata (openGraph.images[0].url or twitter.images[0]).
+function extractOg(meta: any, fallback: string): string {
+  const og = meta?.openGraph?.images?.[0];
+  let url: string | undefined = typeof og === 'string' ? og : og?.url;
+  if (!url && Array.isArray(meta?.twitter?.images) && meta.twitter.images[0]) {
+    const t = meta.twitter.images[0];
+    url = typeof t === 'string' ? t : t?.url;
+  }
+  if (!url) return fallback;
+  try {
+    url = new URL(url).pathname;
+  } catch {
+    url = url.replace(/^https?:\/\/[^/]+/, '');
+  }
+  return url.startsWith('/') ? url : '/' + url;
 }
 
 function hubGuess(slug: string): 'party' | 'couple' | 'bar' {
@@ -59,10 +116,23 @@ function hubGuess(slug: string): 'party' | 'couple' | 'bar' {
   return 'party';
 }
 
-function buildPost(slug: string, locale: BlogLocale, meta: any, faq: any[], take: string[], sec: any[], counterpart: string, hub: string): string {
-  const og = `/og/blog-${slug}-${locale === 'en' ? 'en' : 'fr'}.webp`;
+function buildPost(
+  slug: string,
+  locale: BlogLocale,
+  meta: any,
+  faq: any[],
+  take: string[],
+  sec: any[],
+  counterpart: string,
+  hub: string,
+): string {
   const today = new Date().toISOString().slice(0, 10);
+  // PRESERVE real dates — never reset to today.
+  const published = meta?.other?.datePublished || meta?.datePublished || today;
+  const modified = meta?.other?.dateModified || meta?.dateModified || published;
+  const og = extractOg(meta, `/og/blog-${slug}-${locale === 'en' ? 'en' : 'fr'}.webp`);
   const readTime = locale === 'en' ? 'X min read' : 'X min de lecture';
+
   const faqStr = faq.length
     ? faq.map((f) => `    { q: ${JSON.stringify(f.q)}, a: ${JSON.stringify(f.a)} }`).join(',\n')
     : `    { q: 'TODO question', a: 'TODO answer' },\n    { q: 'TODO question', a: 'TODO answer' },\n    { q: 'TODO question', a: 'TODO answer' }`;
@@ -70,11 +140,17 @@ function buildPost(slug: string, locale: BlogLocale, meta: any, faq: any[], take
     ? take.map((t) => `    ${JSON.stringify(t)}`).join(',\n')
     : `    'TODO takeaway 1', 'TODO takeaway 2', 'TODO takeaway 3'`;
   const secStr = sec.length
-    ? sec.map((s) => `    { h2: ${JSON.stringify(s.h2)}, p: ${JSON.stringify(s.p)} }`).join(',\n')
+    ? sec
+        .map((s) => {
+          const list = s.list?.length ? `, list: [${s.list.map((l: string) => JSON.stringify(l)).join(', ')}]` : '';
+          return `    { h2: ${JSON.stringify(s.h2)}, p: ${JSON.stringify(s.p ?? '')}${list} }`;
+        })
+        .join(',\n')
     : `    { h2: 'TODO section', p: 'TODO paragraph' }`;
+
   return `import type { BlogPost } from '@/lib/content/types';
 
-// MIGRATED from legacy page.tsx — body (sections.p) + geoBlock + related to enrich.
+// MIGRATED from legacy page.tsx — section bodies + FAQ answers + geoBlock to enrich.
 export const post: BlogPost = {
   slug: ${JSON.stringify(slug)},
   locale: ${JSON.stringify(locale)},
@@ -83,7 +159,8 @@ export const post: BlogPost = {
   description: ${JSON.stringify(meta.description ?? 'TODO')},
   frSlug: ${JSON.stringify(counterpart)},
   ogImage: ${JSON.stringify(og)},
-  published: ${JSON.stringify(today)},
+  published: ${JSON.stringify(published)},
+  modified: ${JSON.stringify(modified)},
   readTime: ${JSON.stringify(readTime)},
   faq: [
 ${faqStr}
@@ -126,8 +203,10 @@ const enSec = extractSections(read(enFile));
 const frSec = fs.existsSync(frFile) ? extractSections(read(frFile)) : enSec;
 
 const dir = path.join(ROOT, 'src/content/blog');
+// Same slug for EN+FR (legacy anomaly) would collide on filename — suffix EN with "-en".
+const enOut = enSlug === frSlug ? `${enSlug}-en.ts` : `${enSlug}.ts`;
 fs.writeFileSync(
-  path.join(dir, `${enSlug}.ts`),
+  path.join(dir, enOut),
   buildPost(enSlug, 'en', enMeta, enFaq, enTake, enSec, frSlug, hub),
 );
 fs.writeFileSync(
@@ -139,5 +218,7 @@ fs.writeFileSync(
 fs.rmSync(path.dirname(enFile), { recursive: true, force: true });
 fs.rmSync(path.dirname(frFile), { recursive: true, force: true });
 
-console.log(`✅ Migrated ${enSlug} (en, ${enFaq.length} faq, ${enSec.length} sections) + ${frSlug} (fr)`);
-console.log('   Run: npm run blog:build  (then enrich geoBlock + section bodies)');
+console.log(
+  `✅ Migrated ${enSlug} (en, ${enFaq.length} faq, ${enSec.length} sections) + ${frSlug} (fr) | published=${enMeta?.other?.datePublished ?? '?'}`,
+);
+console.log('   Run: npm run blog:build  (then enrich geoBlock + FAQ answers + related)');

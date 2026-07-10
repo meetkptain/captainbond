@@ -2,24 +2,76 @@
 // Add an article: create src/content/blog/<slug>.ts exporting `post`, then run `npm run blog:sync`.
 import type { BlogPost } from '@/lib/content/types';
 
+import { post as p50DeepQuestionsForCouples } from './50-deep-questions-for-couples';
+import { post as p50QuestionsProfondesCouple } from './50-questions-profondes-couple';
+import { post as augmenterChiffreBarSemaine } from './augmenter-chiffre-bar-semaine';
 import { post as barTriviaNightGuide } from './bar-trivia-night-guide';
+import { post as bestCoupleApp2026 } from './best-couple-app-2026';
 import { post as bestPartyGamesForAdults2026 } from './best-party-games-for-adults-2026';
+import { post as bestPartyGamesForLargeGroups } from './best-party-games-for-large-groups';
 import { post as boardGamesApero } from './board-games-apero';
+import { post as coupleCommunicationExercises } from './couple-communication-exercises';
+import { post as coupleConnectionDataStudy } from './couple-connection-data-study';
+import { post as coupleQuestionsCompleteGuide } from './couple-questions-complete-guide';
+import { post as etudeDonneesConnexionCouple } from './etude-donnees-connexion-couple';
+import { post as exercicesCommunicationCouple } from './exercices-communication-couple';
 import { post as guideSoireeQuizBar } from './guide-soiree-quiz-bar';
+import { post as halloweenPartyGamesAdults } from './halloween-party-games-adults';
 import { post as howToHostGameNight } from './how-to-host-game-night';
+import { post as icebreakerGamesForAdults } from './icebreaker-games-for-adults';
+import { post as increaseBarRevenueWeeknight } from './increase-bar-revenue-weeknight';
+import { post as jeuxBriseGlaceAdultes } from './jeux-brise-glace-adultes';
+import { post as jeuxHalloweenAdultes } from './jeux-halloween-adultes';
 import { post as jeuxSocieteApero } from './jeux-societe-apero';
+import { post as meilleureApplicationCouple2026 } from './meilleure-application-couple-2026';
+import { post as meilleursJeuxDeSoireeGrandGroupe } from './meilleurs-jeux-de-soiree-grand-groupe';
 import { post as meilleursJeuxSoireeAdulte2026 } from './meilleurs-jeux-soiree-adulte-2026';
 import { post as organiserSoireeJeux } from './organiser-soiree-jeux';
+import { post as questionsAPoserASonPartenaire } from './questions-a-poser-a-son-partenaire';
+import { post as questionsCoupleGuideComplet } from './questions-couple-guide-complet';
+import { post as questionsPourConstruireIntimite } from './questions-pour-construire-intimite';
+import { post as questionsPourCoupleEn } from './questions-pour-couple-en';
+import { post as questionsPourCouple } from './questions-pour-couple';
+import { post as questionsToAskYourPartner } from './questions-to-ask-your-partner';
+import { post as questionsToBuildIntimacy } from './questions-to-build-intimacy';
+import { post as rituelCoupleHebdomadaire } from './rituel-couple-hebdomadaire';
+import { post as weeklyCoupleRitual } from './weekly-couple-ritual';
 
 export const allPosts: BlogPost[] = [
+  p50DeepQuestionsForCouples,
+  p50QuestionsProfondesCouple,
+  augmenterChiffreBarSemaine,
   barTriviaNightGuide,
+  bestCoupleApp2026,
   bestPartyGamesForAdults2026,
+  bestPartyGamesForLargeGroups,
   boardGamesApero,
+  coupleCommunicationExercises,
+  coupleConnectionDataStudy,
+  coupleQuestionsCompleteGuide,
+  etudeDonneesConnexionCouple,
+  exercicesCommunicationCouple,
   guideSoireeQuizBar,
+  halloweenPartyGamesAdults,
   howToHostGameNight,
+  icebreakerGamesForAdults,
+  increaseBarRevenueWeeknight,
+  jeuxBriseGlaceAdultes,
+  jeuxHalloweenAdultes,
   jeuxSocieteApero,
+  meilleureApplicationCouple2026,
+  meilleursJeuxDeSoireeGrandGroupe,
   meilleursJeuxSoireeAdulte2026,
   organiserSoireeJeux,
+  questionsAPoserASonPartenaire,
+  questionsCoupleGuideComplet,
+  questionsPourConstruireIntimite,
+  questionsPourCoupleEn,
+  questionsPourCouple,
+  questionsToAskYourPartner,
+  questionsToBuildIntimacy,
+  rituelCoupleHebdomadaire,
+  weeklyCoupleRitual,
 ];
 
 export function getPost(slug: string, locale: BlogPost['locale']): BlogPost | undefined {

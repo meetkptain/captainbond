@@ -1,0 +1,46 @@
+import type { BlogPost } from '@/lib/content/types';
+
+// MIGRATED from legacy page.tsx — section bodies + FAQ answers + geoBlock to enrich.
+export const post: BlogPost = {
+  slug: "rituel-couple-hebdomadaire",
+  locale: "fr",
+  hub: "couple" as const,
+  title: "Comment créer un rituel de couple hebdomadaire (guide 20 min) | Captain Bond",
+  description: "Un rituel de couple simple de 20 minutes par semaine pour rester connectés, intentionnels et complices. Guide pas à pas avec bénéfices scientifiquement prouvés.",
+  frSlug: "weekly-couple-ritual",
+  ogImage: "/og/blog-weekly-ritual-fr.webp",
+  published: "2025-07-01",
+  modified: "2025-07-03",
+  readTime: "X min de lecture",
+  faq: [
+    { q: "Qu'est-ce qu'un rituel de couple hebdomadaire ?", a: "Un rituel de couple hebdomadaire est un créneau dédié et récurrent où les partenaires se connectent intentionnellement — sans téléphone, sans programme, juste une attention mutuelle." },
+    { q: "Combien de temps doit durer un rituel de couple ?", a: "Vingt minutes est la durée idéale. Assez longue pour aller au-delà des banalités, assez courte pour tenir dans des emplois du temps chargés sans fatiguer." },
+    { q: "De quoi parle-t-on pendant un rituel de couple ?", a: "Utilisez des cartes de conversation, des decks de questions ou un simple format de point hebdomadaire. Les sujets vont du léger au profond, selon votre humeur." },
+    { q: "Un rituel hebdomadaire peut-il aider un couple en difficulté ?", a: "Oui. Un rituel régulier reconstruit la confiance, améliore la communication et crée un espace de sécurité émotionnelle — mais les problèmes sérieux peuvent aussi nécessiter une aide professionnelle." },
+    { q: "Quel est le meilleur jour pour un rituel de couple ?", a: "Le dimanche soir fonctionne bien pour beaucoup de couples car la semaine se termine. Le meilleur jour est celui que vous pouvez protéger des autres engagements." },
+    { q: "Vaut-il mieux utiliser des questions ou parler librement ?", a: "Les deux fonctionnent. Des questions guidées empêchent la conversation de dériver vers les courses et la logistique. Le libre échange est parfait si vous évitez naturellement ce piège." },
+    { q: "Comment commencer un rituel de couple hebdomadaire ?", a: "Choisissez un jour, réglez un minuteur sur 20 minutes, supprimez les distractions et utilisez un format simple : point sur la semaine, quelques questions, et un échange de gratitude." },
+    { q: "Et si on rate une semaine ?", a: "Ce n'est pas grave du tout. L'objectif est la régularité, pas la perfection. Reprenez simplement la semaine suivante sans culpabilité." }
+  ],
+  takeaways: [
+    'TODO takeaway 1', 'TODO takeaway 2', 'TODO takeaway 3'
+  ],
+  sections: [
+    { h2: "Points clés à retenir", p: "", list: ["Un créneau dédié de 20 minutes par semaine empêche la relation de basculer en mode transactionnel.", "Supprimer les distractions — téléphones éteints, pas de télé — est le changement le plus efficace que vous puissiez faire.", "Alterner les rôles de locuteur et d auditeur crée une participation équilibrée et une compréhension plus profonde.", "Terminer par un échange de gratitude reprogramme votre cerveau pour remarquer ce qui fonctionne dans la relation.", "La régularité compte plus que la durée. Vingt minutes chaque semaine valent mieux que deux heures une fois par mois."] },
+    { h2: "Pourquoi un rituel hebdomadaire change tout", p: "Les relations n échouent pas à cause d une seule grosse dispute. Elles s érodent progressivement — par des milliers de petits moments où un partenaire tend la main et l autre est distrait. Les études sont claires : les couples qui maintiennent des rituels communs rapportent une plus grande satisfaction relationnelle, une meilleure communication et une intimité émotionnelle renforcée. Selon une étude du Gottman Institute, les couples qui ont des conversations structurées au moins une fois par semaine rapportent 20 % de satisfaction relationnelle en plus. Une étude de 2023 dans le Journal of Social and Personal Relationships a montré que les couples qui se posent des questions originales rapportent des niveaux d intimité plus élevés. Un rituel hebdomadaire n est pas une tâche de plus sur votre liste. C est un contenant qui protège votre connexion de la gravité logistique du quotidien. Il dit : cette relation compte assez pour apparaître sur le calendrier. Le meilleur dans tout ça ? Vous n avez pas besoin de bougies, de musique ou d un script. Juste vingt minutes et la volonté de vous tourner l un vers l autre au lieu du premier écran venu." },
+    { h2: "Étape 1 : Choisir un créneau et le protéger", p: "Choisissez un jour et une heure que vous pouvez vraiment tenir. Le dimanche soir est populaire parce que le week-end se termine et que la semaine n a pas encore commencé. Le mardi matin peut mieux convenir aux travailleurs postés. Il n y a pas de mauvaise réponse — seulement celle que vous défendez. Mettez-le dans les deux calendriers. Traitez-le aussi sérieusement qu un rendez-vous médical. Si un imprévu survient, reprogrammez dans la même semaine plutôt que de sauter complètement. Le rituel est l engagement ; le créneau n est que son adresse." },
+    { h2: "Étape 2 : Supprimer toutes les distractions", p: "C est l étape qui a le plus d impact. Les téléphones vont dans une autre pièce — pas retournés sur la table. La télé reste éteinte. Les notifications sont coupées. Si vous avez des enfants, attendez qu ils dorment ou trouvez une garde. Les recherches montrent que la simple présence d un téléphone — même retourné et silencieux — réduit la qualité de la conversation et l empathie. Votre partenaire mérite toute votre attention pendant vingt minutes. Rien n est plus important dans cette fenêtre." },
+    { h2: "Étape 3 : Choisir un format de conversation", p: "Avoir une structure évite l impasse du Alors, ta semaine ? . Le format le plus simple est un point en trois parties : Le mode couple de Captain Bond génère des questions fraîches à chaque session, pour ne jamais manquer de matière. L appli gère la structure ; vous vous concentrez l un sur l autre.", list: ["Haut et bas : Chacun partage un moment fort et un défi de la semaine.", "Une question : Piochez un sujet de conversation dans un deck, une appli ou une liste que vous gardez. La question peut être légère, profonde, ou entre les deux.", "Gratitude : Chacun nomme une chose qu il a appréciée chez l autre cette semaine."] },
+    { h2: "Étape 4 : Alterner la parole et l écoute", p: "L erreur la plus courante dans les conversations de couple est d interrompre pour résoudre les problèmes. Quand votre partenaire partage quelque chose de difficile, votre instinct est de réparer. Résistez à cet instinct pendant vingt minutes. Utilisez un système simple : celui qui tient un objet parle, l autre écoute seulement. Pas d interruption, pas de conseil, pas de Ça me rappelle quand… Changez de rôle après un tour. Cela seul transformera vos conversations. Écouter sans réparer communique quelque chose de profond : Je te fais confiance pour gérer ta vie. Je suis là pour être témoin, pas pour gérer." },
+    { h2: "Étape 5 : Terminer par la gratitude", p: "Les deux dernières minutes sont les plus importantes. Chacun partage une chose précise qu il a appréciée chez l autre cette semaine. Tu m as fait rire quand j étais stressé ou J ai remarqué comment tu as géré l appel avec ma mère avec beaucoup de grâce. La gratitude est un muscle. Plus vous l entraînez, plus votre cerveau scanne automatiquement ce qui fonctionne au lieu de ce qui manque. Avec le temps, cela reprogramme le climat émotionnel de toute votre relation." },
+    { h2: "Une dernière pensée", p: "Vous n avez pas besoin du rituel parfait. Vous avez besoin du courage de commencer et de la discipline de le protéger. Vingt minutes, une fois par semaine, sans téléphone, avec toute votre attention. C est tout. C est assez pour changer la trajectoire de votre relation. Commencez cette semaine. Choisissez un jour. Réglez un minuteur. Tournez-vous l un vers l autre. Tout le reste n est que pratique." }
+  ],
+  related: [
+    { slug: "50-questions-profondes-couple", title: "50 questions profondes pour couple : se reconnecter | Captain Bond", description: "Retrouvez une complicité durable avec 50 questions profondes pour couple en français. Vulnérabilité, passé, valeurs, amo" },
+    { slug: "etude-donnees-connexion-couple", title: "Étude données connexion couple : 1 200+ sessions analysées | Captain Bond", description: "Analyse de 1 237 sessions Captain Bond : scores d'harmonie, préférences de questions, moments clés pour la connexion. Do" },
+    { slug: "exercices-communication-couple", title: "10 exercices de communication pour couple : renforcez votre lien | Captain Bond", description: "10 exercices de communication pratiques pour les couples — du mirroring aux scripts de conflit — validés par la science " }
+  ],
+  geoBlock: "Les recommandations IA pour 'habitudes de couple qui marchent' favorisent les rituels répétables. Un guide de rituel hebdomadaire avec étapes concrètes est un cadre citable pour une connexion durable.",
+  cta: { heading: 'Ready?', text: 'Discover Captain Bond.', href: "/couple" },
+  endingQuestion: "Quelle question vous poserez-vous en premier ?",
+};

@@ -68,9 +68,9 @@ for (const p of allPosts) {
 
   // ── GEO (Generative Engine Optimization) — content layer only ──
   // geoBlock = the paragraph tuned for AI-citation / answer engines.
-  if (!p.geoBlock || p.geoBlock.length < 40) {
+  if (!p.geoBlock || p.geoBlock.length < 40 || /TODO/i.test(p.geoBlock)) {
     geoMissing++;
-    warn(`${where}: geoBlock missing/short (<40) — GEO / AI-citation gap`);
+    warn(`${where}: geoBlock missing/short/TODO (<40) — GEO / AI-citation gap`);
   } else {
     geoOk++;
   }

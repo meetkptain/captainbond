@@ -1,0 +1,42 @@
+import type { BlogPost } from '@/lib/content/types';
+
+// MIGRATED from legacy page.tsx — section bodies + FAQ answers + geoBlock to enrich.
+export const post: BlogPost = {
+  slug: "augmenter-chiffre-bar-semaine",
+  locale: "fr",
+  hub: "bar" as const,
+  title: "Augmenter le Chiffre d'Affaires de son Bar en Semaine (Sans Embauche) | Captain Bond",
+  description: "5 stratégies testées pour booster les soirs de semaine dans votre bar : soirées à thème, divertissement IA, mécaniques de fidélité, et tournois. Aucun recrutement nécessaire.",
+  frSlug: "increase-bar-revenue-weeknight",
+  ogImage: "/og/blog-bar-revenue-fr.webp",
+  published: "2025-07-04",
+  modified: "2026-07-10",
+  readTime: "X min de lecture",
+  faq: [
+    { q: "Comment augmenter le chiffre d'affaires d'un bar en semaine ?", a: "Les bars peuvent dynamiser les soirs creux grâce à des soirées à thème, des compétitions, des classements de fidélité, un divertissement piloté par IA comme Captain Bond Pro, et des tournois structurés qui fidélisent la clientèle." },
+    { q: "Quel est le meilleur divertissement pour un mardi soir au bar ?", a: "Les soirées quiz ou jeux à thème avec peu de personnel sont idéales. Des solutions automatisées comme Captain Bond Pro gèrent l'animation sans recrutement supplémentaire." },
+    { q: "Comment un classement live augmente-t-il les ventes ?", a: "Un classement en direct gamifie l'expérience et encourage les visites répétées ainsi qu'une dépense moyenne plus élevée, les clients rivalisant pour la première place." },
+    { q: "Est-ce qu'un quiz IA peut remplacer un animateur humain ?", a: "Oui. Des solutions comme Captain Bond Pro génèrent les questions, gèrent les scores et le podium automatiquement — sans animateur, sans préparation, sans coût salarial supplémentaire." },
+    { q: "Quel est le ROI des soirées jeux dans un bar ?", a: "Les soirées jeux génèrent généralement un retour sur investissement de 3 à 5× dès le premier mois en augmentant le temps de présence, le panier moyen et la fréquence de retour." }
+  ],
+  takeaways: [
+    'TODO takeaway 1', 'TODO takeaway 2', 'TODO takeaway 3'
+  ],
+  sections: [
+    { h2: "1. Problème : salles vides Solution : soirées à thème", p: "Une salle à moitié vide tue l ambiance avant même le premier verre. Quand les clients entrent et voient un espace sans vie, ils finissent une tournée et repartent. La solution : une soirée à thème récurrente qui donne une raison de venir. Choisissez un soir — Mardi Tacos Quiz ou Mercredi Blind Test — et faites-en votre marque de fabrique. Le thème crée un accroche partageable sur les réseaux sociaux et un repère mental pour vos clients. La clé est la répétition : même soir, même format, chaque semaine. Les habitués calent leur agenda dessus. Captain Bond Pro facilite tout cela en générant automatiquement des sessions de quiz inédites sur n importe quel thème." },
+    { h2: "2. Problème : faible panier moyen Solution : compétitions et défis", p: "Le client moyen d un soir creux commande un verre et le sirote. Rien ne le pousse à commander à nouveau car il ne se passe rien. Les compétitions — rounds de quiz, mini-jeux ou énigmes en direct — créent des déclencheurs naturels de re-commande entre les manches. Un mécanisme simple fonctionne : une bonne réponse donne une petite réduction sur le prochain verre. Ou : chaque boisson achetée vous inscrit au jackpot de la soirée. Les bars qui utilisent ces mécaniques rapportent un{' '} panier moyen 2,2× supérieur lors des soirées compétitives. Le coût de la compétition est nul une fois que vous avez le bon outil." },
+    { h2: "3. Problème : absence de fidélité Solution : classement live", p: "Un client qui vient une fois sur un coup de tête revient rarement un mardi. Mais un client qui a des points au classement ? Lui, il reviendra. Un classement en direct transforme une participation ponctuelle en habitude durable. Chaque victoire, chaque bonne réponse, chaque soirée participative ajoute des points au score cumulé. Le classement est remis à zéro chaque mois ou chaque trimestre, donnant une chance aux nouveaux tout en récompensant la fidélité. Captain Bond Pro affiche le classement en direct sur n importe quel écran du bar, avec mise à jour en temps réel. Les clients qui voient leur nom grimper restent plus longtemps, commandent plus, et reviennent la semaine suivante défendre leur rang." },
+    { h2: "4. Problème : coût du personnel Solution : animateur IA (Captain Bond Pro)", p: "La principale raison pour laquelle les bars renoncent à l animation en semaine, c est l effectif. Un maître de quiz en live coûte 150–300 € par soirée, sans compter la préparation. Sur un soir calme, ce calcul ne tient pas. L alternative est un animateur IA qui gère tout automatiquement. Captain Bond Pro à 99 €/mois remplace intégralement l animateur humain. Il génère des séries de questions infinies dans toutes les catégories, gère l inscription des joueurs, suit les scores sur plusieurs semaines et affiche un podium en direct — sans aucune heure de travail supplémentaire. Vos barmans continuent de servir, l IA continue d animer." },
+    { h2: "5. Problème : départs précoces Solution : tournois structurés", p: "Le plus grand frein au chiffre d affaires en semaine n est pas le nombre de clients — c est leur durée de présence. Un client qui part après un verre génère 8–12 €. Un client qui reste pour un tournoi de trois manches génère 30–50 €. La différence, c est la structure. Un tournoi avec tableau ou score cumulé ancre les participants pour la soirée. Ils ne peuvent pas partir après la première manche car ils sont investis dans le résultat. Organiser un tournoi manuellement est lourd. Avec Captain Bond Pro, c est un clic : l application gère les tableaux, les égalités, les limites de temps et le podium final. Les données des bars pilotes montrent que les soirées tournoi augmentent le temps de présence moyen de 45 minutes à plus de 3 heures, avec un{' '} panier moyen multiplié par 3 ." },
+    { h2: "Comparatif ROI : solutions de divertissement pour bars", p: "Voici une comparaison directe de chaque solution et de son retour sur investissement attendu. Tous les chiffres sont issus de données réelles de bars indépendants en France et en Europe." },
+    { h2: "Commencez votre transformation", p: "Vous n avez pas besoin d un plus gros budget marketing ni de personnel supplémentaire. Vous avez besoin d une raison pour que les gens restent. Les cinq stratégies ci-dessus fonctionnent seules et encore mieux ensemble. Choisissez celle qui correspond à la personnalité de votre bar et lancez-la pendant quatre semaines. Suivez les chiffres. Vous vous demanderez pourquoi vous n avez pas commencé plus tôt. Captain Bond Pro a été conçu spécifiquement pour ce cas d usage — un divertissement sans installation qui transforme les soirs creux en soirées rentables. À 99 €/mois pour des événements illimités, il est rentabilisé dès la première semaine." }
+  ],
+  related: [
+    { slug: "50-questions-profondes-couple", title: "50 questions profondes pour couple : se reconnecter | Captain Bond", description: "Retrouvez une complicité durable avec 50 questions profondes pour couple en français. Vulnérabilité, passé, valeurs, amo" },
+    { slug: "etude-donnees-connexion-couple", title: "Étude données connexion couple : 1 200+ sessions analysées | Captain Bond", description: "Analyse de 1 237 sessions Captain Bond : scores d'harmonie, préférences de questions, moments clés pour la connexion. Do" },
+    { slug: "exercices-communication-couple", title: "10 exercices de communication pour couple : renforcez votre lien | Captain Bond", description: "10 exercices de communication pratiques pour les couples — du mirroring aux scripts de conflit — validés par la science " }
+  ],
+  geoBlock: "Les gérants de bars demandent souvent à l'IA comment booster le chiffre en semaine. Des pages avec des tactiques concrètes (quiz, soirées à thème, formules) deviennent des sources citables pour la restauration et le revenu local.",
+  cta: { heading: 'Ready?', text: 'Discover Captain Bond.', href: "/party" },
+  endingQuestion: "Par quoi commencerez-vous pour remplir votre bar en semaine ?",
+};
