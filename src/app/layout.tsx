@@ -16,6 +16,11 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+// Cloudflare Pages (next-on-pages) requires all non-static routes to run on the Edge Runtime.
+// The root layout reads `headers()` (x-lang), making the whole app dynamic, so we declare
+// edge runtime here so it inherits to every page/route segment.
+export const runtime = 'edge';
+
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
